@@ -1043,7 +1043,7 @@ button{font-family:inherit;color:inherit}
 #loading{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 30%,#fffdf9,#edddcf);transition:opacity .6s}
 #loading.done{opacity:0;pointer-events:none}
 .ld-inner{display:grid;gap:10px;text-align:center;padding:24px;max-width:520px}
-.ld-title{font:800 clamp(44px,9vw,84px)/1 var(--font);letter-spacing:-.02em}
+.ld-title{font:800 clamp(30px,min(9vw,calc((100vw - 64px) / 6.4)),84px)/1.1 var(--font);letter-spacing:-.02em}
 .ld-title small{display:block;font-size:.34em;font-weight:700;color:var(--coral);letter-spacing:.3em;margin-top:10px}
 .ld-sub{font-size:15px;color:var(--muted)}
 .ld-bar{height:6px;border-radius:9px;background:rgba(33,29,29,.08);overflow:hidden;width:220px;margin:6px auto 0}
@@ -1054,6 +1054,7 @@ button{font-family:inherit;color:inherit}
 /* Brand */
 #brand{position:fixed;z-index:12;top:calc(16px + env(safe-area-inset-top,0px));left:calc(16px + env(safe-area-inset-left,0px));width:340px;border-radius:18px;padding:14px 18px 14px;display:grid;gap:4px}
 #brand h1{margin:0;font:800 30px/1.05 var(--font);letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.js-city,.js-sub{white-space:nowrap;word-break:keep-all}
 #brand h1 small{font:700 15px/1 var(--font);color:var(--coral);letter-spacing:.2em}
 #brand .brand-note{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
 
@@ -1205,7 +1206,7 @@ button{font-family:inherit;color:inherit}
 /* Mobile */
 @media (max-width:800px){
   #brand{width:auto;max-width:calc(100% - 92px);padding:10px 14px;border-radius:16px}
-  #brand h1{font-size:22px}
+  #brand h1{font-size:clamp(17px,5.4vw,22px)}
   #brand h1 small{font-size:12px}
   #brand .brand-note{display:none}
   #tools{left:auto;right:calc(12px + env(safe-area-inset-right,0px));flex-direction:column}
@@ -3092,6 +3093,7 @@ function framing(point, offset, willOpenCard = true) {
   return { pos: t.clone().add(offset), target: t };
 }
 function flyTo(pose) {
+  zoomGoal = null;
   if (state.bird) setBird(false, true);
   if (reduced) { camera.position.copy(pose.pos); controls.target.copy(pose.target); controls.update(); dirty = true; flight = null; return; }
   flight = { t: 0, p0: camera.position.clone(), t0: controls.target.clone(), p1: pose.pos.clone(), t1: pose.target.clone() };
@@ -3206,6 +3208,32 @@ function pickAt(cx, cy) {
 }
 let down = null;
 renderer.domElement.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; flight = null; });
+/* 滾輪縮放：自己處理，每次事件最多算一格（約 12%），平滑移動，避免一滾就衝到最近或最遠 */
+let zoomGoal = null;
+stage.addEventListener('wheel', e => {
+  e.preventDefault(); e.stopPropagation();
+  flight = null;
+  let dy = e.deltaY;
+  if (e.deltaMode === 1) dy *= 33; else if (e.deltaMode === 2) dy *= 100;
+  const notch = clamp(dy / 100, -1, 1);
+  const cur = camera.position.distanceTo(controls.target);
+  const base = zoomGoal ?? cur;
+  zoomGoal = clamp(base * Math.pow(1.12, notch), controls.minDistance, controls.maxDistance);
+  if (reduced) { applyZoom(zoomGoal); zoomGoal = null; }
+  dirty = true;
+}, { capture: true, passive: false });
+function applyZoom(d) {
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  camera.position.copy(controls.target).addScaledVector(dir, d);
+}
+function updateZoom(dt) {
+  if (zoomGoal == null) return;
+  const cur = camera.position.distanceTo(controls.target);
+  const nd = cur + (zoomGoal - cur) * Math.min(1, dt * 10);
+  applyZoom(nd);
+  if (Math.abs(nd - zoomGoal) < .01) zoomGoal = null;
+  dirty = true;
+}
 renderer.domElement.addEventListener('pointerup', e => {
   if (!down) return;
   const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y); down = null;
@@ -3561,6 +3589,7 @@ function frame(now) {
   }
   if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
   updateFlight(dt);
+  updateZoom(dt);
   if (controls.update()) dirty = true;
   if (!dirty) return;
   dirty = false;
