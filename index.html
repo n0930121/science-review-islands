@@ -1,0 +1,3602 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>自然科心智圖複習島</title>
+<script>
+/* DATA — 由連結清單整理。每個 item 的 url 就是心智圖或補充教材的連結；model 指定島上的 3D 模型。 */
+window.DATA = {
+ "city": [
+  "自然科心智圖",
+  "Science Mind Maps"
+ ],
+ "subtitle": [
+  "複習島",
+  "Review Islands"
+ ],
+ "eyebrow": [
+  "小四南一 · 小五康軒 · 第一次段考",
+  "Grade 4 Nani · Grade 5 Kang Hsuan · First exam"
+ ],
+ "grades": {
+  "g4": {
+   "name": [
+    "小四自然 · 南一版",
+    "Grade 4 · Nani"
+   ],
+   "short": [
+    "四",
+    "4·"
+   ],
+   "color": "#6f7fb5"
+  },
+  "g5": {
+   "name": [
+    "小五自然 · 康軒版",
+    "Grade 5 · Kang Hsuan"
+   ],
+   "short": [
+    "五",
+    "5·"
+   ],
+   "color": "#6f9a55"
+  }
+ },
+ "kinds": {
+  "mindmap": [
+   "心智圖",
+   "Mind map"
+  ],
+  "game": [
+   "互動遊戲",
+   "Game"
+  ],
+  "dashboard": [
+   "互動儀表板",
+   "Dashboard"
+  ],
+  "extra": [
+   "補充教材",
+   "Extra"
+  ]
+ },
+ "roles": {
+  "official": [
+   "老師",
+   "Teacher"
+  ],
+  "researcher": [
+   "小科學家",
+   "Young scientist"
+  ],
+  "elder": [
+   "爺爺奶奶",
+   "Grandparent"
+  ],
+  "student": [
+   "學童",
+   "Pupil"
+  ],
+  "parent": [
+   "家長",
+   "Parent"
+  ],
+  "commuter": [
+   "騎車的同學",
+   "Cyclist"
+  ],
+  "farmer": [
+   "農夫",
+   "Farmer"
+  ],
+  "worker": [
+   "工人",
+   "Worker"
+  ],
+  "traveler": [
+   "同學",
+   "Classmate"
+  ]
+ },
+ "evidence": {
+  "official": {
+   "name": [
+    "同單元下一課",
+    "Next lesson"
+   ],
+   "note": [
+    "同一個單元裡，照課本順序往下讀。",
+    "The next lesson in the same unit, in textbook order."
+   ]
+  },
+  "thematic": {
+   "name": [
+    "進入下一單元",
+    "Next unit"
+   ],
+   "note": [
+    "這個單元讀完，接著讀下一個單元。",
+    "This unit is done; on to the next one."
+   ]
+  },
+  "pending": {
+   "name": [
+    "其他",
+    "Other"
+   ],
+   "note": [
+    "",
+    ""
+   ]
+  }
+ },
+ "islands": [
+  {
+   "id": "g4-11",
+   "grade": "g4",
+   "unit": [
+    "一、地球的夥伴──日月星辰",
+    "Unit 1 · Earth’s Companions: Sun, Moon and Stars"
+   ],
+   "lesson": "1-1",
+   "q": 1,
+   "r": -3,
+   "name": [
+    "太陽、月亮與星星",
+    "The Sun, Moon and Stars"
+   ],
+   "label": [
+    "太陽月亮星星",
+    "Sun, Moon, Stars"
+   ],
+   "glyph": [
+    "日",
+    "S"
+   ],
+   "accent": "#6f7fb5",
+   "ground": "#e9e8f1",
+   "pattern": "brick",
+   "tree": "pine",
+   "summary": [
+    "南一版小四自然 · 一、地球的夥伴──日月星辰。本課有 1 份心智圖。",
+    "Grade 4 Science (Nani) · Unit 1 · Earth’s Companions: Sun, Moon and Stars. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "a11",
+     "kind": "mindmap",
+     "model": "sunstar",
+     "name": [
+      "1-1 心智圖",
+      "1-1 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1CBmCbhRun/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "telescope",
+    "moon"
+   ]
+  },
+  {
+   "id": "g4-12",
+   "grade": "g4",
+   "unit": [
+    "一、地球的夥伴──日月星辰",
+    "Unit 1 · Earth’s Companions: Sun, Moon and Stars"
+   ],
+   "lesson": "1-2",
+   "q": 2,
+   "r": -3,
+   "name": [
+    "多變的月亮",
+    "The Changing Moon"
+   ],
+   "label": [
+    "多變的月亮",
+    "Changing Moon"
+   ],
+   "glyph": [
+    "月",
+    "M"
+   ],
+   "accent": "#6f7fb5",
+   "ground": "#e9e8f1",
+   "pattern": "speckle",
+   "tree": "pine",
+   "summary": [
+    "南一版小四自然 · 一、地球的夥伴──日月星辰。本課有 1 份心智圖。",
+    "Grade 4 Science (Nani) · Unit 1 · Earth’s Companions: Sun, Moon and Stars. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "a12",
+     "kind": "mindmap",
+     "model": "moon",
+     "name": [
+      "1-2 心智圖",
+      "1-2 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1FbverjQUg/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "telescope",
+    "flowerbed"
+   ]
+  },
+  {
+   "id": "g4-13",
+   "grade": "g4",
+   "unit": [
+    "一、地球的夥伴──日月星辰",
+    "Unit 1 · Earth’s Companions: Sun, Moon and Stars"
+   ],
+   "lesson": "1-3",
+   "q": 3,
+   "r": -3,
+   "name": [
+    "月相變化與生活",
+    "Moon Phases and Daily Life"
+   ],
+   "label": [
+    "月相與生活",
+    "Moon Phases"
+   ],
+   "glyph": [
+    "相",
+    "P"
+   ],
+   "accent": "#6f7fb5",
+   "ground": "#e9e8f1",
+   "pattern": "stripe",
+   "tree": "pine",
+   "summary": [
+    "南一版小四自然 · 一、地球的夥伴──日月星辰。本課有 1 份心智圖、2 個補充教材。",
+    "Grade 4 Science (Nani) · Unit 1 · Earth’s Companions: Sun, Moon and Stars. 1 mind map and 2 extra resources."
+   ],
+   "items": [
+    {
+     "id": "a13",
+     "kind": "mindmap",
+     "model": "phases",
+     "name": [
+      "1-3 心智圖",
+      "1-3 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1BZ4a8QoGu/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    },
+    {
+     "id": "a13g",
+     "kind": "game",
+     "model": "game",
+     "name": [
+      "補充：月相小達人互動遊戲",
+      "Extra: Moon Phase Master game"
+     ],
+     "url": "https://tinyurl.com/yu55777d",
+     "desc": [
+      "補充教材：月相小達人互動遊戲（tinyurl 短網址連結）。",
+      "Extra material: an interactive moon-phase game (tinyurl short link)."
+     ]
+    },
+    {
+     "id": "a13d",
+     "kind": "dashboard",
+     "model": "dashboard",
+     "name": [
+      "補充：月相互動儀表板",
+      "Extra: Moon phase dashboard"
+     ],
+     "url": "https://moonchange.netlify.app/",
+     "desc": [
+      "補充教材：月相互動儀表板（moonchange.netlify.app）。",
+      "Extra material: an interactive moon-phase dashboard (moonchange.netlify.app)."
+     ]
+    }
+   ],
+   "props": []
+  },
+  {
+   "id": "g4-21",
+   "grade": "g4",
+   "unit": [
+    "二、水中世界",
+    "Unit 2 · The Underwater World"
+   ],
+   "lesson": "2-1",
+   "q": 1,
+   "r": -2,
+   "name": [
+    "水域生物的生存環境",
+    "Where Aquatic Life Lives"
+   ],
+   "label": [
+    "生存環境",
+    "Habitats"
+   ],
+   "glyph": [
+    "水",
+    "W"
+   ],
+   "accent": "#3e8ea6",
+   "ground": "#e2eef0",
+   "pattern": "brick",
+   "tree": "willow",
+   "summary": [
+    "南一版小四自然 · 二、水中世界。本課有 1 份心智圖。",
+    "Grade 4 Science (Nani) · Unit 2 · The Underwater World. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "a21",
+     "kind": "mindmap",
+     "model": "pond",
+     "name": [
+      "2-1 心智圖",
+      "2-1 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1Ef8dJ6kBQ/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "canal",
+    "reeds"
+   ]
+  },
+  {
+   "id": "g4-22",
+   "grade": "g4",
+   "unit": [
+    "二、水中世界",
+    "Unit 2 · The Underwater World"
+   ],
+   "lesson": "2-2",
+   "q": 2,
+   "r": -2,
+   "name": [
+    "水域生物的外形與構造",
+    "Shapes and Structures of Aquatic Life"
+   ],
+   "label": [
+    "外形與構造",
+    "Body Structures"
+   ],
+   "glyph": [
+    "構",
+    "B"
+   ],
+   "accent": "#3e8ea6",
+   "ground": "#e2eef0",
+   "pattern": "speckle",
+   "tree": "willow",
+   "summary": [
+    "南一版小四自然 · 二、水中世界。本課有 2 份心智圖。",
+    "Grade 4 Science (Nani) · Unit 2 · The Underwater World. 2 mind maps."
+   ],
+   "items": [
+    {
+     "id": "a22p",
+     "kind": "mindmap",
+     "model": "reeds",
+     "name": [
+      "2-2 心智圖・植物篇",
+      "2-2 Mind map · Plants"
+     ],
+     "url": "https://www.facebook.com/share/p/1Kp9aNEyLJ/",
+     "desc": [
+      "老爹整理的本課心智圖（植物篇），發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind map for this lesson (plants), posted on Facebook."
+     ]
+    },
+    {
+     "id": "a22a",
+     "kind": "mindmap",
+     "model": "fishtank",
+     "name": [
+      "2-2 心智圖・動物篇",
+      "2-2 Mind map · Animals"
+     ],
+     "url": "https://www.facebook.com/share/p/19svxpQ7jX/",
+     "desc": [
+      "老爹整理的本課心智圖（動物篇），發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind map for this lesson (animals), posted on Facebook."
+     ]
+    }
+   ],
+   "props": [
+    "pond"
+   ]
+  },
+  {
+   "id": "g5-11",
+   "grade": "g5",
+   "unit": [
+    "一、動物世界",
+    "Unit 1 · The Animal World"
+   ],
+   "lesson": "1-1",
+   "q": -1,
+   "r": 0,
+   "name": [
+    "動物如何求生存",
+    "How Animals Survive"
+   ],
+   "label": [
+    "求生存",
+    "Survival"
+   ],
+   "glyph": [
+    "存",
+    "S"
+   ],
+   "accent": "#6f9a55",
+   "ground": "#e8efdc",
+   "pattern": "stripe",
+   "tree": "fruit",
+   "summary": [
+    "康軒版小五自然 · 一、動物世界。本課有 1 份心智圖。",
+    "Grade 5 Science (Kang Hsuan) · Unit 1 · The Animal World. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "b11",
+     "kind": "mindmap",
+     "model": "bunny",
+     "name": [
+      "1-1 心智圖",
+      "1-1 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1FToJsJXYe/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "park",
+    "flowerbed"
+   ]
+  },
+  {
+   "id": "g5-12",
+   "grade": "g5",
+   "unit": [
+    "一、動物世界",
+    "Unit 1 · The Animal World"
+   ],
+   "lesson": "1-2",
+   "q": 0,
+   "r": 0,
+   "name": [
+    "動物具有社會行為嗎",
+    "Do Animals Have Social Behavior?"
+   ],
+   "label": [
+    "社會行為",
+    "Social Behavior"
+   ],
+   "glyph": [
+    "群",
+    "G"
+   ],
+   "accent": "#6f9a55",
+   "ground": "#e8efdc",
+   "pattern": "brick",
+   "tree": "fruit",
+   "summary": [
+    "康軒版小五自然 · 一、動物世界。本課有 1 份心智圖。",
+    "Grade 5 Science (Kang Hsuan) · Unit 1 · The Animal World. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "b12",
+     "kind": "mindmap",
+     "model": "beehive",
+     "name": [
+      "1-2 心智圖",
+      "1-2 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1HDFgFgdHr/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "flowerbed",
+    "park"
+   ]
+  },
+  {
+   "id": "g5-13",
+   "grade": "g5",
+   "unit": [
+    "一、動物世界",
+    "Unit 1 · The Animal World"
+   ],
+   "lesson": "1-3",
+   "q": 1,
+   "r": 0,
+   "name": [
+    "動物如何延續生命",
+    "How Animals Carry On Life"
+   ],
+   "label": [
+    "延續生命",
+    "New Life"
+   ],
+   "glyph": [
+    "生",
+    "L"
+   ],
+   "accent": "#6f9a55",
+   "ground": "#e8efdc",
+   "pattern": "speckle",
+   "tree": "fruit",
+   "summary": [
+    "康軒版小五自然 · 一、動物世界。本課有 1 份心智圖、1 個補充教材。",
+    "Grade 5 Science (Kang Hsuan) · Unit 1 · The Animal World. 1 mind map and 1 extra resource."
+   ],
+   "items": [
+    {
+     "id": "b13",
+     "kind": "mindmap",
+     "model": "nest",
+     "name": [
+      "1-3 心智圖",
+      "1-3 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1DDWuyUiJH/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    },
+    {
+     "id": "b13x",
+     "kind": "extra",
+     "model": "book",
+     "name": [
+      "補充：動物的生殖與體溫調節",
+      "Extra: Reproduction and body temperature"
+     ],
+     "url": "https://tinyurl.com/4jbc9r5w",
+     "desc": [
+      "補充教材：動物的生殖與體溫調節（tinyurl 短網址連結）。",
+      "Extra material: animal reproduction and body-temperature control (tinyurl short link)."
+     ]
+    }
+   ],
+   "props": [
+    "bunny"
+   ]
+  },
+  {
+   "id": "g5-21",
+   "grade": "g5",
+   "unit": [
+    "二、探索聲光世界",
+    "Unit 2 · Exploring Sound and Light"
+   ],
+   "lesson": "2-1",
+   "q": -1,
+   "r": 1,
+   "name": [
+    "樂音與噪音有什麼不同",
+    "Music vs. Noise"
+   ],
+   "label": [
+    "樂音與噪音",
+    "Music vs. Noise"
+   ],
+   "glyph": [
+    "聲",
+    "N"
+   ],
+   "accent": "#db6a41",
+   "ground": "#f6e7dc",
+   "pattern": "stripe",
+   "tree": "cherry",
+   "summary": [
+    "康軒版小五自然 · 二、探索聲光世界。本課有 1 份心智圖。",
+    "Grade 5 Science (Kang Hsuan) · Unit 2 · Exploring Sound and Light. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "b21",
+     "kind": "mindmap",
+     "model": "speaker",
+     "name": [
+      "2-1 心智圖",
+      "2-1 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1DePXdWSvt/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "stage"
+   ]
+  },
+  {
+   "id": "g5-22",
+   "grade": "g5",
+   "unit": [
+    "二、探索聲光世界",
+    "Unit 2 · Exploring Sound and Light"
+   ],
+   "lesson": "2-2",
+   "q": 0,
+   "r": 1,
+   "name": [
+    "樂器如何發出不同的聲音",
+    "How Instruments Make Different Sounds"
+   ],
+   "label": [
+    "樂器發聲",
+    "Instruments"
+   ],
+   "glyph": [
+    "樂",
+    "I"
+   ],
+   "accent": "#db6a41",
+   "ground": "#f6e7dc",
+   "pattern": "brick",
+   "tree": "cherry",
+   "summary": [
+    "康軒版小五自然 · 二、探索聲光世界。本課有 1 份心智圖。",
+    "Grade 5 Science (Kang Hsuan) · Unit 2 · Exploring Sound and Light. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "b22",
+     "kind": "mindmap",
+     "model": "xylophone",
+     "name": [
+      "2-2 心智圖",
+      "2-2 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/19WiFvdzPm/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "drum"
+   ]
+  },
+  {
+   "id": "g5-23",
+   "grade": "g5",
+   "unit": [
+    "二、探索聲光世界",
+    "Unit 2 · Exploring Sound and Light"
+   ],
+   "lesson": "2-3",
+   "q": 1,
+   "r": 1,
+   "name": [
+    "光有什麼特性與現象",
+    "Properties and Phenomena of Light"
+   ],
+   "label": [
+    "光的特性",
+    "Light"
+   ],
+   "glyph": [
+    "光",
+    "L"
+   ],
+   "accent": "#db6a41",
+   "ground": "#f6e7dc",
+   "pattern": "speckle",
+   "tree": "cherry",
+   "summary": [
+    "康軒版小五自然 · 二、探索聲光世界。本課有 1 份心智圖。",
+    "Grade 5 Science (Kang Hsuan) · Unit 2 · Exploring Sound and Light. 1 mind map."
+   ],
+   "items": [
+    {
+     "id": "b23",
+     "kind": "mindmap",
+     "model": "prism",
+     "name": [
+      "2-3 心智圖",
+      "2-3 Mind map"
+     ],
+     "url": "https://www.facebook.com/share/p/1DkywSnmzW/",
+     "desc": [
+      "老爹整理的本課心智圖總覽，發布在 Facebook，按下方按鈕開啟。",
+      "Daddy’s mind-map overview for this lesson, posted on Facebook. Use the button below to open it."
+     ]
+    }
+   ],
+   "props": [
+    "telescope"
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "f1",
+   "from": "g4-11",
+   "to": "g4-12",
+   "role": "student",
+   "carry": "book",
+   "carryName": [
+    "心智圖",
+    "mind maps"
+   ],
+   "evidence": "official",
+   "name": [
+    "四1-1 → 1-2",
+    "G4 1-1 → 1-2"
+   ],
+   "note": [
+    "讀完「太陽、月亮與星星」，接著讀「多變的月亮」。",
+    "After “The Sun, Moon and Stars”, move on to “The Changing Moon”."
+   ]
+  },
+  {
+   "id": "f2",
+   "from": "g4-12",
+   "to": "g4-13",
+   "role": "researcher",
+   "carry": "letter",
+   "carryName": [
+    "觀察筆記",
+    "notes"
+   ],
+   "evidence": "official",
+   "name": [
+    "四1-2 → 1-3",
+    "G4 1-2 → 1-3"
+   ],
+   "note": [
+    "讀完「多變的月亮」，接著讀「月相變化與生活」。",
+    "After “The Changing Moon”, move on to “Moon Phases and Daily Life”."
+   ]
+  },
+  {
+   "id": "f3",
+   "from": "g4-13",
+   "to": "g4-21",
+   "role": "commuter",
+   "carry": "laptop",
+   "carryName": [
+    "複習卡",
+    "review cards"
+   ],
+   "evidence": "thematic",
+   "name": [
+    "四1-3 → 2-1",
+    "G4 1-3 → 2-1"
+   ],
+   "note": [
+    "讀完「月相變化與生活」，接著讀「水域生物的生存環境」。",
+    "After “Moon Phases and Daily Life”, move on to “Where Aquatic Life Lives”."
+   ]
+  },
+  {
+   "id": "f4",
+   "from": "g4-21",
+   "to": "g4-22",
+   "role": "parent",
+   "carry": "sapling",
+   "carryName": [
+    "水草",
+    "water plants"
+   ],
+   "evidence": "official",
+   "name": [
+    "四2-1 → 2-2",
+    "G4 2-1 → 2-2"
+   ],
+   "note": [
+    "讀完「水域生物的生存環境」，接著讀「水域生物的外形與構造」。",
+    "After “Where Aquatic Life Lives”, move on to “Shapes and Structures of Aquatic Life”."
+   ]
+  },
+  {
+   "id": "f5",
+   "from": "g5-11",
+   "to": "g5-12",
+   "role": "student",
+   "carry": "book",
+   "carryName": [
+    "心智圖",
+    "mind maps"
+   ],
+   "evidence": "official",
+   "name": [
+    "五1-1 → 1-2",
+    "G5 1-1 → 1-2"
+   ],
+   "note": [
+    "讀完「動物如何求生存」，接著讀「動物具有社會行為嗎」。",
+    "After “How Animals Survive”, move on to “Do Animals Have Social Behavior?”."
+   ]
+  },
+  {
+   "id": "f6",
+   "from": "g5-12",
+   "to": "g5-13",
+   "role": "elder",
+   "carry": "letter",
+   "carryName": [
+    "筆記",
+    "notes"
+   ],
+   "evidence": "official",
+   "name": [
+    "五1-2 → 1-3",
+    "G5 1-2 → 1-3"
+   ],
+   "note": [
+    "讀完「動物具有社會行為嗎」，接著讀「動物如何延續生命」。",
+    "After “Do Animals Have Social Behavior?”, move on to “How Animals Carry On Life”."
+   ]
+  },
+  {
+   "id": "f7",
+   "from": "g5-13",
+   "to": "g5-21",
+   "role": "traveler",
+   "carry": "ticket",
+   "carryName": [
+    "複習卡",
+    "review cards"
+   ],
+   "evidence": "thematic",
+   "name": [
+    "五1-3 → 2-1",
+    "G5 1-3 → 2-1"
+   ],
+   "note": [
+    "讀完「動物如何延續生命」，接著讀「樂音與噪音有什麼不同」。",
+    "After “How Animals Carry On Life”, move on to “Music vs. Noise”."
+   ]
+  },
+  {
+   "id": "f8",
+   "from": "g5-21",
+   "to": "g5-22",
+   "role": "researcher",
+   "carry": "book",
+   "carryName": [
+    "心智圖",
+    "mind maps"
+   ],
+   "evidence": "official",
+   "name": [
+    "五2-1 → 2-2",
+    "G5 2-1 → 2-2"
+   ],
+   "note": [
+    "讀完「樂音與噪音有什麼不同」，接著讀「樂器如何發出不同的聲音」。",
+    "After “Music vs. Noise”, move on to “How Instruments Make Different Sounds”."
+   ]
+  },
+  {
+   "id": "f9",
+   "from": "g5-22",
+   "to": "g5-23",
+   "role": "commuter",
+   "carry": "laptop",
+   "carryName": [
+    "筆記",
+    "notes"
+   ],
+   "evidence": "official",
+   "name": [
+    "五2-2 → 2-3",
+    "G5 2-2 → 2-3"
+   ],
+   "note": [
+    "讀完「樂器如何發出不同的聲音」，接著讀「光有什麼特性與現象」。",
+    "After “How Instruments Make Different Sounds”, move on to “Properties and Phenomena of Light”."
+   ]
+  }
+ ],
+ "dayCycle": [
+  {
+   "from": 300,
+   "to": 540,
+   "name": [
+    "輪到 小四 日月星辰",
+    "G4 · Sun, Moon, Stars"
+   ],
+   "items": [
+    "a11",
+    "a12",
+    "a13",
+    "a13g",
+    "a13d"
+   ]
+  },
+  {
+   "from": 540,
+   "to": 780,
+   "name": [
+    "輪到 小四 水中世界",
+    "G4 · Underwater"
+   ],
+   "items": [
+    "a21",
+    "a22p",
+    "a22a"
+   ]
+  },
+  {
+   "from": 780,
+   "to": 1020,
+   "name": [
+    "輪到 小五 動物世界",
+    "G5 · Animals"
+   ],
+   "items": [
+    "b11",
+    "b12",
+    "b13",
+    "b13x"
+   ]
+  },
+  {
+   "from": 1020,
+   "to": 1260,
+   "name": [
+    "輪到 小五 聲光世界",
+    "G5 · Sound & Light"
+   ],
+   "items": [
+    "b21",
+    "b22",
+    "b23"
+   ]
+  },
+  {
+   "from": 1260,
+   "to": 300,
+   "name": [
+    "全部心智圖",
+    "All mind maps"
+   ],
+   "items": [
+    "a11",
+    "a12",
+    "a13",
+    "a21",
+    "a22p",
+    "a22a",
+    "b11",
+    "b12",
+    "b13",
+    "b21",
+    "b22",
+    "b23"
+   ]
+  }
+ ]
+};
+</script>
+<style>
+/* Layout: full-bleed diorama canvas; glass panels float at the edges (brand + card left, list right, HUD bottom). */
+:root{
+  --coral:#db6a41; --ink:#211d1d; --cream:#fff8f4; --yellow:#fcea8b; --stone:#c5b5a7; --green:#71806a;
+  --glass:#86a8a6; --wood:#b48560; --teal:#3e7c8c;
+  --paper:rgba(255,251,247,.86); --paper-solid:#fffaf6; --line:rgba(33,29,29,.11); --muted:#6e625a; --live:#3bb36b;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --num:Georgia,"Times New Roman",serif;
+  --shadow:0 1px 1px rgba(74,42,20,.05),0 6px 16px rgba(74,42,20,.08),0 22px 48px rgba(74,42,20,.12);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:radial-gradient(130% 100% at 50% 22%,#fffdf9 0%,#f6ece2 55%,#edddcf 100%);color:var(--ink);font-family:var(--font);font-size:14px;-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;touch-action:none}
+#stage canvas{display:block;outline:none}
+#labels{position:fixed!important;inset:0;pointer-events:none;z-index:5}
+[hidden]{display:none!important}
+button{font-family:inherit;color:inherit}
+.eyebrow{font:700 10px/1.3 var(--mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.glass{background:var(--paper);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,255,255,.75);box-shadow:var(--shadow)}
+
+/* Buttons */
+.btn{min-height:44px;min-width:44px;border-radius:9px;border:1px solid var(--line);background:var(--paper-solid);font:600 13px/1.1 var(--font);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;transition:background .15s,color .15s}
+.btn:hover{background:var(--yellow)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.btn:focus-visible,.chip:focus-visible,.isl-label:focus-visible,.list-btn:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#fff;border:0;box-shadow:0 2px 8px #4a2a1414;padding:6px 12px;min-height:34px;font:600 12.5px/1.2 var(--font);cursor:pointer;color:var(--ink)}
+.chip:hover{background:var(--yellow)}
+.chip img{width:20px;height:20px}
+.chip.cream{background:var(--cream)}
+
+/* Loading */
+#loading{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 30%,#fffdf9,#edddcf);transition:opacity .6s}
+#loading.done{opacity:0;pointer-events:none}
+.ld-inner{display:grid;gap:10px;text-align:center;padding:24px;max-width:520px}
+.ld-title{font:800 clamp(44px,9vw,84px)/1 var(--font);letter-spacing:-.02em}
+.ld-title small{display:block;font-size:.34em;font-weight:700;color:var(--coral);letter-spacing:.3em;margin-top:10px}
+.ld-sub{font-size:15px;color:var(--muted)}
+.ld-bar{height:6px;border-radius:9px;background:rgba(33,29,29,.08);overflow:hidden;width:220px;margin:6px auto 0}
+.ld-bar i{display:block;height:100%;width:40%;background:var(--coral);border-radius:9px;animation:ld 1.2s ease-in-out infinite}
+@keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
+.ld-err{background:#fff;border:1px solid #e9b8a5;color:#8c2f12;border-radius:12px;padding:12px 14px;text-align:left;font-size:13px;line-height:1.6}
+
+/* Brand */
+#brand{position:fixed;z-index:12;top:calc(16px + env(safe-area-inset-top,0px));left:calc(16px + env(safe-area-inset-left,0px));width:340px;border-radius:18px;padding:14px 18px 14px;display:grid;gap:4px}
+#brand h1{margin:0;font:800 30px/1.05 var(--font);letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#brand h1 small{font:700 15px/1 var(--font);color:var(--coral);letter-spacing:.2em}
+#brand .brand-note{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+
+/* Tools */
+#tools{position:fixed;z-index:12;top:calc(16px + env(safe-area-inset-top,0px));left:calc(16px + 340px + 10px + env(safe-area-inset-left,0px));display:flex;gap:8px}
+#tools .btn{box-shadow:0 2px 8px #4a2a1414;border-color:rgba(255,255,255,.8);background:var(--paper)}
+#tools .btn[aria-pressed="true"]{background:var(--ink)}
+#tools .btn span{font-size:12px}
+
+/* Detail card */
+#card{position:fixed;z-index:11;left:calc(16px + env(safe-area-inset-left,0px));top:var(--card-top,150px);bottom:100px;width:340px;border-radius:22px;display:flex;flex-direction:column;overflow:hidden}
+#card .card-scroll{overflow:auto;padding:18px 18px 20px;display:grid;gap:14px;align-content:start;overscroll-behavior:contain}
+#card .x{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:9px;border:0;background:transparent;font-size:22px;cursor:pointer;z-index:2}
+#card .x:hover{background:var(--yellow)}
+.card-head{display:flex;gap:12px;align-items:center;padding-right:40px}
+.card-head h2{margin:2px 0 0;font:800 24px/1.15 var(--font);text-wrap:balance}
+.hexb{--c:var(--coral);width:48px;height:54px;flex:none;display:grid;place-items:center;color:#fff;font:800 20px/1 var(--font);background:var(--c);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.summary{margin:0;font-size:14.5px;line-height:1.7}
+.sec{display:grid;gap:8px}
+.item-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.list-btn{width:100%;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;text-align:left;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 10px;cursor:pointer;font:600 13.5px/1.35 var(--font)}
+.list-btn:hover{background:var(--yellow)}
+.list-btn .n{font:700 17px/1 var(--font);color:var(--coral)}
+.list-btn small{font:500 11.5px/1 var(--font);color:var(--muted);white-space:nowrap}
+.list-btn.lit{box-shadow:inset 3px 0 0 #e7c84a}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.thumb{width:160px;height:160px;border-radius:16px;background:radial-gradient(circle at 50% 35%,#fffdf9,#f1e5d8);display:grid;place-items:center;margin:0 auto;box-shadow:inset 0 0 0 1px var(--line)}
+.thumb img{width:160px;height:160px;display:block}
+.desc{margin:0;font-size:14.5px;line-height:1.7}
+.stats{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:8px}
+.stat{background:var(--cream);border-radius:12px;padding:10px 10px 9px;display:grid;gap:4px;align-content:start;box-shadow:inset 0 0 0 1px rgba(219,106,65,.15)}
+.stat b{font:italic 400 28px/1 var(--num);color:var(--coral);font-variant-numeric:tabular-nums;word-break:break-all}
+.stat span{font-weight:700;font-size:12px}
+.stat small{font-size:11px;line-height:1.4;color:var(--muted)}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);position:relative;padding-top:4px}
+.timeline::before{content:"";position:absolute;left:16.6%;right:16.6%;top:13px;height:2px;background:var(--stone)}
+.tl{display:grid;justify-items:center;gap:6px;position:relative;font-size:12px;color:var(--muted)}
+.tl i{width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--stone)}
+.tl.on{color:var(--ink);font-weight:700}
+.tl.on i{background:var(--coral);border-color:var(--coral);box-shadow:0 0 0 4px rgba(219,106,65,.2)}
+.tl.past i{background:var(--stone)}
+.facts{margin:0;padding:0 0 0 18px;display:grid;gap:4px;font-size:13.5px;line-height:1.6}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;font-size:13.5px;align-items:center}
+.kv dt{color:var(--muted);font-size:12px}
+.kv dd{margin:0;font-weight:600;display:flex;align-items:center;gap:8px}
+.kv img{width:26px;height:26px}
+.flowrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.flowrow .arr{font:700 18px/1 var(--font);color:var(--coral)}
+.evl{display:inline-block;width:42px;height:0;border-top:3px solid var(--coral)}
+.evl.thematic{border-top-style:dashed}
+.evl.pending{border-top-style:dotted;border-top-width:4px}
+.note{margin:0;font-size:13.5px;line-height:1.7;color:#3d3431}
+.back{justify-self:start}
+.go-link{width:100%;background:var(--coral);color:#fff;border-color:var(--coral);font-size:15px;text-decoration:none;min-height:48px}
+.go-link:hover{background:var(--ink);color:var(--cream)}
+.urlrow{display:flex;gap:8px;align-items:center}
+.urlrow code{flex:1;min-width:0;font:500 12px/1.4 var(--mono);background:var(--cream);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere;user-select:all}
+.urlrow .btn{min-height:36px;font-size:12px}
+.kind{display:inline-flex;font:700 10px/1 var(--mono);letter-spacing:1px;padding:5px 9px;border-radius:999px;background:var(--yellow);color:var(--ink)}
+.kind.mindmap{background:#fde3d8;color:#9a3a17}
+.item-list li,.side-body ol li{display:flex;gap:6px;align-items:stretch}
+.item-list .list-btn,.side-body ol .list-btn{flex:1;min-width:0}
+.go{display:grid;place-items:center;width:44px;min-height:44px;flex:none;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--coral);font:700 17px/1 var(--font);text-decoration:none}
+.go:hover{background:var(--yellow)}
+.go:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.grade-h{font:800 15px/1.2 var(--font);padding:10px 4px 2px;display:flex;align-items:center;gap:8px}
+.unit-h{font:700 12px/1.4 var(--font);color:var(--muted);padding:6px 4px 0}
+.grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
+
+/* Sidebar */
+#side{position:fixed;z-index:11;right:calc(16px + env(safe-area-inset-right,0px));top:calc(16px + env(safe-area-inset-top,0px));bottom:100px;width:318px;border-radius:22px;display:flex;flex-direction:column;overflow:hidden;background:rgba(255,251,247,.72)}
+.side-head{padding:16px 16px 10px;display:grid;gap:10px;border-bottom:1px solid var(--line)}
+.side-head input{width:100%;min-height:44px;border-radius:9px;border:1px solid var(--line);background:#fff;padding:0 12px;font:500 14px var(--font)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tabs .btn{font-size:13px}
+.side-body{overflow:auto;padding:10px 12px 16px;display:grid;gap:6px;align-content:start;overscroll-behavior:contain}
+.side-body details{border-radius:12px;background:rgba(255,255,255,.7);border:1px solid var(--line)}
+.side-body summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;min-height:44px;padding:6px 12px;border-radius:12px;font-weight:700}
+.side-body summary::-webkit-details-marker{display:none}
+.side-body summary:hover{background:var(--yellow)}
+.hexm{--c:var(--coral);width:34px;height:36px;display:grid;place-items:center;background:var(--c);color:#fff;font:700 11px/1 var(--mono);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.side-body .cnt{font:600 11px var(--mono);color:var(--muted)}
+.side-body ol{list-style:none;margin:0;padding:0 8px 8px;display:grid;gap:4px}
+.side-body .list-btn{border-color:transparent;background:transparent;font-weight:500}
+.side-body .list-btn:hover{background:var(--yellow)}
+.flow-btn{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;text-align:left;min-height:52px;width:100%;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.75);padding:8px 12px;cursor:pointer;font-family:inherit}
+.flow-btn:hover{background:var(--yellow)}
+.flow-btn img{width:30px;height:30px}
+.flow-btn b{display:block;font-size:13.5px}
+.flow-btn small{color:var(--muted);font-size:11.5px}
+.empty{color:var(--muted);font-size:13px;padding:12px}
+.handle{display:none}
+
+/* HUD */
+#hud{position:fixed;z-index:13;left:50%;transform:translateX(-50%);width:max-content;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;max-width:calc(100vw - 32px);flex-wrap:wrap;justify-content:center}
+.clock{display:grid;padding:0 12px 0 14px;min-width:106px}
+.clock b{font:italic 400 24px/1 var(--num);font-variant-numeric:tabular-nums}
+.clock span{font:700 10px/1.4 var(--mono);letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+.hud-group{display:flex;gap:4px;align-items:center}
+.hud-sep{width:1px;align-self:stretch;margin:6px 4px;background:var(--line)}
+.tbtn{flex-direction:column;gap:3px;min-width:52px;padding:4px 8px;border-radius:9px;font-size:11px;background:transparent;border-color:transparent}
+.tbtn b{font:italic 400 16px/1 var(--num)}
+.tbtn svg{width:18px;height:18px}
+.tbtn.on-seg{box-shadow:inset 0 -3px 0 var(--coral)}
+#timeFab{display:none}
+
+/* Legend */
+#legend{position:fixed;z-index:12;left:50%;transform:translateX(-50%);width:max-content;bottom:calc(88px + env(safe-area-inset-bottom,0px));display:flex;gap:14px;align-items:center;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:600}
+#legend span{display:inline-flex;gap:6px;align-items:center}
+#legend .evl{width:28px}
+
+/* Log */
+#log{position:fixed;z-index:12;top:calc(16px + env(safe-area-inset-top,0px));right:calc(var(--log-right,16px) + env(safe-area-inset-right,0px));width:300px;max-height:min(46vh,420px);border-radius:18px;display:flex;flex-direction:column;overflow:hidden}
+.log-head{display:flex;align-items:center;gap:8px;padding:12px 14px 8px}
+.log-head h3{margin:0;font-size:15px;flex:1}
+.live{display:inline-flex;align-items:center;gap:6px;font:700 10px var(--mono);letter-spacing:1.5px;color:#1f7a45}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--live);box-shadow:0 0 0 0 rgba(59,179,107,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(59,179,107,0)}100%{box-shadow:0 0 0 0 rgba(59,179,107,0)}}
+#log select{margin:0 14px 8px;min-height:36px;border-radius:9px;border:1px solid var(--line);background:#fff;font:500 13px var(--font);padding:0 8px}
+#logList{list-style:none;margin:0;padding:0 10px 12px;overflow:auto;display:grid;gap:4px}
+#logList li{display:grid;grid-template-columns:42px auto 1fr;gap:8px;align-items:center;font-size:12.5px;padding:5px 6px;border-radius:8px;background:rgba(255,255,255,.6)}
+#logList time{font:600 11px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.ev{font:700 9.5px/1 var(--mono);letter-spacing:1px;padding:4px 6px;border-radius:999px;text-transform:uppercase}
+.ev.depart{background:#e7eef8;color:#3c5a8a}.ev.arrive{background:#fde9df;color:#a8431d}.ev.handoff{background:#fbf3c4;color:#7b6410}
+
+/* 3D labels */
+.isl-label{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;background:rgba(255,250,246,.95);box-shadow:0 2px 8px #4a2a1422;padding:4px 11px 4px 5px;font:700 13px/1 var(--font);cursor:pointer;white-space:nowrap;transition:opacity .25s,background .2s,color .2s}
+.isl-label b{display:grid;place-items:center;min-width:24px;height:22px;padding:0 5px;border-radius:999px;background:var(--c,var(--coral));color:#fff;font:700 11px/1 var(--mono)}
+.isl-label:hover{background:var(--yellow)}
+.isl-label.sel{background:var(--ink);color:var(--cream)}
+.isl-label.dim{opacity:.45}
+.isl-label.num{padding-right:5px}
+.isl-label.num span{display:none}
+.isl-label.hid,.pin.hid{opacity:0!important;pointer-events:none}
+.pin{pointer-events:auto;cursor:pointer;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#fff;border:2px solid var(--coral);color:var(--coral);font:700 14px/1 var(--font);box-shadow:0 2px 8px #4a2a1430}
+.pin.sel{background:var(--coral);color:#fff}
+.bubble{background:#fff;border-radius:999px;padding:4px 9px;font:600 11px/1 var(--font);box-shadow:0 2px 6px #4a2a1426;white-space:nowrap;pointer-events:none}
+
+/* Help */
+#help{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(60,40,30,.22);padding:16px}
+.help-card{max-width:440px;width:100%;border-radius:22px;padding:22px;display:grid;gap:14px;background:var(--paper-solid);box-shadow:var(--shadow)}
+.help-card h2{margin:0;font-size:22px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:14px;line-height:1.6;counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--yellow);font:italic 400 18px/1 var(--num)}
+.help-card .btn{justify-self:end;background:var(--coral);color:#fff;border-color:var(--coral);padding:0 20px}
+.help-card .btn:hover{background:var(--ink)}
+
+/* Mobile */
+@media (max-width:800px){
+  #brand{width:auto;max-width:calc(100% - 92px);padding:10px 14px;border-radius:16px}
+  #brand h1{font-size:22px}
+  #brand h1 small{font-size:12px}
+  #brand .brand-note{display:none}
+  #tools{left:auto;right:calc(12px + env(safe-area-inset-right,0px));flex-direction:column}
+  #tools .btn span:not(#langLabel){display:none}
+  #card,#side{left:0;right:0;top:auto;bottom:0;width:auto;border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom,0px);transition:height .25s ease}
+  #card{height:34%;z-index:15}
+  #side{height:52%;z-index:14;background:rgba(255,251,247,.94)}
+  #card.dragging,#side.dragging{transition:none}
+  .handle{display:block;height:24px;flex:none;cursor:grab;touch-action:none;position:relative}
+  .handle::after{content:"";position:absolute;left:50%;top:9px;width:44px;height:5px;margin-left:-22px;border-radius:9px;background:rgba(33,29,29,.22)}
+  #card .x{top:6px}
+  #card .card-scroll{padding-top:4px}
+  #hud{display:none;bottom:calc(76px + env(safe-area-inset-bottom,0px));border-radius:20px;left:16px;right:16px;width:auto;transform:none;flex-direction:column;align-items:stretch;padding:10px}
+  body.hud-open #hud{display:flex}
+  .hud-group{justify-content:space-between;flex-wrap:wrap}
+  .hud-sep{height:1px;width:auto;margin:2px 0}
+  .clock{padding:2px 6px}
+  #timeFab{display:inline-flex;position:fixed;z-index:13;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));border-radius:999px;box-shadow:var(--shadow);padding:0 16px;font-size:14px}
+  body.sheet-open #timeFab,body.sheet-open #hud{display:none}
+  #legend{bottom:calc(76px + env(safe-area-inset-bottom,0px));font-size:11px;gap:10px;max-width:calc(100% - 32px);flex-wrap:wrap;justify-content:center}
+  #log{left:16px;right:72px;width:auto;top:calc(76px + env(safe-area-inset-top,0px));max-height:30vh}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+
+<div id="stage" aria-label="3D 自然科複習島" data-en-aria="3D science review islands"></div>
+
+<div id="loading" role="status">
+  <div class="ld-inner">
+    <div class="eyebrow" data-en="FIRST EXAM REVIEW">第一次段考複習</div>
+    <div class="ld-title"><span class="js-city">自然科心智圖</span><small class="js-sub">複習島</small></div>
+    <div class="ld-sub" data-en="Building the review islands…">正在搭建自然科複習島…</div>
+    <div class="ld-bar"><i></i></div>
+    <div class="ld-err" hidden></div>
+  </div>
+</div>
+
+<header id="brand" class="glass">
+  <div class="eyebrow js-eyebrow">小四南一 · 小五康軒</div>
+  <h1><span class="js-city">自然科心智圖</span><small class="js-sub">複習島</small></h1>
+  <p class="brand-note" id="brandNote"></p>
+</header>
+
+<nav id="tools" aria-label="工具列" data-en-aria="Toolbar">
+  <button class="btn" id="btnFull" title="全景" data-en-title="Overview"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span data-en="Overview">全景</span></button>
+  <button class="btn" id="btnList" aria-pressed="false" title="清單" data-en-title="List"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span data-en="List">清單</span></button>
+  <button class="btn" id="btnHelp" title="說明" data-en-title="Help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg></button>
+  <button class="btn" id="btnLang" title="English / 中文"><span id="langLabel">EN</span></button>
+</nav>
+
+<aside id="card" class="glass" hidden aria-live="polite">
+  <div class="handle" aria-hidden="true"></div>
+  <button class="x" id="cardClose" aria-label="關閉" data-en-aria="Close">×</button>
+  <div class="card-scroll" id="cardBody"></div>
+</aside>
+
+<aside id="side" class="glass" hidden>
+  <div class="handle" aria-hidden="true"></div>
+  <div class="side-head">
+    <input id="q" type="search" placeholder="搜尋課名，例如：月亮" data-en-ph="Search lessons, e.g. moon" autocomplete="off">
+    <div class="tabs" role="tablist">
+      <button class="btn" role="tab" id="tabThemes" aria-pressed="true" data-en="Lessons">課程</button>
+      <button class="btn" role="tab" id="tabFlows" aria-pressed="false" data-en="Routes">學習路線</button>
+    </div>
+  </div>
+  <div class="side-body" id="sideThemes"></div>
+  <div class="side-body" id="sideFlows" hidden></div>
+</aside>
+
+<section id="log" class="glass" hidden aria-label="學習日誌" data-en-aria="Study log">
+  <div class="log-head"><h3 data-en="Study log">學習日誌</h3><span class="live"><i></i>LIVE</span></div>
+  <select id="logFilter" aria-label="依學習路線篩選" data-en-aria="Filter by route"></select>
+  <ol id="logList"></ol>
+</section>
+
+<div id="legend" class="glass" hidden>
+  <span><i class="evl official"></i><em class="js-ev" data-k="official"></em></span>
+  <span><i class="evl thematic"></i><em class="js-ev" data-k="thematic"></em></span>
+  <span><i class="evl pending"></i><em class="js-ev" data-k="pending"></em></span>
+</div>
+
+<div id="hud" class="glass">
+  <div class="clock"><b id="clockTime">10:00</b><span id="clockSeg"></span></div>
+  <div class="hud-group" id="timeBtns">
+    <button class="btn tbtn" data-min="360"><b>06</b><span data-en="Dawn">清晨</span></button>
+    <button class="btn tbtn" data-min="720"><b>12</b><span data-en="Day">白天</span></button>
+    <button class="btn tbtn" data-min="1080"><b>18</b><span data-en="Dusk">黃昏</span></button>
+    <button class="btn tbtn" data-min="1260"><b>21</b><span data-en="Night">夜晚</span></button>
+  </div>
+  <div class="hud-sep"></div>
+  <div class="hud-group">
+    <button class="btn tbtn" id="tgNames" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-4 3v-3H6a2 2 0 0 1-2-2z"/></svg><span data-en="Names">名牌</span></button>
+    <button class="btn tbtn" id="tgCarry" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8l-8 4-8-4z M4 8l8 4 8-4 M12 12v8"/></svg><span data-en="Carry">搬運</span></button>
+    <button class="btn tbtn" id="tgFlows" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 18c4 0 4-12 8-12s4 12 8 12"/><circle cx="4" cy="18" r="1.6"/><circle cx="20" cy="18" r="1.6"/></svg><span data-en="Routes">路線</span></button>
+    <button class="btn tbtn" id="tgPause" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg><span data-en="Pause">暫停</span></button>
+    <button class="btn tbtn" id="tgBird" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span data-en="Top view">鳥瞰</span></button>
+    <button class="btn tbtn" id="tgLog" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M6 4h9l3 3v13H6z M9 10h6M9 14h6M9 18h3"/></svg><span data-en="Log">日誌</span></button>
+  </div>
+</div>
+<button class="btn" id="timeFab" aria-pressed="false"><span data-en="◷ Time">◷ 時間</span></button>
+
+<div id="help" hidden>
+  <div class="help-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="eyebrow" data-en="How to explore">怎麼逛</div>
+    <h2 id="helpTitle"><span data-en="Welcome to">歡迎來到</span> <span class="js-city">自然科心智圖</span><span class="js-sub">複習島</span></h2>
+    <ol class="steps">
+      <li data-en="Drag to rotate, scroll or pinch to zoom. The back islands are Grade 4, the front ones Grade 5.">拖曳旋轉、滾輪或雙指縮放。後排是小四（南一），前排是小五（康軒），一座島就是一課。</li>
+      <li data-en="Tap an island or a building. The card lists its mind-map links; press Open to view one.">點一座島或島上的建物，卡片會列出心智圖連結，按「開啟」就能看。也可以打開「清單」直接點。</li>
+      <li data-en="Turn on “Routes” to see the reading order, with little helpers carrying notes along it.">打開「路線」，看小人照課本順序，把筆記從這一課搬到下一課。</li>
+    </ol>
+    <button class="btn" id="helpOk" data-en="Start exploring">開始逛逛</button>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+/* =====================================================================
+   自然科心智圖複習島 — based on the 政策島 template. Three.js 0.160.0, DATA driven.
+   ===================================================================== */
+const D = window.DATA;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const ldErr = $('.ld-err');
+let booted = false;
+
+function showError(e) {
+  console.error(e);
+  const msg = (e && (e.message || String(e))) || 'unknown';
+  $('.ld-bar').hidden = true;
+  ldErr.hidden = false;
+  ldErr.innerHTML = (EN
+    ? '<b>The 3D city could not start.</b><br>Your browser may not support WebGL, or the Three.js CDN could not be reached. Try reloading or another browser.<br><small>'
+    : '<b>3D 城市無法啟動。</b><br>可能是瀏覽器不支援 WebGL，或連不到 Three.js 的 CDN。請重新整理或換個瀏覽器再試。<br><small>') + esc(msg) + '</small>';
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+/* ---------- language ---------- */
+let EN = false;
+try { EN = new URLSearchParams(location.search).get('lang') === 'en' || /(^#|[#&])en$/.test(location.hash); } catch (e) {}
+const T = p => Array.isArray(p) ? (EN ? (p[1] ?? p[0]) : p[0]) : (p ?? '');
+const tr = (zh, en) => EN ? en : zh;
+
+/* ---------- storage ---------- */
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+};
+
+/* ---------- seeded random ---------- */
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+const rng = mulberry32(20261023);
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const easeInOutCubic = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const pick = (arr, r) => arr[Math.floor(r() * arr.length) % arr.length];
+
+const watchdog = setTimeout(() => { if (!booted) showError(new Error(EN ? 'Loading timed out (Three.js CDN unreachable).' : '載入逾時：連不到 Three.js CDN。')); }, 25000);
+
+let THREE, OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry, BGU, SimplexNoise;
+try {
+  THREE = await import('three');
+  ({ OrbitControls } = await import('three/addons/controls/OrbitControls.js'));
+  ({ CSS2DRenderer, CSS2DObject } = await import('three/addons/renderers/CSS2DRenderer.js'));
+  ({ RoundedBoxGeometry } = await import('three/addons/geometries/RoundedBoxGeometry.js'));
+  BGU = await import('three/addons/utils/BufferGeometryUtils.js');
+  ({ SimplexNoise } = await import('three/addons/math/SimplexNoise.js'));
+  boot();
+  booted = true;
+  clearTimeout(watchdog);
+} catch (e) {
+  clearTimeout(watchdog);
+  showError(e);
+}
+
+function boot() {
+/* =====================================================================
+   0. constants & helpers
+   ===================================================================== */
+const V3 = THREE.Vector3;
+const R = 2.02, SPACING = 2.28, TOP = 0.65, WATER_Y = -0.18;
+const SQ3 = Math.sqrt(3);
+const COL = {
+  coral: '#db6a41', ink: '#211d1d', cream: '#fff8f4', yellow: '#fcea8b', stone: '#c5b5a7', green: '#71806a',
+  glass: '#86a8a6', wood: '#b48560', teal: '#3e7c8c', leaf1: '#9cc27a', leaf2: '#8db86f', leaf3: '#728f5f',
+  pink: '#f2b5c6', aqua: '#58a6a6', blue: '#6f7fb5', wall: '#f4ebdd', eave: '#a34e34', win: '#a8c4c2',
+  curb: '#e4d6c3', dark: '#3b3535', gold: '#e8c25a', skin: '#f1c9a5', soil: '#9b7653', white: '#fbfaf6'
+};
+const colCache = new Map();
+const C3 = hex => { let c = colCache.get(hex); if (!c) { c = new THREE.Color(hex); colCache.set(hex, c); } return c; };
+const mqMobile = matchMedia('(max-width: 800px)');
+const mqReduce = matchMedia('(prefers-reduced-motion: reduce)');
+let reduced = mqReduce.matches;
+const isMobile = () => mqMobile.matches;
+const MOBILE0 = isMobile();
+
+/* =====================================================================
+   1. data preparation
+   ===================================================================== */
+const ISL = D.islands.map((d, i) => ({ ...d, idx: i, x: SQ3 * SPACING * (d.q + d.r / 2), z: 1.5 * SPACING * d.r }));
+const ISL_BY = new Map(ISL.map(i => [i.id, i]));
+const CENTER = new V3();
+ISL.forEach(i => { CENTER.x += i.x; CENTER.z += i.z; });
+CENTER.x /= ISL.length; CENTER.z /= ISL.length;
+const ITEMS = new Map();
+const NUMS = '①②③④⑤⑥⑦⑧⑨';
+const NEIGH = [];
+ISL.forEach((a, i) => ISL.forEach((b, j) => {
+  if (j <= i) return;
+  const dq = b.q - a.q, dr = b.r - a.r;
+  if ((Math.abs(dq) + Math.abs(dr) + Math.abs(dq + dr)) === 2) NEIGH.push([i, j]);
+}));
+
+function layoutIsland(isl) {
+  const n = isl.items.length + (isl.props || []).length - 1;
+  let pts = [], cell = .62;
+  for (cell = .62; cell >= .459; cell -= .02) {
+    pts = [];
+    const rowH = cell * .87;
+    for (let row = -7; row <= 7; row++) {
+      const z = row * rowH, off = (row & 1) ? cell / 2 : 0;
+      for (let col = -7; col <= 7; col++) {
+        const x = col * cell + off;
+        if (Math.hypot(x, z) > 1.36 - cell * .42) continue;
+        if (Math.abs(x) < .575 + cell * .42 && z < cell * .42 && z > -1.155 - cell * .42) continue;
+        pts.push({ x, z });
+      }
+    }
+    if (pts.length >= n) break;
+  }
+  pts.sort((a, b) => Math.hypot(a.x, a.z - .55) - Math.hypot(b.x, b.z - .55));
+  const chosen = pts.slice(0, n).sort((a, b) => (a.z - b.z) || (a.x - b.x));
+  const out = [{ x: 0, z: -.58, s: 1.15, main: true }];
+  chosen.forEach(p => out.push({ x: p.x, z: p.z, s: cell * .92 }));
+  return out;
+}
+ISL.forEach(isl => {
+  const lay = layoutIsland(isl);
+  isl.items.forEach((it, k) => {
+    const L = lay[k];
+    ITEMS.set(it.id, { ...it, isl, k, x: isl.x + L.x, z: isl.z + L.z, s: L.s, main: !!L.main, top: TOP + 1 });
+  });
+  isl.propLay = (isl.props || []).map((m, j) => ({ model: m, ...lay[isl.items.length + j] }));
+});
+const FLOWS = D.flows.map(f => ({ ...f, a: ISL_BY.get(f.from), b: ISL_BY.get(f.to) }));
+
+/* =====================================================================
+   2. renderer / scene / camera / controls
+   ===================================================================== */
+const stage = $('#stage');
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+if (!renderer.getContext()) throw new Error('WebGL unavailable');
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, MOBILE0 ? 1.4 : 1.75));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1;
+stage.appendChild(renderer.domElement);
+renderer.domElement.setAttribute('tabindex', '0');
+
+const css2d = new CSS2DRenderer();
+css2d.domElement.id = 'labels';
+document.body.appendChild(css2d.domElement);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0xf4eee3, 42, 150);
+const camera = new THREE.PerspectiveCamera(32, 1, .3, 320);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = .07;
+controls.enablePan = false;
+const POLAR_MIN = THREE.MathUtils.degToRad(25), POLAR_MAX = THREE.MathUtils.degToRad(70);
+controls.minPolarAngle = POLAR_MIN;
+controls.maxPolarAngle = POLAR_MAX;
+controls.minDistance = 3;
+controls.maxDistance = 70;
+let dirty = true;
+controls.addEventListener('change', () => { dirty = true; });
+
+/* =====================================================================
+   3. sky, fog, lights, water
+   ===================================================================== */
+const skyU = {
+  uTop: { value: new THREE.Color('#9fd0ec') }, uHorizon: { value: new THREE.Color('#f4eee3') },
+  uSun: { value: new THREE.Color('#fff1de') }, uSunDir: { value: new V3(0, 1, 0) }, uNight: { value: 0 }
+};
+const sky = new THREE.Mesh(new THREE.SphereGeometry(170, 48, 24), new THREE.ShaderMaterial({
+  uniforms: skyU, side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false,
+  vertexShader: `varying vec3 vDir; void main(){ vDir = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+  fragmentShader: `
+    uniform vec3 uTop; uniform vec3 uHorizon; uniform vec3 uSun; uniform vec3 uSunDir; uniform float uNight;
+    varying vec3 vDir;
+    float hash(vec3 p){ return fract(sin(dot(p, vec3(12.9898,78.233,45.164))) * 43758.5453); }
+    void main(){
+      vec3 d = normalize(vDir);
+      vec3 c = mix(uHorizon, uTop, smoothstep(-.02, .55, d.y));
+      float s = max(dot(d, normalize(uSunDir)), 0.0);
+      c += uSun * pow(s, 18.0) * .35;
+      if (uNight > 0.001) {
+        float h = hash(floor(d * 180.0));
+        float star = step(.9965, h) * smoothstep(.02, .3, d.y);
+        c += vec3(star) * uNight * (.6 + .4 * fract(h * 97.0));
+      }
+      gl_FragColor = vec4(c, 1.0);
+      #include <colorspace_fragment>
+    }`
+}));
+sky.renderOrder = -10;
+sky.frustumCulled = false;
+scene.add(sky);
+
+const hemi = new THREE.HemisphereLight(0xeef6fa, 0x8f8270, 1.3);
+scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xfff1de, 2.8);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -20, right: 20, top: 22, bottom: -22, near: 1, far: 90 });
+sun.shadow.bias = -.0006;
+sun.shadow.normalBias = .045;
+sun.shadow.radius = 3;
+sun.target.position.copy(CENTER);
+scene.add(sun, sun.target);
+const fill = new THREE.DirectionalLight(0xbfd6ff, .35);
+fill.position.set(CENTER.x - 20, 14, CENTER.z - 18);
+fill.target.position.copy(CENTER);
+scene.add(fill, fill.target);
+
+/* water — shared uniforms between sea plane and island side walls */
+const WU = {
+  uTime: { value: 0 }, uShallow: { value: new THREE.Color('#a4d4da') }, uDeep: { value: new THREE.Color('#6fa9b8') },
+  uEarth: { value: new THREE.Color('#c9a684') }, uCenter: { value: new THREE.Vector2(CENTER.x, CENTER.z) },
+  uTopY: { value: TOP }, uWaterY: { value: WATER_Y }
+};
+const waterVS = `
+  #include <common>
+  #include <fog_pars_vertex>
+  varying vec3 vW;
+  void main(){
+    vec4 w = modelMatrix * vec4(position, 1.0);
+    vW = w.xyz;
+    vec4 mvPosition = viewMatrix * w;
+    gl_Position = projectionMatrix * mvPosition;
+    #include <fog_vertex>
+  }`;
+const waterFS = `
+  uniform vec3 uShallow; uniform vec3 uDeep; uniform vec3 uEarth; uniform float uTime; uniform vec2 uCenter;
+  uniform float uSide; uniform float uTopY; uniform float uWaterY;
+  varying vec3 vW;
+  #include <common>
+  #include <fog_pars_fragment>
+  void main(){
+    float d = length(vW.xz - uCenter);
+    float w1 = sin(vW.x * .32 + uTime * .55) * sin(vW.z * .41 - uTime * .42);
+    float w2 = sin((vW.x - vW.z) * .85 + uTime * .8) * .5;
+    float k = clamp(smoothstep(9.0, 70.0, d) + (w1 + w2) * .07, 0.0, 1.0);
+    vec3 col = mix(uShallow, uDeep, k);
+    float spark = pow(max(0.0, sin(vW.x * 2.9 + uTime * 1.6) * sin(vW.z * 3.3 - uTime * 1.2)), 28.0) * .16 * (1.0 - k);
+    col += spark;
+    if (uSide > .5) {
+      float h = smoothstep(uWaterY - .05, uTopY - .16, vW.y);
+      col = mix(col * .94, uEarth, h * h);
+    }
+    gl_FragColor = vec4(col, 1.0);
+    #include <colorspace_fragment>
+    #include <fog_fragment>
+  }`;
+function waterMat(side) {
+  return new THREE.ShaderMaterial({
+    uniforms: Object.assign({}, WU, { uSide: { value: side ? 1 : 0 } }, THREE.UniformsUtils.clone(THREE.UniformsLib.fog)),
+    vertexShader: waterVS, fragmentShader: waterFS, fog: true, toneMapped: false
+  });
+}
+const water = new THREE.Mesh(new THREE.CircleGeometry(160, 64).rotateX(-Math.PI / 2), waterMat(false));
+water.position.set(CENTER.x, WATER_Y, CENTER.z);
+scene.add(water);
+
+/* =====================================================================
+   4. islands (merged by material)
+   ===================================================================== */
+function groundTex(kind) {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const g = c.getContext('2d'); const r = mulberry32(hashStr(kind));
+  g.fillStyle = '#fbf8f3'; g.fillRect(0, 0, 256, 256);
+  if (kind === 'brick') {
+    for (let row = 0; row < 16; row++) for (let col = -1; col < 9; col++) {
+      const x = col * 32 + (row & 1 ? 16 : 0), y = row * 16;
+      g.fillStyle = `rgba(150,110,80,${.02 + r() * .06})`; g.fillRect(x + 1, y + 1, 30, 14);
+    }
+    g.strokeStyle = 'rgba(120,90,60,.16)'; g.lineWidth = 1.4;
+    for (let row = 0; row <= 16; row++) { g.beginPath(); g.moveTo(0, row * 16); g.lineTo(256, row * 16); g.stroke(); }
+    for (let row = 0; row < 16; row++) for (let col = 0; col <= 8; col++) { const x = col * 32 + (row & 1 ? 16 : 0); g.beginPath(); g.moveTo(x, row * 16); g.lineTo(x, row * 16 + 16); g.stroke(); }
+  } else if (kind === 'speckle') {
+    for (let i = 0; i < 1100; i++) {
+      const x = r() * 256, y = r() * 256, s = .6 + r() * 1.6;
+      g.fillStyle = `rgba(${100 + r() * 40},${80 + r() * 30},${60 + r() * 30},${.08 + r() * .14})`;
+      for (const ox of [-256, 0, 256]) for (const oy of [-256, 0, 256]) { g.beginPath(); g.arc(x + ox, y + oy, s, 0, 7); g.fill(); }
+    }
+  } else {
+    g.strokeStyle = 'rgba(130,100,70,.08)'; g.lineWidth = 9;
+    for (let k = -16; k < 32; k++) { g.beginPath(); g.moveTo(k * 32, 0); g.lineTo(k * 32 + 256, 256); g.stroke(); }
+    for (let i = 0; i < 260; i++) { g.fillStyle = 'rgba(120,90,60,.07)'; g.fillRect(r() * 256, r() * 256, 1.5, 1.5); }
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+  return t;
+}
+function bandAtlas() {
+  const H = 32, c = document.createElement('canvas'); c.width = 256; c.height = H * ISL.length;
+  const g = c.getContext('2d');
+  ISL.forEach((isl, i) => {
+    const y = i * H;
+    g.fillStyle = isl.accent; g.fillRect(0, y, 256, H);
+    g.fillStyle = 'rgba(255,248,244,.88)';
+    for (let k = 0; k < 8; k++) {
+      const x = k * 32 + 16;
+      if (i % 3 === 0) { g.beginPath(); g.moveTo(x - 9, y + 24); g.lineTo(x, y + 8); g.lineTo(x + 9, y + 24); g.closePath(); g.fill(); }
+      else if (i % 3 === 1) { g.beginPath(); g.arc(x, y + 16, 6, 0, 7); g.fill(); g.fillRect(x + 11, y + 14, 6, 4); }
+      else { g.fillRect(x - 10, y + 9, 8, 14); g.fillRect(x + 3, y + 12, 7, 8); }
+    }
+    g.fillStyle = 'rgba(33,29,29,.16)'; g.fillRect(0, y + H - 4, 256, 4);
+  });
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = THREE.RepeatWrapping; t.wrapT = THREE.ClampToEdgeWrapping; t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+const hexDisc = r => new THREE.CircleGeometry(r, 6).rotateZ(Math.PI / 6).rotateX(-Math.PI / 2);
+const hexRing = (a, b) => new THREE.RingGeometry(a, b, 6, 1).rotateZ(Math.PI / 6).rotateX(-Math.PI / 2);
+function addColor(geo, hex) {
+  const c = C3(hex), n = geo.attributes.position.count, arr = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) { arr[i * 3] = c.r; arr[i * 3 + 1] = c.g; arr[i * 3 + 2] = c.b; }
+  geo.setAttribute('color', new THREE.BufferAttribute(arr, 3));
+  return geo;
+}
+function worldUV(geo, div = 2.2) {
+  const p = geo.attributes.position, uv = geo.attributes.uv;
+  for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / div, p.getZ(i) / div);
+  return geo;
+}
+const groundGeos = { brick: [], speckle: [], stripe: [] };
+const wallGeos = [], bandGeos = [], walkGeos = [], curbGeos = [], shallowGeos = [], foamGeos = [];
+ISL.forEach((isl, i) => {
+  groundGeos[isl.pattern].push(addColor(worldUV(hexDisc(R - .05).translate(isl.x, TOP, isl.z)), isl.ground));
+  wallGeos.push(new THREE.CylinderGeometry(R, R, (TOP - .16) - (WATER_Y - .7), 6, 1, true).translate(isl.x, ((TOP - .16) + (WATER_Y - .7)) / 2, isl.z));
+  const band = new THREE.CylinderGeometry(R + .004, R + .004, .16, 6, 1, true).translate(isl.x, TOP - .08, isl.z);
+  const uv = band.attributes.uv;
+  for (let k = 0; k < uv.count; k++) uv.setXY(k, uv.getX(k) * 6, (ISL.length - 1 - i + .08 + uv.getY(k) * .84) / ISL.length);
+  bandGeos.push(band);
+  walkGeos.push(worldUV(hexRing(1.66, 1.94).translate(isl.x, TOP + .005, isl.z), 1.1));
+  curbGeos.push(hexRing(R - .13, R + .004).translate(isl.x, TOP + .012, isl.z));
+  shallowGeos.push(hexRing(R, R + .7).translate(isl.x, WATER_Y + .006, isl.z));
+  foamGeos.push(hexRing(R, R + .16).translate(isl.x, WATER_Y + .012, isl.z));
+});
+const merge = arr => BGU.mergeGeometries(arr, false);
+const groundMeshes = [];
+for (const kind of ['brick', 'speckle', 'stripe']) {
+  if (!groundGeos[kind].length) continue;
+  const m = new THREE.Mesh(merge(groundGeos[kind]), new THREE.MeshStandardMaterial({ map: groundTex(kind), vertexColors: true, roughness: .92, metalness: 0 }));
+  m.receiveShadow = true; scene.add(m); groundMeshes.push(m);
+}
+const walls = new THREE.Mesh(merge(wallGeos), waterMat(true)); scene.add(walls);
+const bands = new THREE.Mesh(merge(bandGeos), new THREE.MeshStandardMaterial({ map: bandAtlas(), roughness: .85 }));
+bands.receiveShadow = true; scene.add(bands);
+const walkTex = groundTex('brick');
+const walkway = new THREE.Mesh(merge(walkGeos), new THREE.MeshStandardMaterial({ color: '#f0dcc8', map: walkTex, roughness: .9, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 }));
+walkway.receiveShadow = true; scene.add(walkway);
+const curb = new THREE.Mesh(merge(curbGeos), new THREE.MeshStandardMaterial({ color: COL.curb, roughness: .85, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }));
+curb.receiveShadow = true; scene.add(curb);
+const shallowMat = new THREE.MeshBasicMaterial({ color: '#cdeee9', transparent: true, opacity: .5, depthWrite: false, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 });
+const foamMat = new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: .55, depthWrite: false, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 });
+scene.add(new THREE.Mesh(merge(shallowGeos), shallowMat), new THREE.Mesh(merge(foamGeos), foamMat));
+
+/* =====================================================================
+   5. kit — instanced parts library
+   ===================================================================== */
+const KG = (() => {
+  const g = {};
+  g.box = new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0);
+  g.rbox = new RoundedBoxGeometry(1, 1, 1, 2, .12).translate(0, .5, 0);
+  g.cyl = new THREE.CylinderGeometry(.5, .5, 1, 14).translate(0, .5, 0);
+  g.cone = new THREE.ConeGeometry(.5, 1, 14).translate(0, .5, 0);
+  g.sphere = new THREE.SphereGeometry(.5, 16, 12);
+  g.ico = new THREE.IcosahedronGeometry(.5, 1);
+  g.dome = new THREE.SphereGeometry(.5, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2);
+  g.torus = new THREE.TorusGeometry(.5, .12, 8, 24);
+  const sh = new THREE.Shape(); sh.moveTo(-.5, 0); sh.lineTo(.5, 0); sh.lineTo(0, 1); sh.closePath();
+  g.prism = new THREE.ExtrudeGeometry(sh, { depth: 1, bevelEnabled: false }).translate(0, 0, -.5);
+  g.hip = new THREE.ConeGeometry(Math.SQRT1_2, 1, 4).rotateY(Math.PI / 4).translate(0, .5, 0);
+  g.glowbox = g.box; g.glowsphere = g.sphere;
+  return g;
+})();
+const MAT = {
+  solid: new THREE.MeshStandardMaterial({ roughness: .78, metalness: 0 }),
+  glow: new THREE.MeshStandardMaterial({ roughness: .55, metalness: 0, emissive: new THREE.Color('#ffc777'), emissiveIntensity: 0 })
+};
+let SINK = [];
+const _p = new V3(), _q = new THREE.Quaternion(), _s = new V3(), _e = new THREE.Euler(), _m = new THREE.Matrix4(), _m2 = new THREE.Matrix4();
+class Bld {
+  constructor(base, owner = null, lod = false) { this.base = base; this.owner = owner; this.lod = lod; }
+  p(kind, x, y, z, sx, sy, sz, col, ry = 0, rx = 0, rz = 0, lod) {
+    const j = 1 + (rng() * 2 - 1) * .0072;
+    _e.set(rx, ry, rz); _q.setFromEuler(_e); _p.set(x, y, z); _s.set(sx * j, sy * j, sz * j);
+    _m.compose(_p, _q, _s); _m2.multiplyMatrices(this.base, _m);
+    SINK.push({ kind, m: _m2.clone(), color: new THREE.Color(col), owner: this.owner, lod: lod ?? this.lod });
+  }
+}
+const M4 = (x, y, z, s = 1, ry = 0) => new THREE.Matrix4().compose(new V3(x, y, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, 0)), new V3(s, s, s));
+
+/* ---------- archetypes (unit space: base ±0.5, height 0–1.5); return top height ---------- */
+function mini(b, x, y, z, shirt, s = 1, ry = 0) {
+  b.p('cyl', x, y, z, .1 * s, .11 * s, .1 * s, shirt);
+  b.p('sphere', x, y + .16 * s, z, .1 * s, .1 * s, .1 * s, COL.skin);
+  b.p('dome', x, y + .17 * s, z - .005, .105 * s, .07 * s, .105 * s, COL.dark, ry, -.3);
+}
+const ARCH = {
+  house(b) {
+    b.p('rbox', 0, .04, 0, .62, .5, .52, COL.wall);
+    b.p('box', 0, .53, 0, .76, .04, .66, COL.eave);
+    b.p('hip', 0, .57, 0, .68, .34, .58, COL.coral);
+    b.p('box', .17, .62, -.1, .08, .22, .08, COL.eave);
+    b.p('glowbox', -.16, .25, .255, .14, .15, .02, COL.win);
+    b.p('glowbox', .16, .25, .255, .14, .15, .02, COL.win);
+    b.p('box', 0, .04, .262, .12, .24, .02, COL.wood);
+    b.p('glowbox', .312, .27, 0, .02, .14, .16, COL.win);
+    b.p('glowbox', -.312, .27, 0, .02, .14, .16, COL.win);
+    b.p('ico', -.38, .1, .3, .14, .12, .14, COL.leaf2);
+    return .95;
+  },
+  hall(b) {
+    b.p('rbox', 0, .04, .04, .92, .08, .64, COL.stone);
+    b.p('rbox', 0, .12, .02, .84, .4, .48, COL.cream);
+    for (const x of [-.3, -.1, .1, .3]) b.p('cyl', x, .12, .3, .07, .36, .07, COL.wall);
+    b.p('box', 0, .5, .04, .92, .05, .58, COL.eave);
+    b.p('prism', 0, .55, .04, .9, .16, .56, COL.coral);
+    for (const x of [-.32, -.2, .2, .32]) b.p('glowbox', x, .22, .262, .07, .14, .02, COL.win);
+    b.p('box', 0, .12, .262, .14, .24, .02, COL.wood);
+    b.p('rbox', 0, .55, -.14, .28, .62, .28, COL.cream);
+    b.p('cyl', 0, .95, -.0, .2, .025, .2, COL.cream, 0, Math.PI / 2);
+    b.p('torus', 0, .95, .025, .2, .2, .2, COL.eave);
+    b.p('box', 0, .95, .03, .016, .07, .01, COL.ink, 0, 0, .5);
+    b.p('box', 0, .95, .03, .016, .09, .01, COL.ink, 0, 0, -1.9);
+    b.p('box', 0, 1.17, -.14, .32, .03, .32, COL.eave);
+    b.p('hip', 0, 1.2, -.14, .32, .26, .32, COL.coral);
+    b.p('cone', 0, 1.44, -.14, .04, .1, .04, COL.gold);
+    b.p('glowsphere', 0, .76, -.0, .05, .05, .05, COL.yellow);
+    return 1.5;
+  },
+  kiosk(b) {
+    b.p('rbox', 0, .04, .06, .7, .3, .36, COL.wood);
+    b.p('box', 0, .34, .06, .76, .03, .42, COL.cream);
+    for (const [x, z] of [[-.34, -.16], [.34, -.16], [-.34, .26], [.34, .26]]) b.p('cyl', x, .04, z, .035, .64, .035, COL.dark);
+    for (let i = 0; i < 6; i++) b.p('box', -.31 + i * .124, .68, .05, .124, .035, .56, i % 2 ? COL.cream : COL.coral, 0, -.22);
+    b.p('box', 0, .8, -.17, .5, .14, .03, COL.cream);
+    b.p('box', 0, .83, -.155, .36, .05, .01, COL.coral);
+    const cols = [COL.pink, COL.yellow, COL.leaf1, COL.coral, COL.aqua];
+    for (let i = 0; i < 5; i++) b.p('sphere', -.24 + i * .12, .41, .1, .1, .1, .1, cols[i]);
+    b.p('glowsphere', 0, .58, .05, .06, .06, .06, COL.yellow);
+    b.p('cyl', .3, .04, .38, .05, .2, .05, COL.dark);
+    return .9;
+  },
+  classroom(b) {
+    b.p('box', 0, .04, 0, .9, .03, .82, '#efe2d0');
+    b.p('box', 0, .07, -.37, .88, .48, .06, COL.wall);
+    b.p('box', 0, .22, -.335, .6, .22, .02, '#3b4a3f');
+    b.p('box', 0, .21, -.32, .62, .02, .04, COL.wood);
+    b.p('box', -.42, .07, 0, .05, .3, .74, COL.wall);
+    b.p('glowbox', -.445, .2, -.05, .02, .12, .3, COL.win);
+    b.p('box', 0, .55, -.37, .92, .04, .1, COL.coral);
+    for (const x of [-.18, .18]) for (const z of [-.08, .18]) {
+      b.p('box', x, .17, z, .22, .025, .14, COL.wood);
+      b.p('box', x, .07, z, .2, .1, .02, COL.dark);
+      b.p('box', x, .11, z + .12, .1, .02, .08, COL.teal);
+      mini(b, x, .07, z + .12, pick([COL.coral, COL.yellow, COL.blue, COL.pink], mulberry32(hashStr('c' + x + z))), .9);
+    }
+    mini(b, .3, .07, -.25, COL.coral, 1.1);
+    return .62;
+  },
+  clinic(b) {
+    b.p('rbox', 0, .04, 0, .78, .6, .6, COL.white);
+    b.p('box', 0, .44, 0, .8, .06, .62, COL.teal);
+    b.p('box', 0, .64, 0, .84, .05, .66, COL.stone);
+    b.p('box', 0, .69, 0, .06, .14, .04, COL.dark);
+    b.p('box', 0, .9, 0, .26, .08, .06, COL.coral);
+    b.p('box', 0, .79, 0, .08, .26, .06, COL.coral);
+    b.p('box', 0, .04, .302, .2, .28, .02, COL.glass);
+    b.p('box', 0, .32, .33, .34, .03, .1, COL.coral);
+    for (const x of [-.27, .27]) b.p('glowbox', x, .22, .302, .14, .12, .02, COL.win);
+    for (const x of [-.27, 0, .27]) b.p('glowbox', x, .52, .312, .12, .06, .02, COL.win);
+    b.p('ico', .36, .1, .35, .12, .12, .12, COL.leaf2);
+    return 1.05;
+  },
+  busstop(b) {
+    b.p('box', 0, .04, 0, .96, .03, .9, '#e2d3c2');
+    for (const x of [-.44, 0]) b.p('cyl', x, .07, -.25, .03, .42, .03, COL.dark);
+    b.p('rbox', -.22, .48, -.22, .54, .04, .34, COL.teal);
+    b.p('box', -.22, .08, -.33, .48, .38, .015, COL.glass);
+    b.p('box', -.22, .16, -.26, .4, .03, .1, COL.wood);
+    b.p('cyl', .16, .07, -.32, .025, .52, .025, COL.dark);
+    b.p('cyl', .16, .56, -.335, .14, .02, .14, COL.coral, 0, Math.PI / 2);
+    b.p('rbox', .06, .1, .2, .86, .32, .3, '#f3d250', 0, 0, 0);
+    b.p('glowbox', .06, .27, .355, .74, .09, .02, COL.win);
+    b.p('glowbox', .5, .25, .2, .02, .12, .2, COL.win);
+    b.p('box', .06, .17, .353, .86, .03, .015, COL.coral);
+    for (const x of [-.22, .36]) b.p('cyl', x, .1, .33, .12, .03, .12, COL.ink, 0, Math.PI / 2);
+    mini(b, -.3, .07, -.18, COL.blue);
+    return .62;
+  },
+  bikerack(b) {
+    b.p('box', 0, .04, 0, .92, .03, .72, '#e9d6bf');
+    for (let i = 0; i < 4; i++) b.p('torus', -.3 + i * .2, .07, -.2, .18, .18, .4, COL.dark);
+    const cols = [COL.coral, COL.teal, COL.blue];
+    for (let i = 0; i < 3; i++) {
+      const x = -.24 + i * .24;
+      for (const z of [-.08, .14]) b.p('torus', x, .15, z, .17, .17, .25, COL.ink, Math.PI / 2);
+      b.p('box', x, .18, .03, .025, .03, .22, cols[i]);
+      b.p('box', x, .25, -.04, .05, .02, .06, COL.ink);
+      b.p('box', x, .26, .12, .12, .015, .015, COL.ink);
+    }
+    b.p('cyl', .4, .07, .25, .03, .4, .03, COL.dark);
+    b.p('rbox', .4, .32, .25, .12, .16, .06, COL.teal);
+    b.p('glowbox', .4, .36, .282, .08, .08, .01, COL.win);
+    return .5;
+  },
+  court(b) {
+    b.p('box', 0, .04, 0, .96, .03, .92, '#86a873');
+    b.p('box', 0, .07, 0, .82, .006, .74, '#95b97f');
+    for (const [x, z, w, d] of [[0, .37, .82, .016], [0, -.37, .82, .016], [.41, 0, .016, .74], [-.41, 0, .016, .74], [0, 0, .82, .012]]) b.p('box', x, .076, z, w, .004, d, COL.cream);
+    b.p('torus', 0, .078, 0, .22, .22, .05, COL.cream, 0, Math.PI / 2);
+    for (const s of [-1, 1]) {
+      b.p('cyl', 0, .07, s * .44, .035, .44, .035, COL.dark);
+      b.p('box', 0, .42, s * .41, .2, .13, .015, COL.white);
+      b.p('torus', 0, .4, s * .36, .07, .07, .07, COL.coral, 0, Math.PI / 2);
+    }
+    b.p('sphere', .14, .11, .12, .075, .075, .075, COL.coral);
+    mini(b, -.2, .07, .1, COL.yellow); mini(b, .25, .07, -.15, COL.blue);
+    return .6;
+  },
+  farm(b) {
+    b.p('box', 0, .04, 0, .92, .06, .88, COL.soil);
+    for (let r = 0; r < 3; r++) {
+      const z = -.08 + r * .17;
+      b.p('box', .08, .1, z, .7, .04, .11, '#8a6748');
+      for (let i = 0; i < 5; i++) b.p('ico', -.2 + i * .14, .16, z, .1, .09, .1, r === 1 ? COL.leaf1 : COL.leaf2);
+    }
+    b.p('rbox', -.24, .1, -.3, .3, .24, .24, COL.coral);
+    b.p('prism', -.24, .34, -.3, .34, .14, .28, COL.cream);
+    b.p('box', -.24, .1, -.177, .08, .14, .01, COL.wood);
+    b.p('glowbox', .2, .1, -.33, .3, .02, .2, COL.win);
+    for (let i = 0; i < 6; i++) b.p('cyl', -.42 + i * .17, .07, .42, .025, .12, .025, COL.wood);
+    b.p('box', 0, .15, .42, .88, .02, .015, COL.wood);
+    mini(b, .32, .07, -.28, COL.green);
+    return .55;
+  },
+  flowerbed(b, r) {
+    b.p('cyl', 0, .04, 0, .82, .14, .82, COL.stone);
+    b.p('cyl', 0, .18, 0, .74, .02, .74, '#8a6748');
+    const cols = [COL.pink, COL.yellow, COL.coral, '#ffffff', COL.blue];
+    for (let i = 0; i < 16; i++) {
+      const a = r() * Math.PI * 2, rr = .14 + r() * .2;
+      b.p('ico', Math.cos(a) * rr, .21, Math.sin(a) * rr, .09, .07, .09, COL.leaf2);
+      b.p('sphere', Math.cos(a) * rr, .27, Math.sin(a) * rr, .06, .06, .06, cols[i % cols.length]);
+    }
+    b.p('cyl', 0, .2, 0, .05, .26, .05, COL.wood);
+    b.p('ico', 0, .55, 0, .32, .28, .32, COL.leaf1);
+    b.p('ico', .06, .68, .04, .2, .18, .2, COL.leaf2);
+    return .8;
+  },
+  canal(b) {
+    b.p('box', -.32, .04, 0, .3, .12, .92, '#d9c8b0');
+    b.p('box', .32, .04, 0, .3, .12, .92, '#d9c8b0');
+    b.p('box', 0, .04, 0, .36, .05, .92, '#7fb9c2');
+    for (let i = 0; i < 7; i++) { const t = i / 6, x = -.24 + t * .48; b.p('box', x, .16 + Math.sin(Math.PI * t) * .07, 0, .075, .025, .18, COL.wood); }
+    for (const z of [-.09, .09]) b.p('box', 0, .26, z, .5, .015, .015, COL.eave);
+    for (const [x, z] of [[-.3, -.35], [-.26, .3], [.3, .32], [.27, -.3]]) b.p('cone', x, .16, z, .05, .16, .05, COL.leaf3);
+    b.p('cyl', .38, .16, .05, .025, .3, .025, COL.dark);
+    b.p('glowsphere', .38, .48, .05, .07, .07, .07, COL.yellow);
+    b.p('rbox', .02, .085, -.3, .1, .04, .2, COL.coral);
+    return .55;
+  },
+  stage(b) {
+    b.p('rbox', 0, .04, -.1, .9, .16, .56, COL.wood);
+    b.p('box', 0, .2, -.1, .86, .01, .52, '#c99f78');
+    b.p('box', 0, .2, -.36, .86, .52, .04, COL.coral);
+    b.p('box', 0, .34, -.335, .5, .14, .01, COL.yellow);
+    for (const x of [-.44, .44]) b.p('cyl', x, .04, -.36, .04, .78, .04, COL.dark);
+    b.p('box', 0, .8, -.3, .92, .04, .04, COL.dark);
+    for (let i = 0; i < 5; i++) b.p('glowsphere', -.3 + i * .15, .76, -.27, .055, .055, .055, COL.yellow);
+    for (const x of [-.36, .36]) b.p('box', x, .21, -.24, .1, .2, .1, COL.ink);
+    mini(b, 0, .21, -.12, COL.teal, 1.1);
+    for (const x of [-.24, 0, .24]) mini(b, x, .04, .34, pick([COL.blue, COL.pink, COL.yellow], mulberry32(hashStr('s' + x))), .95);
+    return .85;
+  },
+  book(b) {
+    b.p('box', 0, .04, 0, .62, .07, .42, COL.wood);
+    b.p('box', -.2, .14, 0, .44, .04, .58, COL.coral, 0, 0, -.42);
+    b.p('box', .2, .14, 0, .44, .04, .58, COL.coral, 0, 0, .42);
+    b.p('box', -.19, .17, 0, .4, .04, .54, COL.cream, 0, 0, -.42);
+    b.p('box', .19, .17, 0, .4, .04, .54, COL.cream, 0, 0, .42);
+    for (let i = 0; i < 4; i++) { b.p('box', -.2, .23 + i * 0, -.15 + i * .1, .26, .006, .02, '#c9bba8', 0, 0, -.42); b.p('box', .2, .23, -.15 + i * .1, .26, .006, .02, '#c9bba8', 0, 0, .42); }
+    b.p('box', .05, .2, .27, .03, .16, .006, COL.yellow);
+    b.p('rbox', .38, .04, .3, .2, .06, .14, COL.blue);
+    b.p('rbox', .38, .1, .3, .18, .06, .13, COL.yellow);
+    return .55;
+  },
+  coin(b) {
+    b.p('box', 0, .04, -.05, .34, .1, .18, COL.wood);
+    b.p('cyl', 0, .5, -.12, .72, .1, .72, COL.gold, 0, Math.PI / 2);
+    b.p('cyl', 0, .5, -.03, .52, .025, .52, '#f2d47a', 0, Math.PI / 2);
+    b.p('torus', 0, .5, -.005, .42, .42, .2, '#c99a2e');
+    b.p('box', -.04, .43, .0, .05, .16, .01, COL.eave);
+    b.p('box', .04, .43, .0, .05, .16, .01, COL.eave);
+    for (let i = 0; i < 4; i++) b.p('cyl', -.28, .04 + i * .055, .25, .26, .05, .26, i % 2 ? '#f2d47a' : COL.gold);
+    for (let i = 0; i < 2; i++) b.p('cyl', .3, .04 + i * .055, .26, .24, .05, .24, i % 2 ? '#f2d47a' : COL.gold);
+    return .9;
+  },
+  clock(b) {
+    b.p('rbox', 0, .04, 0, .32, .12, .32, COL.stone);
+    b.p('cyl', 0, .16, 0, .08, .56, .08, COL.dark);
+    b.p('cyl', 0, .95, -.04, .62, .08, .62, COL.cream, 0, Math.PI / 2);
+    b.p('torus', 0, .95, .04, .6, .6, .5, COL.coral);
+    for (let k = 0; k < 12; k++) { const a = k / 12 * Math.PI * 2; b.p('box', Math.sin(a) * .24, .95 + Math.cos(a) * .24 - .015, .045, .02, k % 3 ? .02 : .05, .01, COL.ink, 0, 0, -a); }
+    b.p('box', 0, .95, .05, .025, .15, .01, COL.ink, 0, 0, -2.1);
+    b.p('box', 0, .95, .05, .018, .22, .01, COL.ink, 0, 0, .55);
+    b.p('sphere', 0, .95, .055, .04, .04, .04, COL.coral);
+    b.p('glowsphere', 0, 1.33, -.02, .07, .07, .07, COL.yellow);
+    return 1.38;
+  },
+  globe(b, r) {
+    b.p('cyl', 0, .04, 0, .38, .06, .38, COL.wood);
+    b.p('cyl', 0, .1, 0, .05, .25, .05, COL.dark);
+    b.p('sphere', 0, .62, 0, .5, .5, .5, '#76b8c6');
+    for (let i = 0; i < 8; i++) {
+      const u = r() * Math.PI * 2, v = (r() - .5) * 2.2;
+      const x = Math.cos(u) * Math.cos(v) * .23, y = Math.sin(v) * .23, z = Math.sin(u) * Math.cos(v) * .23;
+      b.p('ico', x, .62 + y, z, .16, .1, .16, COL.leaf1, u, v);
+    }
+    b.p('torus', 0, .62, 0, .62, .62, .3, COL.gold, 0, 0, .4);
+    b.p('torus', 0, .62, 0, .58, .58, .25, COL.cream, Math.PI / 2, Math.PI / 2, 0);
+    return .95;
+  },
+  antenna(b) {
+    b.p('rbox', 0, .04, 0, .5, .12, .5, COL.stone);
+    for (const [x, z] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) b.p('box', x * .11, .14, z * .11, .03, 1.06, .03, COL.coral, 0, -z * .07, x * .07);
+    for (const y of [.42, .7, .95]) { const w = .26 - (y - .14) * .14; b.p('box', 0, y, 0, w, .02, w, COL.cream); }
+    b.p('cyl', 0, 1.15, 0, .03, .12, .03, COL.dark);
+    b.p('glowsphere', 0, 1.29, 0, .08, .08, .08, COL.coral);
+    b.p('dome', 0, .8, .1, .3, .12, .3, COL.cream, 0, 1.15);
+    b.p('rbox', .28, .16, .2, .18, .18, .16, COL.teal);
+    b.p('glowbox', .28, .24, .282, .1, .06, .01, COL.win);
+    return 1.3;
+  },
+  bins(b) {
+    b.p('box', 0, .04, 0, .92, .03, .62, COL.stone);
+    const cols = [COL.teal, '#e7c84a', COL.coral];
+    for (let i = 0; i < 3; i++) {
+      const x = -.28 + i * .28;
+      b.p('rbox', x, .07, 0, .24, .34, .26, cols[i]);
+      b.p('rbox', x, .41, 0, .26, .04, .28, COL.dark);
+      b.p('box', x, .2, .133, .1, .1, .01, COL.cream);
+    }
+    for (const x of [-.44, .44]) b.p('cyl', x, .07, -.22, .03, .5, .03, COL.dark);
+    b.p('box', 0, .57, -.12, .96, .03, .3, COL.green);
+    b.p('glowsphere', 0, .52, -.05, .05, .05, .05, COL.yellow);
+    return .65;
+  },
+  park(b) {
+    b.p('cyl', 0, .04, 0, .92, .03, .92, COL.leaf1);
+    b.p('box', 0, .07, .1, .16, .006, .82, '#ecd9c0', .5);
+    b.p('cyl', -.22, .072, .22, .3, .006, .24, '#8fc6cc');
+    for (const [x, z, s] of [[-.24, -.2, 1], [.26, -.12, .85]]) {
+      b.p('cyl', x, .07, z, .05, .26 * s, .05, COL.wood);
+      b.p('ico', x, .38 * s + .07, z, .36 * s, .32 * s, .36 * s, COL.leaf2);
+      b.p('ico', x + .06, .52 * s + .07, z + .02, .22 * s, .2 * s, .22 * s, COL.leaf1);
+    }
+    b.p('box', .22, .12, .3, .24, .025, .08, COL.wood, -.4);
+    b.p('cyl', .38, .07, .02, .025, .34, .025, COL.dark);
+    b.p('glowsphere', .38, .43, .02, .07, .07, .07, COL.yellow);
+    mini(b, .05, .07, .22, COL.pink);
+    return .8;
+  },
+  post(b) {
+    b.p('rbox', 0, .04, 0, .52, .08, .52, COL.stone);
+    b.p('rbox', 0, .12, 0, .42, .38, .4, COL.white);
+    b.p('box', 0, .32, 0, .44, .05, .42, COL.blue);
+    b.p('box', 0, .5, 0, .5, .03, .48, COL.dark);
+    b.p('hip', 0, .53, 0, .46, .18, .44, COL.blue);
+    b.p('glowbox', -.06, .72, 0, .1, .05, .06, COL.coral);
+    b.p('glowbox', .06, .72, 0, .1, .05, .06, '#7fa0e0');
+    b.p('glowbox', 0, .2, .202, .2, .1, .02, COL.win);
+    b.p('box', .14, .12, .202, .08, .18, .02, COL.wood);
+    for (const x of [-.36, .38]) { b.p('cone', x, .04, .32, .1, .2, .1, COL.coral); b.p('cyl', x, .12, .32, .065, .03, .065, COL.cream); }
+    return .78;
+  },
+  apartment(b) {
+    b.p('rbox', 0, .04, 0, .62, 1.22, .52, '#f6efe6');
+    for (const y of [.33, .61, .89]) b.p('box', 0, y, 0, .64, .025, .54, COL.stone);
+    for (const y of [.13, .41, .69, .97]) for (const x of [-.18, 0, .18]) {
+      b.p('glowbox', x, y, .262, .1, .12, .02, COL.win);
+      b.p('box', x, y - .02, .29, .13, .02, .05, COL.coral);
+    }
+    b.p('box', 0, 1.26, 0, .66, .04, .56, COL.stone);
+    for (const x of [-.18, .02]) b.p('box', x, 1.31, -.08, .16, .02, .22, '#4b5a86', 0, -.35);
+    b.p('ico', .2, 1.33, .12, .14, .12, .14, COL.leaf2);
+    b.p('box', 0, .04, .262, .14, .16, .02, COL.wood);
+    return 1.42;
+  },
+  sunstar(b) {
+    b.p('rbox', 0, .04, 0, .44, .1, .44, COL.stone);
+    b.p('cyl', 0, .14, 0, .045, .36, .045, COL.dark);
+    b.p('sphere', 0, .86, 0, .46, .46, .46, '#f6b436');
+    b.p('sphere', 0, .86, .04, .4, .4, .4, '#f9cf55');
+    for (let k = 0; k < 10; k++) { const a = k / 10 * Math.PI * 2; b.p('cone', Math.sin(a) * .24, .86 + Math.cos(a) * .24, 0, .1, .17, .06, '#ef8f2f', 0, 0, -a); }
+    sparkle(b, -.36, 1.3, .1, 1.1, '#fff3b0');
+    sparkle(b, .38, 1.36, -.05, .8, '#fff3b0');
+    sparkle(b, .3, .28, .3, .7, COL.yellow);
+    return 1.4;
+  },
+  moon(b) {
+    b.p('rbox', 0, .04, 0, .46, .1, .46, COL.stone);
+    b.p('cyl', 0, .14, 0, .045, .32, .045, COL.dark);
+    b.p('glowsphere', 0, .8, 0, .6, .6, .6, '#f7e9a6');
+    b.p('dome', 0, .8, 0, .615, .615, .615, '#3b4677', 0, 0, -Math.PI / 2);
+    for (const [x, y, z, s] of [[-.14, .92, .235, .09], [-.2, .72, .2, .065], [-.08, .68, .27, .05]]) b.p('sphere', x, y, z, s, s, s * .45, '#e3cf84');
+    sparkle(b, .34, 1.26, .1, .9, '#fff3b0');
+    sparkle(b, -.36, 1.2, -.05, .7, '#fff3b0');
+    return 1.3;
+  },
+  telescope(b) {
+    for (let k = 0; k < 3; k++) { const a = k / 3 * Math.PI * 2 + .4; b.p('cyl', Math.cos(a) * .2, 0, Math.sin(a) * .2, .028, .62, .028, COL.wood, -a, 0, .3); }
+    b.p('sphere', .08, .6, 0, .09, .09, .09, COL.dark);
+    b.p('cyl', .14, .56, 0, .13, .66, .13, COL.blue, 0, 0, .95);
+    b.p('cyl', .14, .56, 0, .07, .16, .07, COL.dark, 0, 0, .95 + Math.PI);
+    b.p('glowsphere', .14 - Math.sin(.95) * .66, .56 + Math.cos(.95) * .66, 0, .1, .1, .1, '#cfe6f2');
+    b.p('cyl', .14 - Math.sin(.95) * .5, .56 + Math.cos(.95) * .5, 0, .15, .08, .15, COL.gold, 0, 0, .95);
+    return 1.05;
+  },
+  phases(b) {
+    for (const x of [-.4, .4]) b.p('cyl', x, .04, -.05, .04, .7, .04, COL.wood);
+    b.p('rbox', 0, .32, -.06, .96, .5, .06, '#2f3b6a');
+    b.p('box', 0, .82, -.06, 1.0, .04, .1, COL.wood);
+    const xs = [-.33, -.11, .11, .33], off = [.99, .55, .3, 0];
+    xs.forEach((x, k) => {
+      if (k === 0) { b.p('torus', x, .57, -.02, .17, .17, .1, '#8a93b8'); }
+      else {
+        b.p('cyl', x, .57, -.03, .17, .03, .17, '#f7e9a6', 0, Math.PI / 2);
+        if (off[k] > 0) b.p('cyl', x + .085 * off[k], .57, 0, .18, .03, .18, '#2f3b6a', 0, Math.PI / 2);
+      }
+    });
+    b.p('box', 0, .36, -.02, .7, .02, .02, COL.cream);
+    for (let i = 0; i < 4; i++) b.p('box', -.33 + i * .22, .4, -.02, .02, .06, .02, COL.cream);
+    b.p('glowsphere', 0, .9, -.06, .06, .06, .06, COL.yellow);
+    mini(b, .34, .04, .3, COL.yellow);
+    mini(b, -.3, .04, .28, COL.blue, .9);
+    return .95;
+  },
+  game(b) {
+    b.p('rbox', 0, .04, -.05, .3, .06, .2, COL.dark);
+    b.p('cyl', 0, .08, -.07, .05, .14, .05, COL.dark);
+    b.p('rbox', 0, .2, -.08, .86, .58, .07, COL.ink);
+    b.p('glowbox', 0, .24, -.04, .76, .48, .02, '#273566');
+    const xs = [-.27, -.09, .09, .27], off = [.99, .55, .3, 0];
+    xs.forEach((x, k) => {
+      b.p('cyl', x, .5, -.03, .13, .02, .13, '#f7e9a6', 0, Math.PI / 2);
+      if (off[k] > 0) b.p('cyl', x + .065 * off[k], .5, -.02, .14, .02, .14, '#273566', 0, Math.PI / 2);
+    });
+    b.p('box', -.12, .3, -.025, .3, .07, .01, COL.coral);
+    b.p('box', .2, .3, -.025, .14, .07, .01, COL.yellow);
+    b.p('rbox', .02, .04, .3, .4, .07, .18, COL.coral);
+    for (const [x, c] of [[.12, COL.yellow], [.18, COL.teal]]) b.p('sphere', x, .12, .3, .045, .03, .045, c);
+    b.p('box', -.1, .11, .3, .1, .02, .03, COL.cream); b.p('box', -.1, .11, .3, .03, .02, .1, COL.cream);
+    sparkle(b, .38, .9, -.05, .8, '#fff3b0');
+    return .92;
+  },
+  dashboard(b) {
+    b.p('rbox', 0, .04, -.05, .3, .06, .2, COL.dark);
+    b.p('cyl', 0, .08, -.07, .05, .14, .05, COL.dark);
+    b.p('rbox', 0, .2, -.08, .86, .58, .07, COL.ink);
+    b.p('glowbox', 0, .24, -.04, .76, .48, .02, COL.cream);
+    b.p('cyl', -.2, .5, -.025, .2, .02, .2, '#f7e9a6', 0, Math.PI / 2);
+    b.p('cyl', -.155, .5, -.015, .2, .02, .2, '#3b4677', 0, Math.PI / 2);
+    const hs = [.06, .12, .18, .22, .16, .1];
+    hs.forEach((h, i) => b.p('box', .04 + i * .055, .3, -.025, .035, h, .01, i === 3 ? COL.coral : COL.teal));
+    b.p('box', -.2, .3, -.025, .24, .03, .01, COL.stone);
+    b.p('box', -.2, .36, -.025, .18, .03, .01, COL.stone);
+    b.p('rbox', .3, .04, .28, .26, .04, .18, COL.cream);
+    mini(b, -.3, .04, .3, COL.coral);
+    return .82;
+  },
+  pond(b, r) {
+    b.p('cyl', 0, .04, 0, .96, .05, .96, '#d9c8a6');
+    b.p('cyl', 0, .06, 0, .82, .03, .82, '#6fb3c0');
+    for (const [x, z] of [[-.2, .12], [.16, -.2], [.05, .25], [-.1, -.22]]) b.p('cyl', x, .09, z, .17, .012, .17, COL.leaf2);
+    b.p('sphere', -.2, .12, .12, .08, .07, .08, COL.pink);
+    b.p('sphere', .16, .12, -.2, .07, .06, .07, '#fff6f8');
+    for (const [x, z, ry, c] of [[.18, .14, .4, '#ef8a3c'], [-.06, .02, 2.4, '#f3b34a']]) {
+      const m = M4(x, .08, z, 1, ry), f = new Bld(new THREE.Matrix4().multiplyMatrices(b.base, m), b.owner, b.lod);
+      f.p('sphere', 0, 0, 0, .13, .06, .06, c);
+      f.p('cone', .1, 0, 0, .06, .06, .03, c, 0, 0, Math.PI / 2);
+    }
+    for (let i = 0; i < 6; i++) { const a = 3.4 + i * .22; const x = Math.cos(a) * .4, z = Math.sin(a) * .4; b.p('cyl', x, .06, z, .02, .3 + r() * .2, .02, COL.leaf3); }
+    b.p('cyl', Math.cos(3.6) * .4, .34, Math.sin(3.6) * .4, .045, .1, .045, '#8a5a3a');
+    b.p('ico', .36, .06, .28, .14, .1, .12, '#b9b0a3');
+    b.p('ico', .42, .06, .14, .1, .08, .1, '#c9c0b3');
+    return .55;
+  },
+  reeds(b, r) {
+    b.p('cyl', 0, .04, 0, .86, .16, .86, '#b9a58a');
+    b.p('cyl', 0, .19, 0, .76, .015, .76, '#6fb3c0');
+    for (let i = 0; i < 10; i++) {
+      const a = r() * Math.PI * 2, rr = .08 + r() * .22, h = .32 + r() * .32;
+      b.p('cyl', Math.cos(a) * rr, .2, Math.sin(a) * rr, .022, h, .022, i % 3 ? COL.leaf3 : COL.leaf2);
+      if (i % 3 === 0) b.p('cyl', Math.cos(a) * rr, .2 + h, Math.sin(a) * rr, .045, .1, .045, '#8a5a3a');
+    }
+    for (let i = 0; i < 12; i++) { const a = r() * Math.PI * 2, rr = .15 + r() * .2; b.p('cyl', Math.cos(a) * rr, .205, Math.sin(a) * rr, .04, .008, .04, COL.leaf1); }
+    b.p('cyl', .22, .205, .2, .16, .01, .16, COL.leaf2);
+    b.p('sphere', .22, .23, .2, .07, .06, .07, COL.pink);
+    return .85;
+  },
+  fishtank(b) {
+    b.p('rbox', 0, .04, 0, .84, .14, .5, COL.wood);
+    b.p('box', 0, .18, 0, .8, .54, .44, '#a9dbe0');
+    b.p('box', 0, .18, 0, .81, .07, .45, '#e3d2ae');
+    b.p('box', 0, .72, 0, .84, .04, .48, COL.dark);
+    for (const [x, y, c, d] of [[-.2, .46, '#ef8a3c', 1], [.15, .56, '#f3c34a', -1], [.06, .34, COL.coral, 1]]) {
+      b.p('sphere', x, y, .225, .13, .07, .02, c);
+      b.p('cone', x - d * .085, y, .225, .06, .05, .02, c, 0, 0, d * Math.PI / 2);
+      b.p('sphere', x + d * .035, y + .01, .235, .015, .015, .01, COL.ink);
+    }
+    for (const x of [-.32, -.27, .3]) b.p('box', x, .25, .225, .03, .26, .01, COL.leaf3);
+    for (const [x, y, s] of [[.33, .42, .03], [.3, .52, .025], [.34, .62, .02]]) b.p('sphere', x, y, .225, s, s, .01, '#ffffff');
+    b.p('ico', -.05, .27, .225, .1, .06, .02, '#b9b0a3');
+    return .76;
+  },
+  bunny(b) {
+    b.p('cyl', 0, .04, 0, .9, .04, .9, COL.leaf1);
+    const W = '#f6f1ea';
+    b.p('sphere', 0, .26, -.02, .36, .3, .42, W);
+    b.p('sphere', 0, .46, .17, .24, .23, .24, W);
+    for (const x of [-.05, .05]) { b.p('cyl', x, .54, .13, .055, .28, .035, W, 0, -.25); b.p('cyl', x, .56, .145, .03, .22, .01, COL.pink, 0, -.25); }
+    for (const x of [-.065, .065]) b.p('sphere', x, .48, .285, .03, .03, .02, COL.ink);
+    b.p('sphere', 0, .44, .295, .03, .025, .02, COL.pink);
+    b.p('sphere', 0, .28, -.23, .1, .1, .1, '#ffffff');
+    b.p('cone', .3, .1, .26, .06, .22, .06, '#ef8a3c', 0, 0, Math.PI / 2);
+    for (const a of [-.4, 0, .4]) b.p('cone', .42, .1, .26, .025, .1, .025, COL.leaf3, 0, a, -Math.PI / 2);
+    for (const [x, z] of [[-.34, .28], [-.36, -.25], [.32, -.3]]) b.p('cone', x, .06, z, .1, .16, .1, COL.leaf2);
+    return .82;
+  },
+  beehive(b) {
+    b.p('rbox', -.32, .04, -.1, .2, .06, .2, COL.stone);
+    b.p('cyl', -.32, .08, -.1, .05, .96, .05, COL.wood);
+    b.p('box', -.12, .98, -.1, .46, .05, .06, COL.wood);
+    b.p('cyl', .06, .84, -.1, .012, .14, .012, COL.dark);
+    b.p('sphere', .06, .64, -.1, .38, .44, .38, '#f2c14e');
+    for (const [y, w] of [[.5, .82], [.62, 1], [.74, .86]]) b.p('torus', .06, y, -.1, .37 * w, .37 * w, .5, '#d9a23a', 0, Math.PI / 2);
+    b.p('sphere', .06, .54, .07, .07, .05, .03, COL.ink);
+    for (const [x, y, z] of [[.34, .82, .12], [.3, .5, .25], [-.14, .66, .22], [.4, .62, -.05]]) {
+      b.p('sphere', x, y, z, .07, .055, .055, '#f3c34a');
+      b.p('sphere', x, y, z, .03, .058, .058, COL.ink);
+      b.p('sphere', x, y + .04, z, .04, .015, .05, '#ffffff');
+    }
+    for (let i = 0; i < 7; i++) { const x = -.2 + i * .07, z = .36 - Math.sin(i * .9) * .04; b.p('sphere', x, .07, z, .035, .025, .025, COL.ink); }
+    b.p('ico', .3, .06, .35, .12, .08, .12, '#a07c5a');
+    return 1.05;
+  },
+  nest(b) {
+    b.p('cyl', 0, .04, 0, .52, .3, .52, '#9b7653');
+    b.p('cyl', 0, .33, 0, .5, .02, .5, '#c9a27a');
+    b.p('torus', 0, .4, 0, .52, .52, .7, '#8a6748', 0, Math.PI / 2);
+    b.p('cyl', 0, .34, 0, .4, .06, .4, '#a07c5a');
+    for (const [x, z] of [[-.08, .04], [.07, .06], [0, -.07]]) b.p('sphere', x, .44, z, .09, .12, .09, '#cfe6ea');
+    b.p('sphere', .18, .62, -.1, .22, .18, .28, COL.coral, .5);
+    b.p('sphere', .24, .74, .02, .15, .15, .15, COL.coral);
+    b.p('cone', .27, .74, .09, .04, .09, .04, COL.gold, 0, Math.PI / 2);
+    b.p('sphere', .3, .77, .06, .025, .025, .02, COL.ink);
+    b.p('sphere', .08, .64, -.08, .06, .14, .22, '#b85a35', .5);
+    b.p('ico', -.32, .06, .3, .16, .1, .14, COL.leaf2);
+    return .85;
+  },
+  speaker(b) {
+    b.p('rbox', -.12, .04, -.05, .42, .74, .36, '#4a4545');
+    b.p('cyl', -.12, .3, .13, .26, .04, .26, '#8a8484', 0, Math.PI / 2);
+    b.p('cyl', -.12, .3, .15, .1, .04, .1, COL.ink, 0, Math.PI / 2);
+    b.p('cyl', -.12, .6, .13, .12, .04, .12, '#8a8484', 0, Math.PI / 2);
+    for (const [y, s] of [[.42, .32], [.42, .48]]) b.p('torus', .02, y, .1, s, s, .25, COL.coral, .9);
+    for (let i = 0; i < 5; i++) b.p('box', .26 + (i % 2) * .05, .2 + i * .1, .1, .12, .03, .03, COL.ink, 0, 0, i % 2 ? .7 : -.7);
+    noteGlyph(b, .3, .78, .1, 1);
+    noteGlyph(b, -.4, .9, .05, .8);
+    return 1.05;
+  },
+  xylophone(b) {
+    for (const z of [-.16, .16]) b.p('box', 0, .22, z, .9, .05, .05, COL.wood, 0, 0, 0);
+    for (const [x, z] of [[-.4, -.16], [.4, -.16], [-.4, .16], [.4, .16]]) b.p('cyl', x, .04, z, .04, .2, .04, COL.dark);
+    const cols = ['#e74c3c', '#f39c34', '#f6d34a', '#5cb85c', '#3e8ed0', '#5a5eb0', '#8d5ba6'];
+    cols.forEach((c, i) => { const x = -.36 + i * .12, L = .52 - i * .04; b.p('rbox', x, .27, 0, .095, .035, L, c); });
+    b.p('cyl', .3, .32, .32, .02, .34, .02, COL.wood, 0, 1.2, .3); b.p('sphere', .3, .33, .33, .05, .05, .05, COL.coral);
+    noteGlyph(b, -.2, .62, 0, 1);
+    noteGlyph(b, .16, .78, -.05, .85);
+    return .95;
+  },
+  drum(b) {
+    b.p('cyl', 0, .04, 0, .64, .36, .64, COL.coral);
+    for (const y of [.06, .38]) b.p('torus', 0, y, 0, .32, .32, .3, COL.cream, 0, Math.PI / 2);
+    b.p('cyl', 0, .4, 0, .6, .012, .6, '#fbf4e6');
+    for (let k = 0; k < 8; k++) { const a = k / 8 * Math.PI * 2; b.p('cyl', Math.cos(a) * .315, .08, Math.sin(a) * .315, .015, .3, .015, COL.gold); }
+    b.p('cyl', -.1, .43, .1, .02, .36, .02, COL.wood, -.5, 0, 1.35);
+    b.p('cyl', .1, .43, .14, .02, .36, .02, COL.wood, .5, 0, -1.35);
+    noteGlyph(b, .2, .66, 0, .9);
+    return .9;
+  },
+  prism(b) {
+    b.p('rbox', 0, .04, 0, .96, .06, .62, '#3b3535');
+    b.p('prism', 0, .1, 0, .34, .34, .32, '#d6eef2');
+    b.p('cyl', -.42, .2, 0, .1, .16, .1, COL.dark, 0, 0, -Math.PI / 2);
+    b.p('glowsphere', -.26, .2, 0, .07, .07, .07, '#fff6d8');
+    b.p('glowbox', -.17, .2, 0, .17, .025, .03, '#fff8e6');
+    const cols = ['#e74c3c', '#f39c34', '#f6d34a', '#5cb85c', '#3e8ed0', '#8d5ba6'];
+    cols.forEach((c, k) => b.p('box', .26, .25 - k * .025, 0, .3, .02, .03, c, 0, 0, -.12 - k * .05));
+    b.p('box', .45, .1, 0, .03, .32, .5, COL.white);
+    cols.forEach((c, k) => b.p('box', .435, .14 + (5 - k) * .025, 0, .01, .025, .3, c));
+    return .55;
+  },
+};
+function sparkle(b, x, y, z, s, col) {
+  b.p('sphere', x, y, z, .03 * s, .2 * s, .03 * s, col);
+  b.p('sphere', x, y, z, .03 * s, .2 * s, .03 * s, col, 0, 0, Math.PI / 2);
+  b.p('glowsphere', x, y, z, .06 * s, .06 * s, .06 * s, col);
+}
+function noteGlyph(b, x, y, z, s) {
+  b.p('sphere', x, y, z, .08 * s, .06 * s, .04 * s, COL.ink, 0, 0, .35);
+  b.p('box', x + .035 * s, y, z, .014 * s, .2 * s, .014 * s, COL.ink);
+  b.p('box', x + .065 * s, y + .17 * s, z, .06 * s, .02 * s, .014 * s, COL.ink, 0, 0, -.5);
+}
+
+/* ---------- trees & street furniture (world space) ---------- */
+function tree(b, sp, x, z, s, r) {
+  const y = TOP;
+  const trunk = (h, w = .05) => b.p('cyl', x, y, z, w * s, h * s, w * s, COL.wood);
+  if (sp === 'pine') {
+    trunk(.14);
+    b.p('cone', x, y + .1 * s, z, .36 * s, .3 * s, .36 * s, COL.leaf3);
+    b.p('cone', x, y + .27 * s, z, .29 * s, .27 * s, .29 * s, COL.leaf3);
+    b.p('cone', x, y + .43 * s, z, .2 * s, .24 * s, .2 * s, '#7d9a69');
+    return;
+  }
+  if (sp === 'cherry') {
+    trunk(.24, .055);
+    for (let i = 0; i < 4; i++) { const a = i * 1.7 + r(); b.p('sphere', x + Math.cos(a) * .1 * s, y + (.36 + r() * .1) * s, z + Math.sin(a) * .1 * s, .26 * s, .22 * s, .26 * s, i % 2 ? COL.pink : '#f7cfd9'); }
+    return;
+  }
+  if (sp === 'fruit') {
+    trunk(.22, .055);
+    b.p('ico', x, y + .4 * s, z, .42 * s, .38 * s, .42 * s, COL.leaf2);
+    for (let i = 0; i < 5; i++) { const a = i * 1.25 + r(); b.p('sphere', x + Math.cos(a) * .19 * s, y + (.36 + r() * .12) * s, z + Math.sin(a) * .19 * s, .05 * s, .05 * s, .05 * s, i % 2 ? COL.coral : '#f3c34a'); }
+    return;
+  }
+  if (sp === 'palm') {
+    let px = x, py = y, lean = .15 + r() * .1;
+    for (let i = 0; i < 4; i++) { b.p('cyl', px, py, z, .05 * s, .13 * s, .05 * s, i % 2 ? COL.wood : '#c49a72', 0, 0, -lean); px += Math.sin(lean) * .13 * s; py += Math.cos(lean) * .13 * s; }
+    for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2; b.p('box', px + Math.cos(a) * .13 * s, py, z + Math.sin(a) * .13 * s, .3 * s, .012 * s, .07 * s, k % 2 ? COL.leaf2 : COL.leaf1, -a, 0, -.35); }
+    b.p('sphere', px, py, z, .07 * s, .07 * s, .07 * s, COL.wood);
+    return;
+  }
+  if (sp === 'willow') {
+    trunk(.26, .06);
+    b.p('dome', x, y + .3 * s, z, .52 * s, .36 * s, .52 * s, COL.leaf1);
+    for (let k = 0; k < 9; k++) { const a = k / 9 * Math.PI * 2; b.p('cyl', x + Math.cos(a) * .22 * s, y + .14 * s, z + Math.sin(a) * .22 * s, .05 * s, .2 * s, .05 * s, COL.leaf2); }
+    return;
+  }
+  trunk(.2, .055);
+  b.p('ico', x, y + .34 * s, z, .4 * s, .36 * s, .4 * s, COL.leaf1);
+  b.p('ico', x + .07 * s, y + .48 * s, z - .03 * s, .26 * s, .24 * s, .26 * s, COL.leaf2);
+}
+function lamp(b, x, z) {
+  b.p('cyl', x, TOP, z, .045, .06, .045, COL.dark);
+  b.p('cyl', x, TOP, z, .024, .46, .024, COL.dark);
+  b.p('cone', x, TOP + .5, z, .1, .05, .1, COL.dark);
+  b.p('glowsphere', x, TOP + .47, z, .075, .075, .075, '#fff3cf');
+}
+const POOLS = [];
+const ID = new THREE.Matrix4();
+
+/* ---------- build the whole static city into the kit ---------- */
+SINK = [];
+ISL.forEach(isl => {
+  const r = mulberry32(hashStr(isl.id));
+  // items
+  isl.items.forEach(it => {
+    const I = ITEMS.get(it.id);
+    const b = new Bld(M4(I.x, TOP, I.z, I.s), 'item:' + it.id);
+    b.p('cyl', 0, 0, 0, 1, .04, 1, new THREE.Color(isl.ground).multiplyScalar(.9).getStyle());
+    const fn = ARCH[it.model] || ARCH.house;
+    const h = fn(b, mulberry32(hashStr(it.id)));
+    I.top = TOP + h * I.s;
+    POOLS.push({ x: I.x, y: TOP, z: I.z + .42 * I.s, r: .38 * I.s, a: .55 });
+  });
+  isl.propLay.forEach((P, j) => {
+    const b = new Bld(M4(isl.x + P.x, TOP, isl.z + P.z, P.s), 'isl:' + isl.id);
+    b.p('cyl', 0, 0, 0, 1, .04, 1, new THREE.Color(isl.ground).multiplyScalar(.93).getStyle());
+    (ARCH[P.model] || ARCH.park)(b, mulberry32(hashStr(isl.id + 'p' + j)));
+  });
+  const bw = new Bld(ID, 'isl:' + isl.id);
+  const bl = new Bld(ID, 'isl:' + isl.id, true);
+  // lamps on hex vertices (on the curb)
+  for (let k = 0; k < 6; k++) {
+    const a = Math.PI / 6 + k * Math.PI / 3;
+    const x = isl.x + Math.cos(a) * 1.97, z = isl.z + Math.sin(a) * 1.97;
+    lamp(bw, x, z);
+    POOLS.push({ x, y: TOP, z, r: .62, a: .9 });
+  }
+  // edges: pots, shrubs, flowers + string lights
+  for (let k = 0; k < 6; k++) {
+    const a0 = Math.PI / 6 + k * Math.PI / 3, a1 = a0 + Math.PI / 3;
+    const p0 = [Math.cos(a0), Math.sin(a0)], p1 = [Math.cos(a1), Math.sin(a1)];
+    for (const t of [.24, .76]) {
+      const x = isl.x + lerp(p0[0], p1[0], t) * 1.93, z = isl.z + lerp(p0[1], p1[1], t) * 1.93;
+      const kind = (k + (t > .5 ? 1 : 0)) % 3;
+      if (kind === 0) { bl.p('cyl', x, TOP, z, .13, .1, .13, '#c9774e'); bl.p('ico', x, TOP + .14, z, .17, .15, .17, COL.leaf2); }
+      else if (kind === 1) { bl.p('ico', x, TOP + .07, z, .22, .16, .2, COL.leaf3); bl.p('ico', x + .06, TOP + .1, z, .14, .12, .14, COL.leaf2); }
+      else { bl.p('ico', x, TOP + .05, z, .16, .1, .16, COL.leaf2); for (let f = 0; f < 3; f++) bl.p('sphere', x + (f - 1) * .045, TOP + .11, z + (f % 2) * .03, .05, .05, .05, [COL.pink, COL.yellow, '#ffffff'][f]); }
+    }
+    for (let s = 1; s < 8; s++) {
+      const t = s / 8;
+      bl.p('glowsphere', isl.x + lerp(p0[0], p1[0], t) * 2.0, TOP + .045, isl.z + lerp(p0[1], p1[1], t) * 2.0, .03, .03, .03, '#fff3cf');
+    }
+  }
+  // big trees: candidates near vertices, prefer back side
+  const cands = [];
+  for (let k = 0; k < 6; k++) for (const d of [-.27, .27]) { const a = Math.PI / 6 + k * Math.PI / 3 + d; cands.push({ x: Math.cos(a) * 1.43, z: Math.sin(a) * 1.43 }); }
+  cands.sort((a, b) => (a.z + r() * .5) - (b.z + r() * .5));
+  const nTree = 4 + Math.floor(r() * 3);
+  cands.slice(0, nTree).forEach(c => tree(bw, isl.tree, isl.x + c.x, isl.z + c.z, .95 + r() * .35, r));
+  // benches
+  for (const a of [1.15, 1.99]) {
+    const x = isl.x + Math.cos(a) * 1.5, z = isl.z + Math.sin(a) * 1.5, ry = -a - Math.PI / 2;
+    const m = M4(x, TOP, z, 1, Math.atan2(-(isl.x - x), -(isl.z - z)));
+    const bb = new Bld(m, 'isl:' + isl.id, true);
+    bb.p('box', 0, .07, 0, .24, .025, .08, COL.wood);
+    bb.p('box', 0, .1, -.04, .24, .07, .015, COL.wood);
+    for (const sx of [-.1, .1]) bb.p('box', sx, 0, 0, .02, .07, .07, COL.dark);
+  }
+});
+// bridges
+const BRIDGE = new Map();
+NEIGH.forEach(([i, j]) => {
+  const A = ISL[i], B = ISL[j];
+  const dx = B.x - A.x, dz = B.z - A.z, L = Math.hypot(dx, dz), ux = dx / L, uz = dz / L;
+  const mid = 1.8 * Math.cos(Math.PI / 6);
+  const ax = A.x + ux * mid, az = A.z + uz * mid, bx = B.x - ux * mid, bz = B.z - uz * mid;
+  const h = .04 + rng() * .06;
+  const ry = Math.atan2(-uz, ux);
+  const bw = new Bld(ID, null);
+  const span = Math.hypot(bx - ax, bz - az);
+  for (let k = 0; k < 9; k++) {
+    const t = (k + .5) / 9;
+    bw.p('rbox', lerp(ax, bx, t), TOP + Math.sin(Math.PI * t) * h, lerp(az, bz, t), span / 9 * .9, .035, .34, k % 2 ? COL.wood : '#c3946c', ry);
+  }
+  for (const side of [-1, 1]) {
+    const ox = -uz * .17 * side, oz = ux * .17 * side;
+    for (const t of [0, .5, 1]) bw.p('cyl', lerp(ax, bx, t) + ox, TOP + Math.sin(Math.PI * t) * h, lerp(az, bz, t) + oz, .025, .14, .025, COL.eave);
+    for (let k = 0; k < 4; k++) {
+      const t0 = k / 4, t1 = (k + 1) / 4, tm = (t0 + t1) / 2;
+      bw.p('box', lerp(ax, bx, tm) + ox, TOP + .12 + Math.sin(Math.PI * tm) * h, lerp(az, bz, tm) + oz, span / 4, .015, .015, COL.eave, ry);
+    }
+  }
+  BRIDGE.set(i + '-' + j, { h, ax, az, bx, bz });
+});
+
+/* =====================================================================
+   6. far scenery: terrain, background trees, silhouettes, clouds, sea
+   ===================================================================== */
+const noise = new SimplexNoise({ random: mulberry32(77) });
+const camXZ = new THREE.Vector2(.24, .87).normalize();
+function fbm(x, z) { let a = 0, amp = 1, f = 1, n = 0; for (let o = 0; o < 4; o++) { a += noise.noise(x * f, z * f) * amp; n += amp; amp *= .5; f *= 2.03; } return a / n; }
+function terrainH(x, z) {
+  const dx = x - CENTER.x, dz = z - CENTER.z, r = Math.hypot(dx, dz) + 1e-6;
+  const cs = (dx * camXZ.x + dz * camXZ.y) / r;
+  const ring = smooth(25, 50, r) * .85 + smooth(14, 25, r) * .15;
+  const n = fbm(x * .03, z * .03), n2 = fbm(x * .11 + 7, z * .11 - 3);
+  let h = -1.6 + ring * (10 + n * 7) + n2 * 1.1 * smooth(14, 24, r);
+  const low = smooth(.15, .85, cs) * (1 - smooth(60, 85, r) * .5);
+  h = lerp(h, -1.6 + smooth(20, 62, r) * 3.4 + n * 1.2, low);
+  if (h > .25) { const st = .62, q = Math.floor(h / st) * st; h = q + smooth(.62, 1, (h - q) / st) * st; }
+  return h;
+}
+{
+  const g = new THREE.PlaneGeometry(170, 170, 160, 160).rotateX(-Math.PI / 2).translate(CENTER.x, 0, CENTER.z);
+  const p = g.attributes.position, cols = new Float32Array(p.count * 3);
+  const stops = [[-.25, '#8fb3ad'], [.35, '#d9c9a3'], [1.8, '#aec493'], [4, '#a3b986'], [7.5, '#6f8a62'], [99, '#b2a38d']];
+  const cc = new THREE.Color();
+  for (let i = 0; i < p.count; i++) {
+    const h = terrainH(p.getX(i), p.getZ(i)); p.setY(i, h);
+    let hex = stops[stops.length - 1][1];
+    for (const [lim, c] of stops) if (h < lim) { hex = c; break; }
+    cc.set(hex); const v = 1 + (noise.noise(p.getX(i) * .2, p.getZ(i) * .2)) * .04;
+    cols[i * 3] = cc.r * v; cols[i * 3 + 1] = cc.g * v; cols[i * 3 + 2] = cc.b * v;
+  }
+  g.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+  const terrain = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 1 }));
+  scene.add(terrain);
+}
+{
+  const conGeo = BGU.mergeGeometries([
+    new THREE.CylinderGeometry(.08, .1, .5, 5).translate(0, .25, 0),
+    new THREE.ConeGeometry(.7, 1.1, 7).translate(0, 1.0, 0),
+    new THREE.ConeGeometry(.55, .95, 7).translate(0, 1.55, 0),
+    new THREE.ConeGeometry(.38, .8, 7).translate(0, 2.05, 0)
+  ]);
+  const r = mulberry32(5);
+  const blobs = [];
+  for (let i = 0; i < 4; i++) blobs.push(new THREE.IcosahedronGeometry(.55 + r() * .25, 0).translate((r() - .5) * .7, 1.0 + r() * .6, (r() - .5) * .7));
+  blobs.push(new THREE.CylinderGeometry(.08, .1, .8, 5).translate(0, .4, 0).toNonIndexed());
+  const broadGeo = BGU.mergeGeometries(blobs);
+  const N = MOBILE0 ? 1100 : 3000;
+  const mat = new THREE.MeshStandardMaterial({ flatShading: true, roughness: 1 });
+  const con = new THREE.InstancedMesh(conGeo, mat, N), brd = new THREE.InstancedMesh(broadGeo, mat, N);
+  let nc = 0, nb = 0, tries = 0;
+  const greens = ['#5f7d55', '#6f8a62', '#7c9868', '#58744f'], greens2 = ['#86a66c', '#93b177', '#7a9b62', '#a3b986'];
+  while ((nc + nb) < N * 1.4 && tries < 40000) {
+    tries++;
+    const a = r() * Math.PI * 2, rad = 16 + Math.sqrt(r()) * 36;
+    const x = CENTER.x + Math.cos(a) * rad, z = CENTER.z + Math.sin(a) * rad;
+    const h = terrainH(x, z);
+    if (h < .45 || h > 11) continue;
+    const s = .45 + r() * .7 + rad * .008;
+    const coni = h > 4.2 || r() < .25;
+    _m.compose(_p.set(x, h - .05, z), _q.setFromEuler(_e.set(0, r() * 6.28, 0)), _s.set(s, s * (.85 + r() * .4), s));
+    if (coni && nc < N) { con.setMatrixAt(nc, _m); con.setColorAt(nc, C3(pick(greens, r))); nc++; }
+    else if (!coni && nb < N) { brd.setMatrixAt(nb, _m); brd.setColorAt(nb, C3(pick(greens2, r))); nb++; }
+  }
+  con.count = nc; brd.count = nb;
+  scene.add(con, brd);
+}
+const silh = [];
+[[92, 2, 12, '#9db3a6', .32], [112, 4, 17, '#a9bab8', .52], [134, 7, 22, '#b9c4c9', .72]].forEach(([rad, base, amp, hex, mix], k) => {
+  const N = 220, pos = [], idx = [];
+  for (let i = 0; i <= N; i++) {
+    const a = i / N * Math.PI * 2, cx = Math.cos(a), sz = Math.sin(a);
+    const facing = (cx * camXZ.x + sz * camXZ.y);
+    const h = base + amp * (.55 + .45 * noise.noise(cx * 2.2 + k * 10, sz * 2.2)) * (1 - smooth(.3, .95, facing) * .6);
+    pos.push(CENTER.x + cx * rad, -4, CENTER.z + sz * rad, CENTER.x + cx * rad, h, CENTER.z + sz * rad);
+    if (i < N) { const b = i * 2; idx.push(b, b + 1, b + 2, b + 1, b + 3, b + 2); }
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx);
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: hex, fog: false, side: THREE.DoubleSide, toneMapped: false }));
+  m.userData = { base: new THREE.Color(hex), mix };
+  silh.push(m); scene.add(m);
+});
+const clouds = [];
+const cloudMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, emissive: new THREE.Color('#ffffff'), emissiveIntensity: .25 });
+const cloudMesh = (() => {
+  const r = mulberry32(9), parts = [];
+  for (let i = 0; i < 7; i++) parts.push(new THREE.SphereGeometry(1, 14, 10).scale(1, .72, 1).translate((i - 3) * .75 + (r() - .5) * .3, (3 - Math.abs(i - 3)) * .22 + r() * .2, (r() - .5) * .8).scale(1 + r() * .2, 1, 1));
+  const m = new THREE.InstancedMesh(BGU.mergeGeometries(parts), cloudMat, 12);
+  m.frustumCulled = false;
+  for (let i = 0; i < 12; i++) clouds.push({ x: CENTER.x - 90 + r() * 180, y: 17 + r() * 10, z: CENTER.z - 70 + r() * 80, s: 1.4 + r() * 1.6, v: .35 + r() * .55, ry: r() * .6 });
+  scene.add(m);
+  return m;
+})();
+function updateClouds(dt) {
+  clouds.forEach((c, i) => {
+    c.x += c.v * dt; if (c.x > CENTER.x + 95) c.x = CENTER.x - 95;
+    _m.compose(_p.set(c.x, c.y, c.z), _q.setFromEuler(_e.set(0, c.ry, 0)), _s.set(c.s * 1.6, c.s, c.s));
+    cloudMesh.setMatrixAt(i, _m);
+  });
+  cloudMesh.instanceMatrix.needsUpdate = true;
+}
+updateClouds(0);
+// sea decorations
+{
+  const r = mulberry32(31), base = Math.atan2(camXZ.y, camXZ.x);
+  const spots = [];
+  let tries = 0;
+  while (spots.length < 8 && tries < 400) {
+    tries++;
+    const a = base + (r() < .5 ? -1 : 1) * (.85 + r() * 1.1), rad = 12 + r() * 3.5;
+    const x = CENTER.x + Math.cos(a) * rad, z = CENTER.z + Math.sin(a) * rad;
+    if (terrainH(x, z) > -.6) continue;
+    if (ISL.some(i => Math.hypot(i.x - x, i.z - z) < 3.4)) continue;
+    if (spots.some(s => Math.hypot(s.x - x, s.z - z) < 2.2)) continue;
+    spots.push({ x, z });
+  }
+  const b = new Bld(ID, null);
+  spots.forEach((s, i) => {
+    if (i === 0) {
+      b.p('ico', s.x, WATER_Y - .2, s.z, 1.2, .55, 1.1, '#b9a98f');
+      b.p('cyl', s.x, WATER_Y + .1, s.z, .34, .3, .34, COL.white);
+      for (let k = 0; k < 4; k++) b.p('cyl', s.x, WATER_Y + .4 + k * .3, s.z, .3 - k * .02, .15, .3 - k * .02, k % 2 ? COL.white : COL.coral);
+      b.p('cyl', s.x, WATER_Y + 1.6, s.z, .2, .18, .2, COL.glass);
+      b.p('glowsphere', s.x, WATER_Y + 1.69, s.z, .14, .14, .14, '#fff3cf');
+      b.p('cone', s.x, WATER_Y + 1.78, s.z, .3, .22, .3, COL.coral);
+      POOLS.push({ x: s.x, y: WATER_Y, z: s.z, r: 1.4, a: .8 });
+    } else if (i < 4) {
+      b.p('ico', s.x, WATER_Y - .25, s.z, 1 + r() * .6, .5, .9 + r() * .5, '#c8b894');
+      b.p('ico', s.x + .1, WATER_Y + .2, s.z, .55, .45, .55, COL.leaf2);
+      b.p('cone', s.x - .25, WATER_Y + .1, s.z + .1, .3, .6, .3, COL.leaf3);
+    } else {
+      const ry = r() * 6.28;
+      const m = M4(s.x, WATER_Y, s.z, .9, ry);
+      const bb = new Bld(m, null);
+      bb.p('rbox', 0, -.02, 0, .32, .14, .9, COL.white);
+      bb.p('box', 0, .1, -.05, .24, .03, .6, COL.wood);
+      bb.p('cyl', 0, .1, .05, .03, .9, .03, COL.dark);
+      bb.p('prism', 0, .2, .2, .5, .7, .02, i % 2 ? COL.cream : COL.yellow, Math.PI / 2);
+      bb.p('prism', 0, .2, -.06, .3, .55, .02, COL.coral, -Math.PI / 2);
+    }
+  });
+}
+
+/* ---------- materialize the kit ---------- */
+function buildInstanced(recs, shadows = true) {
+  const groups = new Map();
+  recs.forEach(r => { const key = r.kind + (r.lod ? '|lod' : ''); if (!groups.has(key)) groups.set(key, []); groups.get(key).push(r); });
+  const out = [];
+  for (const [key, arr] of groups) {
+    const kind = key.split('|')[0];
+    const mesh = new THREE.InstancedMesh(KG[kind], kind.startsWith('glow') ? MAT.glow : MAT.solid, arr.length);
+    arr.forEach((r, i) => { mesh.setMatrixAt(i, r.m); mesh.setColorAt(i, r.color); r.mesh = mesh; r.i = i; });
+    mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
+    mesh.castShadow = shadows; mesh.receiveShadow = true;
+    mesh.userData.recs = arr; mesh.userData.lod = key.endsWith('|lod');
+    mesh.computeBoundingSphere();
+    out.push(mesh);
+  }
+  return out;
+}
+const kitRecs = SINK;
+const kitMeshes = buildInstanced(kitRecs);
+kitMeshes.forEach(m => scene.add(m));
+const itemRecs = new Map();
+kitRecs.forEach(r => { if (r.owner && r.owner.startsWith('item:')) { const id = r.owner.slice(5); if (!itemRecs.has(id)) itemRecs.set(id, []); itemRecs.get(id).push(r); } });
+
+/* ---------- light pools (additive) ---------- */
+const poolMat = new THREE.ShaderMaterial({
+  uniforms: { uNight: { value: 0 }, uColor: { value: new THREE.Color('#ffc777') } },
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false,
+  polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -8,
+  vertexShader: `attribute float aA; varying vec2 vUv; varying float vA; void main(){ vUv = uv; vA = aA; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+  fragmentShader: `uniform float uNight; uniform vec3 uColor; varying vec2 vUv; varying float vA;
+    void main(){ float d = length(vUv * 2.0 - 1.0); float a = pow(max(0.0, 1.0 - d), 2.0) * uNight * vA * .5; if (a < .002) discard; gl_FragColor = vec4(uColor * a, a);
+    #include <colorspace_fragment>
+    }`
+});
+{
+  const geos = POOLS.map(p => {
+    const g = new THREE.PlaneGeometry(p.r * 2, p.r * 2).rotateX(-Math.PI / 2).translate(p.x, p.y + .02, p.z);
+    g.setAttribute('aA', new THREE.Float32BufferAttribute(new Array(4).fill(p.a), 1));
+    return g;
+  });
+  const pools = new THREE.Mesh(merge(geos), poolMat);
+  pools.renderOrder = 5;
+  scene.add(pools);
+}
+
+/* =====================================================================
+   7. pedestrian network & Dijkstra
+   ===================================================================== */
+const NODES = [], ADJ = [];
+const link = (a, b, w, bridge) => { ADJ[a].push({ to: b, w, bridge }); ADJ[b].push({ to: a, w, bridge }); };
+ISL.forEach((isl, ii) => {
+  for (let k = 0; k < 12; k++) {
+    const vert = k % 2 === 0;
+    const a = Math.PI / 6 + (k >> 1) * Math.PI / 3 + (vert ? 0 : Math.PI / 6);
+    const rr = vert ? 1.8 : 1.8 * Math.cos(Math.PI / 6);
+    NODES.push({ x: isl.x + Math.cos(a) * rr, z: isl.z + Math.sin(a) * rr, isl: ii, a });
+    ADJ.push([]);
+  }
+  for (let k = 0; k < 12; k++) { const a = ii * 12 + k, b = ii * 12 + (k + 1) % 12; link(a, b, Math.hypot(NODES[a].x - NODES[b].x, NODES[a].z - NODES[b].z), null); }
+});
+NEIGH.forEach(([i, j]) => {
+  const br = BRIDGE.get(i + '-' + j);
+  const near = (ii, x, z) => { let best = -1, bd = 1e9; for (let k = 1; k < 12; k += 2) { const n = NODES[ii * 12 + k]; const d = Math.hypot(n.x - x, n.z - z); if (d < bd) { bd = d; best = ii * 12 + k; } } return best; };
+  const na = near(i, br.ax, br.az), nb = near(j, br.bx, br.bz);
+  link(na, nb, Math.hypot(NODES[na].x - NODES[nb].x, NODES[na].z - NODES[nb].z), br);
+});
+function dijkstra(src, dst) {
+  const n = NODES.length, dist = new Array(n).fill(Infinity), prev = new Array(n).fill(-1), done = new Array(n).fill(false);
+  dist[src] = 0;
+  for (let it = 0; it < n; it++) {
+    let u = -1, best = Infinity;
+    for (let i = 0; i < n; i++) if (!done[i] && dist[i] < best) { best = dist[i]; u = i; }
+    if (u < 0 || u === dst) break;
+    done[u] = true;
+    for (const e of ADJ[u]) { const nd = dist[u] + e.w; if (nd < dist[e.to]) { dist[e.to] = nd; prev[e.to] = u; } }
+  }
+  const path = []; for (let v = dst; v >= 0; v = prev[v]) path.unshift(v);
+  return path;
+}
+const RING_Y = TOP + .012;
+function routeFor(a, b) {
+  const path = dijkstra(a.idx * 12 + 2, b.idx * 12 + 2);
+  const pts = [new V3(NODES[path[0]].x, RING_Y, NODES[path[0]].z)];
+  for (let i = 0; i < path.length - 1; i++) {
+    const A = NODES[path[i]], B = NODES[path[i + 1]];
+    const e = ADJ[path[i]].find(x => x.to === path[i + 1]);
+    if (e && e.bridge) for (let s = 1; s < 10; s++) { const t = s / 10; pts.push(new V3(lerp(A.x, B.x, t), TOP + .03 + Math.sin(Math.PI * t) * e.bridge.h, lerp(A.z, B.z, t))); }
+    pts.push(new V3(B.x, RING_Y, B.z));
+  }
+  const cum = [0];
+  for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
+  return { pts, cum, len: cum[cum.length - 1] };
+}
+function sampleRoute(rt, s, out, dirOut) {
+  s = clamp(s, 0, rt.len);
+  let lo = 0, hi = rt.cum.length - 1;
+  while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (rt.cum[mid] <= s) lo = mid; else hi = mid; }
+  const seg = rt.cum[hi] - rt.cum[lo] || 1, t = (s - rt.cum[lo]) / seg;
+  out.lerpVectors(rt.pts[lo], rt.pts[hi], t);
+  if (dirOut) dirOut.subVectors(rt.pts[hi], rt.pts[lo]).setY(0).normalize();
+  return out;
+}
+
+/* =====================================================================
+   8. collaboration lines (tubes with flowing pattern)
+   ===================================================================== */
+const flowU = { uTime: { value: 0 } };
+let staticLines = reduced;
+FLOWS.forEach(f => {
+  f.route = routeFor(f.a, f.b);
+  const lifted = f.route.pts.map(p => p.clone().setY(p.y + .1));
+  const curve = new THREE.CatmullRomCurve3(lifted, false, 'centripetal', .2);
+  const mode = { official: 0, thematic: 1, pending: 2 }[f.evidence] ?? 0;
+  f.mode = mode;
+  f.mat = new THREE.ShaderMaterial({
+    uniforms: { uTime: flowU.uTime, uLen: { value: f.route.len }, uMode: { value: staticLines ? 1 : mode }, uOpacity: { value: .82 }, uColor: { value: new THREE.Color(COL.coral) } },
+    transparent: true, depthWrite: false, toneMapped: false,
+    vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+    fragmentShader: `uniform float uTime; uniform float uLen; uniform float uMode; uniform float uOpacity; uniform vec3 uColor; varying vec2 vUv;
+      void main(){ float u = vUv.x * uLen * 5.0 - uTime * 1.4; float f = fract(u);
+        if (uMode > .5 && uMode < 1.5 && f > .6) discard;
+        if (uMode > 1.5 && f > .3) discard;
+        gl_FragColor = vec4(uColor, uOpacity);
+        #include <colorspace_fragment>
+      }`
+  });
+  f.tube = new THREE.Mesh(new THREE.TubeGeometry(curve, Math.ceil(f.route.len * 12), .035, 6, false), f.mat);
+  f.tube.renderOrder = 7; f.tube.visible = false;
+  f.casing = new THREE.Mesh(new THREE.TubeGeometry(curve, Math.ceil(f.route.len * 6), .06, 6, false), new THREE.MeshBasicMaterial({ color: '#fffaf3', transparent: true, opacity: .85, depthWrite: false, toneMapped: false }));
+  f.casing.renderOrder = 6; f.tube.add(f.casing);
+  f.pick = new THREE.Mesh(new THREE.TubeGeometry(curve, Math.ceil(f.route.len * 3), .16, 5, false), new THREE.MeshBasicMaterial({ visible: false }));
+  f.pick.userData.flow = f;
+  scene.add(f.tube, f.pick);
+  const bb = new THREE.Box3().setFromPoints(f.route.pts); f.center = bb.getCenter(new V3()); f.extent = bb.getSize(new V3()).length();
+});
+
+/* =====================================================================
+   9. walkers (instanced chibi residents)
+   ===================================================================== */
+const ICON_COL = { medkit: '#f4f0ea', book: COL.coral, sapling: COL.leaf2, laptop: '#9aa5b5', lunchbox: COL.yellow, ticket: COL.pink, toolbox: COL.coral, letter: '#ffffff', ball: '#e48a3c' };
+function drawIcon(g, type, cx, cy, s) {
+  g.save(); g.translate(cx, cy); g.scale(s, s);
+  g.strokeStyle = COL.ink; g.lineWidth = 3.2; g.lineCap = 'round'; g.lineJoin = 'round'; g.fillStyle = 'rgba(0,0,0,0)';
+  const rr = (x, y, w, h, r) => { g.beginPath(); g.roundRect ? g.roundRect(x, y, w, h, r) : g.rect(x, y, w, h); g.stroke(); };
+  const L = (...p) => { g.beginPath(); g.moveTo(p[0], p[1]); for (let i = 2; i < p.length; i += 2) g.lineTo(p[i], p[i + 1]); g.stroke(); };
+  switch (type) {
+    case 'medkit': rr(-16, -10, 32, 24, 4); L(-6, -10, -6, -15, 6, -15, 6, -10); L(0, -4, 0, 10); L(-7, 3, 7, 3); break;
+    case 'book': L(0, -10, 0, 12); g.beginPath(); g.moveTo(0, -10); g.quadraticCurveTo(-8, -14, -17, -11); g.lineTo(-17, 10); g.quadraticCurveTo(-8, 8, 0, 12); g.quadraticCurveTo(8, 8, 17, 10); g.lineTo(17, -11); g.quadraticCurveTo(8, -14, 0, -10); g.stroke(); break;
+    case 'sapling': L(-10, 6, 10, 6, 7, 15, -7, 15, -10, 6); L(0, 6, 0, -6); g.beginPath(); g.moveTo(0, -4); g.quadraticCurveTo(-12, -6, -12, -16); g.quadraticCurveTo(-2, -15, 0, -4); g.stroke(); g.beginPath(); g.moveTo(0, -8); g.quadraticCurveTo(10, -9, 12, -17); g.quadraticCurveTo(3, -18, 0, -8); g.stroke(); break;
+    case 'laptop': rr(-12, -12, 24, 17, 2); L(-17, 9, 17, 9, 14, 13, -14, 13, -17, 9); break;
+    case 'lunchbox': rr(-15, -6, 30, 18, 4); L(-15, 0, 15, 0); L(-6, -6, -6, -11, 6, -11, 6, -6); break;
+    case 'ticket': g.beginPath(); g.moveTo(-16, -9); g.lineTo(16, -9); g.lineTo(16, -3); g.arc(16, 0, 3, -Math.PI / 2, Math.PI / 2, true); g.lineTo(16, 9); g.lineTo(-16, 9); g.lineTo(-16, 3); g.arc(-16, 0, 3, Math.PI / 2, -Math.PI / 2, true); g.closePath(); g.stroke(); g.setLineDash([3, 4]); L(5, -7, 5, 7); g.setLineDash([]); break;
+    case 'toolbox': rr(-16, -4, 32, 17, 3); L(-7, -4, -7, -11, 7, -11, 7, -4); L(-16, 4, 16, 4); L(0, 2, 0, 7); break;
+    case 'letter': rr(-16, -10, 32, 21, 2); L(-16, -9, 0, 3, 16, -9); break;
+    case 'ball': g.beginPath(); g.arc(0, 0, 14, 0, 7); g.stroke(); L(-14, 0, 14, 0); g.beginPath(); g.arc(-18, 0, 12, -1, 1); g.stroke(); g.beginPath(); g.arc(18, 0, 12, Math.PI - 1, Math.PI + 1); g.stroke(); break;
+  }
+  g.restore();
+}
+const iconURL = new Map(), badgeTex = new Map();
+function iconCanvas(type, size = 128, ring = true) {
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  const g = c.getContext('2d'), m = size / 2;
+  g.fillStyle = '#ffffff'; g.beginPath(); g.arc(m, m, m * .86, 0, 7); g.fill();
+  if (ring) { g.strokeStyle = COL.coral; g.lineWidth = size * .07; g.beginPath(); g.arc(m, m, m * .86, 0, 7); g.stroke(); }
+  drawIcon(g, type, m, m, size / 72);
+  return c;
+}
+function iconSrc(type) { if (!iconURL.has(type)) iconURL.set(type, iconCanvas(type, 96).toDataURL()); return iconURL.get(type); }
+function badgeMat(type) {
+  if (!badgeTex.has(type)) {
+    const t = new THREE.CanvasTexture(iconCanvas(type, 128)); t.colorSpace = THREE.SRGBColorSpace;
+    badgeTex.set(type, new THREE.SpriteMaterial({ map: t, transparent: true, depthWrite: false, toneMapped: false }));
+  }
+  return badgeTex.get(type);
+}
+const ROLE_LOOK = {
+  official:   { shirt: '#f4ebdd', pants: '#4b5a86' },
+  researcher: { shirt: COL.teal, pants: '#5a5050' },
+  elder:      { shirt: '#c9a0b4', pants: '#6b6060', hair: ['#e8e4dd', '#d9d4cc'] },
+  student:    { shirt: '#ffffff', pants: '#3e4f7d', size: .86 },
+  parent:     { shirt: COL.aqua, pants: '#4d4a55' },
+  commuter:   { shirt: COL.blue, pants: '#3a3a44' },
+  farmer:     { shirt: COL.green, pants: '#6b5a44' },
+  worker:     { shirt: '#5f7f9a', pants: '#3f4652' },
+  traveler:   { shirt: COL.pink, pants: '#4a5466' }
+};
+const SKINS = ['#f1c9a5', '#e2b08a', '#c98f69', '#f6d8bf'], HAIRS = ['#2d2424', '#4a3428', '#6b4a32', '#1f1b1b', '#8a5a3a'];
+const walkers = [];
+const wr = mulberry32(404);
+FLOWS.forEach(f => {
+  const n = clamp(Math.round(f.route.len / 2.4), 4, 14);
+  for (let k = 0; k < n; k++) {
+    const look = ROLE_LOOK[f.role] || ROLE_LOOK.official;
+    const bike = f.role === 'commuter';
+    walkers.push({
+      flow: f, role: f.role, idx: walkers.length,
+      s: wr() * f.route.len, dir: wr() < .5 ? 1 : -1, pause: 0,
+      speed: bike ? .62 + wr() * .08 : .32 + wr() * .08, phase: wr(),
+      size: look.size || (.95 + wr() * .1),
+      skin: C3(pick(SKINS, wr)), hair: C3(look.hair ? pick(look.hair, wr) : pick(HAIRS, wr)),
+      shirt: C3(look.shirt), pants: C3(look.pants),
+      pos: new V3(), fwd: new V3(0, 0, 1), yaw: 0, moving: true
+    });
+  }
+});
+const NW = walkers.length;
+const W_GEO = {
+  leg: new THREE.CapsuleGeometry(.019, .055, 3, 8).translate(0, -.046, 0),
+  arm: new THREE.CapsuleGeometry(.015, .055, 3, 8).translate(0, -.042, 0),
+  body: new THREE.CapsuleGeometry(.047, .04, 4, 12).translate(0, .152, 0),
+  head: new THREE.SphereGeometry(.07, 16, 12),
+  hair: new THREE.SphereGeometry(.074, 16, 8, 0, Math.PI * 2, 0, Math.PI * .5),
+  eye: new THREE.SphereGeometry(.011, 6, 5),
+  shadow: new THREE.CircleGeometry(.08, 18).rotateX(-Math.PI / 2),
+  box: new THREE.BoxGeometry(1, 1, 1), cyl: new THREE.CylinderGeometry(.5, .5, 1, 10),
+  dome: new THREE.SphereGeometry(.5, 14, 7, 0, Math.PI * 2, 0, Math.PI / 2), torus: new THREE.TorusGeometry(.5, .13, 6, 16),
+  cone: new THREE.ConeGeometry(.5, 1, 12)
+};
+const W_MAX = { leg: 2, arm: 2, body: 1, head: 1, hair: 1, eye: 2, shadow: 1, box: 7, cyl: 4, dome: 2, torus: 4, cone: 1 };
+const wSolid = new THREE.MeshStandardMaterial({ roughness: .7, metalness: 0 });
+const wShadow = new THREE.MeshBasicMaterial({ color: COL.ink, transparent: true, opacity: .22, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -6 });
+const WM = {}, WC = {};
+for (const k in W_MAX) {
+  const m = new THREE.InstancedMesh(W_GEO[k], k === 'shadow' ? wShadow : wSolid, W_MAX[k] * NW);
+  m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  m.frustumCulled = false;
+  m.castShadow = false; m.receiveShadow = k !== 'shadow';
+  for (let i = 0; i < W_MAX[k] * NW; i++) m.setColorAt(i, C3('#ffffff'));
+  m.count = 0;
+  WM[k] = m; scene.add(m);
+}
+const _W = new THREE.Matrix4(), _wq = new THREE.Quaternion(), _wy = new V3(0, 1, 0), _wp = new V3(), _ws = new V3();
+function wput(part, x, y, z, rx, ry, rz, sx, sy, sz, col) {
+  const mesh = WM[part], i = WC[part]++;
+  _e.set(rx, ry, rz); _q.setFromEuler(_e); _p.set(x, y, z); _s.set(sx, sy, sz);
+  _m.compose(_p, _q, _s); _m2.multiplyMatrices(_W, _m);
+  mesh.setMatrixAt(i, _m2); mesh.setColorAt(i, col);
+}
+const CC = { ink: C3(COL.ink), coral: C3(COL.coral), cream: C3(COL.cream), white: C3('#f8f7f2'), yellow: C3('#f5d35a'), wood: C3(COL.wood), straw: C3('#e6cf8f'), orange: C3('#ef8a3c'), teal: C3(COL.teal), pink: C3(COL.pink), dark: C3(COL.dark), blue: C3(COL.blue) };
+const badges = walkers.map(w => { const s = new THREE.Sprite(badgeMat(w.flow.carry)); s.visible = false; s.renderOrder = 8; scene.add(s); return s; });
+const bubbles = walkers.map(w => {
+  const el = document.createElement('div'); el.className = 'bubble';
+  const o = new CSS2DObject(el); o.visible = false; scene.add(o); return o;
+});
+function bubbleText() { walkers.forEach((w, i) => { bubbles[i].element.textContent = tr('正在搬 ', 'Carrying ') + T(w.flow.carryName); }); }
+bubbleText();
+
+let clockMin = 600;
+const logState = { last: new Map(), entries: [] };
+function updateWalkers(dt) {
+  for (const w of walkers) {
+    const rt = w.flow.route;
+    if (w.pause > 0) {
+      w.pause -= dt; w.moving = false;
+      if (w.pause <= 0) {
+        w.dir *= -1; w.moving = true;
+        if (w.dir < 0) logEvent('handoff', w, tr(`在${T(w.flow.b.label)}交付${T(w.flow.carryName)}，折返`, `Handed over ${T(w.flow.carryName)} at ${T(w.flow.b.label)}, heading back`));
+        else logEvent('depart', w, tr(`從${T(w.flow.a.label)}出發，帶著${T(w.flow.carryName)}`, `Left ${T(w.flow.a.label)} with ${T(w.flow.carryName)}`));
+      }
+    } else {
+      w.s += w.dir * w.speed * dt;
+      if (w.s >= rt.len) { w.s = rt.len; w.pause = 1.4; logEvent('arrive', w, tr(`抵達「${T(w.flow.b.label)}」`, `Arrived at ${T(w.flow.b.label)}`)); }
+      else if (w.s <= 0) { w.s = 0; w.pause = 1.4; }
+    }
+    sampleRoute(rt, w.s, w.pos, w.fwd);
+    if (w.dir < 0) w.fwd.negate();
+    w.pos.x += w.fwd.z * .07; w.pos.z -= w.fwd.x * .07;
+    if (w.moving) w.yaw = Math.atan2(w.fwd.x, w.fwd.z);
+  }
+}
+function buildWalkerMatrices(time, camDist) {
+  for (const k in WC) WC[k] = 0;
+  for (const k in WM) WC[k] = 0;
+  const S = clamp(camDist / 20, 1, 1.45);
+  const showCarry = state.showCarry;
+  for (const w of walkers) {
+    const bike = w.role === 'commuter', stroller = w.role === 'parent';
+    const ph = time * 9 + w.phase * 20;
+    const walking = w.moving;
+    const bob = walking && !bike ? Math.abs(Math.sin(ph)) * .012 : 0;
+    const sc = S * w.size;
+    _wq.setFromAxisAngle(_wy, w.yaw);
+    _W.compose(_wp.set(w.pos.x, w.pos.y, w.pos.z), _wq, _ws.set(sc, sc, sc));
+    wput('shadow', 0, .006, 0, 0, 0, 0, bike ? 1.3 : 1, 1, bike ? 1.6 : 1, CC.ink);
+    const carrying = w.dir > 0 && showCarry;
+    const L = bike ? .07 : 0, B = bob;
+    // legs
+    const legSw = walking ? Math.sin(ph) * .55 : 0;
+    if (bike) {
+      const pd = walking ? ph * .6 : 0;
+      wput('leg', -.026, .1 + L, .01, -1.1 + Math.sin(pd) * .45, 0, 0, 1, 1, 1, w.pants);
+      wput('leg', .026, .1 + L, .01, -1.1 - Math.sin(pd) * .45, 0, 0, 1, 1, 1, w.pants);
+    } else {
+      wput('leg', -.026, .1 + B, 0, legSw, 0, 0, 1, 1, 1, w.pants);
+      wput('leg', .026, .1 + B, 0, -legSw, 0, 0, 1, 1, 1, w.pants);
+    }
+    // arms
+    let armL = walking ? -Math.sin(ph) * .45 : 0, armR = -armL;
+    if (bike || stroller || (carrying && w.role !== 'traveler') || (!walking && w.pause > 0)) armL = armR = -1.05;
+    if (w.role === 'elder' && !carrying) armR = -.35;
+    wput('arm', -.058, .2 + L + B, 0, armL, 0, -.12, 1, 1, 1, w.shirt);
+    wput('arm', .058, .2 + L + B, 0, armR, 0, .12, 1, 1, 1, w.shirt);
+    wput('body', 0, L + B, 0, 0, 0, 0, 1, 1, 1, w.shirt);
+    wput('head', 0, .285 + L + B, 0, 0, 0, 0, 1, 1, 1, w.skin);
+    wput('hair', 0, .292 + L + B, -.006, -.32, 0, 0, 1, 1, 1, w.hair);
+    wput('eye', -.024, .29 + L + B, .064, 0, 0, 0, 1, 1, 1, CC.ink);
+    wput('eye', .024, .29 + L + B, .064, 0, 0, 0, 1, 1, 1, CC.ink);
+    const y = L + B;
+    switch (w.role) {
+      case 'official':
+        wput('cyl', 0, .155 + y, 0, 0, 0, 0, .104, .09, .104, CC.coral);
+        wput('box', .022, .175 + y, .052, 0, 0, 0, .024, .032, .006, CC.cream);
+        break;
+      case 'researcher': wput('cyl', 0, .125 + y, 0, 0, 0, 0, .106, .15, .106, CC.white); break;
+      case 'elder': if (!carrying) wput('cyl', .075, .095 + B, .06, .3, 0, 0, .014, .19, .014, CC.wood); break;
+      case 'student':
+        wput('dome', 0, .3 + y, 0, -.1, 0, 0, .158, .1, .158, CC.yellow);
+        wput('cyl', 0, .3 + y, .02, -.1, 0, 0, .17, .008, .18, CC.yellow);
+        wput('box', 0, .16 + y, -.058, 0, 0, 0, .075, .085, .035, CC.coral);
+        break;
+      case 'farmer':
+        wput('cone', 0, .375 + y, 0, 0, 0, 0, .25, .075, .25, CC.straw);
+        wput('cyl', 0, .335 + y, 0, 0, 0, 0, .25, .006, .25, CC.straw);
+        break;
+      case 'worker':
+        wput('cyl', 0, .155 + y, 0, 0, 0, 0, .104, .09, .104, CC.orange);
+        wput('dome', 0, .31 + y, 0, -.1, 0, 0, .16, .12, .16, CC.yellow);
+        wput('cyl', 0, .31 + y, .02, -.1, 0, 0, .17, .008, .19, CC.yellow);
+        break;
+      case 'traveler':
+        wput('box', .085, .06, -.09, 0, 0, 0, .07, .1, .045, CC.teal);
+        wput('cyl', .08, .14, -.075, .45, 0, 0, .01, .11, .01, CC.dark);
+        wput('torus', .085, .012, -.11, 0, Math.PI / 2, 0, .02, .02, .02, CC.ink);
+        break;
+      case 'parent':
+        wput('box', 0, .09, .2, 0, 0, 0, .1, .07, .14, CC.pink);
+        wput('dome', 0, .125, .155, -.6, 0, 0, .11, .1, .1, CC.pink);
+        for (const [x, z] of [[-.052, .15], [.052, .15], [-.052, .25], [.052, .25]]) wput('torus', x, .04, z, 0, Math.PI / 2, 0, .05, .05, .05, CC.ink);
+        wput('cyl', 0, .155 + B, .115, 0, 0, Math.PI / 2, .012, .1, .012, CC.dark);
+        if (carrying) wput('box', 0, .14, .22, 0, 0, 0, .06, .04, .06, C3(ICON_COL[w.flow.carry] || '#ffffff'));
+        break;
+      case 'commuter':
+        for (const z of [-.09, .09]) wput('torus', 0, .06, z, 0, Math.PI / 2, 0, .12, .12, .12, CC.ink);
+        wput('box', 0, .11, 0, 0, 0, 0, .016, .016, .19, CC.coral);
+        wput('box', 0, .07, .01, 0, 0, 0, .014, .08, .014, CC.coral);
+        wput('box', 0, .16, -.03, 0, 0, 0, .04, .014, .05, CC.dark);
+        wput('box', 0, .18, .085, 0, 0, 0, .1, .012, .012, CC.dark);
+        wput('box', 0, .15, .12, 0, 0, 0, .06, .04, .05, CC.wood);
+        if (carrying) wput('box', 0, .175, .12, 0, 0, 0, .05, .02, .04, C3(ICON_COL[w.flow.carry] || '#ffffff'));
+        break;
+    }
+    if (carrying && !bike && !stroller) wput('box', 0, .155 + y, .085, 0, 0, 0, .085, .065, .05, C3(ICON_COL[w.flow.carry] || '#ffffff'));
+    // overlays
+    const bdg = badges[w.idx];
+    const dCam = camera.position.distanceTo(w.pos);
+    bdg.visible = state.showCarry && dCam < 16;
+    if (bdg.visible) { bdg.position.set(w.pos.x, w.pos.y + (.44 + L) * sc, w.pos.z); bdg.scale.setScalar(.17 * sc); }
+    const bub = bubbles[w.idx];
+    bub.visible = state.showNames && dCam < 14;
+    if (bub.visible) bub.position.set(w.pos.x, w.pos.y + (.62 + L) * sc, w.pos.z);
+  }
+  for (const k in WM) { WM[k].count = WC[k]; WM[k].instanceMatrix.needsUpdate = true; if (WM[k].instanceColor) WM[k].instanceColor.needsUpdate = true; }
+}
+
+/* =====================================================================
+   10. day / night
+   ===================================================================== */
+const KF = [
+  [0, '1e2c58', '3f4f80', 'b4c2ff', 1.15, '94a2d8', '64566a', 1.85, 1, '5a88b2'],
+  [300, '26365f', '4c5688', 'b8c4ff', 1.0, '96a4da', '66586c', 1.85, 1, '5c8ab4'],
+  [360, '7f8fc4', 'f6c3a6', 'ffb48a', 1.3, 'f3c6b5', '6b5a5a', 1.1, .55, '8fb7c4'],
+  [450, 'a9d1ea', 'fbe6d3', 'ffe2c4', 2.4, 'eaf2f6', '8a7a68', 1.25, 0, '9fcfd6'],
+  [720, '9fd0ec', 'f4eee3', 'fff1de', 2.9, 'eef6fa', '8f8270', 1.35, 0, 'a9d8db'],
+  [960, 'a6cfe6', 'f8e7d2', 'ffe3c0', 2.5, 'f1efe8', '8a7a66', 1.25, 0, '9fcbd2'],
+  [1065, '8b8fc4', 'f7b98f', 'ff9f6a', 1.8, 'f6d2bc', '7d6660', 1.2, .3, '93a9bd'],
+  [1140, '5a5e9e', 'd99aa6', 'ff9a7a', 1.3, 'c0b2e0', '655868', 1.35, .75, '6a7cab'],
+  [1260, '22325f', '445488', 'c0ccff', 1.2, '98a8dc', '685a6e', 1.9, 1, '5a88b2']
+].map(k => k.map((v, i) => (typeof v === 'string' ? new THREE.Color('#' + v) : v)));
+KF.push([1440, ...KF[0].slice(1)]);
+const ENV = { top: new THREE.Color(), hor: new THREE.Color(), sun: new THREE.Color(), hs: new THREE.Color(), hg: new THREE.Color(), water: new THREE.Color(), sunI: 1, hemiI: 1, night: 0 };
+const _ca = new THREE.Color(), sunDir = new V3();
+function applyTime(min) {
+  min = ((min % 1440) + 1440) % 1440;
+  let i = 0; while (i < KF.length - 2 && KF[i + 1][0] <= min) i++;
+  const a = KF[i], b = KF[i + 1], t = (min - a[0]) / (b[0] - a[0]);
+  ENV.top.lerpColors(a[1], b[1], t); ENV.hor.lerpColors(a[2], b[2], t); ENV.sun.lerpColors(a[3], b[3], t);
+  ENV.sunI = lerp(a[4], b[4], t); ENV.hs.lerpColors(a[5], b[5], t); ENV.hg.lerpColors(a[6], b[6], t);
+  ENV.hemiI = lerp(a[7], b[7], t); ENV.night = lerp(a[8], b[8], t); ENV.water.lerpColors(a[9], b[9], t);
+  // sun azimuth — quantized to 10 minutes
+  const q = Math.floor(min / 10) * 10;
+  const tt = clamp((q - 360) / 720, 0, 1), az = Math.PI * (.15 + .7 * tt), el = .35 + Math.sin(tt * Math.PI) * .75;
+  sunDir.set(Math.cos(az) * Math.cos(el), Math.sin(el), .55 * Math.cos(el) + .35).normalize();
+  sun.position.copy(CENTER).addScaledVector(sunDir, 40);
+  sun.color.copy(ENV.sun); sun.intensity = ENV.sunI;
+  hemi.color.copy(ENV.hs); hemi.groundColor.copy(ENV.hg); hemi.intensity = ENV.hemiI;
+  fill.intensity = .35 * (1 - ENV.night * .4);
+  skyU.uTop.value.copy(ENV.top); skyU.uHorizon.value.copy(ENV.hor); skyU.uSun.value.copy(ENV.sun); skyU.uSunDir.value.copy(sunDir); skyU.uNight.value = ENV.night;
+  scene.fog.color.copy(ENV.hor);
+  renderer.setClearColor(ENV.hor, 1);
+  WU.uShallow.value.copy(ENV.water);
+  WU.uDeep.value.setRGB(ENV.water.r * .62, ENV.water.g * .78, ENV.water.b * .83);
+  WU.uEarth.value.set('#c9a684').multiply(ENV.hs).multiplyScalar(.62 + .14 * ENV.sunI);
+  shallowMat.color.copy(ENV.water).lerp(C3('#ffffff'), .45);
+  foamMat.color.set('#ffffff').lerp(ENV.water, ENV.night * .5);
+  silh.forEach(m => m.material.color.copy(m.userData.base).multiply(_ca.copy(ENV.hs)).lerp(ENV.hor, m.userData.mix));
+  cloudMat.emissiveIntensity = .25 * (1 - ENV.night) + .04;
+  MAT.glow.emissiveIntensity = ENV.night * 3.2;
+  poolMat.uniforms.uNight.value = ENV.night;
+  dirty = true;
+}
+function segOf(min) {
+  const m = ((min % 1440) + 1440) % 1440;
+  return D.dayCycle.find(s => s.from <= s.to ? (m >= s.from && m < s.to) : (m >= s.from || m < s.to)) || D.dayCycle[0];
+}
+
+/* =====================================================================
+   11. highlight, labels, pins
+   ===================================================================== */
+const state = { sel: null, showNames: false, showCarry: true, showFlows: false, paused: false, bird: false, showLog: false, sideOpen: false, cardOpen: false, seg: null };
+const _hc = new THREE.Color(), HL_CORAL = new THREE.Color(COL.coral), HL_YELLOW = new THREE.Color(COL.yellow);
+function selIslandId() {
+  const s = state.sel; if (!s) return null;
+  if (s.type === 'island') return s.id;
+  if (s.type === 'item') return ITEMS.get(s.id).isl.id;
+  return null;
+}
+function applyHighlights() {
+  const lit = new Set(state.seg ? state.seg.items : []);
+  const sel = new Set();
+  if (state.sel?.type === 'item') sel.add(state.sel.id);
+  if (state.sel?.type === 'island') ISL_BY.get(state.sel.id).items.forEach(it => sel.add(it.id));
+  const touched = new Set();
+  for (const [id, recs] of itemRecs) {
+    const tgt = sel.has(id) ? HL_CORAL : lit.has(id) ? HL_YELLOW : null;
+    for (const r of recs) { _hc.copy(r.color); if (tgt) _hc.lerp(tgt, .22); r.mesh.setColorAt(r.i, _hc); touched.add(r.mesh); }
+  }
+  touched.forEach(m => m.instanceColor.needsUpdate = true);
+  dirty = true;
+}
+// island labels
+const labels = ISL.map(isl => {
+  const el = document.createElement('button');
+  el.className = 'isl-label'; el.type = 'button';
+  el.style.setProperty('--c', isl.accent);
+  el.innerHTML = `<b></b><span></span>`;
+  el.addEventListener('click', e => { e.stopPropagation(); selectIsland(isl.id); });
+  el.addEventListener('pointerdown', e => e.stopPropagation());
+  const o = new CSS2DObject(el);
+  o.position.set(isl.x, TOP - .02, isl.z + R - .12);
+  scene.add(o);
+  return { el, obj: o, isl, state: 'full', kind: 'isl', wFull: 0, wNum: 0, h: 30 };
+});
+const codeOf = isl => T(D.grades[isl.grade].short) + isl.lesson;
+const gradeTags = Object.entries(D.grades).map(([gid, G]) => {
+  const list = ISL.filter(i => i.grade === gid); if (!list.length) return null;
+  const el = document.createElement('div'); el.className = 'grade-tag';
+  const o = new CSS2DObject(el);
+  o.position.set(Math.min(...list.map(i => i.x)) - R - .55, TOP + .25, list.reduce((a, i) => a + i.z, 0) / list.length);
+  scene.add(o);
+  return { el, G };
+}).filter(Boolean);
+function labelTexts() {
+  labels.forEach(L => { L.el.querySelector('b').textContent = codeOf(L.isl); L.el.querySelector('span').textContent = T(L.isl.label); L.el.setAttribute('aria-label', `${codeOf(L.isl)} ${T(L.isl.name)}`); L.wFull = 0; });
+  gradeTags.forEach(g => { g.el.textContent = T(g.G.name); });
+}
+labelTexts();
+let pins = [], pinLines = null;
+const pinLineMat = new THREE.LineBasicMaterial({ color: COL.coral, depthTest: false, transparent: true, opacity: .9 });
+function setPins(islId) {
+  pins.forEach(p => { scene.remove(p.obj); p.el.remove(); });
+  pins = [];
+  if (pinLines) { scene.remove(pinLines); pinLines.geometry.dispose(); pinLines = null; }
+  if (!islId) return;
+  const isl = ISL_BY.get(islId), segs = [];
+  isl.items.forEach((it, k) => {
+    const I = ITEMS.get(it.id);
+    const el = document.createElement('button'); el.type = 'button'; el.className = 'pin'; el.textContent = NUMS[k];
+    el.setAttribute('aria-label', T(it.name));
+    if (state.sel?.type === 'item' && state.sel.id === it.id) el.classList.add('sel');
+    el.addEventListener('click', e => { e.stopPropagation(); selectItem(it.id); });
+    el.addEventListener('pointerdown', e => e.stopPropagation());
+    const o = new CSS2DObject(el); const py = I.top + .42;
+    o.position.set(I.x, py, I.z); scene.add(o);
+    segs.push(I.x, I.top + .02, I.z, I.x, py - .1, I.z);
+    pins.push({ el, obj: o, state: 'full', kind: 'pin', wFull: 26, wNum: 26, h: 26, item: it.id });
+  });
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(segs, 3));
+  pinLines = new THREE.LineSegments(g, pinLineMat); pinLines.renderOrder = 999; scene.add(pinLines);
+}
+function updateLabelClasses() {
+  const sid = selIslandId();
+  labels.forEach(L => { L.el.classList.toggle('sel', L.isl.id === sid); L.el.classList.toggle('dim', !!sid && L.isl.id !== sid); });
+}
+const _lv = new V3();
+function panelRects() {
+  const out = [];
+  for (const id of ['brand', 'tools', 'card', 'side', 'log', 'hud', 'legend', 'timeFab']) {
+    const el = document.getElementById(id);
+    if (!el || el.hidden) continue;
+    const r = el.getBoundingClientRect(); if (r.width && r.height) out.push(r);
+  }
+  return out;
+}
+const overlaps = (a, b, pad) => a.left < b.right + pad && a.right > b.left - pad && a.top < b.bottom + pad && a.bottom > b.top - pad;
+function layoutLabels() {
+  const W = innerWidth, H = innerHeight, panels = panelRects();
+  const sid = selIslandId();
+  const list = [...pins, ...labels.slice().sort((a, b) => {
+    if (a.isl.id === sid) return -1; if (b.isl.id === sid) return 1;
+    return camera.position.distanceTo(a.obj.position) - camera.position.distanceTo(b.obj.position);
+  })];
+  const placed = [];
+  for (const L of list) {
+    if (L.kind === 'isl' && !L.wFull) { L.wFull = L.el.offsetWidth || 80; L.wNum = (L.el.querySelector('b').offsetWidth || 24) + 12; L.h = L.el.offsetHeight || 30; }
+    _lv.copy(L.obj.position).project(camera);
+    if (_lv.z > 1) { setLState(L, 'hid'); continue; }
+    const cx = (_lv.x * .5 + .5) * W, cy = (-_lv.y * .5 + .5) * H;
+    const order = ['full', 'num'];
+    let chosen = 'hid';
+    for (const st of order) {
+      if (L.kind === 'pin' && st === 'num') break;
+      const w = st === 'full' ? L.wFull : L.wNum;
+      const rect = { left: cx - w / 2, right: cx + w / 2, top: cy - L.h / 2, bottom: cy + L.h / 2 };
+      const rank = { full: 0, num: 1, hid: 2 };
+      const pad = rank[st] < rank[L.state] ? 8 : 0;
+      if (panels.some(p => overlaps(rect, p, pad)) || placed.some(p => overlaps(rect, p, pad))) continue;
+      chosen = st; placed.push(rect); break;
+    }
+    setLState(L, chosen);
+  }
+}
+function setLState(L, st) {
+  if (L.state === st) return;
+  L.state = st;
+  L.el.classList.toggle('num', st === 'num');
+  L.el.classList.toggle('hid', st === 'hid');
+}
+
+/* =====================================================================
+   12. camera: views, flights
+   ===================================================================== */
+const ISL_OFF = new V3(2.75, 5.3, 6.2), ITEM_OFF = new V3(1.6, 2.5, 3.2);
+let flight = null;
+function fullViewPose() {
+  const a = innerWidth / Math.max(1, innerHeight);
+  const dist = a >= 1.25 ? 28.5 : a >= .8 ? 38 : 56;
+  const t = new V3(CENTER.x, .4, CENTER.z);
+  if (state.sideOpen && !isMobile()) {
+    const viewW = 2 * dist * Math.tan(THREE.MathUtils.degToRad(16)) * a;
+    t.addScaledVector(new V3(.87, 0, -.24).normalize(), viewW * 90 / innerWidth);
+  }
+  return { pos: t.clone().addScaledVector(new V3(.24, .33, .87).normalize(), dist), target: t };
+}
+function framing(point, offset, willOpenCard = true) {
+  const t = point.clone();
+  const asp = innerWidth / Math.max(1, innerHeight);
+  if (asp < 1) offset = offset.clone().multiplyScalar(Math.min(2.2, .9 / asp));
+  if (willOpenCard && !isMobile()) {
+    const right = new V3(offset.z, 0, -offset.x).normalize();
+    t.addScaledVector(right, -1.5);
+  } else if (willOpenCard && isMobile()) {
+    const fwd = new V3(offset.x, 0, offset.z).normalize();
+    t.addScaledVector(fwd, offset.length() * .12);
+  }
+  return { pos: t.clone().add(offset), target: t };
+}
+function flyTo(pose) {
+  if (state.bird) setBird(false, true);
+  if (reduced) { camera.position.copy(pose.pos); controls.target.copy(pose.target); controls.update(); dirty = true; flight = null; return; }
+  flight = { t: 0, p0: camera.position.clone(), t0: controls.target.clone(), p1: pose.pos.clone(), t1: pose.target.clone() };
+}
+function updateFlight(dt) {
+  if (!flight) return;
+  flight.t = Math.min(1, flight.t + dt / .8);
+  const e = easeInOutCubic(flight.t);
+  camera.position.lerpVectors(flight.p0, flight.p1, e);
+  controls.target.lerpVectors(flight.t0, flight.t1, e);
+  if (flight.t >= 1) flight = null;
+  dirty = true;
+}
+function orbitBy(dAz, dPol) {
+  flight = null;
+  const off = camera.position.clone().sub(controls.target);
+  const sph = new THREE.Spherical().setFromVector3(off);
+  sph.theta += dAz; sph.phi = clamp(sph.phi + dPol, controls.minPolarAngle, controls.maxPolarAngle);
+  off.setFromSpherical(sph); camera.position.copy(controls.target).add(off); controls.update(); dirty = true;
+}
+function setBird(on, silent) {
+  state.bird = on;
+  $('#tgBird').setAttribute('aria-pressed', String(on));
+  if (on) {
+    controls.minPolarAngle = 0;
+    const t = controls.target.clone();
+    const pose = { pos: t.clone().add(new V3(.01, 42, 6)), target: t };
+    if (reduced) { camera.position.copy(pose.pos); controls.update(); }
+    else flight = { t: 0, p0: camera.position.clone(), t0: controls.target.clone(), p1: pose.pos, t1: pose.target };
+  } else {
+    controls.minPolarAngle = POLAR_MIN;
+    if (!silent) flyTo(fullViewPose());
+  }
+  dirty = true;
+}
+
+/* =====================================================================
+   13. selection
+   ===================================================================== */
+function relatedFlows() {
+  const s = state.sel, set = new Set();
+  if (!s) return set;
+  if (s.type === 'flow') set.add(s.id);
+  else if (s.type === 'walker') set.add(walkers[s.id].flow.id);
+  else {
+    const iid = selIslandId();
+    FLOWS.forEach(f => { if (f.from === iid || f.to === iid) set.add(f.id); });
+  }
+  return set;
+}
+function updateFlowVisibility() {
+  const rel = relatedFlows(); let any = false;
+  FLOWS.forEach(f => {
+    const v = state.showFlows || rel.has(f.id);
+    f.tube.visible = v; any = any || v;
+    f.mat.uniforms.uOpacity.value = (state.sel?.type === 'flow' && state.sel.id === f.id) || (state.sel?.type === 'walker' && walkers[state.sel.id].flow === f) ? 1 : .82;
+  });
+  $('#legend').hidden = !any;
+  dirty = true;
+}
+function select(sel, pose) {
+  state.sel = sel;
+  applyHighlights();
+  updateFlowVisibility();
+  setPins(selIslandId());
+  updateLabelClasses();
+  if (pose) flyTo(pose);
+  openCard();
+  markLists();
+}
+function selectIsland(id) { const isl = ISL_BY.get(id); select({ type: 'island', id }, framing(new V3(isl.x, TOP, isl.z), ISL_OFF)); }
+function selectItem(id) { const I = ITEMS.get(id); select({ type: 'item', id }, framing(new V3(I.x, TOP + .3 * I.s, I.z), ITEM_OFF)); }
+function selectFlow(id) {
+  const f = FLOWS.find(x => x.id === id);
+  const off = ISL_OFF.clone().normalize().multiplyScalar(Math.max(10, f.extent * 1.35));
+  select({ type: 'flow', id }, framing(f.center.clone(), off));
+}
+function selectWalker(i) { const w = walkers[i]; select({ type: 'walker', id: i }, framing(w.pos.clone(), ITEM_OFF)); }
+function clearSelection() {
+  state.sel = null;
+  applyHighlights(); updateFlowVisibility(); setPins(null); updateLabelClasses();
+  closeCard(); markLists();
+}
+
+/* =====================================================================
+   14. picking
+   ===================================================================== */
+const raycaster = new THREE.Raycaster();
+const ndc = new THREE.Vector2();
+function pickAt(cx, cy) {
+  const r = renderer.domElement.getBoundingClientRect();
+  ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+  raycaster.setFromCamera(ndc, camera);
+  WM.body.boundingSphere = null; WM.head.boundingSphere = null;
+  const cands = [...kitMeshes.filter(m => m.visible), ...groundMeshes, walls, WM.body, WM.head, ...FLOWS.filter(f => f.tube.visible).map(f => f.pick)];
+  const hits = raycaster.intersectObjects(cands, false);
+  for (const h of hits) {
+    const o = h.object;
+    if (o === WM.body || o === WM.head) { if (h.instanceId != null && h.instanceId < NW) return selectWalker(h.instanceId); continue; }
+    if (o.userData.flow) return selectFlow(o.userData.flow.id);
+    if (o.userData.recs) {
+      const rec = o.userData.recs[h.instanceId]; if (!rec || !rec.owner) continue;
+      if (rec.owner.startsWith('item:')) return selectItem(rec.owner.slice(5));
+      if (rec.owner.startsWith('isl:')) return selectIsland(rec.owner.slice(4));
+      continue;
+    }
+    if (groundMeshes.includes(o) || o === walls) {
+      let best = null, bd = 1e9; ISL.forEach(i => { const d = Math.hypot(i.x - h.point.x, i.z - h.point.z); if (d < bd) { bd = d; best = i; } });
+      if (best && bd < R + .1) return selectIsland(best.id);
+    }
+  }
+}
+let down = null;
+renderer.domElement.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; flight = null; });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (!down) return;
+  const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y); down = null;
+  if (moved <= 6) pickAt(e.clientX, e.clientY);
+});
+
+/* =====================================================================
+   15. UI: card, sidebar, HUD, log, help, language
+   ===================================================================== */
+const cardEl = $('#card'), cardBody = $('#cardBody'), sideEl = $('#side');
+const kindName = it => T(D.kinds[it.kind] || D.kinds.extra);
+const islTag = isl => `${codeOf(isl)} ${T(isl.label)}`;
+const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; } };
+const goLink = it => `<a class="go" href="${esc(it.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(tr('開啟', 'Open') + ' ' + T(it.name))}" title="${esc(tr('開啟連結', 'Open link'))}">↗</a>`;
+function bigNums(facts) {
+  const out = [];
+  const re = /(\d[\d,]*(?:\.\d+)?)\s*(%|×|°C|m²|平方公尺|公尺|公里|公頃|公噸|分鐘|小時|個月|萬|倍|戶|座|所|處|間|班|台|盞|名|人次|人|份|組|株|冊|條|場|家|格|堂|棵|項|元|度|秒|次|個|面|站|張|種|位|本|km|min|tonnes|hectares|m)?/i;
+  for (const f of facts) { const s = T(f); const m = s.match(re); if (m) out.push({ n: m[1], u: m[2] || '', cap: s }); if (out.length >= 3) break; }
+  return out;
+}
+const thumbCache = new Map();
+let thumbRT = null;
+function thumbFor(item) {
+  if (thumbCache.has(item.id)) return thumbCache.get(item.id);
+  let url = '';
+  try {
+    const SZ = 320;
+    if (!thumbRT) thumbRT = new THREE.WebGLRenderTarget(SZ, SZ);
+    const prevSink = SINK; SINK = [];
+    const b = new Bld(new THREE.Matrix4(), null);
+    b.p('cyl', 0, 0, 0, 1, .04, 1, new THREE.Color(item.isl.ground).multiplyScalar(.9).getStyle());
+    const h = (ARCH[item.model] || ARCH.house)(b, mulberry32(hashStr(item.id)));
+    const recs = SINK; SINK = prevSink;
+    const mini = new THREE.Scene();
+    buildInstanced(recs, false).forEach(m => mini.add(m));
+    mini.add(new THREE.HemisphereLight(0xffffff, 0x9a8a78, 1.6));
+    const dl = new THREE.DirectionalLight(0xfff1de, 2.4); dl.position.set(2, 4, 3); mini.add(dl);
+    const cam = new THREE.PerspectiveCamera(28, 1, .1, 50);
+    const tgt = new V3(0, h * .42, 0);
+    cam.position.copy(tgt).addScaledVector(new V3(1.6, 1.7, 3.2).normalize(), 2.5 + h * 1.1); cam.lookAt(tgt);
+    const prevGlow = MAT.glow.emissiveIntensity; MAT.glow.emissiveIntensity = .4;
+    const prevClear = renderer.getClearColor(new THREE.Color()), prevAlpha = renderer.getClearAlpha();
+    renderer.setRenderTarget(thumbRT); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(mini, cam);
+    const buf = new Uint8Array(SZ * SZ * 4); renderer.readRenderTargetPixels(thumbRT, 0, 0, SZ, SZ, buf);
+    renderer.setRenderTarget(null); renderer.setClearColor(prevClear, prevAlpha);
+    MAT.glow.emissiveIntensity = prevGlow;
+    mini.children.forEach(m => m.isInstancedMesh && m.dispose());
+    const c = document.createElement('canvas'); c.width = c.height = SZ;
+    const g = c.getContext('2d'), img = g.createImageData(SZ, SZ);
+    const toS = v => { v /= 255; v = v <= .0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - .055; return Math.round(clamp(v, 0, 1) * 255); };
+    const lut = new Uint8Array(256); for (let i = 0; i < 256; i++) lut[i] = toS(i);
+    for (let y = 0; y < SZ; y++) for (let x = 0; x < SZ; x++) {
+      const si = ((SZ - 1 - y) * SZ + x) * 4, di = (y * SZ + x) * 4, a = buf[si + 3];
+      const un = v => a ? Math.min(255, Math.round(v * 255 / a)) : 0;
+      img.data[di] = lut[un(buf[si])]; img.data[di + 1] = lut[un(buf[si + 1])]; img.data[di + 2] = lut[un(buf[si + 2])]; img.data[di + 3] = a;
+    }
+    g.putImageData(img, 0, 0);
+    url = c.toDataURL('image/png');
+  } catch (e) { console.warn('thumb', e); }
+  thumbCache.set(item.id, url);
+  dirty = true;
+  return url;
+}
+function flowChip(f, from) {
+  const other = from === f.from ? f.b : f.a, arrow = from === f.from ? '→' : '←';
+  return `<button class="chip" data-flow="${f.id}"><img src="${iconSrc(f.carry)}" alt="">${arrow} ${esc(codeOf(other))} ${esc(T(other.label))} · ${esc(T(f.carryName))}</button>`;
+}
+function renderIslandCard(isl) {
+  const flows = FLOWS.filter(f => f.from === isl.id || f.to === isl.id);
+  const lit = new Set(state.seg ? state.seg.items : []);
+  return `
+    <div class="card-head"><div class="hexb" style="--c:${isl.accent}">${esc(T(isl.glyph))}</div>
+      <div><div class="eyebrow">${esc(T(D.grades[isl.grade].name))} · ${esc(isl.lesson)}</div><h2>${esc(T(isl.name))}</h2></div></div>
+    <p class="summary">${esc(T(isl.summary))}</p>
+    <div class="sec"><div class="eyebrow">${tr('本課連結', 'Links')}</div>
+      <ol class="item-list">${isl.items.map((it, k) => `<li><button class="list-btn${lit.has(it.id) ? ' lit' : ''}" data-item="${it.id}"><span class="n">${NUMS[k]}</span><span>${esc(T(it.name))}</span><small>${esc(kindName(it))}</small></button>${goLink(it)}</li>`).join('')}</ol></div>
+    ${flows.length ? `<div class="sec"><div class="eyebrow">${tr('學習路線', 'Reading order')}</div><div class="chips">${flows.map(f => flowChip(f, isl.id)).join('')}</div></div>` : ''}`;
+}
+function renderItemCard(I) {
+  const isl = I.isl, others = isl.items.filter(x => x.id !== I.id);
+  return `
+    <div class="card-head" style="padding-right:40px"><div><div class="eyebrow">${esc(T(D.grades[isl.grade].name))} · ${esc(isl.lesson)} · ${NUMS[I.k]}</div><h2>${esc(T(I.name))}</h2></div></div>
+    ${(u => u ? `<div class="thumb"><img alt="${esc(T(I.name))}" src="${u}"></div>` : '')(thumbFor(I))}
+    <div><span class="kind ${esc(I.kind)}">${esc(kindName(I))}</span></div>
+    <p class="desc">${esc(T(I.desc))}</p>
+    <a class="btn go-link" href="${esc(I.url)}" target="_blank" rel="noopener noreferrer">${tr('開啟', 'Open')} ${esc(hostOf(I.url))} ↗</a>
+    <div class="urlrow"><code>${esc(I.url)}</code><button class="btn" data-copy="${esc(I.url)}">${tr('複製', 'Copy')}</button></div>
+    <dl class="kv">
+      <dt>${tr('單元', 'Unit')}</dt><dd>${esc(T(isl.unit))}</dd>
+      <dt>${tr('課名', 'Lesson')}</dt><dd>${esc(isl.lesson)} ${esc(T(isl.name))}</dd>
+    </dl>
+    ${others.length ? `<div class="sec"><div class="eyebrow">${tr('同一課的其他連結', 'Other links in this lesson')}</div><ol class="item-list">${others.map(o => `<li><button class="list-btn" data-item="${o.id}"><span class="n">${NUMS[ITEMS.get(o.id).k]}</span><span>${esc(T(o.name))}</span><small>${esc(kindName(o))}</small></button>${goLink(o)}</li>`).join('')}</ol></div>` : ''}
+    <button class="btn back" data-island="${isl.id}">← ${tr('回到', 'Back to')} ${esc(isl.lesson)} ${esc(T(isl.label))}</button>`;
+}
+function renderFlowCard(f) {
+  const ev = D.evidence[f.evidence], nW = walkers.filter(w => w.flow === f).length;
+  return `
+    <div class="card-head" style="padding-right:40px"><div><div class="eyebrow">${tr('學習路線', 'Reading order')} · ${esc(T(ev.name))}</div><h2>${esc(T(f.name))}</h2></div></div>
+    <div class="flowrow"><button class="chip cream" data-island="${f.a.id}">${esc(islTag(f.a))}</button><span class="arr">→</span><button class="chip cream" data-island="${f.b.id}">${esc(islTag(f.b))}</button></div>
+    <dl class="kv">
+      <dt>${tr('搬運物', 'Carrying')}</dt><dd><img src="${iconSrc(f.carry)}" alt="">${esc(T(f.carryName))}</dd>
+      <dt>${tr('搬運的人', 'Helpers')}</dt><dd>${esc(T(D.roles[f.role]))} × ${nW}</dd>
+      <dt>${tr('類型', 'Type')}</dt><dd><i class="evl ${f.evidence}"></i>${esc(T(ev.name))}</dd>
+    </dl>
+    <p class="note">${esc(T(f.note))}</p>
+    <p class="note" style="color:var(--muted)">${esc(T(ev.note))}</p>`;
+}
+function renderWalkerCard(w) {
+  const f = w.flow;
+  const status = w.pause > 0 ? tr('交接中', 'Handing over') : w.dir > 0 ? tr(`前往${T(f.b.label)}`, `Heading to ${T(f.b.label)}`) : tr(`返回${T(f.a.label)}`, `Returning to ${T(f.a.label)}`);
+  return `
+    <div class="card-head" style="padding-right:40px"><div><div class="eyebrow">${tr('小幫手', 'Helper')} · ${esc(T(D.roles[w.role]))}</div><h2>${esc(T(D.roles[w.role]))} #${w.idx + 1}</h2></div></div>
+    <dl class="kv">
+      <dt>${tr('正在搬', 'Carrying')}</dt><dd><img src="${iconSrc(f.carry)}" alt="">${esc(T(f.carryName))}</dd>
+      <dt>${tr('狀態', 'Status')}</dt><dd>${esc(status)}</dd>
+      <dt>${tr('路線', 'Route')}</dt><dd>${esc(T(f.a.label))} → ${esc(T(f.b.label))}</dd>
+    </dl>
+    <div class="chips"><button class="chip" data-flow="${f.id}"><img src="${iconSrc(f.carry)}" alt="">${esc(T(f.name))}</button></div>
+    <p class="note">${esc(T(f.note))}</p>`;
+}
+function openCard() {
+  const s = state.sel; if (!s) return closeCard();
+  let html = '';
+  if (s.type === 'island') html = renderIslandCard(ISL_BY.get(s.id));
+  else if (s.type === 'item') html = renderItemCard(ITEMS.get(s.id));
+  else if (s.type === 'flow') html = renderFlowCard(FLOWS.find(f => f.id === s.id));
+  else if (s.type === 'walker') html = renderWalkerCard(walkers[s.id]);
+  cardBody.innerHTML = html;
+  cardBody.scrollTop = 0;
+  cardEl.hidden = false; state.cardOpen = true;
+  if (isMobile()) { setSide(false); cardEl.style.height = ''; }
+  syncSheetClass(); placeCard(); dirty = true;
+}
+function closeCard() { cardEl.hidden = true; state.cardOpen = false; syncSheetClass(); dirty = true; }
+function selectCode(btn) { const c = btn.parentElement.querySelector('code'); if (!c) return; const rg = document.createRange(); rg.selectNodeContents(c); const sl = getSelection(); sl.removeAllRanges(); sl.addRange(rg); }
+cardBody.addEventListener('click', e => {
+  const cp = e.target.closest('[data-copy]');
+  if (cp) {
+    const done = () => { cp.textContent = tr('已複製', 'Copied'); setTimeout(() => { cp.textContent = tr('複製', 'Copy'); }, 1500); };
+    try { navigator.clipboard.writeText(cp.dataset.copy).then(done, () => selectCode(cp)); } catch (err) { selectCode(cp); }
+    return;
+  }
+  const t = e.target.closest('[data-item],[data-island],[data-flow]'); if (!t) return;
+  if (t.dataset.item) selectItem(t.dataset.item);
+  else if (t.dataset.island) selectIsland(t.dataset.island);
+  else if (t.dataset.flow) selectFlow(t.dataset.flow);
+});
+$('#cardClose').addEventListener('click', clearSelection);
+function placeCard() {
+  if (isMobile()) { cardEl.style.removeProperty('--card-top'); return; }
+  const b = $('#brand').getBoundingClientRect();
+  cardEl.style.setProperty('--card-top', Math.round(b.bottom + 12) + 'px');
+}
+
+/* sidebar */
+function renderSide() {
+  const q = $('#q').value.trim().toLowerCase();
+  const lit = new Set(state.seg ? state.seg.items : []);
+  const match = s => !q || s.toLowerCase().includes(q);
+  let html = '', lastG = null, lastU = null;
+  ISL.forEach(isl => {
+    const hitIsl = match(T(isl.name)) || match(isl.name[0]) || match(isl.name[1]) || match(T(isl.unit)) || match(isl.lesson) || match(T(D.grades[isl.grade].name));
+    const items = isl.items.map((it, k) => ({ it, k })).filter(({ it }) => hitIsl || match(T(it.name)) || match(T(it.desc)) || match(it.name[0]) || match(it.name[1]));
+    if (!items.length) return;
+    const G = D.grades[isl.grade];
+    if (isl.grade !== lastG) { html += `<div class="grade-h"><span class="hexm" style="--c:${G.color}">${esc(T(G.short).replace('·', ''))}</span>${esc(T(G.name))}</div>`; lastG = isl.grade; lastU = null; }
+    if (T(isl.unit) !== lastU) { lastU = T(isl.unit); html += `<div class="unit-h">${esc(lastU)}</div>`; }
+    html += `<details data-island="${isl.id}"${q ? ' open' : ''}><summary><span class="hexm" style="--c:${isl.accent}">${esc(isl.lesson)}</span><span>${esc(T(isl.name))}</span><span class="cnt">${isl.items.length}</span></summary><ol>${items.map(({ it, k }) => `<li><button class="list-btn${lit.has(it.id) ? ' lit' : ''}" data-item="${it.id}"><span class="n">${NUMS[k]}</span><span>${esc(T(it.name))}</span><small>${esc(kindName(it))}</small></button>${goLink(it)}</li>`).join('')}</ol></details>`;
+  });
+  $('#sideThemes').innerHTML = html || `<p class="empty">${tr('找不到符合的課程。換個關鍵字試試。', 'No matching lessons. Try another keyword.')}</p>`;
+  const fl = FLOWS.filter(f => !q || [T(f.name), T(f.a.label), T(f.b.label), T(f.carryName)].some(match));
+  $('#sideFlows').innerHTML = fl.map(f => `<button class="flow-btn" data-flow="${f.id}"><img src="${iconSrc(f.carry)}" alt=""><span><b>${esc(T(f.name))}</b><small>${esc(T(f.a.label))} → ${esc(T(f.b.label))} · ${esc(T(D.evidence[f.evidence].name))}</small></span><i class="evl ${f.evidence}"></i></button>`).join('') || `<p class="empty">${tr('找不到符合的路線。', 'No matching routes.')}</p>`;
+  markLists();
+}
+function markLists() {
+  const sid = selIslandId();
+  $$('#sideThemes details').forEach(d => { if (d.dataset.island === sid && !d.open) d.open = true; });
+}
+$('#q').addEventListener('input', renderSide);
+$('#sideThemes').addEventListener('click', e => {
+  const b = e.target.closest('[data-item]'); if (b) { selectItem(b.dataset.item); return; }
+  const s = e.target.closest('summary');
+  if (s) { e.preventDefault(); const d = s.parentElement; if (d.open) d.open = false; else { d.open = true; selectIsland(d.dataset.island); } }
+});
+$('#sideFlows').addEventListener('click', e => { const b = e.target.closest('[data-flow]'); if (b) selectFlow(b.dataset.flow); });
+function setTab(which) {
+  $('#tabThemes').setAttribute('aria-pressed', String(which === 'themes'));
+  $('#tabFlows').setAttribute('aria-pressed', String(which === 'flows'));
+  $('#sideThemes').hidden = which !== 'themes'; $('#sideFlows').hidden = which !== 'flows';
+}
+$('#tabThemes').addEventListener('click', () => setTab('themes'));
+$('#tabFlows').addEventListener('click', () => setTab('flows'));
+function setSide(open) {
+  state.sideOpen = open; sideEl.hidden = !open;
+  $('#btnList').setAttribute('aria-pressed', String(open));
+  if (open && isMobile()) { closeCard(); sideEl.style.height = ''; }
+  document.documentElement.style.setProperty('--log-right', (open && !isMobile() ? 16 + 318 + 12 : 16) + 'px');
+  syncSheetClass(); dirty = true;
+}
+function syncSheetClass() { document.body.classList.toggle('sheet-open', isMobile() && (state.sideOpen || state.cardOpen)); }
+
+/* bottom sheet drag (mobile) */
+function makeSheet(el, onClose) {
+  const h = el.querySelector('.handle'); let start = null;
+  h.addEventListener('pointerdown', e => { if (!isMobile()) return; h.setPointerCapture(e.pointerId); start = { y: e.clientY, h: el.getBoundingClientRect().height, moved: false }; el.classList.add('dragging'); });
+  h.addEventListener('pointermove', e => { if (!start) return; const dy = start.y - e.clientY; if (Math.abs(dy) > 4) start.moved = true; el.style.height = clamp(start.h + dy, 60, innerHeight * .94) + 'px'; });
+  const end = () => {
+    if (!start) return; el.classList.remove('dragging');
+    const hh = el.getBoundingClientRect().height, H = innerHeight;
+    if (!start.moved) el.style.height = hh > H * .7 ? '' : (H * .94) + 'px';
+    else if (hh < H * .18) { el.style.height = ''; onClose(); }
+    else if (hh > H * .66) el.style.height = (H * .94) + 'px';
+    else el.style.height = '';
+    start = null;
+  };
+  h.addEventListener('pointerup', end); h.addEventListener('pointercancel', end);
+}
+makeSheet(cardEl, clearSelection);
+makeSheet(sideEl, () => setSide(false));
+
+/* HUD */
+function fmtClock(m) { m = ((Math.floor(m) % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+let lastClockText = '';
+function updateHud() {
+  const txt = fmtClock(clockMin);
+  if (txt !== lastClockText) { $('#clockTime').textContent = txt; lastClockText = txt; }
+  const seg = segOf(clockMin);
+  if (seg !== state.seg) {
+    state.seg = seg;
+    $('#clockSeg').textContent = T(seg.name);
+    applyHighlights();
+    $$('.list-btn[data-item]').forEach(b => b.classList.toggle('lit', seg.items.includes(b.dataset.item)));
+  }
+  const near = [360, 720, 1080, 1260].reduce((best, m) => Math.abs(m - clockMin) < Math.abs(best - clockMin) ? m : best, 360);
+  $$('#timeBtns .tbtn').forEach(b => b.classList.toggle('on-seg', +b.dataset.min === near && Math.abs(near - clockMin) < 90));
+}
+$$('#timeBtns .tbtn').forEach(b => b.addEventListener('click', () => { clockMin = +b.dataset.min; lastMinApplied = -1; dirty = true; }));
+function toggle(id, key, after) {
+  const btn = $('#' + id);
+  btn.addEventListener('click', () => { state[key] = !state[key]; btn.setAttribute('aria-pressed', String(state[key])); after && after(state[key]); dirty = true; });
+}
+toggle('tgNames', 'showNames');
+toggle('tgCarry', 'showCarry');
+toggle('tgFlows', 'showFlows', updateFlowVisibility);
+toggle('tgPause', 'paused');
+$('#tgBird').addEventListener('click', () => setBird(!state.bird));
+toggle('tgLog', 'showLog', on => { $('#log').hidden = !on; if (on) renderLog(); });
+$('#timeFab').addEventListener('click', () => { const on = !document.body.classList.contains('hud-open'); document.body.classList.toggle('hud-open', on); $('#timeFab').setAttribute('aria-pressed', String(on)); });
+
+/* log */
+function renderLogFilter() {
+  const sel = $('#logFilter'), v = sel.value || 'all';
+  sel.innerHTML = `<option value="all">${tr('全部路線', 'All routes')}</option>` + FLOWS.map(f => `<option value="${f.id}">${esc(T(f.name))}</option>`).join('');
+  sel.value = v;
+}
+$('#logFilter').addEventListener('change', renderLog);
+function logEvent(type, w, text) {
+  const now = performance.now(), last = logState.last.get(w.flow.id) || 0;
+  if (now - last < 3500) return;
+  logState.last.set(w.flow.id, now);
+  logState.entries.unshift({ type, flow: w.flow.id, text, time: fmtClock(clockMin), who: T(D.roles[w.role]) });
+  if (logState.entries.length > 60) logState.entries.length = 60;
+  if (state.showLog) renderLog();
+}
+const EVN = { depart: ['出發', 'depart'], arrive: ['抵達', 'arrive'], handoff: ['交接', 'handoff'] };
+function renderLog() {
+  const f = $('#logFilter').value || 'all';
+  const rows = logState.entries.filter(e => f === 'all' || e.flow === f).slice(0, 30);
+  $('#logList').innerHTML = rows.map(e => `<li><time>${e.time}</time><span class="ev ${e.type}">${esc(T(EVN[e.type]))}</span><span>${esc(e.who)}：${esc(e.text)}</span></li>`).join('') || `<li style="grid-template-columns:1fr"><span>${tr('小人出發後，這裡會記錄每一次交接。', 'Each handoff appears here once the helpers start walking.')}</span></li>`;
+}
+
+/* tools */
+$('#btnFull').addEventListener('click', () => { if (state.bird) setBird(false, true); flyTo(fullViewPose()); });
+$('#btnList').addEventListener('click', () => setSide(!state.sideOpen));
+$('#btnHelp').addEventListener('click', () => showHelp(true));
+$('#helpOk').addEventListener('click', () => showHelp(false));
+$('#help').addEventListener('click', e => { if (e.target.id === 'help') showHelp(false); });
+function showHelp(on) { $('#help').hidden = !on; if (on) $('#helpOk').focus(); else store.set('scienceIslands.helpSeen', '1'); }
+$('#btnLang').addEventListener('click', () => setLang(!EN));
+
+/* language */
+function applyStatic() {
+  $$('[data-en]').forEach(el => { if (el.dataset.zh == null) el.dataset.zh = el.textContent; el.textContent = EN ? el.dataset.en : el.dataset.zh; });
+  $$('[data-en-ph]').forEach(el => { if (el.dataset.zhPh == null) el.dataset.zhPh = el.placeholder; el.placeholder = EN ? el.dataset.enPh : el.dataset.zhPh; });
+  $$('[data-en-aria]').forEach(el => { if (el.dataset.zhAria == null) el.dataset.zhAria = el.getAttribute('aria-label') || ''; el.setAttribute('aria-label', EN ? el.dataset.enAria : el.dataset.zhAria); });
+  $$('[data-en-title]').forEach(el => { if (el.dataset.zhTitle == null) el.dataset.zhTitle = el.title; el.title = EN ? el.dataset.enTitle : el.dataset.zhTitle; });
+  $$('.js-city').forEach(el => el.textContent = T(D.city));
+  $$('.js-sub').forEach(el => el.textContent = T(D.subtitle));
+  $$('.js-ev').forEach(el => { el.textContent = T(D.evidence[el.dataset.k].name); el.parentElement.hidden = !FLOWS.some(f => f.evidence === el.dataset.k); });
+  $$('.js-eyebrow').forEach(el => el.textContent = T(D.eyebrow));
+  const nItems = ISL.reduce((a, i) => a + i.items.length, 0);
+  $('#brandNote').textContent = tr(`${ISL.length} 課 · ${nItems} 個連結 · 點島就能開心智圖`, `${ISL.length} lessons · ${nItems} links · tap an island to open`);
+  $('#langLabel').textContent = EN ? '中' : 'EN';
+  document.documentElement.lang = EN ? 'en' : 'zh-Hant';
+  document.title = T(D.city) + T(['', ' · ']) + T(D.subtitle);
+}
+function setLang(en) {
+  EN = en;
+  applyStatic(); labelTexts(); bubbleText(); renderSide(); renderLogFilter(); renderLog();
+  if (state.seg) $('#clockSeg').textContent = T(state.seg.name);
+  if (state.sel) { const keep = cardBody.scrollTop; openCard(); cardBody.scrollTop = keep; }
+  setPins(selIslandId());
+  placeCard(); dirty = true;
+}
+
+/* keyboard */
+addEventListener('keydown', e => {
+  if (e.target.closest && e.target.closest('input,select,textarea')) { if (e.key === 'Escape') e.target.blur(); return; }
+  const step = .08;
+  if (e.key === 'ArrowLeft') { orbitBy(step, 0); e.preventDefault(); }
+  else if (e.key === 'ArrowRight') { orbitBy(-step, 0); e.preventDefault(); }
+  else if (e.key === 'ArrowUp') { orbitBy(0, -step); e.preventDefault(); }
+  else if (e.key === 'ArrowDown') { orbitBy(0, step); e.preventDefault(); }
+  else if (e.key === 'Escape') { if (!$('#help').hidden) showHelp(false); else if (state.sel) clearSelection(); else if (document.body.classList.contains('hud-open')) $('#timeFab').click(); }
+});
+
+/* reduced motion */
+function applyReduced() {
+  staticLines = reduced;
+  FLOWS.forEach(f => { f.mat.uniforms.uMode.value = reduced ? 1 : f.mode; });
+  if (reduced) flight = null;
+  dirty = true;
+}
+mqReduce.addEventListener?.('change', e => { reduced = e.matches; applyReduced(); });
+mqMobile.addEventListener?.('change', () => { cardEl.style.height = ''; sideEl.style.height = ''; setSide(state.sideOpen); placeCard(); syncSheetClass(); });
+
+/* =====================================================================
+   16. resize, render loop
+   ===================================================================== */
+function resize() {
+  const w = stage.clientWidth || innerWidth, h = stage.clientHeight || innerHeight;
+  renderer.setSize(w, h, false); renderer.domElement.style.width = w + 'px'; renderer.domElement.style.height = h + 'px';
+  css2d.setSize(w, h);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  placeCard(); dirty = true;
+}
+new ResizeObserver(resize).observe(stage);
+resize();
+
+let last = performance.now(), simTime = 0, lastMinApplied = -1, lodState = null, firstFrame = true;
+function frame(now) {
+  requestAnimationFrame(frame);
+  const dt = Math.min((now - last) / 1000, .08); last = now;
+  const running = !state.paused && !reduced;
+  if (running) {
+    simTime += dt;
+    clockMin = (clockMin + dt * 10) % 1440;
+    WU.uTime.value = simTime;
+    flowU.uTime.value = simTime;
+    updateWalkers(dt);
+    updateClouds(dt);
+    dirty = true;
+  }
+  if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
+  updateFlight(dt);
+  if (controls.update()) dirty = true;
+  if (!dirty) return;
+  dirty = false;
+  sky.position.copy(camera.position);
+  const camDist = camera.position.distanceTo(controls.target);
+  const lodOn = camDist < 26;
+  gradeTags.forEach(g => { g.el.style.opacity = camDist < 15 ? '0' : '1'; });
+  if (lodOn !== lodState) { lodState = lodOn; kitMeshes.forEach(m => { if (m.userData.lod) m.visible = lodOn; }); }
+  buildWalkerMatrices(simTime, camDist);
+  renderer.render(scene, camera);
+  css2d.render(scene, camera);
+  layoutLabels();
+  if (state.sel?.type === 'walker' && state.cardOpen && running && Math.floor(simTime * 2) !== frame._ws) { frame._ws = Math.floor(simTime * 2); const keep = cardBody.scrollTop; cardBody.innerHTML = renderWalkerCard(walkers[state.sel.id]); cardBody.scrollTop = keep; }
+  if (firstFrame) {
+    firstFrame = false;
+    $('#loading').classList.add('done');
+    setTimeout(() => { $('#loading').hidden = true; }, 700);
+    if (!store.get('scienceIslands.helpSeen')) showHelp(true);
+  }
+}
+
+/* =====================================================================
+   17. start
+   ===================================================================== */
+applyStatic();
+renderSide();
+renderLogFilter();
+renderLog();
+setSide(!MOBILE0 && innerWidth >= 1560);
+// warm the log with a few walking steps
+for (let i = 0; i < 40; i++) updateWalkers(.25);
+const fv = fullViewPose(); camera.position.copy(fv.pos); controls.target.copy(fv.target); controls.update();
+applyTime(clockMin); updateHud(); applyReduced();
+requestAnimationFrame(t => { last = t; frame(t); });
+}
+</script>
+
+</body>
+</html>
