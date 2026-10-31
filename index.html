@@ -4688,6 +4688,8 @@ button.go{cursor:pointer;padding:0}
 .act .stars{font-style:normal;color:#d99a35;font-size:15px;letter-spacing:1px}
 .act .ok{font-style:normal;color:#2f8f57;font-weight:800}
 .act.locked{cursor:default;background:#f4efe8;color:var(--muted)}
+.lock-note{margin:0 0 14px;padding:14px 16px;border-radius:14px;background:#fff6e0;border:1.5px solid #f0c64a;display:grid;gap:8px}
+.lock-note b{font-size:15px}.lock-note p{margin:0;font-size:13.5px;line-height:1.6;color:#5b4f47}.lock-note .btn{justify-self:start}
 .act.locked svg{stroke:var(--muted)}
 #play{position:fixed;inset:0;z-index:55;background:rgba(33,29,29,.45);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .p-wrap{position:absolute;left:50%;top:max(24px,6vh);transform:translateX(-50%);width:min(640px,calc(100vw - 32px));max-height:calc(100% - max(48px,12vh));display:flex;flex-direction:column;background:var(--paper-solid);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
@@ -7229,6 +7231,7 @@ function renderIslandCard(isl) {
     <div class="card-head"><div class="hexb" style="--c:${isl.accent}">${esc(T(isl.glyph))}</div>
       <div><div class="eyebrow">${esc(T(D.grades[isl.grade].name))} · ${esc(isl.lesson)}</div><h2>${esc(T(isl.name))}</h2></div></div>
     <p class="summary">${esc(T(isl.summary))}</p>
+    ${lockNoteHTML(isl)}
     ${(mm => mm ? `<button class="mapthumb" data-view="${mm.id}"><img src="${esc(mm.post.img)}" width="${mm.post.w}" height="${mm.post.h}" alt="${esc(T(mm.name))}" loading="lazy"><span>${tr('點圖片放大看心智圖', 'Tap to enlarge the mind map')}</span></button>` : '')(isl.items.find(x => x.post))}
     ${LP ? activitiesHTML(isl) : ''}
     <div class="sec"><div class="eyebrow">${tr('本課內容', 'In this lesson')}</div>
@@ -7681,11 +7684,18 @@ const LAB_NAME = {
   shadow: ['影子實驗：太陽和影子', 'Shadow lab'], fist: ['拳頭量高度角', 'Measure with your fist'], moon: ['月相變化觀察', 'Moon phase lab'],
   noise: ['聽聽看：樂音和噪音', 'Music or noise?'], music: ['樂器音調實驗', 'Pitch lab'], light: ['光的四大本領', 'Light lab']
 };
+function lockNoteHTML(isl) {
+  if (!LP || unlocked(isl) || !prevIsl(isl)) return '';
+  let h = ''; const open = false;
+  if (!open) { const p = prevIsl(isl); h += `<div class="lock-note"><b>🔒 ${tr('這座島還沒解鎖', 'This island is locked')}</b><p>${tr(`橋上的柵欄還關著，角色暫時走不過來，闖關問答也還不能玩。先到「${codeOf(p)} ${esc(T(p.label))}」通過闖關問答（答對 3 題），柵欄就會打開！心智圖和下面的小遊戲現在就可以先玩。`, `The bridge fence is closed. Pass the quiz on ${codeOf(p)} (3 correct) to open it. The mind map and mini games below are already open.`)}</p><button class="btn primary" data-act="quiz" data-isl="${p.id}">${tr(`挑戰「${codeOf(p)}」闖關問答`, `Take the ${codeOf(p)} quiz`)}</button></div>`; }
+  return h;
+}
 function activitiesHTML(isl) {
   const q = LD.quiz[isl.id], lab = LD.labs[isl.id], srt = LD.sort[isl.id];
   const fills = isl.items.filter(it => LD.blanks[it.id]);
   const open = unlocked(isl), st = LP.q[isl.id] || 0;
-  let h = `<div class="sec acts"><div class="eyebrow">${tr('學習關卡', 'Challenges')}</div>`;
+  let h = '';
+  h += `<div class="sec acts"><div class="eyebrow">${tr('學習關卡', 'Challenges')}</div>`;
   if (q) h += open
     ? `<button class="act main" data-act="quiz" data-isl="${isl.id}">${ICON.quiz}<span><b>${tr('闖關問答', 'Quiz')}</b><small>${tr(`每次 5 題，答對 3 題過關`, '5 questions, 3 to pass')}</small></span><em class="stars">${starStr(st)}</em></button>`
     : `<div class="act locked">${ICON.lock}<span><b>${tr('闖關問答（未解鎖）', 'Quiz (locked)')}</b><small>${tr(`先過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」這一關`, `Pass ${codeOf(prevIsl(isl))} first`)}</small></span></div>`;
@@ -7775,7 +7785,7 @@ function startQuiz(isl) {
       <div class="qrow center"><button class="btn" id="qAgain">${tr('再玩一次', 'Play again')}</button>${nowOpen ? `<button class="btn primary" data-act="goisl" data-isl="${nx.id}">${tr('前往下一課', 'Next lesson')}</button>` : ''}<button class="btn" data-act="pass">${tr('看護照', 'Passport')}</button></div></div>`;
     $('#qAgain').addEventListener('click', () => startQuiz(isl));
     if (stars) confetti(PL.wrap);
-    if (wasLocked && nowOpen) toast(tr(`解鎖 ${codeOf(nx)} ${T(nx.label)}！`, `Unlocked ${codeOf(nx)}!`));
+    if (wasLocked && nowOpen) { toast(tr(`解鎖 ${codeOf(nx)} ${T(nx.label)}！`, `Unlocked ${codeOf(nx)}!`)); if (typeof avSay === 'function') avSay(tr(`柵欄打開了！可以去 ${codeOf(nx)} 囉！`, `The fence is open! Off to ${codeOf(nx)}!`), 5); }
     refreshProgressUI();
   };
   renderQ();
