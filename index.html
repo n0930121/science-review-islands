@@ -5222,7 +5222,7 @@ input[type=range]{width:100%;accent-color:var(--coral);min-height:32px}
       <li data-en="Drag to rotate, scroll or pinch to zoom. The back islands are Grade 4, the front ones Grade 5.">拖曳旋轉、滾輪或雙指縮放。後排是小四（南一），前排是小五（康軒），一座島就是一課。</li>
       <li data-en="Tap an island or a building. The card shows the mind map and key points; tap the picture to enlarge it.">點一座島或島上的建物，卡片會直接顯示老爹的心智圖和重點整理，點圖片可以放大。也可以打開「清單」直接點。</li>
       <li data-en="Each island has challenges: a quiz, experiments, sorting games and mind-map fill-ins. Pass a quiz to unlock the next lesson and collect stars in your passport.">每座島都有學習關卡：闖關問答、科學實驗、分類配對和心智圖填空。過關就能解鎖下一課，星星會記在「護照」裡。</li>
-      <li data-en="Your character walks to the island you tap. Talk to islanders with a “!”, finish quests, and collect cards and leaves in your adventure book.">點一座島，你的角色就會走過去。頭上有「！」的是島民，幫他完成任務；經驗值、圖鑑卡和葉子幣都記在「冒險手冊」裡。</li>
+      <li data-en="Your character walks to the island you tap; tap the ground on that island to walk to that spot. On a computer, walk freely with W A S D (arrow keys still turn the camera). Talk to islanders with a “!”, finish quests, and collect cards and leaves in your adventure book.">點一座島，你的角色就會走過去；再點島上的地面，角色就走到那個位置。用電腦時可以按 W A S D 自由走動（方向鍵還是轉鏡頭）。頭上有「！」的是島民，幫他完成任務，收集圖鑑卡和葉子幣。</li>
       <li data-en="Open the Learning hub for the daily question, your mistake book, a treasure hunt, animal survival and a two-player quiz.">打開「學習中心」：每日一題、錯題本、島上尋寶、動物求生大作戰、親子快問快答都在這裡。</li>
       <li data-en="Turn on “Routes” to see the reading order, with little helpers carrying notes along it.">打開「路線」，看小人照課本順序，把筆記從這一課搬到下一課。</li>
     </ol>
@@ -7103,12 +7103,12 @@ function pickAt(cx, cy) {
       const rec = o.userData.recs[h.instanceId]; if (!rec || !rec.owner) continue;
       if (rec.owner.startsWith('item:')) { if (huntCheck('item', rec.owner.slice(5))) return; return selectItem(rec.owner.slice(5)); }
       if (rec.owner.startsWith('prop:')) { const pid = rec.owner.slice(5); if (huntCheck('prop', pid)) return; return selectIsland(pid.split(':')[0]); }
-      if (rec.owner.startsWith('isl:')) { if (HUNT) return; return selectIsland(rec.owner.slice(4)); }
+      if (rec.owner.startsWith('isl:')) { if (HUNT) return; return groundClick(rec.owner.slice(4), h.point); }
       continue;
     }
     if (groundMeshes.includes(o) || o === walls) {
       let best = null, bd = 1e9; ISL.forEach(i => { const d = Math.hypot(i.x - h.point.x, i.z - h.point.z); if (d < bd) { bd = d; best = i; } });
-      if (best && bd < R + .1) return selectIsland(best.id);
+      if (best && bd < R + .1) return HUNT ? selectIsland(best.id) : groundClick(best.id, h.point);
     }
   }
 }
@@ -8703,8 +8703,11 @@ function buildAvatar() {
   const tag = new CSS2DObject(tagEl); tag.position.set(0, .53, 0); root.add(tag);
   let pet = null; if (AV.eq.pet) { pet = buildPet(AV.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(p).add(new V3(-.3, 0, .2)); scene.add(pet); }
   const boat = new THREE.Group(); part(boat, W_GEO.box, '#ffffff', 0, -.02, 0, .26, .07, .5); part(boat, W_GEO.box, COL.wood, 0, .03, 0, .2, .02, .38); boat.visible = false; root.add(boat);
-  AVA = { root, tag, tagEl, pet, boat, node, path: null, s: 0, len: 0, yaw: 0, say: 0, target: null };
+  const mark = new THREE.Mesh(new THREE.RingGeometry(.07, .1, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#db6a41', transparent: true, depthWrite: false })); mark.visible = false; mark.renderOrder = 6; mark.userData.t = 9; scene.add(mark);
+  if (AVA && AVA.mark) scene.remove(AVA.mark);
+  AVA = { root, tag, tagEl, pet, boat, mark, node, isl: ISL[NODES[node].isl], path: null, s: 0, len: 0, yaw: 0, say: 0, lockSay: 0, target: null };
   updateTag();
+  try { if (!localStorage.getItem('scienceIslands.walkTip')) { localStorage.setItem('scienceIslands.walkTip', '1'); setTimeout(() => avSay(tr('點島上的地面我就走過去；用電腦也可以按 W A S D 走路！', 'Tap the ground and I walk there — or use W A S D!'), 6), 1500); } } catch (e) {}
 }
 function updateTag() { if (!AVA) return; const li = levelInfo(); AVA.tagEl.innerHTML = `<b>${esc(ME.name)}</b><span>Lv.${li.lv}</span>${AVA.say ? `<em>${esc(AVA.sayText)}</em>` : ''}`; }
 function avSay(text, sec = 4) { if (!AVA) return; AVA.say = sec; AVA.sayText = text; updateTag(); dirty = true; }
@@ -8719,21 +8722,82 @@ function routeNodes(src, dst) {
   }
   return pts;
 }
-function advGoto(islId, fromSelect) {
+/* ---------- walkable ground: island hexes + bridges ---------- */
+const HEX_AP = R * Math.cos(Math.PI / 6), WALK_AP = HEX_AP - .09;
+function inHex(isl, x, z, ap = WALK_AP) { const dx = x - isl.x, dz = z - isl.z; for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3; if (dx * Math.cos(a) + dz * Math.sin(a) > ap) return false; } return true; }
+function islAt(x, z, ap = HEX_AP) { for (const i of ISL) if (inHex(i, x, z, ap)) return i; return null; }
+const BRIDGE_LIST = [...BRIDGE.entries()].map(([k, b]) => { const [i, j] = k.split('-').map(Number); return { ...b, A: ISL[i], B: ISL[j] }; });
+function bridgeAt(x, z) {
+  for (const b of BRIDGE_LIST) {
+    const vx = b.bx - b.ax, vz = b.bz - b.az, L2 = vx * vx + vz * vz, t = ((x - b.ax) * vx + (z - b.az) * vz) / L2;
+    if (t < 0 || t > 1) continue;
+    if (Math.hypot(x - (b.ax + vx * t), z - (b.az + vz * t)) < .13) return { b, t };
+  }
+  return null;
+}
+function groundAt(x, z) {
+  const i = islAt(x, z, WALK_AP);
+  if (i) return unlocked(i) ? { y: RING_Y, isl: i } : { locked: i };
+  const br = bridgeAt(x, z);
+  if (br) { const far = br.t > .5 ? br.b.B : br.b.A; if (br.t > .3 && br.t < .7 && !unlocked(far)) return { locked: far }; return { y: TOP + .03 + Math.sin(Math.PI * br.t) * br.b.h, bridge: true }; }
+  return null;
+}
+function nearestNode(p, isl) { let best = 0, bd = 1e9; const lo = isl ? isl.idx * 12 : 0, hi = isl ? lo + 12 : NODES.length; for (let k = lo; k < hi; k++) { const d = Math.hypot(NODES[k].x - p.x, NODES[k].z - p.z); if (d < bd) { bd = d; best = k; } } return best; }
+function lockedSay(isl) { if (AVA.lockSay > 0) return; AVA.lockSay = 3; avSay(tr(`柵欄還沒打開：先通過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」！`, `Pass ${codeOf(prevIsl(isl))} first!`), 2.5); }
+function advGoto(islId, fromSelect, point) {
   if (!ADV_READY || !AVA || !ME) return;
   const isl = ISL_BY.get(islId); if (!isl) return;
-  if (!unlocked(isl)) { avSay(tr(`柵欄還沒打開：先通過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」！`, `Pass ${codeOf(prevIsl(isl))} first!`)); return; }
-  const dst = homeNode(isl); if (AVA.node === dst && !AVA.path) return;
-  if (AVA.path) { AVA.root.position.copy(AVA.path.pts[AVA.path.pts.length - 1]); AVA.node = AVA.path.dst; AVA.path = null; AVA.boat.visible = false; }
-  let pts = routeNodes(AVA.node, dst), boat = false;
-  if (!pts) { const a = AVA.root.position.clone(), b = nodePos(dst); pts = []; for (let i = 0; i <= 24; i++) { const t = i / 24; pts.push(new V3(lerp(a.x, b.x, t), lerp(RING_Y, WATER_Y + .06, Math.sin(Math.PI * t) ** .3), lerp(a.z, b.z, t))); } boat = true; }
+  if (!unlocked(isl)) { lockedSay(isl); return; }
+  const R0 = AVA.root;
+  if (AVA.path) { if (AVA.path.boat) R0.position.copy(AVA.path.pts[AVA.path.pts.length - 1]); AVA.path = null; AVA.boat.visible = false; }
+  const here = R0.position.clone(), hereIsl = islAt(here.x, here.z);
+  const goal = point ? new V3(point.x, RING_Y, point.z) : nodePos(homeNode(isl));
+  if (here.distanceTo(goal) < .06) { if (!point) avSay(tr('我已經在這座島上囉！', "I'm already here!"), 2); return; }
+  let pts = null, boat = false;
+  if (hereIsl === isl) pts = [here, goal];
+  else {
+    const r = routeNodes(nearestNode(here), nearestNode(goal, isl));
+    if (r) { pts = r; if (here.distanceTo(pts[0]) > .02) pts.unshift(here); if (goal.distanceTo(pts[pts.length - 1]) > .02) pts.push(goal); }
+  }
+  if (!pts) { const a = here, b2 = goal; pts = []; for (let i = 0; i <= 24; i++) { const t = i / 24; pts.push(new V3(lerp(a.x, b2.x, t), lerp(RING_Y, WATER_Y + .06, Math.sin(Math.PI * t) ** .3), lerp(a.z, b2.z, t))); } boat = true; }
   const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
   const len = cum[cum.length - 1];
-  AVA.path = { pts, cum, len, dst, isl, boat, speed: Math.max(1.6, len / (boat ? 4.5 : 3.6)) }; AVA.s = 0; AVA.boat.visible = boat;
+  AVA.path = { pts, cum, len, isl, boat, speed: Math.max(1.6, len / (boat ? 4.5 : 3.2)) }; AVA.s = 0; AVA.boat.visible = boat;
   if (reduced || AV.fast) { AVA.s = len; }
   dirty = true;
 }
+/* tap the ground: first tap selects the island, then the avatar walks to the tapped spot */
+function groundClick(id, p) {
+  const isl = ISL_BY.get(id);
+  if (!(ADV_READY && AVA && ME && isl && p)) return selectIsland(id);
+  if (selIslandId() !== id) selectIsland(id);
+  if (!unlocked(isl)) return;
+  if (!inHex(isl, p.x, p.z)) { const dx = p.x - isl.x, dz = p.z - isl.z, f = .92 * WALK_AP / Math.max(.01, Math.hypot(dx, dz)); p = new V3(isl.x + dx * Math.min(1, f), 0, isl.z + dz * Math.min(1, f)); }
+  advGoto(id, true, p);
+  AVA.mark.position.set(p.x, RING_Y + .005, p.z); AVA.mark.userData.t = 0; AVA.mark.visible = true;
+}
+/* WASD free walking */
+const WKEYS = new Set();
+function walkKeyOK(e) {
+  if (!ADV_READY || !AVA || !ME || e.ctrlKey || e.metaKey || e.altKey) return false;
+  if (e.target && e.target.closest && e.target.closest('input,select,textarea,[contenteditable]')) return false;
+  if (!PL.el.hidden || !VW.el.hidden || !$('#help').hidden) return false;
+  return true;
+}
+addEventListener('keydown', e => { const k = (e.key || '').toLowerCase(); if (k.length === 1 && 'wasd'.includes(k) && walkKeyOK(e)) { WKEYS.add(k); e.preventDefault(); } });
+addEventListener('keyup', e => WKEYS.delete((e.key || '').toLowerCase()));
+addEventListener('blur', () => WKEYS.clear());
+const _fw = new V3(), _rt = new V3(), _mv = new V3();
+function walkStep(dx, dz) {
+  const P = AVA.root.position, g = groundAt(P.x + dx, P.z + dz);
+  if (!g) return false;
+  if (g.locked) { lockedSay(g.locked); return false; }
+  P.x += dx; P.z += dz; P.y = g.y;
+  camera.position.x += dx; camera.position.z += dz; controls.target.x += dx; controls.target.z += dz;
+  return true;
+}
 function onArrive(isl) {
+  AVA.node = nearestNode(AVA.root.position, isl); AVA.isl = isl;
   AV.at = AVA.node; saveP();
   const d = dayState(); if (!d.visits.includes(isl.id)) { d.visits.push(isl.id); saveP(); advEvent('visit', { isl: isl.id }); }
   const n = AD.npc[isl.id];
@@ -8748,6 +8812,21 @@ var advTick = function (dt, now) {
   if (!AVA) return;
   const t = now / 1000, R0 = AVA.root, P0 = R0.userData.parts;
   let moving = false;
+  if (AVA.lockSay > 0) AVA.lockSay -= dt;
+  let kx = 0, kz = 0;
+  if (WKEYS.size) { if (WKEYS.has('w')) kz += 1; if (WKEYS.has('s')) kz -= 1; if (WKEYS.has('d')) kx += 1; if (WKEYS.has('a')) kx -= 1; }
+  if (kx || kz) {
+    if (AVA.path) { if (AVA.path.boat) R0.position.copy(AVA.path.pts[AVA.path.pts.length - 1]); AVA.path = null; AVA.boat.visible = false; }
+    flight = null; zoomGoal = null;
+    camera.getWorldDirection(_fw); _fw.y = 0; _fw.normalize(); _rt.set(-_fw.z, 0, _fw.x);
+    _mv.copy(_fw).multiplyScalar(kz).addScaledVector(_rt, kx).normalize();
+    const sp = Math.min(.1, 1.5 * dt);
+    if (!walkStep(_mv.x * sp, _mv.z * sp)) { if (!walkStep(_mv.x * sp, 0)) walkStep(0, _mv.z * sp); }
+    AVA.yaw = Math.atan2(_mv.x, _mv.z); moving = true; AVA.walked = true;
+    const ni = islAt(R0.position.x, R0.position.z, WALK_AP);
+    if (ni && ni !== AVA.isl) onArrive(ni);
+  } else if (AVA.walked) { AVA.walked = false; AVA.node = nearestNode(R0.position); AV.at = AVA.node; saveP(); }
+  if (AVA.mark.visible) { const m = AVA.mark, k = (m.userData.t += dt) / .9; m.scale.setScalar(1 + k * 1.2); m.material.opacity = Math.max(0, 1 - k); if (k >= 1) m.visible = false; }
   if (AVA.path) {
     const pa = AVA.path; AVA.s = Math.min(pa.len, AVA.s + pa.speed * dt);
     let lo = 0; while (lo < pa.cum.length - 2 && pa.cum[lo + 1] < AVA.s) lo++;
@@ -8755,7 +8834,7 @@ var advTick = function (dt, now) {
     _ap.lerpVectors(pa.pts[lo], pa.pts[lo + 1], k); _ad.subVectors(pa.pts[lo + 1], pa.pts[lo]).setY(0);
     R0.position.copy(_ap); if (_ad.lengthSq() > 1e-6) AVA.yaw = Math.atan2(_ad.x, _ad.z);
     moving = true;
-    if (AVA.s >= pa.len) { AVA.node = pa.dst; AVA.path = null; AVA.boat.visible = false; onArrive(pa.isl); }
+    if (AVA.s >= pa.len) { AVA.path = null; AVA.boat.visible = false; onArrive(pa.isl); }
   }
   R0.rotation.y += ((AVA.yaw - R0.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 10);
   const ph = t * 9;
