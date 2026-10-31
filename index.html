@@ -8655,7 +8655,7 @@ function buildChibi(look, eq = {}, forPreview = false) {
   if (eq.hat === 'h_crown') { part(body, W_GEO.cyl, COL.gold, 0, hy + .04, 0, .12, .04, .12); for (let k = 0; k < 5; k++) { const a = k / 5 * Math.PI * 2; part(body, W_GEO.cone, COL.gold, Math.cos(a) * .055, hy + .1, Math.sin(a) * .055, .025, .05, .025); } part(body, W_GEO.eye, COL.coral, 0, hy + .06, .06, 1.2, 1.2, 1.2); }
   if (eq.back === 'b_bag') part(body, W_GEO.box, '#58a6a6', 0, .16 + y, -.06, .09, .1, .05);
   if (eq.back === 'b_cape') part(body, W_GEO.box, '#c8363d', 0, .1 + y, -.055, .13, .22, .01, .15);
-  if (eq.back === 'b_wings') for (const s of [-1, 1]) part(body, W_GEO.head, '#f2b5c6', s * .07, .21 + y, -.07, .7, 1.05, .12, 0, s * .5, s * .3, { transparent: true, opacity: .85 });
+  if (eq.back === 'b_wings') for (const s of [-1, 1]) { part(body, W_GEO.head, '#f4a9c0', s * .1, .25 + y, -.07, 1.05, .78, .1, 0, s * .35, s * .55, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#fbd3df', s * .085, .15 + y, -.065, .72, .55, .1, 0, s * .35, -s * .45, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#ffffff', s * .11, .26 + y, -.075, .4, .3, .11, 0, s * .35, s * .55, { transparent: true, opacity: .55 }); }
   root.userData.parts = parts; root.userData.body = body;
   return root;
 }
@@ -8664,7 +8664,7 @@ function buildPet(id) {
   if (id === 'p_turtle') { part(g, W_GEO.dome, '#5c8f4f', 0, .02, 0, .12, .08, .14); part(g, W_GEO.head, '#9cc27a', 0, .04, .09, .35, .3, .35); for (const [x, z] of [[-.05, .05], [.05, .05], [-.05, -.05], [.05, -.05]]) part(g, W_GEO.head, '#9cc27a', x, .015, z, .2, .15, .2); }
   if (id === 'p_dog') { part(g, W_GEO.body, '#c99a6b', 0, -.06, 0, .9, .7, 1.4, Math.PI / 2); part(g, W_GEO.head, '#c99a6b', 0, .1, .09, .7, .65, .7); for (const s of [-1, 1]) part(g, W_GEO.head, '#8a5a3a', s * .04, .14, .08, .2, .35, .12); part(g, W_GEO.eye, COL.ink, 0, .1, .14, 1.2, 1.2, 1.2); for (const [x, z] of [[-.03, .05], [.03, .05], [-.03, -.05], [.03, -.05]]) part(g, W_GEO.leg, '#c99a6b', x, .06, z, .8, .8, .8); }
   if (id === 'p_bee') { part(g, W_GEO.head, '#f3c34a', 0, 0, 0, .55, .45, .7); part(g, W_GEO.head, COL.ink, 0, 0, -.01, .56, .46, .15); for (const s of [-1, 1]) part(g, W_GEO.head, '#ffffff', s * .03, .04, 0, .35, .12, .3, 0, 0, s * .4, { transparent: true, opacity: .8 }); g.userData.fly = .3; }
-  if (id === 'p_firefly') { part(g, W_GEO.head, '#3b3535', 0, 0, .01, .35, .3, .5); const glow = new THREE.Mesh(W_GEO.head, MAT.glow); glow.scale.set(.4, .4, .45); glow.position.z = -.03; g.add(glow); part(g, W_GEO.head, '#fff6c8', 0, -.02, -.035, .32, .3, .32, 0, 0, 0, { emissive: '#ffd84a', emissiveIntensity: 1.4 }); g.userData.fly = .36; }
+  if (id === 'p_firefly') { part(g, W_GEO.head, '#3b3535', 0, 0, .01, .35, .3, .5); const glow = new THREE.Mesh(W_GEO.head, MAT.glow); glow.scale.set(.4, .4, .45); glow.position.z = -.03; g.add(glow); part(g, W_GEO.head, '#fff6c8', 0, -.02, -.035, .32, .3, .32, 0, 0, 0, { emissive: '#ffd84a', emissiveIntensity: 1.4 }); for (const s of [-1, 1]) part(g, W_GEO.head, '#ffffff', s * .022, .02, .005, .28, .08, .36, 0, 0, s * .5, { transparent: true, opacity: .7 }); g.userData.fly = .36; }
   return g;
 }
 
@@ -8681,8 +8681,8 @@ function buildAvatar() {
   const p = nodePos(node); root.position.copy(p);
   scene.add(root);
   const tagEl = document.createElement('div'); tagEl.className = 'me-tag';
-  const tag = new CSS2DObject(tagEl); tag.position.set(0, .62, 0); root.add(tag);
-  let pet = null; if (AV.eq.pet) { pet = buildPet(AV.eq.pet); pet.scale.setScalar(1.6); pet.position.copy(p).add(new V3(-.3, 0, .2)); scene.add(pet); }
+  const tag = new CSS2DObject(tagEl); tag.position.set(0, .53, 0); root.add(tag);
+  let pet = null; if (AV.eq.pet) { pet = buildPet(AV.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(p).add(new V3(-.3, 0, .2)); scene.add(pet); }
   const boat = new THREE.Group(); part(boat, W_GEO.box, '#ffffff', 0, -.02, 0, .26, .07, .5); part(boat, W_GEO.box, COL.wood, 0, .03, 0, .2, .02, .38); boat.visible = false; root.add(boat);
   AVA = { root, tag, tagEl, pet, boat, node, path: null, s: 0, len: 0, yaw: 0, say: 0, target: null };
   updateTag();
@@ -8744,7 +8744,7 @@ var advTick = function (dt, now) {
   else if (moving) { P0.legL.rotation.x = -1.1 + Math.sin(ph * .7) * .45; P0.legR.rotation.x = -1.1 - Math.sin(ph * .7) * .45; }
   R0.userData.body.position.y = moving ? Math.abs(Math.sin(ph)) * .012 : Math.sin(t * 2) * .004;
   if (AVA.pet) {
-    const back = new V3(-Math.sin(AVA.yaw) * .32 - Math.cos(AVA.yaw) * .18, 0, -Math.cos(AVA.yaw) * .32 + Math.sin(AVA.yaw) * .18).add(R0.position);
+    const back = new V3(-Math.sin(AVA.yaw) * .1 - Math.cos(AVA.yaw) * .34, 0, -Math.cos(AVA.yaw) * .1 + Math.sin(AVA.yaw) * .34).add(R0.position);
     AVA.pet.position.lerp(back, Math.min(1, dt * 4)); const fly = AVA.pet.userData.fly || 0;
     AVA.pet.children.length; if (fly) AVA.pet.position.y = R0.position.y + fly + Math.sin(t * 3) * .04; else AVA.pet.position.y = R0.position.y;
     AVA.pet.rotation.y = AVA.yaw;
@@ -8925,7 +8925,7 @@ function makePreview(host) {
   const loop = () => { if (!alive) return; raf = requestAnimationFrame(loop); if (!reduced) ang += .012; if (g) g.rotation.y = ang; if (pet) { pet.position.set(Math.sin(ang - 1) * .9, pet.userData.fly ? 1 : 0, Math.cos(ang - 1) * .9); pet.rotation.y = ang; } size(); rr.render(sc, cam); };
   loop();
   return {
-    set(look, eq = {}) { if (g) sc.remove(g); if (pet) sc.remove(pet); g = buildChibi(look, eq, true); g.scale.setScalar(5); sc.add(g); pet = eq.pet ? buildPet(eq.pet) : null; if (pet) { pet.scale.setScalar(4); sc.add(pet); } },
+    set(look, eq = {}) { if (g) sc.remove(g); if (pet) sc.remove(pet); g = buildChibi(look, eq, true); g.scale.setScalar(5); sc.add(g); pet = eq.pet ? buildPet(eq.pet) : null; if (pet) { pet.scale.setScalar(pet.userData.fly ? 6 : 4); sc.add(pet); } },
     dispose() { alive = false; cancelAnimationFrame(raf); rr.dispose(); }
   };
 }
