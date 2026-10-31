@@ -4552,6 +4552,16 @@ button{font-family:inherit;color:inherit}
 .js-city,.js-sub{white-space:nowrap;word-break:keep-all}
 #brand h1 small{font:700 15px/1 var(--font);color:var(--coral);letter-spacing:.2em}
 #brand .brand-note{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+#brand:not(.mini){padding-right:52px!important}
+.brand-tog{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line,#e7d9c8);background:#fff;display:grid;place-items:center;cursor:pointer;padding:0;color:var(--ink)}
+.brand-tog svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+@media (hover:hover){.brand-tog:hover{background:var(--ink);color:#fff}}
+#brand.mini{width:auto;padding:8px 50px 8px 14px;min-height:48px;align-content:center}
+#brand.mini > :not(h1):not(.brand-tog){display:none!important}
+#brand.mini h1{font-size:17px}
+#brand.mini h1 small{display:none}
+#brand.mini .brand-tog{top:8px}
+#brand.mini .brand-tog svg{transform:rotate(180deg)}
 
 /* Tools */
 #tools{position:fixed;z-index:12;top:calc(16px + env(safe-area-inset-top,0px));left:calc(16px + 340px + 10px + env(safe-area-inset-left,0px));display:flex;gap:8px}
@@ -5070,8 +5080,11 @@ input[type=range]{width:100%;accent-color:var(--coral);min-height:32px}
 .bubble{background:#fff;border-radius:999px;padding:4px 9px;font:600 11px/1 var(--font);box-shadow:0 2px 6px #4a2a1426;white-space:nowrap;pointer-events:none}
 
 /* Help */
-#help{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(60,40,30,.22);padding:16px}
-.help-card{max-width:440px;width:100%;border-radius:22px;padding:22px;display:grid;gap:14px;background:var(--paper-solid);box-shadow:var(--shadow)}
+#help{position:fixed;inset:0;z-index:40;display:grid;place-items:safe center;background:rgba(60,40,30,.22);padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom));overflow:hidden}
+.help-card{position:relative;max-width:440px;width:100%;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;border-radius:22px;padding:22px;display:grid;gap:14px;background:var(--paper-solid);box-shadow:var(--shadow)}
+.help-x{position:sticky;top:0;justify-self:end;margin:-8px -8px -44px 0;width:40px;height:40px;border-radius:50%;border:1px solid var(--line,#e7d9c8);background:var(--paper-solid);font-size:22px;line-height:1;cursor:pointer;z-index:2;color:var(--ink)}
+.help-card #helpOk{position:sticky;bottom:0;box-shadow:0 -10px 18px var(--paper-solid)}
+@media (max-width:600px){.help-card{padding:18px;gap:10px}.help-card h2{font-size:19px}.help-card .steps li{font-size:14px;line-height:1.55}}
 .help-card h2{margin:0;font-size:22px}
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
 .steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:14px;line-height:1.6;counter-increment:s}
@@ -5126,6 +5139,7 @@ input[type=range]{width:100%;accent-color:var(--coral);min-height:32px}
 </div>
 
 <header id="brand" class="glass">
+  <button class="brand-tog" id="brandTog" type="button" aria-expanded="true" title="收合" data-en-title="Collapse"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
   <div class="eyebrow js-eyebrow">小四南一 · 小五康軒</div>
   <h1><span class="js-city">自然科心智圖</span><small class="js-sub">複習島</small></h1>
   <p class="brand-note" id="brandNote"></p>
@@ -5216,6 +5230,7 @@ input[type=range]{width:100%;accent-color:var(--coral);min-height:32px}
 </div>
 <div id="help" hidden>
   <div class="help-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <button class="help-x" id="helpX" type="button" aria-label="關閉說明">×</button>
     <div class="eyebrow" data-en="How to explore">怎麼逛</div>
     <h2 id="helpTitle"><span data-en="Welcome to">歡迎來到</span> <span class="js-city">自然科心智圖</span><span class="js-sub">複習島</span></h2>
     <ol class="steps">
@@ -7497,6 +7512,10 @@ $('#btnFull').addEventListener('click', () => { if (state.bird) setBird(false, t
 $('#btnList').addEventListener('click', () => setSide(!state.sideOpen));
 $('#btnHelp').addEventListener('click', () => showHelp(true));
 $('#helpOk').addEventListener('click', () => showHelp(false));
+$('#helpX').addEventListener('click', () => showHelp(false));
+function setBrandMini(on) { $('#brand').classList.toggle('mini', on); const t = $('#brandTog'); t.setAttribute('aria-expanded', String(!on)); t.title = on ? tr('展開', 'Expand') : tr('收合', 'Collapse'); try { store.set('scienceIslands.brandMini', on ? '1' : ''); } catch (e) {} if (typeof placeCard === 'function') placeCard(); }
+$('#brandTog').addEventListener('click', e => { e.stopPropagation(); setBrandMini(!$('#brand').classList.contains('mini')); });
+try { if (store.get('scienceIslands.brandMini') === '1') setBrandMini(true); } catch (e) {}
 $('#help').addEventListener('click', e => { if (e.target.id === 'help') showHelp(false); });
 function showHelp(on) { $('#help').hidden = !on; if (on) $('#helpOk').focus(); else store.set('scienceIslands.helpSeen', '1'); }
 $('#btnLang').addEventListener('click', () => setLang(!EN));
@@ -8743,7 +8762,7 @@ function groundAt(x, z) {
   return null;
 }
 function nearestNode(p, isl) { let best = 0, bd = 1e9; const lo = isl ? isl.idx * 12 : 0, hi = isl ? lo + 12 : NODES.length; for (let k = lo; k < hi; k++) { const d = Math.hypot(NODES[k].x - p.x, NODES[k].z - p.z); if (d < bd) { bd = d; best = k; } } return best; }
-function lockedSay(isl) { if (AVA.lockSay > 0) return; AVA.lockSay = 3; avSay(tr(`柵欄還沒打開：先通過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」！`, `Pass ${codeOf(prevIsl(isl))} first!`), 2.5); }
+function lockedSay(isl) { if (AVA.lockSay > 0) return; AVA.lockSay = 3; toast(tr(`🔒 ${codeOf(isl)} 還沒解鎖：先通過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」的闖關問答`, `🔒 ${codeOf(isl)} is locked: pass ${codeOf(prevIsl(isl))} first`)); avSay(tr(`柵欄還沒打開：先通過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」！`, `Pass ${codeOf(prevIsl(isl))} first!`), 2.5); }
 function advGoto(islId, fromSelect, point) {
   if (!ADV_READY || !AVA || !ME) return;
   const isl = ISL_BY.get(islId); if (!isl) return;
