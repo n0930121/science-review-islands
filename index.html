@@ -15427,6 +15427,51 @@ window.DATA = {
      "kind": "lab"
     },
     "card": "c435"
+   },
+   "z1-1": {
+    "role": "student",
+    "who": "踢踏小鴨",
+    "line": "ㄅㄆㄇ有的是聲符、有的是韻符，我老是分不清楚。可以幫我把它們放進對的籃子嗎？",
+    "task": {
+     "kind": "sort"
+    },
+    "card": "z11010"
+   },
+   "z1-2": {
+    "role": "traveler",
+    "who": "紙飛機達人",
+    "line": "我的紙飛機上寫滿了注音，結果被風吹亂了！幫我把它們重新分好，飛機才能再起飛。",
+    "task": {
+     "kind": "sort"
+    },
+    "card": "z12040"
+   },
+   "z1-3": {
+    "role": "elder",
+    "who": "說故事爺爺",
+    "line": "故事屋裡的注音符號都跑出來玩了。牠們是在哪一個單元學的？幫我一個一個送回家吧！",
+    "task": {
+     "kind": "sort"
+    },
+    "card": "z13070"
+   },
+   "z1-4": {
+    "role": "worker",
+    "who": "划船叔叔",
+    "line": "小船要出發囉！先幫我把這些字照第一聲、第三聲、第四聲排好，大家才能一起喊加油！",
+    "task": {
+     "kind": "sort"
+    },
+    "card": "z14010"
+   },
+   "z1-5": {
+    "role": "researcher",
+    "who": "宇宙郵差",
+    "line": "外星人寄來一堆國字，說要分到水、口、手三個部首。你能幫我解開這個謎嗎？",
+    "task": {
+     "kind": "sort"
+    },
+    "card": "z15050"
    }
   },
   "shop": [
@@ -16202,7 +16247,7 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 .photo-prev{width:100%;border-radius:14px;box-shadow:0 4px 16px #0003}
 .pmsg{display:grid;gap:6px}.pmsg label{display:grid;gap:2px}.pmsg small{color:var(--muted)}.pmsg textarea{font:15px/1.6 var(--font);border:2px solid var(--line);border-radius:10px;padding:8px}
 .letter{background:#fffaf0!important}.letter-t{font:700 20px/1.7 var(--font);margin:6px 0}.letter-d{color:var(--muted);font-size:12px}
-.act.bossact{background:linear-gradient(160deg,#fff7d6,#ffe9a8)}
+.act.bossact{background:linear-gradient(160deg,#fff7d6,#ffe9a8)}.act.bossact.lk{filter:grayscale(.85);opacity:.6;cursor:default}
 #grpNav{flex-wrap:wrap;justify-content:center;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;padding:0!important;gap:8px!important}
 #grpNav .gn-grp{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--paper);box-shadow:0 4px 14px #4a2a1420;backdrop-filter:blur(8px)}
 #grpNav .gn-tog{background:var(--ink)!important;color:#fff}#grpNav .gn-tog i{font-style:normal;font-weight:900;transition:transform .2s;display:inline-block}
@@ -19628,6 +19673,7 @@ function activitiesHTML(isl) {
   if (srt) h += `<button class="act" data-act="sort" data-isl="${isl.id}">${ICON.sort}<span><b>${tr('分類配對', 'Sorting game')}</b><small>${tr(`${srt.length} 回合，把卡片放到正確的格子`, `${srt.length} rounds`)}</small></span><em class="ok">${LP.s[isl.id] ? '✓' : ''}</em></button>`;
   isl.items.filter(it => LD.puzzle && LD.puzzle[it.id]).forEach(it => { h += `<button class="act" data-act="puzzle" data-item="${it.id}">${ICON.puzzle}<span><b>${tr('心智圖拼圖', 'Mind-map puzzle')}${/篇/.test(T(it.name)) ? '・' + esc(T(it.name).split('・')[1] || '') : ''}</b><small>${tr(`${LD.puzzle[it.id].length} 塊拼圖，拼回原位`, `${LD.puzzle[it.id].length} pieces`)}</small></span><em class="ok">${LP.z && LP.z[it.id] ? '✓' : ''}</em></button>`; });
   if (typeof LGAMES !== 'undefined' && isl.id === LG_ISL) LGAMES.forEach(gm => { const sv = (LP.lg || {})[gm.id] || 0; h += `<button class="act lgact" data-act="lg" data-g="${gm.id}"><span class="lg-ico">${gm.ic}</span><span><b>${esc(T(gm.n))}</b><small>${esc(T(gm.k))}・${esc(T(gm.d))}</small></span><em class="stars">${sv ? starStr(sv) : ''}</em></button>`; });
+  if (q && (LP.q[isl.id] || 0) < 3) h += `<button class="act bossact lk" type="button" disabled><span class="lg-ico">👑</span><span><b>${tr('島主挑戰', 'Island boss')}</b><small>${tr(`闖關問答拿到 3 顆星就會開放（現在 ${LP.q[isl.id] || 0} 顆）`, 'Opens at 3 stars')}</small></span></button>`;
   if (q && (LP.q[isl.id] || 0) >= 3) h += `<button class="act bossact" data-act="boss" data-isl="${isl.id}"><span class="lg-ico">👑</span><span><b>${tr('島主挑戰', 'Island boss')}</b><small>${LP.boss && LP.boss[isl.id] ? tr('已打敗 ✓ 可以再挑戰', 'Defeated ✓') : tr('5 題全對才能打敗島主，拿皇冠徽章', 'All 5 right for a crown badge')}</small></span><em class="ok">${LP.boss && LP.boss[isl.id] ? '👑' : ''}</em></button>`;
   fills.forEach(it => { h += `<button class="act" data-act="fill" data-item="${it.id}" data-noselect="1">${ICON.fill}<span><b>${tr('心智圖填空', 'Mind-map fill-in')}${/篇/.test(T(it.name)) ? '・' + esc(T(it.name).split('・')[1] || '') : ''}</b><small>${tr(`${LD.blanks[it.id].length} 個空格`, `${LD.blanks[it.id].length} blanks`)}</small></span><em class="ok">${LP.f[it.id] ? '✓' : ''}</em></button>`; });
   return h + '</div>';
