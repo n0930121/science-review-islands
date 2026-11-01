@@ -13535,7 +13535,6 @@ body.hide-labels .isl-label,body.hide-labels .grade-tag,body.hide-labels .subj-t
   <div class="hud-sep"></div>
   <div class="hud-group">
     <button class="btn tbtn" id="tgLabels" aria-pressed="false" title="隱藏島名、群島名等名稱（快捷鍵 N）" data-en-title="Hide island names (N)"><svg viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6C3.9 8.3 2 12 2 12s3.5 7 10 7a9.6 9.6 0 0 0 4.4-1"/></svg><span data-en="Hide names">隱藏名稱</span></button>
-    <button class="btn tbtn" id="tgNames" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-4 3v-3H6a2 2 0 0 1-2-2z"/></svg><span data-en="Names">名牌</span></button>
     <button class="btn tbtn" id="tgCarry" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8l-8 4-8-4z M4 8l8 4 8-4 M12 12v8"/></svg><span data-en="Carry">搬運</span></button>
     <button class="btn tbtn" id="tgFlows" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 18c4 0 4-12 8-12s4 12 8 12"/><circle cx="4" cy="18" r="1.6"/><circle cx="20" cy="18" r="1.6"/></svg><span data-en="Routes">路線</span></button>
     <button class="btn tbtn" id="tgPause" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg><span data-en="Pause">暫停</span></button>
@@ -13936,16 +13935,39 @@ function worldUV(geo, div = 2.2) {
 const groundGeos = { brick: [], speckle: [], stripe: [] };
 /* floating island underside: a rocky cone with grass lip, a waterfall and cloud puffs */
 const SKYROCK = [], SKYFALL = [], SKYPUFF = [];
+/* sky islands — "storybook strata": a turf lip with mossy drape, stepped hex strata (sand → ochre → clay → slate),
+   a glowing crystal tip in the island's own colour, hanging roots, a cloud ring at the waist and a few orbiting shards */
+const SKY_STRATA = [['#e9cf9f', .9, .72, .5], ['#d4a46a', .72, .54, .55], ['#a97f5c', .54, .36, .55], ['#7f8ca6', .36, .1, .75]];
+const SKYSHARDS = [], CRYSTAL_MAT = {};
 function skyRock(isl) {
   const top = TOP + isl.ly - .16, rr = mulberry32(hashStr(isl.id + 'rock'));
-  const lip = new THREE.CylinderGeometry(R, R * .97, .5, 6, 1, false).translate(isl.x, top - .25, isl.z);
-  const cone = new THREE.CylinderGeometry(R * .97, .28, 2.9, 12, 5, false), p = cone.attributes.position;
-  for (let k = 0; k < p.count; k++) { const y = p.getY(k), f = 1 + (rr() - .5) * .22 * (1 - Math.abs(y) / 1.45); p.setX(k, p.getX(k) * f); p.setZ(k, p.getZ(k) * f); }
-  cone.translate(isl.x, top - .5 - 1.45, isl.z); cone.computeVertexNormals();
-  SKYROCK.push(addColor(lip.toNonIndexed(), '#8a6a4c'), addColor(cone.toNonIndexed(), '#a8835e'));
-  const a = Math.PI / 2 + (rr() - .5) * .9, fx = isl.x + Math.cos(a) * (R - .35), fz = isl.z + Math.sin(a) * (R - .35);
-  SKYFALL.push({ x: fx, z: fz, a, top: top + .1, h: 2.4 + rr() * 1.2 });
-  for (let k = 0; k < 8; k++) { const b = rr() * Math.PI * 2, d = R * (.45 + rr() * .45); SKYPUFF.push({ x: isl.x + Math.cos(b) * d, y: top - 1.3 - rr() * 1.5, z: isl.z + Math.sin(b) * d, s: .32 + rr() * .3, ph: rr() * 6 }); }
+  const jag = (geo, amt, keepTop = true) => { const p = geo.attributes.position, hy = geo.parameters.height / 2; for (let k = 0; k < p.count; k++) { const y = p.getY(k); if (keepTop && y > hy - 1e-4) continue; const f = 1 + (rr() - .5) * amt; p.setX(k, p.getX(k) * f); p.setZ(k, p.getZ(k) * f); } return geo; };
+  // turf lip and the darker moss drape that spills over the edge
+  SKYROCK.push(addColor(new THREE.CylinderGeometry(R * 1.005, R * .99, .18, 6, 1).translate(isl.x, top - .09, isl.z).toNonIndexed(), '#7fb069'));
+  const drape = jag(new THREE.CylinderGeometry(R * .99, R * .9, .34, 6, 2), .07); drape.translate(isl.x, top - .18 - .17, isl.z);
+  SKYROCK.push(addColor(drape.toNonIndexed(), '#5c8f4a'));
+  // stepped strata, each band a little narrower and jagged at the bottom
+  let y = top - .52;
+  SKY_STRATA.forEach(([col, r0, r1, h], k) => { const g = jag(new THREE.CylinderGeometry(R * r0, R * r1, h, 6, 2), k === 3 ? .18 : .1); g.translate(isl.x, y - h / 2, isl.z); y -= h * .92; const gg = g.toNonIndexed(); gg.computeVertexNormals(); SKYROCK.push(addColor(gg, col)); });
+  const tipY = y;
+  // crystal cluster at the tip, coloured by the island's accent
+  const cm = CRYSTAL_MAT[isl.accent] || (CRYSTAL_MAT[isl.accent] = new THREE.MeshStandardMaterial({ color: isl.accent, emissive: isl.accent, emissiveIntensity: .75, roughness: .25, metalness: .1, flatShading: true }));
+  const cr = new THREE.Group(); cr.position.set(isl.x, tipY + .1, isl.z); scene.add(cr);
+  for (let k = 0; k < 6; k++) { const m = new THREE.Mesh(new THREE.OctahedronGeometry(1, 0), cm); const a = k / 6 * Math.PI * 2 + rr() * .4, tilt = k ? .5 + rr() * .35 : 0; m.scale.set(.09 + rr() * .05, k ? .32 + rr() * .2 : .55, .09 + rr() * .05); m.position.set(Math.cos(a) * (k ? .12 : 0), -.15, Math.sin(a) * (k ? .12 : 0)); m.rotation.set(Math.sin(a) * tilt, 0, -Math.cos(a) * tilt); cr.add(m); }
+  const glow = new THREE.PointLight(isl.accent, 1.6, 3.2, 1.8); glow.position.y = -.35; cr.add(glow);
+  // hanging roots under the drape
+  const rootMat = CRYSTAL_MAT._root || (CRYSTAL_MAT._root = new THREE.MeshStandardMaterial({ color: '#4f6b3a', roughness: 1, flatShading: true }));
+  for (let k = 0; k < 14; k++) { const a = rr() * Math.PI * 2, d = R * (.82 + rr() * .1), L = .25 + rr() * .75, m = new THREE.Mesh(new THREE.CylinderGeometry(.018, .006, L, 4), rootMat); m.position.set(isl.x + Math.cos(a) * d, top - .45 - L / 2, isl.z + Math.sin(a) * d); m.rotation.z = (rr() - .5) * .25; scene.add(m); }
+  // waterfall from the lip, ending in a mist puff
+  const a = Math.PI / 2 + (rr() - .5) * .9, fx = isl.x + Math.cos(a) * (R * .97), fz = isl.z + Math.sin(a) * (R * .97);
+  SKYFALL.push({ x: fx, z: fz, a, top: top + .02, h: 1.7 + rr() * .5 });
+  SKYPUFF.push({ x: fx + Math.cos(a) * .15, y: top - 1.75, z: fz + Math.sin(a) * .15, s: .3, ph: 0 });
+  // a slim ring of cloud at the waist
+  for (let k = 0; k < 9; k++) { const b = k / 9 * Math.PI * 2 + rr() * .3, d = R * (.78 + rr() * .18); SKYPUFF.push({ x: isl.x + Math.cos(b) * d, y: top - 1.05 - rr() * .25, z: isl.z + Math.sin(b) * d, s: .24 + rr() * .14, ph: rr() * 6 }); }
+  // orbiting rock shards
+  const sh = new THREE.Group(); sh.position.set(isl.x, top - .9, isl.z); scene.add(sh); const shMat = CRYSTAL_MAT._sh || (CRYSTAL_MAT._sh = new THREE.MeshStandardMaterial({ color: '#b08a65', roughness: 1, flatShading: true }));
+  for (let k = 0; k < 3; k++) { const b = k / 3 * Math.PI * 2 + rr(), m = new THREE.Mesh(new THREE.DodecahedronGeometry(.1 + rr() * .08, 0), shMat); m.position.set(Math.cos(b) * (R + .45 + rr() * .3), (rr() - .5) * .5, Math.sin(b) * (R + .45 + rr() * .3)); const cap = new THREE.Mesh(new THREE.CylinderGeometry(.08, .1, .04, 6), CRYSTAL_MAT._cap || (CRYSTAL_MAT._cap = new THREE.MeshStandardMaterial({ color: '#7fb069', roughness: 1, flatShading: true }))); cap.position.y = .09; m.add(cap); sh.add(m); }
+  SKYSHARDS.push({ g: sh, v: .08 + rr() * .06, ph: rr() * 6, cr });
 }
 const wallGeos = [], bandGeos = [], walkGeos = [], curbGeos = [], shallowGeos = [], foamGeos = [];
 ISL.forEach((isl, i) => {
@@ -13974,9 +13996,9 @@ if (SKYROCK.length) {
   const fallMat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, side: THREE.DoubleSide, uniforms: { uT: WU.uTime },
     vertexShader: 'varying vec2 vU; void main(){ vU = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
     fragmentShader: 'uniform float uT; varying vec2 vU; void main(){ float s = fract(vU.y * 3.0 + uT * 1.4 + sin(vU.x * 9.0) * .2); float a = (1.0 - vU.y * .9) * (.55 + .35 * step(.55, s)) * smoothstep(0.0, .2, vU.x) * smoothstep(1.0, .8, vU.x); gl_FragColor = vec4(mix(vec3(.75,.9,1.0), vec3(1.0), step(.7, s)), a); }' });
-  SKYFALL.forEach(f => { const g = new THREE.PlaneGeometry(.42, f.h).translate(0, -f.h / 2, 0); const m = new THREE.Mesh(g, fallMat); m.position.set(f.x, f.top, f.z); m.rotation.y = -f.a + Math.PI / 2; m.renderOrder = 3; scene.add(m); });
-  const puff = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, emissive: '#ffffff', emissiveIntensity: .35, flatShading: true }), SKYPUFF.length);
-  { const M = new THREE.Matrix4(), Q = new THREE.Quaternion(); SKYPUFF.forEach((c, k) => { M.compose(new V3(c.x, c.y, c.z), Q, new V3(c.s * 1.5, c.s, c.s * 1.2)); puff.setMatrixAt(k, M); }); }
+  SKYFALL.forEach(f => { const g = new THREE.PlaneGeometry(.3, f.h).translate(0, -f.h / 2, 0); const m = new THREE.Mesh(g, fallMat); m.position.set(f.x, f.top, f.z); m.rotation.y = -f.a + Math.PI / 2; m.renderOrder = 3; scene.add(m); });
+  const puff = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 3), new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, emissive: '#eef6ff', emissiveIntensity: .55, transparent: true, opacity: .82, depthWrite: false }), SKYPUFF.length);
+  { const M = new THREE.Matrix4(), Q = new THREE.Quaternion(); SKYPUFF.forEach((c, k) => { M.compose(new V3(c.x, c.y, c.z), Q, new V3(c.s * 1.25, c.s * .5, c.s * 1)); puff.setMatrixAt(k, M); }); }
   scene.add(puff); window.__skyPuff = { puff };
 }
 const bands = new THREE.Mesh(merge(bandGeos), new THREE.MeshStandardMaterial({ map: bandAtlas(), roughness: .85 }));
@@ -15892,7 +15914,6 @@ function toggle(id, key, after) {
   const btn = $('#' + id);
   btn.addEventListener('click', () => { state[key] = !state[key]; btn.setAttribute('aria-pressed', String(state[key])); after && after(state[key]); dirty = true; });
 }
-toggle('tgNames', 'showNames');
 function setHideLabels(on) { document.body.classList.toggle('hide-labels', on); const b = $('#tgLabels'); b.setAttribute('aria-pressed', String(on)); b.querySelector('span').textContent = on ? tr('顯示名稱', 'Show names') : tr('隱藏名稱', 'Hide names'); try { store.set('scienceIslands.hideLabels', on ? '1' : ''); } catch (e) {} dirty = true; }
 $('#tgLabels').addEventListener('click', () => setHideLabels(!document.body.classList.contains('hide-labels')));
 addEventListener('keydown', e => { if ((e.key || '').toLowerCase() === 'n' && !e.repeat && !e.ctrlKey && !e.metaKey && !(e.target.closest && e.target.closest('input,select,textarea'))) setHideLabels(!document.body.classList.contains('hide-labels')); });
@@ -19928,6 +19949,7 @@ function growCelebrate(isl, st) {
   for (let i = 0; i < 26; i++) { const a = Math.random() * 6.28, sp = .6 + Math.random() * 1.2; spray(isl.x + Math.cos(a) * .4, TOP + isl.ly + .3, isl.z + Math.sin(a) * .4, Math.cos(a) * sp, 1.2 + Math.random() * 1.2, Math.sin(a) * sp, .03); }
 }
 function growTick(dt, t) {
+  SKYSHARDS.forEach(S => { S.g.rotation.y = t * S.v + S.ph; S.g.position.y += Math.sin(t * .9 + S.ph) * .0012; S.cr.rotation.y = t * .25; });
   /* rainbows: appear for ~25 s every ~70 s, fading in and out */
   { const c = (t % 70) / 70, k = c < .36 ? Math.min(1, c / .05, (.36 - c) / .05) : 0; RAINBOWS.forEach(m => { m.material.opacity = .82 * k; m.visible = k > .01; }); }
   GROW.g.forEach(g => { const sp = g.userData.spark; if (sp) sp.forEach(s => { s.m.position.set(Math.cos(s.a + t * .5) * s.r, s.h + Math.sin(t * 2 + s.a) * .12, Math.sin(s.a + t * .5) * s.r); s.m.rotation.y = t * 3; }); g.children.forEach(c => { if (c.userData.flag) c.rotation.y = Math.sin(t * 3) * .25; }); });
