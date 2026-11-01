@@ -9616,7 +9616,7 @@ async function netStart() {
 /* ---------- stage: both avatars on one island ---------- */
 function netStageIsl(g) { const s = g.isl; return ISL_BY.get(s) || ISL.find(i => i.grade === s) || ISL[0]; }
 function netStage(room) {
-  closePlay(true);
+  PL.onClose = null; closePlay(true);
   const g = room.game, isl = netStageIsl(g);
   const el = document.createElement('div'); el.id = 'nd';
   el.innerHTML = `<div class="nd-top"><div class="nd-p me"><b>${esc(ME.name)}</b><span class="nd-sc" id="ndMe">0</span></div><div class="nd-mid"><span id="ndNum"></span><div class="nd-bar"><i id="ndBar"></i></div></div><div class="nd-p opp"><span class="nd-sc" id="ndOpp">0</span><b id="ndOppName"></b></div></div>
@@ -9722,7 +9722,7 @@ async function netLeave() {
   clearTimeout(N.qTimer);
   if (N.remote) { scene.remove(N.remote.root); if (N.remote.pet) scene.remove(N.remote.pet); }
   const el = $('#nd'); if (el) el.remove(); document.body.classList.remove('net-on');
-  if (PL.kind === 'net-lobby') closePlay(true);
+  if (PL.kind === 'net-lobby') { PL.onClose = null; closePlay(true); }
   try { history.replaceState(null, '', location.pathname); } catch (e) {}
   if (FB) {
     try {
