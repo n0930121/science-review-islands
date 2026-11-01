@@ -6791,6 +6791,7 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 .shop-col{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;margin:6px 0}.shop-col .bar{flex:1;max-width:180px;height:7px;border-radius:9px;background:#f1e7da;overflow:hidden}.shop-col .bar i{display:block;height:100%;background:#d99a1e}
 .shop-trying{font-weight:800;color:var(--coral);margin:4px 0}
 .me-tag i.ttl{font-style:normal;font:800 10.5px/1 var(--font);color:#fff;background:var(--rc,#7aa36b);padding:3px 7px;border-radius:999px;white-space:nowrap}
+.bottle-btn{pointer-events:auto;padding:6px 10px;border-radius:999px;border:2px solid #fff;background:#3e8ed0;color:#fff;font:800 13px/1 var(--font);cursor:pointer;box-shadow:0 3px 10px #0003;animation:bob 1.6s ease-in-out infinite}
 #duel{position:fixed;inset:0;z-index:70;display:grid;grid-template-rows:1fr auto 1fr;background:var(--paper-solid);padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:10px}
 .dside{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:14px;border-radius:20px;background:#fff;border:2px solid var(--line);min-height:0;overflow:auto}
 .dside.p1{transform:rotate(180deg);background:#f3f6fb}
@@ -9631,6 +9632,125 @@ function whalePick() {
   }
   return null;
 }
+/* ---------- more sea surprises: island-sized turtle, pirate ship, message bottle, flying fish ---------- */
+function bigPick(clr, ends, needView = true) {
+  let best = null, bd = 1e9;
+  for (const nv of needView ? [true, false] : [false]) {
+    for (let k = 0; k < 200; k++) {
+      const a = Math.random() * Math.PI * 2, rr = 5 + Math.random() * 8.5, x = CENTER.x + Math.cos(a) * rr, z = CENTER.z + Math.sin(a) * rr;
+      camera.getWorldDirection(_so); const h = Math.atan2(-_so.z, _so.x) + (Math.random() < .5 ? 0 : Math.PI) + (Math.random() - .5) * .8, hx = Math.sin(h), hz = Math.cos(h);
+      if (!seaOK(x, z, clr)) continue;
+      let ok = true; for (const t of ends) if (!seaOK(x + hx * t, z + hz * t, clr * .6)) { ok = false; break; }
+      if (!ok) continue;
+      if (nv) { _sv.set(x, WATER_Y, z).project(camera); if (Math.abs(_sv.x) > .8 || Math.abs(_sv.y) > .85 || _sv.z > 1 || seaHidden(x, z)) continue; }
+      const d = Math.hypot(camera.position.x - x, camera.position.z - z) * (.8 + Math.random() * .4);
+      if (d < bd) { bd = d; best = { x, z, h }; }
+    }
+    if (best) return best;
+  }
+  return null;
+}
+const SM = c => new THREE.MeshStandardMaterial({ color: c, roughness: .6, flatShading: true });
+function sPart(g, geo, c, x, y, z, sx, sy, sz, rx = 0, ry = 0, rz = 0) { const m = new THREE.Mesh(geo, typeof c === 'string' ? SM(c) : c); m.position.set(x, y, z); m.scale.set(sx, sy, sz); m.rotation.set(rx, ry, rz); m.castShadow = true; g.add(m); return m; }
+const SG2 = { dome: new THREE.SphereGeometry(1, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2), box: new THREE.BoxGeometry(1, 1, 1), cyl: new THREE.CylinderGeometry(1, 1, 1, 10), cone: new THREE.ConeGeometry(1, 1, 4) };
+function buildTurtle() {
+  const g = new THREE.Group(), body = new THREE.Group(); g.add(body);
+  sPart(body, SG2.dome, '#5f8f4a', 0, 0, 0, 1.9, .75, 2.2);
+  for (let k = 0; k < 11; k++) { const a = k / 11 * Math.PI * 2, r = k ? 1.15 : 0, x = Math.cos(a) * r, z = Math.sin(a) * r * 1.15; sPart(body, SG.sph, '#7aa85c', x, Math.sqrt(Math.max(0, 1 - (x / 1.9) ** 2 - (z / 2.2) ** 2)) * .75 - .02, z, .42, .08, .46); }
+  sPart(body, SG2.cyl, '#d9c48a', 0, .02, 0, 1.92, .06, 2.22);
+  const head = new THREE.Group(); head.position.set(0, .05, 2.25); body.add(head);
+  sPart(head, SG.sph, '#9cc27a', 0, .12, .35, .55, .45, .65);
+  for (const s of [-1, 1]) { sPart(head, SG.sph, '#ffffff', s * .26, .32, .72, .14, .14, .14); sPart(head, SG.sph, '#1f2a33', s * .28, .33, .82, .07, .07, .07); sPart(head, SG.sph, '#f4a9c0', s * .32, .16, .78, .08, .04, .06); }
+  const fl = [];
+  for (const [x, z, sx] of [[1.7, 1.3, 1], [-1.7, 1.3, -1], [1.4, -1.5, 1], [-1.4, -1.5, -1]]) { const f = new THREE.Group(); f.position.set(x, -.05, z); body.add(f); sPart(f, SG.sph, '#9cc27a', sx * .45, 0, 0, .65, .1, .32); fl.push({ f, sx, z }); }
+  // a tiny island on its back
+  sPart(body, SG2.cyl, '#8a6a46', .3, .95, -.2, .07, .9, .07, 0, 0, .12);
+  for (let k = 0; k < 5; k++) sPart(body, SG.sph, '#5cb85c', .38 + Math.cos(k * 1.26) * .3, 1.42, -.2 + Math.sin(k * 1.26) * .3, .42, .07, .18, 0, k * 1.26, .35);
+  const bird = new THREE.Group(); bird.position.set(-.6, .78, .4); body.add(bird); sPart(bird, SG.sph, '#ffffff', 0, .1, 0, .12, .1, .2); sPart(bird, SG.sph, '#ffffff', 0, .2, .12, .08, .08, .08); sPart(bird, SG2.cone, '#f3a64a', 0, .2, .22, .03, .08, .03, Math.PI / 2);
+  g.userData = { body, head, fl, bird }; return g;
+}
+function buildShip() {
+  const g = new THREE.Group(), wood = '#8a5a34';
+  sPart(g, SG2.box, wood, 0, .15, 0, .9, .45, 2.6); sPart(g, SG2.box, '#6b4426', 0, .38, -1, .9, .3, .6); sPart(g, SG2.box, '#c9a66b', 0, .39, 0, .8, .02, 2.4);
+  sPart(g, SG2.cone, wood, 0, .15, 1.55, .45, .7, .32, Math.PI / 2, Math.PI / 4, 0);
+  for (const [z, h] of [[.5, 2.2], [-.5, 1.8]]) { sPart(g, SG2.cyl, '#5a3a22', 0, .4 + h / 2, z, .05, h, .05); const sail = sPart(g, SG2.box, '#f6f1e4', 0, .55 + h * .55, z + .02, .02, h * .55, .95 * h / 2.2, 0, Math.PI / 2, 0); sail.userData.sail = 1; }
+  const flag = sPart(g, SG2.box, '#2b2b33', 0, 2.75, .62, .02, .22, .36, 0, Math.PI / 2, 0); sPart(g, SG.sph, '#ffffff', .02, 2.76, .55, .05, .05, .05);
+  for (let k = 0; k < 4; k++) sPart(g, SG.sph, '#2b2b33', .46, .22, -.8 + k * .5, .07, .07, .07);
+  g.userData = { flag }; return g;
+}
+function buildBottle() {
+  const g = new THREE.Group();
+  sPart(g, SG2.cyl, new THREE.MeshStandardMaterial({ color: '#9fd6c8', transparent: true, opacity: .55, roughness: .1 }), 0, 0, 0, .09, .32, .09, Math.PI / 2 - .3, 0, 0);
+  sPart(g, SG2.cyl, '#b48560', 0, .05, .2, .04, .08, .04, Math.PI / 2 - .3, 0, 0);
+  sPart(g, SG2.cyl, '#f3e2b3', 0, 0, 0, .06, .2, .06, Math.PI / 2 - .3, 0, 0);
+  return g;
+}
+const BOTTLE_FACTS = [
+  '海龜是爬蟲類，屬於外溫動物，會到海灘上產卵（卵生）。', '海豚是哺乳類，用肺呼吸、胎生，還會用聲音互相溝通。', '鯨魚噴出的「水柱」其實是牠呼氣時帶出的水氣。',
+  '光從空氣斜斜射進水裡會偏折，所以水底看起來比實際淺。', '聲音在水裡傳得比在空氣中快。', '臺灣四面環海，東邊是太平洋，西邊隔著臺灣海峽。',
+  '黑面琵鷺每年秋天飛來臺灣過冬，是候鳥。', '珊瑚礁需要清澈、溫暖、陽光充足的海水才長得好。', '颱風多在夏、秋兩季來臨，會帶來強風和豪雨。', '月亮的引力造成海水漲潮和退潮。'
+];
+function spawnTurtle() {
+  if (SEA.ev.some(e => e.kind === 'turtle')) return false;
+  const p = bigPick(2.4, [-5, -2.5, 2.5, 5]); if (!p) return false;
+  const g = buildTurtle(); g.position.set(p.x - Math.sin(p.h) * 4, WATER_Y - 1, p.z - Math.cos(p.h) * 4); g.rotation.y = p.h; scene.add(g);
+  SEA.ev.push({ kind: 'turtle', x: p.x, z: p.z, h: p.h, t: 0, dur: 36, g }); return true;
+}
+function spawnShip() {
+  if (SEA.ev.some(e => e.kind === 'ship')) return false;
+  const p = bigPick(1.6, [-5, -2.5, 2.5, 5]); if (!p) return false;
+  const g = buildShip(); g.position.set(p.x, WATER_Y, p.z); g.rotation.y = p.h; scene.add(g);
+  SEA.ev.push({ kind: 'ship', x: p.x, z: p.z, h: p.h, t: 0, dur: 30, g }); return true;
+}
+function spawnBottle() {
+  if (SEA.ev.some(e => e.kind === 'bottle')) return false;
+  const p = seaPick(0, .6); if (!p) return false;
+  const g = buildBottle(); g.position.set(p.x, WATER_Y + .02, p.z); g.scale.setScalar(1.6); scene.add(g);
+  const btn = document.createElement('button'); btn.className = 'bottle-btn'; btn.type = 'button'; btn.textContent = tr('漂流瓶！點我', 'Bottle! Tap'); const lab = new CSS2DObject(btn); lab.position.set(0, .45, 0); g.add(lab);
+  const e = { kind: 'bottle', x: p.x, z: p.z, t: 0, dur: 45, g, cleanup: () => btn.remove() };
+  btn.addEventListener('pointerdown', ev => ev.stopPropagation());
+  btn.addEventListener('click', ev => {
+    ev.stopPropagation(); if (e.got) return; e.got = true; btn.remove(); e.t = e.dur - .8;
+    const fact = BOTTLE_FACTS[Math.random() * BOTTLE_FACTS.length | 0], c = 8 + (Math.random() * 18 | 0);
+    if (typeof ADV_READY !== 'undefined' && ADV_READY && ME) { grant({ coins: c }, tr('撿到漂流瓶', 'Message bottle')); }
+    toast(tr(`📜 瓶中信：${fact}`, `📜 ${fact}`)); splash(p.x, p.z, .5, 8);
+  });
+  SEA.ev.push(e); return true;
+}
+function spawnFlyfish() {
+  const p = seaPick(3.5, .9); if (!p) return false;
+  const list = [];
+  for (let i = 0; i < 7; i++) { const f = new THREE.Group(); sPart(f, SG.sph, '#6fa8dc', 0, 0, 0, .06, .05, .2); for (const s of [-1, 1]) sPart(f, SG.sph, '#cfe8ff', s * .1, .02, .02, .12, .01, .07, 0, 0, s * .3); sPart(f, SG2.cone, '#6fa8dc', 0, 0, -.22, .04, .1, .02, -Math.PI / 2); f.visible = false; scene.add(f); list.push({ g: f, lag: i * .22 + Math.random() * .2, side: (Math.random() - .5) * .8, wet: false }); }
+  SEA.ev.push({ kind: 'flyfish', x: p.x, z: p.z, h: p.h, t: 0, dur: 5.5, list }); return true;
+}
+function seaTick2(e, dt) {
+  const t = e.t;
+  if (e.kind === 'turtle') {
+    const U = e.g.userData, hx = Math.sin(e.h), hz = Math.cos(e.h), mv = -4 + t * .26;
+    e.g.position.x = e.x + hx * mv; e.g.position.z = e.z + hz * mv;
+    const rise = Math.min(1, t / 4, (e.dur - t) / 4); e.g.position.y = WATER_Y - 1 + rise * .95 + Math.sin(t * .9) * .05;
+    U.fl.forEach(({ f, sx, z }) => { f.rotation.z = sx * Math.sin(t * 1.6 + (z > 0 ? 0 : Math.PI)) * .35; f.rotation.y = sx * Math.sin(t * 1.6) * .25; });
+    U.head.rotation.y = Math.sin(t * .4) * .3; U.head.position.y = .05 + Math.sin(t * 1.2) * .04;
+    U.bird.rotation.y = Math.sin(t * .7) * .8;
+    if (Math.random() < dt * 2.5) splash(e.g.position.x + (Math.random() - .5) * 3, e.g.position.z + (Math.random() - .5) * 3, .8, 3);
+  } else if (e.kind === 'ship') {
+    const hx = Math.sin(e.h), hz = Math.cos(e.h), mv = -5 + t * .34, k = Math.min(1, t / 2, (e.dur - t) / 2);
+    e.g.position.set(e.x + hx * mv, WATER_Y - .25 + k * .25 + Math.sin(t * 1.5) * .03, e.z + hz * mv); e.g.rotation.z = Math.sin(t * 1.2) * .05; e.g.rotation.x = Math.sin(t * .9) * .03;
+    e.g.userData.flag.rotation.x = Math.sin(t * 6) * .2; e.g.visible = k > 0;
+    if (Math.random() < dt * 4) splash(e.g.position.x + hx * 1.6, e.g.position.z + hz * 1.6, .5, 2);
+  } else if (e.kind === 'bottle') {
+    e.g.position.y = WATER_Y + .02 + Math.sin(t * 2) * .02; e.g.rotation.y = t * .3; e.g.rotation.z = Math.sin(t * 1.5) * .15;
+  } else if (e.kind === 'flyfish') {
+    const hx = Math.sin(e.h), hz = Math.cos(e.h);
+    e.list.forEach(f => {
+      const tt = t - f.lag; if (tt < 0) return; const u = tt / 1.6;
+      const x = e.x + hx * tt * 2 + hz * f.side, z = e.z + hz * tt * 2 - hx * f.side;
+      if (u <= 1) { if (!f.wet) { f.wet = true; splash(x, z, .35, 4); } f.g.visible = true; f.g.position.set(x, WATER_Y + Math.sin(u * Math.PI) * .45, z); f.g.rotation.set(0, e.h, 0); f.g.rotateX(-Math.cos(u * Math.PI) * .6); }
+      else if (f.wet) { f.wet = false; f.g.visible = false; splash(x, z, .35, 5); }
+    });
+  }
+}
+
 function spawnWhale() {
   if (SEA.ev.some(e => e.kind === 'whale')) return false;
   const p = whalePick(); if (!p) return false;
@@ -9638,13 +9758,13 @@ function spawnWhale() {
   SEA.ev.push({ kind: 'whale', x: p.x, z: p.z, h: p.h, t: 0, dur: 11.5, g: w, spouted: false, dove: false });
   return true;
 }
-window.__sea = { fish: () => spawnFish(), dolphin: () => spawnDolphins(), whale: () => spawnWhale(), list: () => SEA.ev.map(e => e.kind + ':' + e.t.toFixed(1)) };
-function endEvent(e) { (e.list ? e.list.map(o => o.g) : [e.g]).forEach(g => scene.remove(g)); }
+window.__sea = { turtle: () => spawnTurtle(), ship: () => spawnShip(), bottle: () => spawnBottle(), flyfish: () => spawnFlyfish(), fish: () => spawnFish(), dolphin: () => spawnDolphins(), whale: () => spawnWhale(), list: () => SEA.ev.map(e => e.kind + ':' + e.t.toFixed(1)) };
+function endEvent(e) { (e.list ? e.list.map(o => o.g) : [e.g]).forEach(g => scene.remove(g)); if (e.cleanup) e.cleanup(); }
 function seaTick(dt) {
   SEA.next -= dt;
   if (SEA.next <= 0) {
     SEA.next = 3 + Math.random() * 5;
-    if (SEA.ev.length < 4) { const r = Math.random(); (r < .45 ? spawnFish : r < .78 ? spawnDolphins : spawnWhale)() || spawnFish(); }
+    if (SEA.ev.length < 5) { const r = Math.random(); (r < .32 ? spawnFish : r < .54 ? spawnDolphins : r < .65 ? spawnWhale : r < .76 ? spawnTurtle : r < .85 ? spawnShip : r < .92 ? spawnFlyfish : spawnBottle)() || spawnFish(); }
   }
   for (let i = SEA.ev.length - 1; i >= 0; i--) {
     const e = SEA.ev[i]; e.t += dt;
@@ -9685,6 +9805,7 @@ function seaTick(dt) {
         if (u > .6 && !e.dove) { e.dove = true; const fx = w.position.x - hx * 1.3 * WS, fz = w.position.z - hz * 1.3 * WS; setTimeout(() => splash(fx, fz, 3, 30), 400); }
       } else w.visible = false;
     }
+    else seaTick2(e, dt);
     if (e.t >= e.dur) { endEvent(e); SEA.ev.splice(i, 1); }
   }
   // droplets
