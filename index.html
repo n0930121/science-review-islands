@@ -6726,6 +6726,10 @@ input[type=range]{width:100%;accent-color:var(--coral);min-height:32px}
 body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body.net-on #hud{visibility:hidden}
 .me-tag.opp b{background:#3e8ed0}
 @media (max-width:600px){.net-row{grid-template-columns:1fr}.nd-opts{grid-template-columns:1fr}.nd-q{font-size:16px}.nd-top{grid-template-columns:1fr auto 1fr;padding:8px 10px}.nd-bar{width:70px}.nd-sc{font-size:22px}}
+#btnMusic{position:relative}#btnMusic.off svg{opacity:.4}
+#btnMusic .mus-x{display:none;position:absolute;left:50%;top:50%;width:22px;height:2px;background:var(--coral);transform:translate(-50%,-50%) rotate(-40deg);border-radius:2px}
+#btnMusic.off .mus-x{display:block}
+.mus-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.mus-now{font-size:13px;color:var(--muted)}.mus-vol{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.mus-vol input{width:110px}
 #duel{position:fixed;inset:0;z-index:70;display:grid;grid-template-rows:1fr auto 1fr;background:var(--paper-solid);padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:10px}
 .dside{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:14px;border-radius:20px;background:#fff;border:2px solid var(--line);min-height:0;overflow:auto}
 .dside.p1{transform:rotate(180deg);background:#f3f6fb}
@@ -10466,6 +10470,7 @@ function openHub() {
     <button class="hcard" data-act="pass"><b>${tr('學習護照', 'Passport')}</b><span>${tr(`已拿到 ${totalStars()} 顆星`, `${totalStars()} stars`)}</span><em></em></button>
   </div>
   <div class="hub-set">
+    <div class="mus-row"><label class="sw"><input type="checkbox" id="hMusic" ${MUSIC.on ? 'checked' : ''}> <span>${tr('背景音樂', 'Background music')}</span></label><span class="mus-now">♪ <b id="hMusicName">${esc(T(TRACKS[MUSIC.idx].name))}</b></span><button class="btn" id="hMusicNext">${tr('下一首', 'Next')}</button><label class="mus-vol"><span>${tr('音量', 'Volume')}</span><input type="range" id="hMusicVol" min="0" max="1" step="0.05" value="${MUSIC.vol}"></label></div>
     <label class="sw"><input type="checkbox" id="hVoice" ${LP.voice ? 'checked' : ''}> <span>${tr('語音唸題（題目出現時自動唸出來）', 'Read questions aloud')}</span></label>
     <label class="exam"><span>${tr('段考日期（家長設定）', 'Exam date')}</span><input type="date" id="hExam" value="${LP.exam || ''}"></label>
     ${n != null && n >= 0 ? `<p class="exam-big">${n === 0 ? tr('就是今天！', 'Today!') : tr(`還有 <b>${n}</b> 天`, `<b>${n}</b> days to go`)}</p>` : ''}
@@ -10477,6 +10482,9 @@ function openHub() {
   $('#hSurv').addEventListener('click', startSurvival);
   $('#hDuel').addEventListener('click', setupDuel);
   $('#hNet').addEventListener('click', () => openNet());
+  $('#hMusic').addEventListener('change', e => setMusic(e.target.checked));
+  $('#hMusicNext').addEventListener('click', () => { if (!MUSIC.on) { $('#hMusic').checked = true; setMusic(true); } else { musicNext(false); toast(tr(`♪ ${TRACKS[MUSIC.idx].name[0]}`, `♪ ${TRACKS[MUSIC.idx].name[1]}`)); } });
+  $('#hMusicVol').addEventListener('input', e => setMusicVol(+e.target.value));
   $('#hVoice').addEventListener('change', e => { LP.voice = e.target.checked; saveP(); if (LP.voice) speak(tr('語音唸題已開啟', 'Read aloud is on')); });
   $('#hExam').addEventListener('change', e => { LP.exam = e.target.value || ''; saveP(); updateExamNote(); openHub(); });
 }
@@ -11610,6 +11618,126 @@ function netTick(dt, now) {
 {
   const m = /[?&]room=(\d{4})/.exec(location.search);
   if (m) setTimeout(() => openNet(m[1]), 1800);
+}
+
+/* =====================================================================
+   16f. background music: generated light tunes (Web Audio, no files)
+   ===================================================================== */
+const MUSIC = { ctx: null, on: true, vol: .32, idx: 0, timer: null, next: 0, step: 0, bars: 0, out: null, started: false };
+try { const v = localStorage.getItem('scienceIslands.music'); if (v === 'off') MUSIC.on = false; const vv = parseFloat(localStorage.getItem('scienceIslands.musicVol')); if (vv >= 0 && vv <= 1) MUSIC.vol = vv; } catch (e) {}
+// degree -> semitone in a major scale
+const MAJ = [0, 2, 4, 5, 7, 9, 11];
+const TRACKS = [
+  { name: ['晴天散步', 'Sunny Stroll'], mood: 'light', bpm: 108, root: 60, prog: [0, 4, 5, 3], lead: 'pluck', pad: .5, hat: true, swing: 0 },
+  { name: ['海風輕輕吹', 'Sea Breeze'], mood: 'calm', bpm: 70, root: 65, prog: [0, 5, 3, 4], lead: 'bell', pad: 1, hat: false, arp: true },
+  { name: ['小島探險隊', 'Island Explorers'], mood: 'light', bpm: 120, root: 67, prog: [0, 3, 1, 4], lead: 'marimba', pad: .4, hat: true },
+  { name: ['星空下的書房', 'Starlit Study'], mood: 'calm', bpm: 64, root: 62, prog: [5, 3, 0, 4], lead: 'musicbox', pad: .9, hat: false, arp: true },
+  { name: ['蝴蝶花園', 'Butterfly Garden'], mood: 'light', bpm: 96, root: 63, prog: [0, 3, 4, 0, 5, 1, 4, 4], lead: 'flute', pad: .6, hat: true }
+];
+const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+function rngSeed(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+function musicCtx() {
+  if (MUSIC.ctx) return MUSIC.ctx;
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
+  const ctx = new AC(), master = ctx.createGain(), comp = ctx.createDynamicsCompressor(), wet = ctx.createGain(), dry = ctx.createGain(), conv = ctx.createConvolver();
+  const len = ctx.sampleRate * 2.2, ir = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+  conv.buffer = ir; wet.gain.value = .28; dry.gain.value = .8; master.gain.value = 0;
+  const bus = ctx.createGain(); bus.connect(dry); bus.connect(conv); conv.connect(wet); dry.connect(comp); wet.connect(comp); comp.connect(master); master.connect(ctx.destination);
+  const nb = ctx.createBuffer(1, ctx.sampleRate * .3, ctx.sampleRate), nd = nb.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+  Object.assign(MUSIC, { ctx, master, bus, noise: nb });
+  return ctx;
+}
+function env(g, t, a, peak, dec, sus = 0) { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(Math.max(.0001, sus || .0001), t + a + dec); }
+function voice(kind, f, t, dur, vol) {
+  const { ctx, bus } = MUSIC, g = ctx.createGain(); g.connect(bus);
+  const o = ctx.createOscillator(), end = t + dur + 2;
+  if (kind === 'pluck') { o.type = 'triangle'; const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(3200, t); lp.frequency.exponentialRampToValueAtTime(700, t + .4); o.connect(lp); lp.connect(g); env(g, t, .004, vol, .55); }
+  else if (kind === 'bell' || kind === 'musicbox') { o.type = 'sine'; o.connect(g); const o2 = ctx.createOscillator(), g2 = ctx.createGain(); o2.type = 'sine'; o2.frequency.value = f * (kind === 'bell' ? 2.01 : 3.0); o2.connect(g2); g2.connect(bus); env(g2, t, .003, vol * .25, kind === 'bell' ? .9 : .35); o2.start(t); o2.stop(end); env(g, t, .004, vol, kind === 'bell' ? 1.8 : 1.1); }
+  else if (kind === 'marimba') { o.type = 'sine'; o.connect(g); const o2 = ctx.createOscillator(), g2 = ctx.createGain(); o2.type = 'sine'; o2.frequency.value = f * 4; o2.connect(g2); g2.connect(bus); env(g2, t, .002, vol * .3, .08); o2.start(t); o2.stop(end); env(g, t, .003, vol, .45); }
+  else if (kind === 'flute') { o.type = 'sine'; const lfo = ctx.createOscillator(), lg = ctx.createGain(); lfo.frequency.value = 5; lg.gain.value = f * .006; lfo.connect(lg); lg.connect(o.frequency); lfo.start(t); lfo.stop(end); o.connect(g); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .06); g.gain.setValueAtTime(vol, t + Math.max(.07, dur * .8)); g.gain.exponentialRampToValueAtTime(.0001, t + dur + .25); }
+  else if (kind === 'bass') { o.type = 'sine'; o.connect(g); env(g, t, .01, vol, Math.max(.3, dur)); }
+  o.frequency.value = f; o.start(t); o.stop(end);
+}
+function padChord(fs, t, dur, vol) {
+  const { ctx, bus } = MUSIC, g = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 850; lp.connect(g); g.connect(bus);
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + dur * .3); g.gain.setValueAtTime(vol, t + dur * .75); g.gain.linearRampToValueAtTime(0, t + dur + .3);
+  fs.forEach(f => [-4, 4].forEach(dt => { const o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = dt; o.connect(lp); o.start(t); o.stop(t + dur + .4); }));
+}
+function hat(t, vol) { const { ctx, bus, noise } = MUSIC, s = ctx.createBufferSource(), hp = ctx.createBiquadFilter(), g = ctx.createGain(); s.buffer = noise; hp.type = 'highpass'; hp.frequency.value = 7500; s.connect(hp); hp.connect(g); g.connect(bus); env(g, t, .001, vol, .05); s.start(t); s.stop(t + .1); }
+/* one bar = 8 eighth-notes; chord from the progression, melody from a seeded walk on chord/pentatonic tones */
+function scheduleBar(T, bar, t0) {
+  const spb = 60 / T.bpm, e = spb / 2, deg = T.prog[bar % T.prog.length], r = T.root;
+  const chordDeg = [deg, deg + 2, deg + 4].map(d => r + MAJ[d % 7] + 12 * Math.floor(d / 7));
+  padChord(chordDeg.map(m => mtof(m - 12)), t0, spb * 4, .022 * T.pad);
+  voice('bass', mtof(chordDeg[0] - 24), t0, spb * 1.6, .16); voice('bass', mtof(chordDeg[0] - 24 + (bar % 2 ? 7 : 0)), t0 + spb * 2, spb * 1.6, .12);
+  const rnd = rngSeed(T.bpm * 131 + bar * 977 + MUSIC.idx * 31), penta = [0, 2, 4, 7, 9];
+  const lead = T.lead, lv = lead === 'pluck' ? .11 : lead === 'flute' ? .07 : .1;
+  if (T.arp) {
+    const notes = [chordDeg[0], chordDeg[1], chordDeg[2], chordDeg[0] + 12, chordDeg[2], chordDeg[1], chordDeg[0] + 12, chordDeg[1] + 12];
+    notes.forEach((m, k) => voice(lead, mtof(m + 12), t0 + k * e, e * 1.6, lv * (k % 4 === 0 ? 1 : .7)));
+    if (bar % 2 === 1) { const m = r + 24 + penta[Math.floor(rnd() * 5)]; voice('flute', mtof(m), t0 + spb * 2, spb * 1.8, .045); }
+  } else {
+    let pos = 0; let note = chordDeg[1] + 12;
+    while (pos < 8) {
+      const len = rnd() < .55 ? 1 : rnd() < .7 ? 2 : 3;
+      if (rnd() > .18) {
+        const step = Math.floor(rnd() * 5) - 2; const pc = ((note - r) % 12 + 12) % 12; let idx = penta.indexOf(penta.reduce((a, b) => Math.abs(b - pc) < Math.abs(a - pc) ? b : a));
+        idx = Math.max(0, Math.min(9, idx + step + (note > r + 26 ? -1 : 0) + (note < r + 12 ? 1 : 0)));
+        note = r + 12 + Math.floor(idx / 5) * 12 + penta[idx % 5];
+        if (pos === 0) note = chordDeg[Math.floor(rnd() * 3)] + 12;
+        const sw = T.swing && pos % 2 ? e * .15 : 0;
+        voice(lead, mtof(note), t0 + pos * e + sw, len * e * .95, lv);
+      }
+      pos += len;
+    }
+  }
+  if (T.hat) for (let k = 0; k < 8; k++) hat(t0 + k * e, k % 2 ? .02 : .035);
+}
+const BARS_PER_TRACK = 32;
+window.__music = () => ({ on: MUSIC.on, track: TRACKS[MUSIC.idx].name[0], bars: MUSIC.bars, state: MUSIC.ctx && MUSIC.ctx.state, t: MUSIC.ctx && +MUSIC.ctx.currentTime.toFixed(1) });
+function musicTick() {
+  const ctx = MUSIC.ctx; if (!ctx || !MUSIC.on) return;
+  const T = TRACKS[MUSIC.idx], barLen = 60 / T.bpm * 4;
+  while (MUSIC.next < ctx.currentTime + .6) {
+    if (MUSIC.bars >= BARS_PER_TRACK) { musicNext(true); return; }
+    scheduleBar(T, MUSIC.bars, MUSIC.next); MUSIC.next += barLen; MUSIC.bars++;
+  }
+}
+function musicNext(auto) {
+  const ctx = MUSIC.ctx; if (!ctx) return;
+  MUSIC.idx = (MUSIC.idx + 1) % TRACKS.length; MUSIC.bars = 0; MUSIC.next = Math.max(ctx.currentTime + (auto ? 1.2 : .15), MUSIC.next + (auto ? .8 : 0));
+  if (!auto) MUSIC.next = ctx.currentTime + .15;
+  if (!auto) { const g = MUSIC.master.gain; g.cancelScheduledValues(ctx.currentTime); g.setValueAtTime(0, ctx.currentTime); g.linearRampToValueAtTime(MUSIC.vol * .5, ctx.currentTime + 1); }
+  musicLabel();
+}
+function musicLabel() { const b = $('#btnMusic'); if (b) { b.setAttribute('aria-pressed', String(MUSIC.on)); b.title = MUSIC.on ? tr(`背景音樂：${TRACKS[MUSIC.idx].name[0]}（點一下關閉）`, `Music: ${TRACKS[MUSIC.idx].name[1]} (tap to turn off)`) : tr('背景音樂已關閉（點一下開啟）', 'Music off (tap to turn on)'); b.classList.toggle('off', !MUSIC.on); } const n = $('#hMusicName'); if (n) n.textContent = T(TRACKS[MUSIC.idx].name); }
+function musicStart() {
+  if (!MUSIC.on) return;
+  const ctx = musicCtx(); if (!ctx) return;
+  if (ctx.state === 'suspended') ctx.resume();
+  if (!MUSIC.started) { MUSIC.started = true; MUSIC.idx = Math.floor(Math.random() * TRACKS.length); MUSIC.next = ctx.currentTime + .2; MUSIC.bars = 0; }
+  const g = MUSIC.master.gain; g.cancelScheduledValues(ctx.currentTime); g.setValueAtTime(g.value, ctx.currentTime); g.linearRampToValueAtTime(MUSIC.vol * .5, ctx.currentTime + 2);
+  if (MUSIC.next < ctx.currentTime) MUSIC.next = ctx.currentTime + .1;
+  clearInterval(MUSIC.timer); MUSIC.timer = setInterval(musicTick, 120); musicTick(); musicLabel();
+}
+function musicStop() {
+  const ctx = MUSIC.ctx; clearInterval(MUSIC.timer); MUSIC.timer = null;
+  if (ctx) { const g = MUSIC.master.gain; g.cancelScheduledValues(ctx.currentTime); g.setValueAtTime(g.value, ctx.currentTime); g.linearRampToValueAtTime(0, ctx.currentTime + .5); setTimeout(() => { if (!MUSIC.on && ctx.state === 'running') ctx.suspend(); }, 700); }
+  musicLabel();
+}
+function setMusic(on) { MUSIC.on = on; try { localStorage.setItem('scienceIslands.music', on ? 'on' : 'off'); } catch (e) {} if (on) { musicStart(); toast(tr(`♪ 背景音樂：${TRACKS[MUSIC.idx].name[0]}`, `♪ ${TRACKS[MUSIC.idx].name[1]}`)); } else { musicStop(); toast(tr('背景音樂已關閉', 'Music off')); } }
+function setMusicVol(v) { MUSIC.vol = v; try { localStorage.setItem('scienceIslands.musicVol', String(v)); } catch (e) {} if (MUSIC.ctx && MUSIC.on) { const g = MUSIC.master.gain; g.cancelScheduledValues(MUSIC.ctx.currentTime); g.setTargetAtTime(v * .5, MUSIC.ctx.currentTime, .1); } }
+{
+  const b = document.createElement('button'); b.className = 'btn'; b.id = 'btnMusic'; b.type = 'button';
+  b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg><span class="mus-x" aria-hidden="true"></span>';
+  const tools = $('#tools'), help = $('#btnHelp'); tools.insertBefore(b, help);
+  b.addEventListener('click', () => { setMusic(!MUSIC.on); });
+  musicLabel();
+  // browsers only allow sound after the first tap or key press
+  const first = ev => { if (ev && ev.target && ev.target.closest && ev.target.closest('#btnMusic')) return; removeEventListener('pointerdown', first, true); removeEventListener('keydown', first, true); if (MUSIC.on) musicStart(); };
+  addEventListener('pointerdown', first, true); addEventListener('keydown', first, true);
+  document.addEventListener('visibilitychange', () => { if (!MUSIC.ctx) return; if (document.hidden) MUSIC.ctx.suspend(); else if (MUSIC.on) { MUSIC.ctx.resume(); musicStart(); } });
 }
 
 /* =====================================================================
