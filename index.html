@@ -6792,6 +6792,15 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 .shop-trying{font-weight:800;color:var(--coral);margin:4px 0}
 .me-tag i.ttl{font-style:normal;font:800 10.5px/1 var(--font);color:#fff;background:var(--rc,#7aa36b);padding:3px 7px;border-radius:999px;white-space:nowrap}
 .bottle-btn{pointer-events:auto;padding:6px 10px;border-radius:999px;border:2px solid #fff;background:#3e8ed0;color:#fff;font:800 13px/1 var(--font);cursor:pointer;box-shadow:0 3px 10px #0003;animation:bob 1.6s ease-in-out infinite}
+.fish-bite{pointer-events:auto;padding:10px 16px;border-radius:999px;border:3px solid #fff;background:#e94b5a;color:#fff;font:900 16px/1 var(--font);cursor:pointer;box-shadow:0 4px 14px #0004;animation:bob .5s ease-in-out infinite}
+#btnFish{position:relative}#btnFish .fish-n{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#3e8ed0;color:#fff;font:800 11px/18px var(--font);font-style:normal;text-align:center}
+.fish-pop .fp-row{display:flex;align-items:center;gap:10px}.fish-pop .fp-row b{font-size:24px}.fish-pop .fp-left{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+.fish-mk{display:grid;gap:10px}.dex-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.dex-chip{font-size:12px;font-weight:800;color:#fff;background:var(--rc);padding:3px 9px;border-radius:999px}
+.fish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.fish-it{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px;border-radius:14px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--rc)}
+.fish-it small{display:block;font-size:12px;color:var(--muted)}.fish-it .btn{min-height:34px;padding:0 10px;font-size:13px}
+.ftitles{display:flex;flex-wrap:wrap;gap:8px}.ftitles span{display:grid;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:800;font-size:14px;opacity:.6}.ftitles span.on{opacity:1;border-color:var(--rc);box-shadow:inset 0 3px 0 var(--rc)}.ftitles small{font-weight:600;font-size:11.5px;color:var(--muted)}
+.stab.fishtab{background:#eaf5fb}.stab.fishtab.on{background:#3e8ed0;border-color:#3e8ed0}
 #duel{position:fixed;inset:0;z-index:70;display:grid;grid-template-rows:1fr auto 1fr;background:var(--paper-solid);padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:10px}
 .dside{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:14px;border-radius:20px;background:#fff;border:2px solid var(--line);min-height:0;overflow:auto}
 .dside.p1{transform:rotate(180deg);background:#f3f6fb}
@@ -11110,6 +11119,125 @@ function auraTick(dt, t, root, id, moving) {
 }
 const titleName = id => { const s = id && SHOP_BY.get(id); return s ? s.n : ''; };
 
+/* =====================================================================
+   16h. fishing: 200 species, 5 casts per real hour, fish market, fishing titles
+   ===================================================================== */
+const FISH = [{"n": "吳郭魚", "r": "c", "p": 3, "f": "原產非洲，很能適應環境，是臺灣常見的養殖魚。", "id": "f001"}, {"n": "鯽魚", "r": "c", "p": 3, "f": "", "id": "f002"}, {"n": "鯉魚", "r": "c", "p": 3, "f": "", "id": "f003"}, {"n": "草魚", "r": "c", "p": 3, "f": "", "id": "f004"}, {"n": "鰱魚", "r": "c", "p": 3, "f": "", "id": "f005"}, {"n": "泥鰍", "r": "c", "p": 4, "f": "", "id": "f006"}, {"n": "大肚魚", "r": "c", "p": 4, "f": "", "id": "f007"}, {"n": "孔雀魚", "r": "c", "p": 4, "f": "", "id": "f008"}, {"n": "溪哥", "r": "c", "p": 4, "f": "", "id": "f009"}, {"n": "羅漢魚", "r": "c", "p": 4, "f": "", "id": "f010"}, {"n": "馬口魚", "r": "c", "p": 4, "f": "", "id": "f011"}, {"n": "鯖魚", "r": "c", "p": 4, "f": "常成群游動，是很常見的食用魚。", "id": "f012"}, {"n": "秋刀魚", "r": "c", "p": 4, "f": "秋天是盛產季節，身體細長像一把刀。", "id": "f013"}, {"n": "竹筴魚", "r": "c", "p": 4, "f": "", "id": "f014"}, {"n": "沙丁魚", "r": "c", "p": 5, "f": "", "id": "f015"}, {"n": "鯷魚", "r": "c", "p": 5, "f": "", "id": "f016"}, {"n": "虱目魚", "r": "c", "p": 5, "f": "臺南沿海常見的養殖魚，喜歡溫暖的水。", "id": "f017"}, {"n": "烏魚", "r": "c", "p": 5, "f": "", "id": "f018"}, {"n": "白帶魚", "r": "c", "p": 5, "f": "", "id": "f019"}, {"n": "狗母魚", "r": "c", "p": 5, "f": "", "id": "f020"}, {"n": "四破魚", "r": "c", "p": 5, "f": "", "id": "f021"}, {"n": "雀鯛", "r": "c", "p": 5, "f": "", "id": "f022"}, {"n": "天竺鯛", "r": "c", "p": 6, "f": "", "id": "f023"}, {"n": "鰕虎", "r": "c", "p": 6, "f": "", "id": "f024"}, {"n": "彈塗魚", "r": "c", "p": 6, "f": "可以用胸鰭在泥灘上跳著走。", "id": "f025"}, {"n": "斑馬魚", "r": "c", "p": 6, "f": "", "id": "f026"}, {"n": "霓虹燈魚", "r": "c", "p": 6, "f": "", "id": "f027"}, {"n": "金魚", "r": "c", "p": 6, "f": "由鯽魚經過長期人工培育而來。", "id": "f028"}, {"n": "臭肚魚", "r": "c", "p": 6, "f": "", "id": "f029"}, {"n": "花身雞魚", "r": "c", "p": 6, "f": "", "id": "f030"}, {"n": "大眼鯛", "r": "c", "p": 6, "f": "", "id": "f031"}, {"n": "金線魚", "r": "c", "p": 7, "f": "", "id": "f032"}, {"n": "梭魚", "r": "c", "p": 7, "f": "", "id": "f033"}, {"n": "鱚魚", "r": "c", "p": 7, "f": "", "id": "f034"}, {"n": "飛魚", "r": "c", "p": 7, "f": "蘭嶼達悟族有飛魚季，捕魚前會舉行祭典。", "id": "f035"}, {"n": "黑鯛", "r": "c", "p": 7, "f": "喜歡住在岩礁和防波堤附近。", "id": "f036"}, {"n": "青鱗魚", "r": "c", "p": 7, "f": "", "id": "f037"}, {"n": "銀魚", "r": "c", "p": 7, "f": "", "id": "f038"}, {"n": "鯔魚苗", "r": "c", "p": 7, "f": "", "id": "f039"}, {"n": "紅目鰱", "r": "c", "p": 7, "f": "", "id": "f040"}, {"n": "圓鰺", "r": "c", "p": 8, "f": "", "id": "f041"}, {"n": "帶鰆", "r": "c", "p": 8, "f": "", "id": "f042"}, {"n": "白鰱", "r": "c", "p": 8, "f": "", "id": "f043"}, {"n": "鱗鯛", "r": "c", "p": 8, "f": "", "id": "f044"}, {"n": "扁魚", "r": "c", "p": 8, "f": "", "id": "f045"}, {"n": "鱸魚", "r": "u", "p": 10, "f": "", "id": "f046"}, {"n": "鰻魚", "r": "u", "p": 10, "f": "會從河川游到深海產卵，是洄游魚類。", "id": "f047"}, {"n": "鯰魚", "r": "u", "p": 10, "f": "", "id": "f048"}, {"n": "鱔魚", "r": "u", "p": 11, "f": "", "id": "f049"}, {"n": "七星鱧", "r": "u", "p": 11, "f": "可以用特殊器官直接呼吸空氣。", "id": "f050"}, {"n": "香魚", "r": "u", "p": 11, "f": "喜歡乾淨冷涼的溪流。", "id": "f051"}, {"n": "苦花", "r": "u", "p": 11, "f": "", "id": "f052"}, {"n": "平頜鱲", "r": "u", "p": 12, "f": "", "id": "f053"}, {"n": "鬥魚", "r": "u", "p": 12, "f": "雄鬥魚會吐泡泡築巢，還有領域行為。", "id": "f054"}, {"n": "神仙魚", "r": "u", "p": 12, "f": "", "id": "f055"}, {"n": "血鸚鵡", "r": "u", "p": 12, "f": "", "id": "f056"}, {"n": "地圖魚", "r": "u", "p": 12, "f": "", "id": "f057"}, {"n": "琵琶鼠魚", "r": "u", "p": 13, "f": "", "id": "f058"}, {"n": "鰹魚", "r": "u", "p": 13, "f": "", "id": "f059"}, {"n": "土魠魚", "r": "u", "p": 13, "f": "", "id": "f060"}, {"n": "午仔魚", "r": "u", "p": 13, "f": "", "id": "f061"}, {"n": "黃魚", "r": "u", "p": 14, "f": "", "id": "f062"}, {"n": "白鯧", "r": "u", "p": 14, "f": "", "id": "f063"}, {"n": "黑鯧", "r": "u", "p": 14, "f": "", "id": "f064"}, {"n": "赤鯮", "r": "u", "p": 14, "f": "", "id": "f065"}, {"n": "嘉鱲魚", "r": "u", "p": 15, "f": "", "id": "f066"}, {"n": "石斑魚", "r": "u", "p": 15, "f": "", "id": "f067"}, {"n": "比目魚", "r": "u", "p": 15, "f": "兩隻眼睛在同一側，身體顏色像沙地（保護色）。", "id": "f068"}, {"n": "鰈魚", "r": "u", "p": 15, "f": "", "id": "f069"}, {"n": "河豚", "r": "u", "p": 15, "f": "遇到危險會吸水鼓起身體保護自己。", "id": "f070"}, {"n": "刺河豚", "r": "u", "p": 16, "f": "鼓起來時全身的刺都會豎起來，敵人不敢吃。", "id": "f071"}, {"n": "小丑魚", "r": "u", "p": 16, "f": "和海葵住在一起，海葵的觸手保護牠。", "id": "f072"}, {"n": "藍倒吊", "r": "u", "p": 16, "f": "", "id": "f073"}, {"n": "黃金吊", "r": "u", "p": 16, "f": "", "id": "f074"}, {"n": "蝴蝶魚", "r": "u", "p": 17, "f": "", "id": "f075"}, {"n": "炮彈魚", "r": "u", "p": 17, "f": "", "id": "f076"}, {"n": "獅子魚", "r": "u", "p": 17, "f": "鮮豔的條紋是警戒色，鰭棘有毒。", "id": "f077"}, {"n": "石頭魚", "r": "u", "p": 17, "f": "長得像石頭（偽裝），背鰭還有毒刺。", "id": "f078"}, {"n": "海鰻", "r": "u", "p": 18, "f": "", "id": "f079"}, {"n": "鸚哥魚", "r": "u", "p": 18, "f": "會啃食珊瑚上的藻類，晚上會吐黏液包住自己睡覺。", "id": "f080"}, {"n": "紅甘鰺", "r": "u", "p": 18, "f": "", "id": "f081"}, {"n": "金梭魚", "r": "u", "p": 18, "f": "", "id": "f082"}, {"n": "海鱺", "r": "u", "p": 18, "f": "", "id": "f083"}, {"n": "鬼頭刀", "r": "u", "p": 19, "f": "", "id": "f084"}, {"n": "秋姑魚", "r": "u", "p": 19, "f": "", "id": "f085"}, {"n": "剝皮魚", "r": "u", "p": 19, "f": "", "id": "f086"}, {"n": "黃鰭鯛", "r": "u", "p": 19, "f": "", "id": "f087"}, {"n": "紅尾冬", "r": "u", "p": 20, "f": "", "id": "f088"}, {"n": "鮸魚", "r": "u", "p": 20, "f": "", "id": "f089"}, {"n": "鰏魚", "r": "u", "p": 20, "f": "", "id": "f090"}, {"n": "錦鯉", "r": "r", "p": 26, "f": "是鯉魚經過人工培育出的觀賞魚。", "id": "f091"}, {"n": "七彩神仙魚", "r": "r", "p": 27, "f": "", "id": "f092"}, {"n": "銀龍魚", "r": "r", "p": 28, "f": "", "id": "f093"}, {"n": "皇帝神仙魚", "r": "r", "p": 28, "f": "", "id": "f094"}, {"n": "蘇眉魚", "r": "r", "p": 29, "f": "", "id": "f095"}, {"n": "龍膽石斑", "r": "r", "p": 30, "f": "", "id": "f096"}, {"n": "老虎斑", "r": "r", "p": 31, "f": "", "id": "f097"}, {"n": "黃鰭鮪", "r": "r", "p": 32, "f": "", "id": "f098"}, {"n": "鮭魚", "r": "r", "p": 33, "f": "在河裡出生、到海裡長大，再洄游回河川產卵。", "id": "f099"}, {"n": "鱈魚", "r": "r", "p": 33, "f": "", "id": "f100"}, {"n": "旗魚", "r": "r", "p": 34, "f": "", "id": "f101"}, {"n": "海馬", "r": "r", "p": 35, "f": "由公海馬用育兒袋孵育寶寶，和袋鼠一樣有育兒袋！", "id": "f102"}, {"n": "葉海龍", "r": "r", "p": 36, "f": "", "id": "f103"}, {"n": "燈籠魚", "r": "r", "p": 37, "f": "住在深海，身上的發光器會發光。", "id": "f104"}, {"n": "鮟鱇魚", "r": "r", "p": 38, "f": "頭上有像釣竿的構造，用來引誘獵物。", "id": "f105"}, {"n": "魟魚", "r": "r", "p": 38, "f": "", "id": "f106"}, {"n": "豹紋鯊", "r": "r", "p": 39, "f": "", "id": "f107"}, {"n": "鱘魚", "r": "r", "p": 40, "f": "", "id": "f108"}, {"n": "電鰻", "r": "r", "p": 41, "f": "可以放出電來捕食和保護自己。", "id": "f109"}, {"n": "食人魚", "r": "r", "p": 42, "f": "有銳利的牙齒，其實大多是成群行動、膽子不大。", "id": "f110"}, {"n": "巨骨舌魚", "r": "r", "p": 43, "f": "", "id": "f111"}, {"n": "長吻雀鱔", "r": "r", "p": 43, "f": "", "id": "f112"}, {"n": "虹鱒", "r": "r", "p": 44, "f": "", "id": "f113"}, {"n": "鬼魚", "r": "r", "p": 45, "f": "", "id": "f114"}, {"n": "紅金眼鯛", "r": "r", "p": 46, "f": "", "id": "f115"}, {"n": "海鯰", "r": "r", "p": 47, "f": "", "id": "f116"}, {"n": "斑點九刺鮨", "r": "r", "p": 48, "f": "", "id": "f117"}, {"n": "紫紅笛鯛", "r": "r", "p": 48, "f": "", "id": "f118"}, {"n": "隆頭鸚哥魚", "r": "r", "p": 49, "f": "", "id": "f119"}, {"n": "狼鰻", "r": "r", "p": 50, "f": "", "id": "f120"}, {"n": "黑鮪魚", "r": "e", "p": 75, "f": "屏東東港的黑鮪魚很有名，牠們會長途洄游。", "id": "f121"}, {"n": "翻車魚", "r": "e", "p": 80, "f": "又叫曼波魚，是體重最重的硬骨魚之一。", "id": "f122"}, {"n": "鬼蝠魟", "r": "e", "p": 86, "f": "像在水中飛行一樣拍動巨大的胸鰭。", "id": "f123"}, {"n": "雙髻鯊", "r": "e", "p": 91, "f": "", "id": "f124"}, {"n": "紅龍魚", "r": "e", "p": 96, "f": "", "id": "f125"}, {"n": "金龍魚", "r": "e", "p": 102, "f": "", "id": "f126"}, {"n": "帝王鮭", "r": "e", "p": 107, "f": "", "id": "f127"}, {"n": "劍魚", "r": "e", "p": 112, "f": "", "id": "f128"}, {"n": "長鰭鮪", "r": "e", "p": 118, "f": "", "id": "f129"}, {"n": "石鯛", "r": "e", "p": 123, "f": "", "id": "f130"}, {"n": "巨石斑", "r": "e", "p": 129, "f": "", "id": "f131"}, {"n": "拿破崙魚", "r": "e", "p": 134, "f": "", "id": "f132"}, {"n": "東方旗魚", "r": "e", "p": 139, "f": "", "id": "f133"}, {"n": "大西洋鮭", "r": "e", "p": 145, "f": "", "id": "f134"}, {"n": "皇后神仙魚", "r": "e", "p": 150, "f": "", "id": "f135"}, {"n": "腔棘魚", "r": "l", "p": 280, "f": "被稱為「活化石」，曾被認為早已滅絕。", "id": "f136"}, {"n": "皇帶魚", "r": "l", "p": 326, "f": "身體又長又扁，傳說中的「海龍王」。", "id": "f137"}, {"n": "鯨鯊", "r": "l", "p": 371, "f": "世界上最大的魚，卻只吃浮游生物等小生物。", "id": "f138"}, {"n": "大白鯊", "r": "l", "p": 417, "f": "是大型肉食性魚類，頂端掠食者之一。", "id": "f139"}, {"n": "巨口鯊", "r": "l", "p": 463, "f": "", "id": "f140"}, {"n": "歐氏尖吻鮫", "r": "l", "p": 509, "f": "", "id": "f141"}, {"n": "黃金龍魚", "r": "l", "p": 554, "f": "", "id": "f142"}, {"n": "月光鬥魚", "r": "l", "p": 600, "f": "", "id": "f143"}, {"n": "白化吳郭魚", "r": "r", "p": 30, "f": "罕見的白化個體，身體缺少色素。", "id": "f144"}, {"n": "金色草魚", "r": "e", "p": 80, "f": "非常罕見的金色變異個體！", "id": "f145"}, {"n": "彩虹鯖魚", "r": "l", "p": 300, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f146"}, {"n": "白化孔雀魚", "r": "r", "p": 31, "f": "罕見的白化個體，身體缺少色素。", "id": "f147"}, {"n": "金色馬口魚", "r": "e", "p": 83, "f": "非常罕見的金色變異個體！", "id": "f148"}, {"n": "彩虹白帶魚", "r": "l", "p": 312, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f149"}, {"n": "白化沙丁魚", "r": "r", "p": 32, "f": "罕見的白化個體，身體缺少色素。", "id": "f150"}, {"n": "金色烏魚", "r": "e", "p": 87, "f": "非常罕見的金色變異個體！", "id": "f151"}, {"n": "彩虹斑馬魚", "r": "l", "p": 324, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f152"}, {"n": "白化雀鯛", "r": "r", "p": 33, "f": "罕見的白化個體，身體缺少色素。", "id": "f153"}, {"n": "金色彈塗魚", "r": "e", "p": 90, "f": "非常罕見的金色變異個體！", "id": "f154"}, {"n": "彩虹梭魚", "r": "l", "p": 337, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f155"}, {"n": "白化臭肚魚", "r": "r", "p": 34, "f": "罕見的白化個體，身體缺少色素。", "id": "f156"}, {"n": "金色金線魚", "r": "e", "p": 93, "f": "非常罕見的金色變異個體！", "id": "f157"}, {"n": "彩虹紅目鰱", "r": "l", "p": 349, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f158"}, {"n": "白化黑鯛", "r": "r", "p": 35, "f": "罕見的白化個體，身體缺少色素。", "id": "f159"}, {"n": "金色鯔魚苗", "r": "e", "p": 97, "f": "非常罕見的金色變異個體！", "id": "f160"}, {"n": "彩虹鰻魚", "r": "l", "p": 361, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f161"}, {"n": "白化白鰱", "r": "r", "p": 36, "f": "罕見的白化個體，身體缺少色素。", "id": "f162"}, {"n": "金色鱸魚", "r": "e", "p": 100, "f": "非常罕見的金色變異個體！", "id": "f163"}, {"n": "彩虹鬥魚", "r": "l", "p": 373, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f164"}, {"n": "白化七星鱧", "r": "r", "p": 37, "f": "罕見的白化個體，身體缺少色素。", "id": "f165"}, {"n": "金色平頜鱲", "r": "e", "p": 103, "f": "非常罕見的金色變異個體！", "id": "f166"}, {"n": "彩虹午仔魚", "r": "l", "p": 386, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f167"}, {"n": "白化地圖魚", "r": "r", "p": 38, "f": "罕見的白化個體，身體缺少色素。", "id": "f168"}, {"n": "金色土魠魚", "r": "e", "p": 107, "f": "非常罕見的金色變異個體！", "id": "f169"}, {"n": "彩虹比目魚", "r": "l", "p": 398, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f170"}, {"n": "白化黑鯧", "r": "r", "p": 39, "f": "罕見的白化個體，身體缺少色素。", "id": "f171"}, {"n": "金色石斑魚", "r": "e", "p": 110, "f": "非常罕見的金色變異個體！", "id": "f172"}, {"n": "彩虹蝴蝶魚", "r": "l", "p": 410, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f173"}, {"n": "白化刺河豚", "r": "r", "p": 40, "f": "罕見的白化個體，身體缺少色素。", "id": "f174"}, {"n": "金色黃金吊", "r": "e", "p": 113, "f": "非常罕見的金色變異個體！", "id": "f175"}, {"n": "彩虹金梭魚", "r": "l", "p": 422, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f176"}, {"n": "白化石頭魚", "r": "r", "p": 41, "f": "罕見的白化個體，身體缺少色素。", "id": "f177"}, {"n": "金色紅甘鰺", "r": "e", "p": 117, "f": "非常罕見的金色變異個體！", "id": "f178"}, {"n": "彩虹鮸魚", "r": "l", "p": 434, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f179"}, {"n": "白化秋姑魚", "r": "r", "p": 42, "f": "罕見的白化個體，身體缺少色素。", "id": "f180"}, {"n": "金色紅尾冬", "r": "e", "p": 120, "f": "非常罕見的金色變異個體！", "id": "f181"}, {"n": "彩虹泥鰍", "r": "l", "p": 447, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f182"}, {"n": "白化鯽魚", "r": "r", "p": 43, "f": "罕見的白化個體，身體缺少色素。", "id": "f183"}, {"n": "金色鰱魚", "r": "e", "p": 123, "f": "非常罕見的金色變異個體！", "id": "f184"}, {"n": "彩虹秋刀魚", "r": "l", "p": 459, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f185"}, {"n": "白化溪哥", "r": "r", "p": 44, "f": "罕見的白化個體，身體缺少色素。", "id": "f186"}, {"n": "金色鯖魚", "r": "e", "p": 127, "f": "非常罕見的金色變異個體！", "id": "f187"}, {"n": "彩虹狗母魚", "r": "l", "p": 471, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f188"}, {"n": "白化鯷魚", "r": "r", "p": 45, "f": "罕見的白化個體，身體缺少色素。", "id": "f189"}, {"n": "金色白帶魚", "r": "e", "p": 130, "f": "非常罕見的金色變異個體！", "id": "f190"}, {"n": "彩虹霓虹燈魚", "r": "l", "p": 483, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f191"}, {"n": "白化天竺鯛", "r": "r", "p": 46, "f": "罕見的白化個體，身體缺少色素。", "id": "f192"}, {"n": "金色斑馬魚", "r": "e", "p": 133, "f": "非常罕見的金色變異個體！", "id": "f193"}, {"n": "彩虹鱚魚", "r": "l", "p": 496, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f194"}, {"n": "白化花身雞魚", "r": "r", "p": 47, "f": "罕見的白化個體，身體缺少色素。", "id": "f195"}, {"n": "金色梭魚", "r": "e", "p": 137, "f": "非常罕見的金色變異個體！", "id": "f196"}, {"n": "彩虹圓鰺", "r": "l", "p": 508, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f197"}, {"n": "白化青鱗魚", "r": "r", "p": 48, "f": "罕見的白化個體，身體缺少色素。", "id": "f198"}, {"n": "金色紅目鰱", "r": "e", "p": 140, "f": "非常罕見的金色變異個體！", "id": "f199"}, {"n": "彩虹鯰魚", "r": "l", "p": 520, "f": "傳說中的彩虹色變異，幾乎沒人見過！", "id": "f200"}];
+const FISH_BY = new Map(FISH.map(f => [f.id, f]));
+RAR.u = { n: ['少見', 'Uncommon'], col: '#58a6a6', lv: 1 };
+const FISH_ODDS = [['c', .55], ['u', .26], ['r', .12], ['e', .055], ['l', .015]];
+const FISH_LIMIT = 5, FISH_WINDOW = 3600 * 1000;
+const FISH_TITLES = [
+  ['ti_f1', '釣魚新手', 'c', '釣到第 1 條魚', S => S.total >= 1], ['ti_f10', '小小釣手', 'r', '發現 10 種魚', S => S.kinds >= 10],
+  ['ti_fep', '深海探索者', 'e', '釣到一條史詩魚', S => S.e >= 1], ['ti_fsell', '魚市場大亨', 'e', '賣魚累計 1000 葉子幣', S => S.sold >= 1000],
+  ['ti_f50', '釣魚達人', 'e', '發現 50 種魚', S => S.kinds >= 50], ['ti_fleg', '傳說釣客', 'l', '釣到一條傳說魚', S => S.l >= 1],
+  ['ti_f100', '海洋博士', 'l', '發現 100 種魚', S => S.kinds >= 100], ['ti_f200', '釣魚之王', 'l', '200 種魚全部發現', S => S.kinds >= 200]
+];
+FISH_TITLES.forEach(([id, n, r, d]) => { if (!AD.shop.some(x => x.id === id)) { const s = { id, slot: 'title', n, p: 0, r, d, earn: d }; AD.shop.push(s); SHOP_BY.set(id, s); } });
+function fishInit() { AV.fishBag = AV.fishBag || {}; AV.fishDex = AV.fishDex || {}; AV.fishLog = (AV.fishLog || []).filter(x => Date.now() - x < FISH_WINDOW); AV.fishSold = AV.fishSold || 0; }
+function fishLeft() { fishInit(); return Math.max(0, FISH_LIMIT - AV.fishLog.length); }
+function fishWaitMin() { fishInit(); if (AV.fishLog.length < FISH_LIMIT) return 0; return Math.ceil((Math.min(...AV.fishLog) + FISH_WINDOW - Date.now()) / 60000); }
+function fishStats() { fishInit(); const S = { total: 0, kinds: Object.keys(AV.fishDex).length, sold: AV.fishSold, e: 0, l: 0 }; Object.keys(AV.fishDex).forEach(id => { const f = FISH_BY.get(id); if (f && f.r === 'e') S.e++; if (f && f.r === 'l') S.l++; }); S.total = Object.values(AV.fishDex).reduce((a, d) => a + (d.n || 1), 0); return S; }
+function checkFishTitles() { const S = fishStats(); FISH_TITLES.forEach(([id, n, , , ok]) => { if (!AV.owned[id] && ok(S)) { AV.owned[id] = today(); saveP(); setTimeout(() => toast(tr(`🎣 獲得特殊稱號「${n}」！到商店的「稱號」可以戴上`, `New title: ${n}!`)), 900); } }); }
+function rollFish() { let x = Math.random(), r = 'c'; for (const [t, p] of FISH_ODDS) { if (x < p) { r = t; break; } x -= p; } const pool = FISH.filter(f => f.r === r); return pool[Math.random() * pool.length | 0]; }
+const fishSvg = (col, s = 34) => `<svg viewBox="0 0 64 40" width="${s}" height="${Math.round(s * .62)}" aria-hidden="true"><path d="M6 20c8-12 26-16 40-8l10-8v32l-10-8c-14 8-32 4-40-8z" fill="${col}" stroke="#2b2b33" stroke-width="2.5" stroke-linejoin="round"/><circle cx="16" cy="18" r="3.2" fill="#2b2b33"/></svg>`;
+/* the fishing trip */
+let FS = null;
+function fishStart() {
+  if (!ADV_READY || !AVA || !ME) { toast(tr('先建立角色才能釣魚喔！', 'Create a character first!')); return; }
+  if (FS) { fishStop(); return; }
+  fishInit();
+  if (AV.fishLog.length >= FISH_LIMIT) { const m = fishWaitMin(); avSay(tr('今天釣夠囉，先去學習吧！', 'Time to study!'), 4); toast(tr(`⏰ 這一小時已經釣了 ${FISH_LIMIT} 次，先去闖關、答題學習吧！再過 ${m} 分鐘才能再釣。`, `You've fished ${FISH_LIMIT} times this hour. Go learn! Try again in ${m} min.`)); return; }
+  const P = AVA.root.position, isl = islAt(P.x, P.z, WALK_AP) || AVA.isl;
+  if (!isl || AVA.path && AVA.path.boat) { toast(tr('要站在島上才能釣魚喔！', 'Stand on an island to fish.')); return; }
+  let dx = P.x - isl.x, dz = P.z - isl.z; if (Math.hypot(dx, dz) < .4) { dx = camera.position.x - isl.x; dz = camera.position.z - isl.z; }
+  const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L;
+  const edge = new V3(isl.x + dx * WALK_AP * .93, RING_Y, isl.z + dz * WALK_AP * .93), water = new V3(isl.x + dx * (HEX_AP + 1.1), WATER_Y + .02, isl.z + dz * (HEX_AP + 1.1));
+  FS = { st: 'walk', t: 0, isl, edge, water, dir: Math.atan2(dx, dz) };
+  advGoto(isl.id, true, edge); fishBtn();
+  AVA.follow = false; flyTo(framing(new V3(lerp(edge.x, water.x, .4), TOP, lerp(edge.z, water.z, .4)), ISL_OFF.clone().multiplyScalar(.5), false));
+}
+function fishStop(msg) {
+  if (!FS) return; const F = FS; FS = null;
+  if (F.rod) F.rod.parent && F.rod.parent.remove(F.rod); if (F.line) scene.remove(F.line); if (F.bob) scene.remove(F.bob); if (F.lab) { F.lab.element.remove(); F.lab.parent && F.lab.parent.remove(F.lab); }
+  if (F.held) F.held.parent && F.held.parent.remove(F.held);
+  if (msg) avSay(msg, 3); fishBtn();
+}
+function fishBuildGear() {
+  const arm = AVA.root.userData.parts.armR, rod = new THREE.Group(); rod.position.set(0, -.085, .01); arm.add(rod);
+  part(rod, W_GEO.cyl, '#7a4a2a', 0, .02, .17, .007, .36, .007, Math.PI / 2 - .5); const tip = new THREE.Object3D(); tip.position.set(0, .115, .335); rod.add(tip);
+  part(rod, W_GEO.cyl, '#555', .01, -.005, .04, .02, .018, .02, 0, 0, Math.PI / 2);
+  const bob = new THREE.Group(); part(bob, W_GEO.head, '#e94b5a', 0, .02, 0, .5, .4, .5); part(bob, W_GEO.head, '#ffffff', 0, -.005, 0, .5, .3, .5); bob.scale.setScalar(1.6); bob.position.copy(FS.water); scene.add(bob);
+  const lg = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 10 }, () => new V3())); const line = new THREE.Line(lg, new THREE.LineBasicMaterial({ color: '#f6f6f6', transparent: true, opacity: .8 })); line.frustumCulled = false; scene.add(line);
+  Object.assign(FS, { rod, tip, bob, line });
+}
+const _tp = new V3();
+window.__fs = () => FS && { st: FS.st, t: +FS.t.toFixed(1), d: AVA && +AVA.root.position.distanceTo(FS.edge).toFixed(2), path: !!(AVA && AVA.path) };
+function fishTick(dt, t, R0, P0) {
+  if (!FS) return; const F = FS; F.t += dt;
+  if (AVA.path && F.st !== 'walk') { fishStop(tr('收竿！', 'Packing up!')); return; }
+  if (F.st === 'walk') {
+    if (!AVA.path) { if (R0.position.distanceTo(F.edge) > .25) { fishStop(); return; } F.st = 'cast'; F.t = 0; AVA.yaw = F.dir; fishBuildGear(); fishInit(); AV.fishLog.push(Date.now()); saveP(); fishBtn(); }
+    return;
+  }
+  AVA.yaw = F.dir; P0.armR.rotation.x = F.st === 'cast' ? -2.2 + Math.min(1, F.t / .5) * 1.3 : F.st === 'reel' ? -1.6 : -.9;
+  F.tip.getWorldPosition(_tp);
+  let by = WATER_Y + .02 + Math.sin(t * 3) * .01;
+  if (F.st === 'cast') { const k = Math.min(1, F.t / .6); F.bob.position.lerpVectors(_tp, F.water, k); F.bob.position.y = lerp(_tp.y, by, k) + Math.sin(k * Math.PI) * .4; if (k >= 1) { F.st = 'wait'; F.t = 0; F.wait = window.__fishFast ? .2 : 3 + Math.random() * 4; splash(F.water.x, F.water.z, .4, 4); } }
+  else if (F.st === 'wait') { F.bob.position.y = by; if (F.t > F.wait) { F.st = 'bite'; F.t = 0; splash(F.water.x, F.water.z, .5, 8); fishBite(); } }
+  else if (F.st === 'bite') { F.bob.position.y = by - .05 - Math.abs(Math.sin(t * 18)) * .05; if (F.t > 1.8) { fishStop(tr('哎呀，魚跑掉了！下次要快一點按「收竿」', 'It got away!')); } }
+  else if (F.st === 'reel') { const k = Math.min(1, F.t / .5); F.bob.position.lerpVectors(F.water, _tp, k); if (k >= 1) fishCatch(); }
+  const pos = F.line.geometry.attributes.position, a = _tp, b = F.bob.position;
+  for (let i = 0; i < 10; i++) { const u = i / 9; pos.setXYZ(i, lerp(a.x, b.x, u), lerp(a.y, b.y, u) - Math.sin(u * Math.PI) * (F.st === 'bite' ? .02 : .12), lerp(a.z, b.z, u)); }
+  pos.needsUpdate = true;
+}
+function fishBite() {
+  const b = document.createElement('button'); b.className = 'fish-bite'; b.type = 'button'; b.textContent = tr('上鉤了！收竿！', 'Bite! Reel in!');
+  b.addEventListener('pointerdown', e => e.stopPropagation()); b.addEventListener('click', e => { e.stopPropagation(); fishReel(); });
+  const lab = new CSS2DObject(b); lab.position.set(0, .8, 0); AVA.root.add(lab); FS.lab = lab; avSay(tr('有魚上鉤！', 'A bite!'), 1.8);
+}
+function fishReel() { if (!FS || FS.st !== 'bite') return; FS.st = 'reel'; FS.t = 0; if (FS.lab) { FS.lab.element.remove(); FS.lab.parent.remove(FS.lab); FS.lab = null; } }
+addEventListener('keydown', e => { if (FS && FS.st === 'bite' && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); fishReel(); } });
+function fishCatch() {
+  const f = rollFish(), R = RAR[f.r]; fishInit();
+  AV.fishBag[f.id] = (AV.fishBag[f.id] || 0) + 1; const isNew = !AV.fishDex[f.id]; AV.fishDex[f.id] = { d: AV.fishDex[f.id] ? AV.fishDex[f.id].d : today(), n: (AV.fishDex[f.id] ? AV.fishDex[f.id].n : 0) + 1 };
+  saveP(); checkFishTitles();
+  const held = new THREE.Group(); held.position.set(0, .62, 0); part(held, W_GEO.head, R.col, 0, 0, 0, .45, .35, .9); part(held, W_GEO.cone, R.col, 0, 0, -.08, .05, .05, .02, -Math.PI / 2); AVA.root.add(held); FS.held = held;
+  avSay(tr(`釣到${f.n}！`, `Caught a ${f.n}!`), 3); AVA.hop = .6;
+  const el = document.createElement('div'); el.className = 'card-pop fish-pop';
+  el.innerHTML = `<div class="kcard" style="--c:${R.col}">${isNew ? '<span class="knew">NEW</span>' : ''}<small>${esc(T(R.n))} · ${tr('釣到了！', 'Caught!')}</small><div class="fp-row">${fishSvg(R.col, 56)}<b>${esc(f.n)}</b></div>${f.f ? `<p>${esc(f.f)}</p>` : ''}<div class="kfoot"><span>${tr(`賣價 ${f.p} 葉子幣`, `Sells for ${f.p}`)}</span><span>${tr(`魚類圖鑑 ${Object.keys(AV.fishDex).length} / ${FISH.length}`, `Dex ${Object.keys(AV.fishDex).length}/${FISH.length}`)}</span></div><p class="fp-left">${tr(`這一小時還能釣 ${fishLeft()} 次`, `${fishLeft()} casts left this hour`)}</p></div>`;
+  document.body.appendChild(el); requestAnimationFrame(() => el.classList.add('on')); if (f.r === 'e' || f.r === 'l') confetti(el.firstElementChild);
+  el.addEventListener('click', () => el.remove()); setTimeout(() => { el.classList.remove('on'); setTimeout(() => el.remove(), 450); }, 4200);
+  setTimeout(() => fishStop(), 2600);
+}
+/* toolbar button */
+function fishBtn() {
+  let b = $('#btnFish');
+  if (!b) { b = document.createElement('button'); b.className = 'btn'; b.id = 'btnFish'; b.type = 'button'; $('#tools').insertBefore(b, $('#btnMusic') || $('#btnHelp')); b.addEventListener('click', fishStart); }
+  b.hidden = !(typeof ADV_READY !== 'undefined' && ADV_READY && ME);
+  const left = ME ? fishLeft() : 0;
+  b.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 20L17 4"/><path d="M17 4v9"/><circle cx="17" cy="15" r="2"/></svg><span>${FS ? tr('收竿', 'Stop') : tr('釣魚', 'Fish')}</span><i class="fish-n">${left}</i>`;
+  b.title = tr(`釣魚（這一小時還能釣 ${left} 次）`, `Fish (${left} left this hour)`);
+}
+/* fish market inside the shop */
+function fishMarket(pane) {
+  fishInit(); const S = fishStats(), bag = Object.entries(AV.fishBag).filter(([, n]) => n > 0).map(([id, n]) => ({ f: FISH_BY.get(id), n })).filter(x => x.f).sort((a, b) => b.f.p - a.f.p);
+  const worth = bag.reduce((a, x) => a + x.f.p * x.n, 0), by = r => FISH.filter(f => f.r === r), seen = r => by(r).filter(f => AV.fishDex[f.id]).length;
+  return `<div class="fish-mk">
+    <p class="hint">${tr(`魚簍裡的魚可以賣成葉子幣，越稀有越值錢。每小時最多釣 ${FISH_LIMIT} 次（重新整理也不會重算），這一小時還能釣 <b>${fishLeft()}</b> 次${fishLeft() ? '' : `，${fishWaitMin()} 分鐘後恢復`}。`, `Sell fish for leaves. ${FISH_LIMIT} casts per hour.`)}</p>
+    <div class="dex-row">${['c', 'u', 'r', 'e', 'l'].map(r => `<span class="dex-chip" style="--rc:${RAR[r].col}">${esc(T(RAR[r].n))} ${seen(r)}/${by(r).length}</span>`).join('')}<b>${tr(`圖鑑 ${S.kinds} / ${FISH.length}`, `Dex ${S.kinds}/${FISH.length}`)}</b></div>
+    ${bag.length ? `<div class="qrow"><button class="btn primary" id="fmAll">${tr(`全部賣掉（${worth} 葉子幣）`, `Sell all (${worth})`)}</button></div>
+    <div class="fish-grid">${bag.map(({ f, n }) => `<div class="fish-it" style="--rc:${RAR[f.r].col}">${fishSvg(RAR[f.r].col)}<div><b>${esc(f.n)}</b><small>${esc(T(RAR[f.r].n))} · ×${n} · ${tr(`每條 ${f.p}`, `${f.p} each`)}</small></div><button class="btn" data-sell="${f.id}">${tr('賣 1 條', 'Sell 1')}</button></div>`).join('')}</div>`
+      : `<p class="hint">${tr('魚簍是空的。按上方的「釣魚」按鈕，角色會走到島邊釣魚；看到「上鉤了！」要趕快按收竿。', 'Your bag is empty. Tap “Fish” at the top.')}</p>`}
+    <section class="qsec"><div class="eyebrow">${tr('釣魚特殊稱號', 'Fishing titles')}</div><div class="ftitles">${FISH_TITLES.map(([id, n, r, d]) => `<span class="${AV.owned[id] ? 'on' : ''}" style="--rc:${RAR[r].col}">${AV.owned[id] ? '🏅' : '🔒'} ${esc(n)}<small>${esc(d)}</small></span>`).join('')}</div></section>
+  </div>`;
+}
+function fishMarketBind(pane, rerender) {
+  const sell = (id, n) => { const f = FISH_BY.get(id), have = AV.fishBag[id] || 0, k = Math.min(n, have); if (!f || !k) return 0; AV.fishBag[id] = have - k; AV.coins += f.p * k; AV.fishSold = (AV.fishSold || 0) + f.p * k; return f.p * k; };
+  pane.querySelectorAll('[data-sell]').forEach(b => b.addEventListener('click', () => { const g = sell(b.dataset.sell, 1); saveP(); updateMeBar(); checkFishTitles(); toast(tr(`賣出 +${g} 葉子幣`, `+${g} leaves`)); rerender(); }));
+  const all = pane.querySelector('#fmAll'); if (all) all.addEventListener('click', () => { let g = 0; Object.keys(AV.fishBag).forEach(id => { g += sell(id, AV.fishBag[id]); }); saveP(); updateMeBar(); checkFishTitles(); toast(tr(`全部賣出 +${g} 葉子幣`, `+${g} leaves`)); rerender(); });
+}
+
 function buildChibi(look, eq = {}, forPreview = false) {
   const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
   const ch = look.char || 'student', shirt = look.shirt || '#db6a41', hair = look.hair || '#2d2424', skin = look.skin || '#f1c9a5', pants = '#3e4f7d';
@@ -11299,6 +11427,7 @@ var advTick = function (dt, now) {
   let kx = 0, kz = 0;
   if (WKEYS.size) { if (WKEYS.has('w')) kz += 1; if (WKEYS.has('s')) kz -= 1; if (WKEYS.has('d')) kx += 1; if (WKEYS.has('a')) kx -= 1; }
   if (kx || kz) {
+    if (FS) fishStop();
     if (AVA.path) { if (AVA.path.boat) R0.position.copy(AVA.path.pts[AVA.path.pts.length - 1]); AVA.path = null; AVA.boat.visible = false; }
     flight = null; zoomGoal = null;
     camera.getWorldDirection(_fw); _fw.y = 0; _fw.normalize(); _rt.set(-_fw.z, 0, _fw.x);
@@ -11341,6 +11470,7 @@ var advTick = function (dt, now) {
   }
   cosAnim(R0, t); if (AVA.pet) { cosAnim(AVA.pet, t); const sp = AVA.pet.userData.sparks; if (sp && Math.random() < dt * 9 && AP.list.length < 240) AP.list.push({ p: AVA.pet.position.clone().add(new V3((Math.random() - .5) * .1, 0, (Math.random() - .5) * .1)), v: new V3((Math.random() - .5) * .1, -.25, (Math.random() - .5) * .1), c: sp, life: 0, max: .9, size: .016, geo: 'oct', mode: 'rise', rot: 0 }); }
   auraTick(dt, t, R0, AV.eq.aura, moving);
+  fishTick(dt, t, R0, P0);
   if (AVA.say > 0) { AVA.say -= dt; if (AVA.say <= 0) { AVA.say = 0; updateTag(); } }
   dirty = true;
 };
@@ -11506,6 +11636,7 @@ function checkAch() {
 
 /* ---------- player bar ---------- */
 function updateMeBar() {
+  try { fishBtn(); } catch (e) {}
   let el = $('#meBar');
   if (!ME) { if (el) el.remove(); return; }
   if (!el) { el = document.createElement('button'); el.id = 'meBar'; el.className = 'mebar'; el.type = 'button'; $('#brand').appendChild(el); el.addEventListener('click', () => openBook('quest')); }
@@ -11624,16 +11755,17 @@ function tabCards(pane) {
 let SHOPSLOT = 'hat', SHOPTRY = null;
 function tabShop(pane, slot = SHOPSLOT) {
   SHOPSLOT = slot;
-  const lv = levelInfo().lv, items = AD.shop.filter(s => s.slot === slot).sort((x, y) => x.p - y.p);
+  const lv = levelInfo().lv, items = AD.shop.filter(s => s.slot === slot).sort((x, y) => (x.earn ? 1 : 0) - (y.earn ? 1 : 0) || x.p - y.p);
   const ownN = AD.shop.filter(s => AV.owned[s.id]).length, tryS = SHOPTRY && SHOP_BY.get(SHOPTRY);
   const eqPv = { ...AV.eq }; if (tryS) eqPv[tryS.slot] = tryS.id;
   const card = s => {
     const own = !!AV.owned[s.id], on = AV.eq[s.slot] === s.id, R = RAR[s.r] || RAR.c, locked = lv < R.lv, poor = AV.coins < s.p;
     const act = own ? `<button class="btn" data-eq="${s.id}">${on ? tr('卸下', 'Remove') : tr('穿上', 'Wear')}</button>`
+      : s.earn ? `<button class="btn" disabled>🎣 ${esc(s.earn)}</button>`
       : locked ? `<button class="btn" disabled>${tr(`Lv.${R.lv} 解鎖`, `Unlocks at Lv.${R.lv}`)}</button>`
       : `<button class="btn primary" data-buy="${s.id}" ${poor ? 'disabled' : ''}>${poor ? tr(`還差 ${s.p - AV.coins}`, `Need ${s.p - AV.coins}`) : tr('購買', 'Buy')}</button>`;
     return `<div class="shop-item r-${s.r} ${on ? 'on' : ''} ${SHOPTRY === s.id ? 'trying' : ''}" style="--rc:${R.col}">
-      <div class="si-top"><em>${esc(T(R.n))}</em>${own ? `<small>${on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')}</small>` : `<small class="price">${ICON3.leaf}${s.p}</small>`}</div>
+      <div class="si-top"><em>${esc(T(R.n))}</em>${own ? `<small>${on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')}</small>` : s.earn ? `<small>${tr('釣魚限定', 'Fishing only')}</small>` : `<small class="price">${ICON3.leaf}${s.p}</small>`}</div>
       <b>${esc(s.n)}</b>${s.d ? `<p>${esc(s.d)}</p>` : ''}
       <div class="si-btns">${s.slot !== 'title' && s.slot !== 'aura' ? `<button class="btn ghost" data-try="${s.id}">${SHOPTRY === s.id ? tr('取消試穿', 'Stop') : tr('試穿', 'Try')}</button>` : ''}${act}</div></div>`;
   };
@@ -11641,9 +11773,10 @@ function tabShop(pane, slot = SHOPSLOT) {
       <p class="hint">${tr('答對題目、完成活動、每日任務和連線對戰都能賺葉子幣。商品分成普通、稀有、史詩、傳說四種，越精緻越貴；史詩要 Lv.4、傳說要 Lv.7 才能買。商店只換外觀，不會影響答題。', 'Earn leaves by learning. Epic items unlock at Lv.4, legendary at Lv.7.')}</p>
       <p class="shop-col">${tr(`收藏 ${ownN} / ${AD.shop.length} 件`, `Collected ${ownN} / ${AD.shop.length}`)}<span class="bar"><i style="width:${Math.round(ownN / AD.shop.length * 100)}%"></i></span></p>
       ${tryS ? `<p class="shop-trying">${tr(`試穿中：${tryS.n}`, `Trying: ${tryS.n}`)}</p>` : ''}${AV.eq.title ? `<p class="hint">${tr('目前稱號：', 'Title: ')}<b>${esc(titleName(AV.eq.title))}</b></p>` : ''}</div></div>
-    <div class="shop-tabs" role="tablist">${Object.keys(SLOT_NAMES).map(k => `<button class="stab ${k === slot ? 'on' : ''}" data-slot="${k}" role="tab" aria-selected="${k === slot}">${esc(T(SLOT_NAMES[k]))}<small>${AD.shop.filter(x => x.slot === k && AV.owned[x.id]).length}/${AD.shop.filter(x => x.slot === k).length}</small></button>`).join('')}</div>
+    <div class="shop-tabs" role="tablist">${[...Object.keys(SLOT_NAMES), 'fish'].map(k => k === 'fish' ? `<button class="stab fishtab ${slot === 'fish' ? 'on' : ''}" data-slot="fish" role="tab">🎣 ${tr('魚簍・賣魚', 'Fish market')}<small>${Object.keys(AV.fishDex || {}).length}/${FISH.length}</small></button>` : `<button class="stab ${k === slot ? 'on' : ''}" data-slot="${k}" role="tab" aria-selected="${k === slot}">${esc(T(SLOT_NAMES[k]))}<small>${AD.shop.filter(x => x.slot === k && AV.owned[x.id]).length}/${AD.shop.filter(x => x.slot === k).length}</small></button>`).join('')}</div>
     ${slot === 'aura' ? `<p class="hint">${tr('特效會在島上的角色身邊出現（預覽圖看不到），走路時效果更明顯。', 'Effects appear around your character on the islands.')}</p>` : slot === 'title' ? `<p class="hint">${tr('稱號會顯示在角色名牌下方，連線對戰時對手也看得到。', 'Titles show under your name tag.')}</p>` : ''}
-    <div class="shop-grid">${items.map(card).join('')}</div>`;
+    ${slot === 'fish' ? fishMarket(pane) : `<div class="shop-grid">${items.map(card).join('')}</div>`}`;
+  if (slot === 'fish') fishMarketBind(pane, () => tabShop(pane, 'fish'));
   if (BOOKPV) BOOKPV.dispose(); BOOKPV = makePreview(pane.querySelector('.shop-pv')); BOOKPV.set(ME, eqPv);
   pane.querySelectorAll('[data-slot]').forEach(b => b.addEventListener('click', () => { SHOPTRY = null; tabShop(pane, b.dataset.slot); }));
   pane.querySelectorAll('[data-try]').forEach(b => b.addEventListener('click', () => { SHOPTRY = SHOPTRY === b.dataset.try ? null : b.dataset.try; tabShop(pane); }));
