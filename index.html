@@ -16578,7 +16578,7 @@ function frame(now) {
     updateClouds(dt);
     seaTick(dt);
     dinoTick(dt, simTime);
-    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); } catch (e) { console.warn(e); }
+    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); ambTick(dt, simTime); } catch (e) { console.warn(e); }
     dirty = true;
   }
   if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
@@ -19951,7 +19951,7 @@ function growCelebrate(isl, st) {
 function growTick(dt, t) {
   SKYSHARDS.forEach(S => { S.g.rotation.y = t * S.v + S.ph; S.g.position.y += Math.sin(t * .9 + S.ph) * .0012; S.cr.rotation.y = t * .25; });
   /* rainbows: appear for ~25 s every ~70 s, fading in and out */
-  { const c = (t % 70) / 70, k = c < .36 ? Math.min(1, c / .05, (.36 - c) / .05) : 0; RAINBOWS.forEach(m => { m.material.opacity = .82 * k; m.visible = k > .01; }); }
+  { const k = typeof AMB !== 'undefined' ? AMB.rbK : 0; RAINBOWS.forEach(m => { m.material.opacity = .82 * k; m.visible = k > .01; }); }
   GROW.g.forEach(g => { const sp = g.userData.spark; if (sp) sp.forEach(s => { s.m.position.set(Math.cos(s.a + t * .5) * s.r, s.h + Math.sin(t * 2 + s.a) * .12, Math.sin(s.a + t * .5) * s.r); s.m.rotation.y = t * 3; }); g.children.forEach(c => { if (c.userData.flag) c.rotation.y = Math.sin(t * 3) * .25; }); });
   GROW.t -= dt; if (GROW.t <= 0) { GROW.t = 1.2; growAll(true); }
 }
@@ -20065,6 +20065,168 @@ function skyEvTick(dt, t) {
 }
 window.__skyev = { spawn: k => spawnSky(k), SKYEV };
 
+
+/* =====================================================================
+   16k. ambience: night sky, weather, cloud shadows, fog over locked islands, exam clouds,
+        fireworks, life (gulls, butterflies, villagers' day), farmland, camera moments
+   ===================================================================== */
+const AMB = { t: 0, rbK: 0, rainK: 0, fogK: 0, w: { kind: 'clear', t: 0, dur: 90 }, check: 0 };
+const am = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .8, flatShading: true, ...o });
+/* --- 1. night sky: stars and a milky way that fade in with the dark --- */
+{
+  const N = 2600, pos = new Float32Array(N * 3), col = new Float32Array(N * 3), r = mulberry32(2024), Rs = 150 * WK, c = new THREE.Color();
+  for (let i = 0; i < N; i++) {
+    let x, y, z;
+    if (i < 900) { const a = r() * Math.PI * 2, b = (r() - .5) * .28; x = Math.cos(a); z = Math.sin(a) * .55 + .45 * Math.sin(b); y = .25 + Math.abs(Math.sin(a)) * .55 + b; }   // milky way band
+    else { x = r() * 2 - 1; y = .06 + r() * .94; z = r() * 2 - 1; }
+    const v = new V3(x, Math.max(.04, y), z).normalize().multiplyScalar(Rs);
+    pos.set([CENTER.x + v.x, v.y, CENTER.z + v.z], i * 3);
+    c.setHSL(i < 900 ? .62 : .1 + r() * .5, i < 900 ? .5 : .2, .78 + r() * .2); col.set([c.r, c.g, c.b], i * 3);
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  AMB.stars = new THREE.Points(g, new THREE.PointsMaterial({ size: 2.2, sizeAttenuation: false, vertexColors: true, transparent: true, opacity: 0, fog: false, depthWrite: false }));
+  AMB.stars.renderOrder = -1; scene.add(AMB.stars);
+}
+/* --- 2. weather: a passing shower (sea ripples, dimmer light) followed by the rainbow, sometimes a morning mist --- */
+{
+  const N = 900, g = new THREE.BufferGeometry(), p = new Float32Array(N * 6);
+  g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+  AMB.rain = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: '#9fbfdc', transparent: true, opacity: 0, depthWrite: false }));
+  AMB.rain.frustumCulled = false; scene.add(AMB.rain); AMB.drops = Array.from({ length: N }, () => ({ x: 0, y: -99, z: 0, v: 10 + Math.random() * 6 }));
+}
+const WEATHER_SAY = { rain: ['下雨了！雲裡的小水滴變大，就掉下來了。', '下雨了，海面一圈圈的漣漪好漂亮。'], rainbow: ['雨停了，出現彩虹！要背對太陽才看得到。', '彩虹是陽光被小水滴分成的色光！'], mist: ['起霧了，霧是飄在地面附近的小水滴。'] };
+function weatherNext() {
+  const W = AMB.w, prev = W.kind;
+  if (prev === 'rain') { W.kind = 'rainbow'; W.dur = 28; }
+  else if (prev === 'clear') { const r = Math.random(); W.kind = r < .6 ? 'rain' : 'mist'; W.dur = W.kind === 'rain' ? 26 + Math.random() * 14 : 30; }
+  else { W.kind = 'clear'; W.dur = 80 + Math.random() * 100; }
+  W.t = 0;
+  if (WEATHER_SAY[W.kind] && Math.random() < .7) { const L = WEATHER_SAY[W.kind]; try { avSay(L[Math.random() * L.length | 0], 3.5); } catch (e) {} }
+}
+/* --- 3. cloud shadows drifting over the sea and the islands --- */
+try { cloudMesh.castShadow = true; } catch (e) {}
+/* --- 4. fog over locked islands; it clears with a burst of light when the island unlocks --- */
+const LOCKFOG = new Map();
+const fogMat = new THREE.MeshStandardMaterial({ color: '#eef1f5', roughness: 1, transparent: true, opacity: .62, depthWrite: false });
+function lockFogBuild(isl) {
+  const g = new THREE.Group(); g.position.set(isl.x, TOP + isl.ly, isl.z); scene.add(g); const r = mulberry32(hashStr(isl.id + 'fog'));
+  for (let k = 0; k < 14; k++) { const a = k / 14 * Math.PI * 2 + r() * .3, d = R * (.72 + r() * .3), m = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 2), fogMat); m.scale.set(.42 + r() * .25, .16 + r() * .08, .34 + r() * .2); m.position.set(Math.cos(a) * d, .12 + r() * .3, Math.sin(a) * d); g.add(m); }
+  g.userData = { k: 1, ph: r() * 6 }; LOCKFOG.set(isl.id, g);
+}
+/* --- 5. exam countdown: a little rain cloud over unstudied islands in the last week --- */
+const EXAMCLOUD = new Map();
+function examCloudBuild(isl) {
+  const g = new THREE.Group(); g.position.set(isl.x + .3, TOP + isl.ly + 2.1, isl.z - .2); scene.add(g);
+  const cm = am('#8e98a6', { transparent: true, opacity: .92 });
+  [[0, 0, 0, .45], [.38, -.05, .1, .34], [-.36, -.05, -.05, .36], [.1, .15, -.12, .32]].forEach(([x, y, z, s]) => { const m = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 1), cm); m.scale.set(s * 1.3, s * .8, s); m.position.set(x, y, z); g.add(m); });
+  const lines = new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(24 * 6), 3)), new THREE.LineBasicMaterial({ color: '#a9c7e8', transparent: true, opacity: .8 }));
+  g.add(lines); g.userData = { lines, ph: Math.random() * 10 }; EXAMCLOUD.set(isl.id, g);
+}
+/* --- 6. fireworks over an archipelago whose islands all have three stars --- */
+const FW = [];
+function firework(x, y, z) {
+  const N = 70, p = new Float32Array(N * 3), c = new Float32Array(N * 3), v = [], col = new THREE.Color().setHSL(Math.random(), .9, .62);
+  for (let i = 0; i < N; i++) { const d = new V3(Math.random() - .5, Math.random() - .5, Math.random() - .5).normalize().multiplyScalar(2.2 + Math.random() * .8); v.push(d); p.set([x, y, z], i * 3); const k = i % 5 ? col : new THREE.Color('#ffffff'); c.set([k.r, k.g, k.b], i * 3); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3)); g.setAttribute('color', new THREE.BufferAttribute(c, 3));
+  const pts = new THREE.Points(g, new THREE.PointsMaterial({ size: 6, sizeAttenuation: false, vertexColors: true, transparent: true, depthWrite: false, fog: false }));
+  scene.add(pts); FW.push({ pts, v, t: 0, o: new V3(x, y, z) });
+}
+/* --- 7. life: gulls resting on lamp posts, butterflies over flowerbeds --- */
+const GULLS = [], BFLY = [];
+ISL.filter(i => i.layer === 'sea').forEach((isl, n) => {
+  if (n % 2) return; const k = n % 6, a = Math.PI / 6 + k * Math.PI / 3, x = isl.x + Math.cos(a) * 1.97, z = isl.z + Math.sin(a) * 1.97;
+  const g = new THREE.Group(); g.position.set(x, TOP + .56, z); g.rotation.y = -a; scene.add(g);
+  const w = am('#ffffff'), gr = am('#9aa6b2'); const b = new THREE.Mesh(new THREE.SphereGeometry(.05, 8, 6), w); b.scale.set(.8, .8, 1.5); g.add(b);
+  const h = new THREE.Mesh(new THREE.SphereGeometry(.032, 8, 6), w); h.position.set(0, .045, .06); g.add(h); const bk = new THREE.Mesh(new THREE.ConeGeometry(.01, .04, 5), am('#f3a64a')); bk.rotation.x = Math.PI / 2; bk.position.set(0, .045, .1); h.add(bk); bk.position.set(0, 0, .04);
+  for (const s of [-1, 1]) { const wi = new THREE.Mesh(new THREE.BoxGeometry(.012, .03, .08), gr); wi.position.set(s * .045, .01, -.01); g.add(wi); }
+  GULLS.push({ g, h, ph: Math.random() * 6 });
+});
+function butterflies(isl, g) {
+  const cols = ['#ffd84a', '#ff8fb5', '#8fd3ff'];
+  for (let k = 0; k < 2; k++) { const b = new THREE.Group(); g.add(b); const m = am(cols[(k + isl.idx) % 3], { side: THREE.DoubleSide });
+    for (const s of [-1, 1]) { const w = new THREE.Mesh(new THREE.CircleGeometry(.05, 6), m); w.position.x = s * .045; w.rotation.x = -Math.PI / 2; b.add(w); }
+    BFLY.push({ b, g, a: Math.random() * 6, k }); }
+}
+/* --- 8. farmland around the land (grade 1–3) islands: a dirt lane, crop rows and grazing cows --- */
+const COWS = [];
+ISL.filter(i => i.layer === 'land').forEach((isl, n) => {
+  if (n) return;
+  const out = new V3(isl.x - CENTER.x, 0, isl.z - CENTER.z).normalize(), side = new V3(-out.z, 0, out.x);
+  const fx = isl.x + out.x * (R + 2.4) + side.x * 1.2, fz = isl.z + out.z * (R + 2.4) + side.z * 1.2, fy = terrainH(fx, fz);
+  const field = new THREE.Group(); field.position.set(fx, fy + .02, fz); field.rotation.y = Math.atan2(out.x, out.z); scene.add(field);
+  field.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(2.6, .06, 2), am('#8a6440')), { receiveShadow: true }));
+  for (let r = 0; r < 6; r++) { const crop = r % 3 === 0 ? '#e7c75a' : r % 3 === 1 ? '#6ea84f' : '#9fc96a'; for (let c = 0; c < 8; c++) { const m = new THREE.Mesh(new THREE.ConeGeometry(.07, .2, 5), am(crop)); m.position.set(-1.1 + c * .31, .13, -.8 + r * .32); field.add(m); } }
+  const fence = am('#c49a6c'); for (let k = 0; k < 12; k++) { const t = k / 11, post = new THREE.Mesh(new THREE.BoxGeometry(.04, .25, .04), fence); post.position.set(-1.35 + t * 2.7, .12, 1.08); field.add(post); }
+  for (let k = 0; k < 3; k++) {
+    const cow = new THREE.Group(), x0 = isl.x + out.x * (R + 1.4) - side.x * (1.6 + k * .7), z0 = isl.z + out.z * (R + 1.4) - side.z * (1.6 + k * .7);
+    cow.position.set(x0, terrainH(x0, z0), z0); scene.add(cow); const wht = am('#f6f2ea'), blk = am('#2b2b33'), pink = am('#f2b8b8');
+    const body = new THREE.Mesh(new THREE.BoxGeometry(.22, .14, .36), wht); body.position.y = .2; cow.add(body);
+    [[.06, .28, .05], [-.07, .24, -.1]].forEach(([x, y, z]) => { const s = new THREE.Mesh(new THREE.BoxGeometry(.08, .06, .1), blk); s.position.set(x, y, z); cow.add(s); });
+    const head = new THREE.Mesh(new THREE.BoxGeometry(.13, .12, .13), wht); head.position.set(0, .26, .23); cow.add(head); const nose = new THREE.Mesh(new THREE.BoxGeometry(.11, .06, .04), pink); nose.position.set(0, .23, .3); cow.add(nose);
+    for (const [x, z] of [[-.07, -.12], [.07, -.12], [-.07, .12], [.07, .12]]) { const l = new THREE.Mesh(new THREE.BoxGeometry(.04, .14, .04), wht); l.position.set(x, .07, z); cow.add(l); }
+    COWS.push({ cow, head, x0, z0, a: Math.random() * 6, v: .06 + Math.random() * .05 });
+  }
+});
+/* --- 9. camera moments: a short half-orbit after flying to an island, and a slow turntable when nobody touches anything --- */
+let ORBIT = null;
+const _selIsl0 = selectIsland;
+selectIsland = function (id) { _selIsl0(id); if (!reduced && !(AV && AV.fast)) ORBIT = { wait: true, left: Math.PI / 3, dir: Math.random() < .5 ? 1 : -1 }; };
+['pointerdown', 'wheel', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { ORBIT = null; controls.autoRotate = false; }, { capture: true, passive: true }));
+const _orb = new V3();
+/* --- the tick --- */
+function ambTick(dt, t) {
+  AMB.t += dt; const night = ENV.night || 0;
+  // night sky + glowing things
+  AMB.stars.material.opacity = Math.max(0, (night - .25) / .75) * (1 - AMB.rainK * .8);
+  Object.values(typeof CRYSTAL_MAT !== 'undefined' ? CRYSTAL_MAT : {}).forEach(m => { if (m.emissive && m.emissiveIntensity !== undefined && m.color && m !== CRYSTAL_MAT._root && m !== CRYSTAL_MAT._sh) m.emissiveIntensity = .75 + night * 1.8; });
+  if (ISLETS.moon) { const mm = ISLETS.moon.moon.material; mm.emissiveIntensity = .25 + night * .9; }
+  // weather
+  const W = AMB.w; W.t += dt; if (W.t > W.dur) weatherNext();
+  const ramp = Math.min(1, W.t / 4, (W.dur - W.t) / 4);
+  AMB.rainK += ((W.kind === 'rain' ? ramp : 0) - AMB.rainK) * Math.min(1, dt * 2);
+  AMB.fogK += ((W.kind === 'mist' ? ramp : 0) - AMB.fogK) * Math.min(1, dt);
+  AMB.rbK = W.kind === 'rainbow' ? ramp : 0;
+  hemi.intensity = ENV.hemiI * (1 - .3 * AMB.rainK); sun.intensity = ENV.sunI * (1 - .65 * AMB.rainK);
+  scene.fog.near = 42 * WK * (1 - .82 * AMB.fogK) * (1 - .4 * AMB.rainK); scene.fog.far = 150 * WK * (1 - .7 * AMB.fogK) * (1 - .3 * AMB.rainK);
+  const RN = AMB.rain; RN.material.opacity = .85 * AMB.rainK;
+  if (AMB.rainK > .02) {
+    const P = RN.geometry.attributes.position, c = controls.target, dist = camera.position.distanceTo(c), span = Math.min(40, 8 + dist * .6);
+    AMB.drops.forEach((d, i) => { d.y -= d.v * dt; if (d.y < WATER_Y) { if (Math.random() < .02 * AMB.rainK) splash(d.x, d.z, .25, 0); d.x = c.x + (Math.random() - .5) * span; d.z = c.z + (Math.random() - .5) * span; d.y = c.y + 6 + Math.random() * 10; } P.setXYZ(i * 2, d.x, d.y, d.z); P.setXYZ(i * 2 + 1, d.x + .03, d.y + .35, d.z); });
+    P.needsUpdate = true; RN.visible = true;
+  } else RN.visible = false;
+  // islands: lock fog, exam clouds, fireworks (checked every second)
+  AMB.check -= dt;
+  if (AMB.check <= 0) {
+    AMB.check = 1;
+    ISL.forEach(isl => {
+      const locked = !unlocked(isl), F = LOCKFOG.get(isl.id);
+      if (locked && !F) lockFogBuild(isl);
+      if (!locked && F && !F.userData.clearing && F.userData.k > .99 && AMB.t > 3) { F.userData.clearing = true; toast(tr(`🌤️ ${codeOf(isl)} 的霧散開了，可以去探險了！`, `The fog over ${codeOf(isl)} cleared!`)); for (let i = 0; i < 30; i++) { const a = Math.random() * 6.28; spray(isl.x + Math.cos(a) * .5, TOP + isl.ly + .4, isl.z + Math.sin(a) * .5, Math.cos(a), 1.5 + Math.random(), Math.sin(a), .03); } }
+      else if (!locked && F && !F.userData.clearing && AMB.t <= 3) { scene.remove(F); LOCKFOG.delete(isl.id); }
+      const n = typeof examDays === 'function' ? examDays() : null, need = n != null && n >= 0 && n <= 7 && !locked && !(LP.q[isl.id] >= 1), E = EXAMCLOUD.get(isl.id);
+      if (need && !E) examCloudBuild(isl); else if (!need && E) { scene.remove(E); EXAMCLOUD.delete(isl.id); }
+    });
+    ['sci', 'soc', 'chi'].forEach(k => { const L = ISL.filter(i => i.subj === k); if (L.length && L.every(i => (LP.q[i.id] || 0) >= 3) && Math.random() < .5) { const c = L[Math.random() * L.length | 0]; firework(c.x + (Math.random() - .5) * 3, TOP + c.ly + 5 + Math.random() * 2, c.z + (Math.random() - .5) * 3); } });
+  }
+  fogMat.opacity = lerp(.62, .2, smooth(14, 40, camera.position.distanceTo(controls.target)));
+  LOCKFOG.forEach((F, id) => { F.rotation.y += dt * .05; F.children.forEach((m, i) => { m.position.y += Math.sin(t * .7 + i) * .0008; }); if (F.userData.clearing) { F.userData.k -= dt * .7; F.scale.setScalar(1 + (1 - F.userData.k) * .8);  F.children.forEach(m => { m.visible = F.userData.k > 0; }); if (F.userData.k <= 0) { scene.remove(F); LOCKFOG.delete(id); } } });
+  EXAMCLOUD.forEach(E => { E.position.y += Math.sin(t * 1.2 + E.userData.ph) * .002; const P = E.userData.lines.geometry.attributes.position; for (let i = 0; i < 24; i++) { const x = (i % 6 - 2.5) * .12, z = (Math.floor(i / 6) - 1.5) * .1, y = -.2 - ((t * 2.2 + i * .37) % 1) * 1.4; P.setXYZ(i * 2, x, y, z); P.setXYZ(i * 2 + 1, x, y - .14, z); } P.needsUpdate = true; });
+  for (let i = FW.length - 1; i >= 0; i--) { const f = FW[i]; f.t += dt; const P = f.pts.geometry.attributes.position; f.v.forEach((v, k) => { P.setXYZ(k, f.o.x + v.x * f.t, f.o.y + v.y * f.t - 1.6 * f.t * f.t, f.o.z + v.z * f.t); }); P.needsUpdate = true; f.pts.material.opacity = Math.max(0, 1 - f.t / 1.8); if (f.t > 1.8) { scene.remove(f.pts); FW.splice(i, 1); } }
+  // life
+  GULLS.forEach(G => { G.h.rotation.y = Math.sin(t * .8 + G.ph) * .6; G.g.visible = night < .7; });
+  GROW.g.forEach((g, id) => { if (!g.userData.bf && GROW.stage[id] >= 1) { g.userData.bf = true; butterflies(ISL_BY.get(id), g); } });
+  BFLY.forEach(B => { if (!B.g.parent) return; const a = B.a + t * (.7 + B.k * .2), sl = GSLOT[2 + B.k]; B.b.position.set(Math.cos(sl) * 1.48 + Math.cos(a) * .25, .32 + Math.sin(t * 3 + B.k) * .08, Math.sin(sl) * 1.48 + Math.sin(a) * .2); B.b.rotation.y = -a; B.b.children.forEach((w, j) => { w.rotation.z = (j ? -1 : 1) * Math.abs(Math.sin(t * 14 + B.k)) * 1.1; }); B.b.visible = night < .6; });
+  COWS.forEach(C => { C.a += dt * C.v; const x = C.x0 + Math.cos(C.a) * .5, z = C.z0 + Math.sin(C.a * .7) * .4; C.cow.position.set(x, terrainH(x, z), z); C.cow.rotation.y = Math.atan2(-Math.sin(C.a), Math.cos(C.a * .7) * .7) ; C.head.rotation.x = Math.sin(t * .6 + C.a) > .6 ? .5 : 0; });
+  // villagers go home at night, and say hello when you walk past
+  NPCS.forEach(n => { const home = night > .65; n.g.visible = !home; if (home) n.btn.style.opacity = '0';
+    if (!home && AVA && !AVA.path && n.g.position.distanceTo(AVA.root.position) < .7 && !(n.hi > 0)) { n.hi = 25; try { avSay(tr(`${n.q.who}：嗨！今天也一起加油喔！`, `${n.q.who}: Hi there!`), 3); } catch (e) {} }
+    if (n.hi > 0) n.hi -= dt; });
+  // camera
+  if (ORBIT && !flight && !FP.on) { if (ORBIT.wait) ORBIT.wait = false; else { const st = Math.min(ORBIT.left, dt * .9); ORBIT.left -= st; _orb.subVectors(camera.position, controls.target).applyAxisAngle(_up, st * ORBIT.dir); camera.position.copy(controls.target).add(_orb); if (ORBIT.left <= 0) ORBIT = null; } }
+  controls.autoRotate = !FP.on && PL.el.hidden && Date.now() - IDLE.last > 30000 && !(AVA && AVA.path); controls.autoRotateSpeed = .35;
+}
+const _up = new V3(0, 1, 0);
+window.__amb = { AMB, weatherNext, firework, LOCKFOG, EXAMCLOUD };
 
 /* =====================================================================
    17. start
