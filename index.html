@@ -13575,7 +13575,7 @@ body.fp-on #card,body.fp-on #side{display:none}body.fp-on #stage{cursor:grab}
       <li data-en="Drag to rotate, scroll or pinch to zoom. The back islands are Grade 4, the front ones Grade 5.">拖曳旋轉、滾輪或雙指縮放。後排是小四（南一），前排是小五（康軒），一座島就是一課。</li>
       <li data-en="Tap an island or a building. The card shows the mind map and key points; tap the picture to enlarge it.">點一座島或島上的建物，卡片會直接顯示老爹的心智圖和重點整理，點圖片可以放大。也可以打開「清單」直接點。</li>
       <li data-en="Each island has challenges: a quiz, experiments, sorting games and mind-map fill-ins. Pass a quiz to unlock the next lesson and collect stars in your passport.">每座島都有學習關卡：闖關問答、科學實驗、分類配對和心智圖填空。過關就能解鎖下一課，星星會記在「護照」裡。</li>
-      <li data-en="Your character walks to the island you tap; tap the ground on that island to walk to that spot. On a computer, walk freely with W A S D (arrow keys still turn the camera). Talk to islanders with a “!”, finish quests, and collect cards and leaves in your adventure book.">點一座島，你的角色就會走過去；再點島上的地面，角色就走到那個位置。用電腦時可以按 W A S D 自由走動（方向鍵還是轉鏡頭）。頭上有「！」的是島民，幫他完成任務，收集圖鑑卡和葉子幣。</li>
+      <li data-en="Your character walks to the island you tap; tap the ground on that island to walk to that spot. On a computer, W A S D or the arrow keys move the view; press “First person” (V) to walk around with W A S D. Talk to islanders with a “!”, finish quests, and collect cards and leaves in your adventure book.">點一座島，你的角色就會走過去；再點島上的地面，角色就走到那個位置。用電腦時按 W A S D 或方向鍵可以移動視角；按「第一人稱」（快捷鍵 V）就能用 W A S D 自己走路。頭上有「！」的是島民，幫他完成任務，收集圖鑑卡和葉子幣。</li>
       <li data-en="Open the Learning hub for the daily question, your mistake book, a treasure hunt, animal survival and a two-player quiz.">打開「學習中心」：每日一題、錯題本、島上尋寶、動物求生大作戰、親子快問快答都在這裡。</li>
       <li data-en="Turn on “Routes” to see the reading order, with little helpers carrying notes along it.">打開「路線」，看小人照課本順序，把筆記從這一課搬到下一課。</li>
     </ol>
@@ -18139,7 +18139,7 @@ function buildAvatar() {
   if (AVA && AVA.mark) scene.remove(AVA.mark);
   AVA = { root, tag, tagEl, pet, boat, balloon, mark, node, isl: ISL[NODES[node].isl], path: null, s: 0, len: 0, yaw: 0, say: 0, lockSay: 0, target: null };
   updateTag();
-  try { if (!localStorage.getItem('scienceIslands.walkTip')) { localStorage.setItem('scienceIslands.walkTip', '1'); setTimeout(() => avSay(tr('點島上的地面我就走過去；用電腦也可以按 W A S D 走路！', 'Tap the ground and I walk there — or use W A S D!'), 6), 1500); } } catch (e) {}
+  try { if (!localStorage.getItem('scienceIslands.walkTip')) { localStorage.setItem('scienceIslands.walkTip', '1'); setTimeout(() => avSay(tr('點島上的地面我就走過去！W A S D 可以移動視角；切到「第一人稱」（V）就能用 W A S D 走路。', 'Tap the ground and I walk there. WASD moves the view; in first person (V) it walks.'), 6), 1500); } } catch (e) {}
 }
 function updateTag() { if (!AVA) return; const li = levelInfo(), ti = AV.eq.title && SHOP_BY.get(AV.eq.title); AVA.tagEl.innerHTML = `<b>${esc(ME.name)}</b>${ti ? `<i class="ttl" style="--rc:${RAR[ti.r].col}">${esc(ti.n)}</i>` : ''}<span>Lv.${li.lv}</span>${AVA.say ? `<em>${esc(AVA.sayText)}</em>` : ''}`; }
 function avSay(text, sec = 4) { if (!AVA) return; AVA.say = sec; AVA.sayText = text; updateTag(); dirty = true; }
@@ -18224,6 +18224,7 @@ function groundClick(id, p) {
 const WKEYS = new Set();
 function walkKeyOK(e) {
   if (!ADV_READY || !AVA || !ME || e.ctrlKey || e.metaKey || e.altKey) return false;
+  if (typeof FP === 'undefined' || !FP.on) return false;   /* W A S D walks only in first person; otherwise it moves the view */
   if (e.target && e.target.closest && e.target.closest('input,select,textarea,[contenteditable]')) return false;
   if (!PL.el.hidden || !VW.el.hidden || !$('#help').hidden) return false;
   return true;
@@ -18267,7 +18268,7 @@ var advTick = function (dt, now) {
     flight = null; zoomGoal = null;
     camera.getWorldDirection(_fw); _fw.y = 0; _fw.normalize(); _rt.set(-_fw.z, 0, _fw.x);
     _mv.copy(_fw).multiplyScalar(kz).addScaledVector(_rt, kx).normalize();
-    const sp = Math.min(.1, 1.5 * dt);
+    const sp = Math.min(.12, (typeof FP !== 'undefined' && FP.on ? 2.4 : 1.5) * dt);
     if (!walkStep(_mv.x * sp, _mv.z * sp)) { if (!walkStep(_mv.x * sp, 0)) walkStep(0, _mv.z * sp); }
     AVA.yaw = Math.atan2(_mv.x, _mv.z); moving = true; AVA.walked = true;
     const ni = islAt(R0.position.x, R0.position.z, WALK_AP);
@@ -19818,7 +19819,7 @@ const CAMKEY = { arrowup: 'w', arrowdown: 's', arrowleft: 'a', arrowright: 'd' }
 addEventListener('keydown', e => {
   const k = (e.key || '').toLowerCase(); if (!camKeyOK(e)) return;
   if (CAMKEY[k]) { CKEYS.add(CAMKEY[k]); e.preventDefault(); }
-  else if ('wasd'.includes(k) && k.length === 1 && !(ADV_READY && AVA && ME)) { CKEYS.add(k); e.preventDefault(); }
+  else if ('wasd'.includes(k) && k.length === 1 && !(FP.on && ADV_READY && AVA && ME)) { CKEYS.add(k); e.preventDefault(); }
   else if (FP.on && (k === ' ' || k === 'shift')) { CKEYS.add(k === ' ' ? 'up' : 'down'); e.preventDefault(); }
   else if (k === 'escape' && FP.on) setFP(false);
   else if (k === 'v' && !e.repeat) setFP(!FP.on);
@@ -19847,9 +19848,9 @@ function setFP(on) {
     if (AVA) { AVA.follow = false; AVA.root.visible = false; if (AVA.pet) AVA.pet.visible = false; AVA.tag.visible = false; }
     else { camera.position.set(controls.target.x, Math.max(controls.target.y, TOP) + 1.2, controls.target.z); }
     try { closeCard && closeCard(); } catch (e) {}
-    toast(tr('👀 第一人稱模式：W A S D 走路、拖曳畫面轉頭看，按 Esc 或再按一次按鈕離開', '👀 First person: WASD to move, drag to look, Esc to leave'));
+    CKEYS.clear(); toast(tr('👀 第一人稱模式：W A S D 走路、拖曳畫面轉頭看，按 Esc 或再按一次按鈕離開', '👀 First person: WASD to move, drag to look, Esc to leave'));
   } else {
-    controls.enabled = true;
+    WKEYS.clear(); CKEYS.clear(); controls.enabled = true;
     if (AVA) { AVA.root.visible = true; if (AVA.pet) AVA.pet.visible = true; AVA.tag.visible = true; const p = AVA.root.position; flyTo(framing(new V3(p.x, p.y, p.z), ISL_OFF.clone().multiplyScalar(.6), false)); }
     else { camera.getWorldDirection(_cf); controls.target.copy(camera.position).addScaledVector(_cf, 8); flyTo({ pos: controls.target.clone().add(new V3(3, 6, 8)), target: controls.target.clone() }); }
   }
@@ -19880,7 +19881,7 @@ addEventListener('pointerup', () => { FP.drag = null; });
   // on-screen pad for phones and tablets
   const pad = document.createElement('div'); pad.id = 'fpPad'; pad.innerHTML = `<button data-k="w">▲</button><button data-k="a">◀</button><button data-k="s">▼</button><button data-k="d">▶</button><button class="fp-exit" type="button">${tr('離開', 'Exit')}</button>`;
   document.body.appendChild(pad);
-  pad.querySelectorAll('[data-k]').forEach(x => { const k = x.dataset.k, set = (on) => { const S = (ADV_READY && AVA && ME) ? WKEYS : CKEYS; on ? S.add(k) : S.delete(k); }; x.addEventListener('pointerdown', e => { e.preventDefault(); set(true); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => x.addEventListener(ev, () => set(false))); });
+  pad.querySelectorAll('[data-k]').forEach(x => { const k = x.dataset.k, set = (on) => { const S = (FP.on && ADV_READY && AVA && ME) ? WKEYS : CKEYS; on ? S.add(k) : S.delete(k); }; x.addEventListener('pointerdown', e => { e.preventDefault(); set(true); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => x.addEventListener(ev, () => set(false))); });
   pad.querySelector('.fp-exit').addEventListener('click', () => setFP(false));
 }
 /* ---------- islands grow with your stars: flowers → trees and a cottage → golden trophy, star flag and sparkles ---------- */
