@@ -12738,6 +12738,8 @@ button{font-family:inherit;color:inherit}
 #card .card-scroll{overflow:auto;padding:18px 18px 20px;display:grid;gap:14px;align-content:start;overscroll-behavior:contain}
 #card .x{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:9px;border:0;background:transparent;font-size:22px;cursor:pointer;z-index:2}
 #card .x:hover{background:var(--yellow)}
+#card .mini-tog{right:56px;display:grid;place-items:center}#card .mini-tog svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+#card.mini{bottom:auto;height:auto!important}#card.mini .card-scroll > :not(.card-head){display:none!important}#card.mini .mini-tog svg{transform:rotate(180deg)}#card.mini .card-head{padding-right:96px}#card.mini .card-head p,#card.mini .card-head .summary{display:none}
 .card-head{display:flex;gap:12px;align-items:center;padding-right:40px}
 .card-head h2{margin:2px 0 0;font:800 24px/1.15 var(--font);text-wrap:balance}
 .hexb{--c:var(--coral);width:48px;height:54px;flex:none;display:grid;place-items:center;color:#fff;font:800 20px/1 var(--font);background:var(--c);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
@@ -13260,6 +13262,13 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 .gn-sci b{color:#4f8a43}.gn-soc b{color:#b0672c}.gn-chi b{color:#6a5bc0}.gn-moon b{color:#6e6a60}
 @media (max-width:800px){#grpNav{bottom:calc(16px + env(safe-area-inset-bottom,0px));left:auto;right:calc(10px + env(safe-area-inset-right,0px));transform:none;gap:3px;padding:4px}#grpNav .gn{padding:6px 7px;gap:2px}#grpNav .gn b{font-size:11.5px}}
 body.net-on #grpNav{visibility:hidden}
+#fpPad{display:none;position:fixed;z-index:14;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(80px + env(safe-area-inset-bottom,0px));grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,52px);gap:6px}
+body.fp-on #fpPad{display:grid}#fpPad button{border:0;border-radius:14px;background:rgba(255,250,245,.85);font:900 20px var(--font);box-shadow:0 3px 10px #0003;touch-action:none}
+#fpPad [data-k="w"]{grid-column:2;grid-row:1}#fpPad [data-k="a"]{grid-column:1;grid-row:2}#fpPad [data-k="s"]{grid-column:2;grid-row:2}#fpPad [data-k="d"]{grid-column:3;grid-row:2}
+#fpPad .fp-exit{position:absolute;left:0;top:-54px;width:auto;height:44px;padding:0 14px;font-size:14px;background:var(--ink);color:#fff}
+body.fp-on #card,body.fp-on #side{display:none}body.fp-on #stage{cursor:grab}
+@media (hover:hover) and (pointer:fine){body.fp-on #fpPad [data-k]{display:none}body.fp-on #fpPad{display:block}}
+#btnFP[aria-pressed="true"]{background:var(--ink);color:#fff}
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
 
@@ -13485,6 +13494,7 @@ body.net-on #grpNav{visibility:hidden}
 <aside id="card" class="glass" hidden aria-live="polite">
   <div class="handle" aria-hidden="true"></div>
   <button class="x" id="cardClose" aria-label="關閉" data-en-aria="Close">×</button>
+  <button class="x mini-tog" id="cardMini" type="button" title="隱藏文字" data-en-title="Hide text" aria-expanded="true"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
   <div class="card-scroll" id="cardBody"></div>
 </aside>
 
@@ -13666,11 +13676,12 @@ const MOBILE0 = isMobile();
    ===================================================================== */
 /* layers: 4th-grade islands sit on the sea, 5th-grade islands float in the sky above their subject's archipelago */
 /* layers by grade: 1–3 on the land, 4 on the sea, 5 floating in the sky, 6 on the moon */
-const LIFT = 5.6, LANDY = 1.0;
+const LIFT = 7.4, LANDY = 1.0;
 const LAYER = g => { const n = +g.replace(/\D/g, '') || 4; return n <= 3 ? 'land' : n === 4 ? 'sea' : n === 5 ? 'sky' : 'moon'; };
 const SUBJECT = g => g[0] === 'g' ? 'sci' : g[0] === 's' ? 'soc' : 'chi';
 const SUBJ_NAME = { sci: ['自然群島', 'Science Islands'], soc: ['社會群島', 'Social Studies Islands'], chi: ['國語群島', 'Chinese Islands'] };
-const ISL = D.islands.map((d, i) => ({ ...d, idx: i, x: SQ3 * SPACING * (d.q + d.r / 2), z: 1.5 * SPACING * d.r, ly: ({ land: LANDY, sea: 0, sky: LIFT, moon: LIFT })[LAYER(d.grade)], layer: LAYER(d.grade), subj: SUBJECT(d.grade) }));
+const SKYBACK = d => LAYER(d.grade) === 'sky' || LAYER(d.grade) === 'moon' ? 2 : 0;
+const ISL = D.islands.map((d, i) => ({ ...d, idx: i, x: SQ3 * SPACING * (d.q + SKYBACK(d) / 2 + (d.r - SKYBACK(d)) / 2), z: 1.5 * SPACING * (d.r - SKYBACK(d)), ly: ({ land: LANDY, sea: 0, sky: LIFT, moon: LIFT })[LAYER(d.grade)], layer: LAYER(d.grade), subj: SUBJECT(d.grade) }));
 const ISL_BY = new Map(ISL.map(i => [i.id, i]));
 const CENTER = new V3();
 const ISL_WATER = ISL.filter(i => i.layer !== 'land'), ISL_LAND = ISL.filter(i => i.layer === 'land');
@@ -13678,6 +13689,12 @@ ISL_WATER.forEach(i => { CENTER.x += i.x; CENTER.z += i.z; });
 CENTER.x /= ISL_WATER.length; CENTER.z /= ISL_WATER.length;
 const WORLD_R = Math.max(...ISL_WATER.map(i => Math.hypot(i.x - CENTER.x, i.z - CENTER.z))) + R;
 const WK = Math.max(1, (WORLD_R + 3) / 14);  /* world scale: the lagoon, hills and sea grow with the archipelagos */
+/* grades 1–3 live on the land beside the lagoon (left shore), not out in the water */
+if (ISL_LAND.length) {
+  const side = new V3(-.87, 0, .24).normalize(), q0 = Math.min(...ISL_LAND.map(i => i.q)), r0 = Math.min(...ISL_LAND.map(i => i.r));
+  const ax = CENTER.x + side.x * 27 * WK, az = CENTER.z + side.z * 27 * WK;
+  ISL_LAND.forEach(i => { const dq = i.q - q0, dr = i.r - r0; i.x = ax + SQ3 * SPACING * (dq + dr / 2); i.z = az + 1.5 * SPACING * dr; });
+}
 const ITEMS = new Map();
 const NUMS = '①②③④⑤⑥⑦⑧⑨';
 const NEIGH = [];
@@ -15274,6 +15291,7 @@ const gradeTags = Object.entries(D.grades).map(([gid, G]) => {
   scene.add(o);
   return { el, G };
 }).filter(Boolean);
+const RAINBOWS = [];
 /* subject banners over each archipelago, and a rainbow linking the sea layer to the sky layer */
 const SUBJ_TAGS = Object.keys(SUBJ_NAME).map(k => {
   const list = ISL.filter(i => i.subj === k && i.layer !== 'land'); if (!list.length) return null;
@@ -15291,7 +15309,7 @@ const SUBJ_TAGS = Object.keys(SUBJ_NAME).map(k => {
     const p0 = new V3(a.x, TOP, a.z).addScaledVector(dir, R * .95).addScaledVector(side, -.6), p2 = new V3(b.x, TOP + b.ly, b.z).addScaledVector(dir, -R * .95).addScaledVector(side, -.6);
     const p1 = p0.clone().lerp(p2, .5); p1.y = p2.y + 2.4;
     RBC.forEach((c, n) => { const off = side.clone().multiplyScalar((n - 3) * .11), curve = new THREE.QuadraticBezierCurve3(p0.clone().add(off), p1.clone().add(off), p2.clone().add(off));
-      const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, .055, 6, false), new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: .35, transparent: true, opacity: .82, roughness: .5 })); m.renderOrder = 2; scene.add(m); });
+      const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, .055, 6, false), new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: .35, transparent: true, opacity: .82, roughness: .5 })); m.renderOrder = 2; m.userData.rb = true; RAINBOWS.push(m); scene.add(m); });
   });
 }
 function labelTexts() {
@@ -15702,6 +15720,9 @@ cardBody.addEventListener('click', e => {
   else if (t.dataset.flow) selectFlow(t.dataset.flow);
 });
 $('#cardClose').addEventListener('click', clearSelection);
+function setCardMini(on) { $('#card').classList.toggle('mini', on); const b = $('#cardMini'); b.setAttribute('aria-expanded', String(!on)); b.title = on ? tr('顯示文字', 'Show text') : tr('隱藏文字', 'Hide text'); try { store.set('scienceIslands.cardMini', on ? '1' : ''); } catch (e) {} }
+$('#cardMini').addEventListener('click', e => { e.stopPropagation(); setCardMini(!$('#card').classList.contains('mini')); });
+try { if (store.get('scienceIslands.cardMini')) setCardMini(true); } catch (e) {}
 
 /* ---------- post text + mind-map viewer ---------- */
 function fmtPost(t) {
@@ -15900,7 +15921,7 @@ function renderLog() {
 }
 
 /* tools */
-$('#btnFull').addEventListener('click', () => { if (state.bird) setBird(false, true); flyTo(fullViewPose()); });
+$('#btnFull').addEventListener('click', () => { controls.maxPolarAngle = POLAR_MAX; if (state.bird) setBird(false, true); flyTo(fullViewPose()); });
 $('#btnList').addEventListener('click', () => setSide(!state.sideOpen));
 $('#btnHelp').addEventListener('click', () => showHelp(true));
 $('#helpOk').addEventListener('click', () => showHelp(false));
@@ -16530,7 +16551,7 @@ function frame(now) {
     updateClouds(dt);
     seaTick(dt);
     dinoTick(dt, simTime);
-    try { isletTick(dt, simTime); skyEvTick(dt, simTime); } catch (e) { console.warn(e); }
+    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); } catch (e) { console.warn(e); }
     dirty = true;
   }
   if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
@@ -16538,7 +16559,8 @@ function frame(now) {
   updateZoom(dt);
   if (advTick) advTick(dt, now);
   netTick(dt, now);
-  if (controls.update()) dirty = true;
+  try { camKeyTick(dt); } catch (e) {}
+  if (!(typeof FP !== 'undefined' && fpTick(dt))) { if (controls.update()) dirty = true; }
   if (!dirty) return;
   dirty = false;
   sky.position.copy(camera.position);
@@ -19656,6 +19678,7 @@ window.__lg = { start: startLG, games: openGames, LASER_LV, laserTrace, CARDS: C
    16j. decor sky islets: an erupting volcano and a misty rainforest
    ===================================================================== */
 const ISLETS = { list: [], bombs: [], mist: [], t: 0 };
+const HEXW = () => R * Math.cos(Math.PI / 6);
 function isletBase(x, y, z, r, seed) {
   const g = new THREE.Group(); g.position.set(x, y, z); scene.add(g);
   const rr = mulberry32(seed), SM_ = c => new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: 1 });
@@ -19727,11 +19750,17 @@ function buildRainforest(x, y, z) {
 {
   const sky = k => ISL.filter(i => i.subj === k && i.layer === 'sky');
   const sci = sky('sci'), chi = sky('chi');
-  if (sci.length) { const minx = Math.min(...sci.map(i => i.x)), cz = sci.reduce((a, i) => a + i.z, 0) / sci.length; buildVolcano(minx - R - 4.6, TOP + LIFT + .9, cz - 1.5); }
-  if (chi.length) { const maxx = Math.max(...chi.map(i => i.x)), cz = chi.reduce((a, i) => a + i.z, 0) / chi.length; buildRainforest(maxx + R + 4.8, TOP + LIFT + 1.4, cz + .5); }
+  /* the volcano islet joins the 5th-grade science islands, the rainforest joins the Chinese islands — each tied on with a rope bridge */
+  const tie = (isl, dir, rIs) => { const cx = isl.x + dir * (HEXW() + rIs + .9), y = TOP + isl.ly - .02; return { cx, y, z: isl.z, ax: isl.x + dir * HEXW(), bx: cx - dir * rIs }; };
+  const ropeBridge = (ax, bx, y, z) => { const g = new THREE.Group(), n = Math.max(3, Math.round(Math.abs(bx - ax) / .16)), wood = new THREE.MeshStandardMaterial({ color: '#a8743f', roughness: .9, flatShading: true }), rope = new THREE.MeshStandardMaterial({ color: '#6b4a2a', roughness: 1 });
+    for (let k = 0; k < n; k++) { const t = (k + .5) / n, x = lerp(ax, bx, t), sag = Math.sin(Math.PI * t) * .12; const m = new THREE.Mesh(new THREE.BoxGeometry(Math.abs(bx - ax) / n * .8, .035, .5), wood); m.position.set(x, y + .02 - sag, z); m.castShadow = true; g.add(m); }
+    for (const s of [-1, 1]) { const pts = []; for (let k = 0; k <= 12; k++) { const t = k / 12; pts.push(new V3(lerp(ax, bx, t), y + .32 - Math.sin(Math.PI * t) * .12, z + s * .26)); } g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 24, .012, 4), rope)); for (const x of [ax, bx]) { const post = new THREE.Mesh(new THREE.CylinderGeometry(.03, .03, .4, 6), rope); post.position.set(x, y + .18, z + s * .26); g.add(post); } }
+    scene.add(g); };
+  if (sci.length) { const isl = sci.reduce((a, i) => i.x < a.x ? i : a), T0 = tie(isl, -1, 2.3); buildVolcano(T0.cx, T0.y, T0.z); ISLETS.volcano.g.userData.fixed = true; ropeBridge(T0.ax, T0.bx, T0.y, T0.z); }
+  if (chi.length) { const isl = chi.reduce((a, i) => i.x > a.x ? i : a), T0 = tie(isl, 1, 2.5); buildRainforest(T0.cx, T0.y, T0.z); ISLETS.forest.g.userData.fixed = true; ropeBridge(T0.ax, T0.bx, T0.y, T0.z); }
 }
 function isletTick(dt, t) {
-  ISLETS.list.forEach((g, k) => { g.position.y += Math.sin(t * .6 + k * 2) * .0015; g.rotation.y += dt * .015; });
+  ISLETS.list.forEach((g, k) => { if (g.userData.fixed) return; g.position.y += Math.sin(t * .6 + k * 2) * .0015; g.rotation.y += dt * .015; });
   if (ISLETS.moon) ISLETS.moon.moon.rotation.y += dt * .02;
   const V = ISLETS.volcano;
   if (V) {
@@ -19750,7 +19779,10 @@ function isletTick(dt, t) {
 }
 /* the moon: 6th grade will live up here */
 function buildMoon() {
-  const g = new THREE.Group(), RM = 5; g.position.set(CENTER.x + 2, 17, CENTER.z - 9 * WK); scene.add(g);
+  const g = new THREE.Group(), RM = 5;
+  /* far away beyond the mountains, rising over the horizon: from the earth we only ever see part of it */
+  const md = new V3(-.24, 0, -.87).normalize();
+  g.position.set(CENTER.x + md.x * 150 * WK, 26 * WK, CENTER.z + md.z * 150 * WK); g.scale.setScalar(4.6 * WK); scene.add(g);
   const geo = new THREE.IcosahedronGeometry(RM, 4), p = geo.attributes.position, cols = new Float32Array(p.count * 3), rr = mulberry32(606), craters = [];
   for (let k = 0; k < 26; k++) { const v = new V3(rr() - .5, rr() - .5, rr() - .5).normalize(); craters.push({ v, r: .25 + rr() * .45 }); }
   const c = new THREE.Color(), n = new V3();
@@ -19774,14 +19806,133 @@ function buildMoon() {
   const rn = new THREE.Mesh(new THREE.ConeGeometry(.22, .45, 12), M('#e94b5a')); rn.position.y = 1.52; rocket.add(rn);
   for (let k = 0; k < 3; k++) { const f = new THREE.Mesh(new THREE.BoxGeometry(.04, .35, .25), M('#3e8ed0')); f.position.set(Math.cos(k * 2.09) * .25, .18, Math.sin(k * 2.09) * .25); f.rotation.y = -k * 2.09; rocket.add(f); }
   const label = document.createElement('div'); label.className = 'islet-tag moon'; label.textContent = tr('🌙 月球・六年級（之後開放）', '🌙 Moon · Grade 6 (coming)'); const lo = new CSS2DObject(label); lo.position.set(0, RM + 2.6, 0); g.add(lo);
-  ISLETS.moon = { g, moon };
+  base.visible = false; lo.position.set(0, RM * .55, RM * 1.05);
+  ISLETS.moon = { g, moon, dir: md };
 }
 buildMoon();
-window.__islets = ISLETS;
+window.__islets = ISLETS; window.__ISL = ISL;
+/* ---------- camera keys (arrow keys always; W A S D when there is no character) + first-person explore mode ---------- */
+const CKEYS = new Set();
+function camKeyOK(e) { if (e.ctrlKey || e.metaKey || e.altKey) return false; if (e.target && e.target.closest && e.target.closest('input,select,textarea,[contenteditable]')) return false; if (!PL.el.hidden || !VW.el.hidden || !$('#help').hidden) return false; return true; }
+const CAMKEY = { arrowup: 'w', arrowdown: 's', arrowleft: 'a', arrowright: 'd' };
+addEventListener('keydown', e => {
+  const k = (e.key || '').toLowerCase(); if (!camKeyOK(e)) return;
+  if (CAMKEY[k]) { CKEYS.add(CAMKEY[k]); e.preventDefault(); }
+  else if ('wasd'.includes(k) && k.length === 1 && !(ADV_READY && AVA && ME)) { CKEYS.add(k); e.preventDefault(); }
+  else if (FP.on && (k === ' ' || k === 'shift')) { CKEYS.add(k === ' ' ? 'up' : 'down'); e.preventDefault(); }
+  else if (k === 'escape' && FP.on) setFP(false);
+  else if (k === 'v' && !e.repeat) setFP(!FP.on);
+}, true);
+addEventListener('keyup', e => { const k = (e.key || '').toLowerCase(); CKEYS.delete(CAMKEY[k] || (k === ' ' ? 'up' : k === 'shift' ? 'down' : k)); });
+addEventListener('blur', () => CKEYS.clear());
+const _cf = new V3(), _cr = new V3();
+function camKeyTick(dt) {
+  if (FP.on || !CKEYS.size) return;
+  let f = 0, s = 0; if (CKEYS.has('w')) f++; if (CKEYS.has('s')) f--; if (CKEYS.has('d')) s++; if (CKEYS.has('a')) s--;
+  if (!f && !s) return;
+  camera.getWorldDirection(_cf); _cf.y = 0; _cf.normalize(); _cr.set(-_cf.z, 0, _cf.x);
+  const sp = Math.max(3, camera.position.distanceTo(controls.target) * .9) * dt;
+  _cf.multiplyScalar(f * sp).addScaledVector(_cr, s * sp);
+  camera.position.add(_cf); controls.target.add(_cf); flight = null; zoomGoal = null; if (AVA) AVA.follow = false; dirty = true;
+}
+/* first person: you see through your character's eyes (or fly freely without one) */
+const FP = { on: false, yaw: 0, pitch: 0, drag: null, saved: null };
+function setFP(on) {
+  if (on === FP.on) return; FP.on = on; document.body.classList.toggle('fp-on', on);
+  const b = $('#btnFP'); if (b) b.setAttribute('aria-pressed', String(on));
+  if (on) {
+    flight = null; zoomGoal = null; controls.enabled = false;
+    camera.getWorldDirection(_cf); FP.yaw = Math.atan2(_cf.x, _cf.z); FP.pitch = -.05;
+    FP.saved = { p: camera.position.clone(), t: controls.target.clone() };
+    if (AVA) { AVA.follow = false; AVA.root.visible = false; if (AVA.pet) AVA.pet.visible = false; AVA.tag.visible = false; }
+    else { camera.position.set(controls.target.x, Math.max(controls.target.y, TOP) + 1.2, controls.target.z); }
+    try { closeCard && closeCard(); } catch (e) {}
+    toast(tr('👀 第一人稱模式：W A S D 走路、拖曳畫面轉頭看，按 Esc 或再按一次按鈕離開', '👀 First person: WASD to move, drag to look, Esc to leave'));
+  } else {
+    controls.enabled = true;
+    if (AVA) { AVA.root.visible = true; if (AVA.pet) AVA.pet.visible = true; AVA.tag.visible = true; const p = AVA.root.position; flyTo(framing(new V3(p.x, p.y, p.z), ISL_OFF.clone().multiplyScalar(.6), false)); }
+    else { camera.getWorldDirection(_cf); controls.target.copy(camera.position).addScaledVector(_cf, 8); flyTo({ pos: controls.target.clone().add(new V3(3, 6, 8)), target: controls.target.clone() }); }
+  }
+  dirty = true;
+}
+const _fl = new V3();
+function fpTick(dt) {
+  if (!FP.on) return false;
+  if (AVA) {
+    const p = AVA.root.position; camera.position.set(p.x, p.y + .52, p.z);
+    if (AVA.path) { const pa = AVA.path; if (pa.boat || pa.balloon) camera.position.y += pa.balloon ? .3 : .05; }
+  } else {
+    let f = 0, s = 0, u = 0; if (CKEYS.has('w')) f++; if (CKEYS.has('s')) f--; if (CKEYS.has('d')) s++; if (CKEYS.has('a')) s--; if (CKEYS.has('up')) u++; if (CKEYS.has('down')) u--;
+    const sp = 4 * dt; camera.position.x += (Math.sin(FP.yaw) * f - Math.cos(FP.yaw) * s) * sp; camera.position.z += (Math.cos(FP.yaw) * f + Math.sin(FP.yaw) * s) * sp; camera.position.y = Math.max(WATER_Y + .5, camera.position.y + u * sp);
+  }
+  _fl.set(Math.sin(FP.yaw) * Math.cos(FP.pitch), Math.sin(FP.pitch), Math.cos(FP.yaw) * Math.cos(FP.pitch)).add(camera.position);
+  camera.lookAt(_fl); controls.target.copy(_fl); dirty = true;
+  return true;
+}
+renderer.domElement.addEventListener('pointerdown', e => { if (!FP.on) return; FP.drag = { x: e.clientX, y: e.clientY, yaw: FP.yaw, pitch: FP.pitch, moved: false }; });
+addEventListener('pointermove', e => { if (!FP.on || !FP.drag) return; const dx = e.clientX - FP.drag.x, dy = e.clientY - FP.drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) FP.drag.moved = true; FP.yaw = FP.drag.yaw - dx * .006; FP.pitch = Math.max(-1.2, Math.min(1.2, FP.drag.pitch - dy * .005)); dirty = true; });
+addEventListener('pointerup', () => { FP.drag = null; });
+{
+  const b = document.createElement('button'); b.className = 'btn'; b.id = 'btnFP'; b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+  b.innerHTML = `<svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>${tr('第一人稱', 'First person')}</span>`;
+  b.title = tr('第一人稱探索（快捷鍵 V）', 'First-person explore (V)');
+  $('#tools').insertBefore(b, $('#btnMusic') || $('#btnHelp')); b.addEventListener('click', () => setFP(!FP.on));
+  // on-screen pad for phones and tablets
+  const pad = document.createElement('div'); pad.id = 'fpPad'; pad.innerHTML = `<button data-k="w">▲</button><button data-k="a">◀</button><button data-k="s">▼</button><button data-k="d">▶</button><button class="fp-exit" type="button">${tr('離開', 'Exit')}</button>`;
+  document.body.appendChild(pad);
+  pad.querySelectorAll('[data-k]').forEach(x => { const k = x.dataset.k, set = (on) => { const S = (ADV_READY && AVA && ME) ? WKEYS : CKEYS; on ? S.add(k) : S.delete(k); }; x.addEventListener('pointerdown', e => { e.preventDefault(); set(true); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => x.addEventListener(ev, () => set(false))); });
+  pad.querySelector('.fp-exit').addEventListener('click', () => setFP(false));
+}
+/* ---------- islands grow with your stars: flowers → trees and a cottage → golden trophy, star flag and sparkles ---------- */
+const GROW = { g: new Map(), stage: {}, t: 0, spark: [] };
+const GM = {};
+const gmat = (c, o = {}) => GM[c + JSON.stringify(o)] || (GM[c + JSON.stringify(o)] = new THREE.MeshStandardMaterial({ color: c, roughness: .7, flatShading: true, ...o }));
+function gPart(g, geo, c, x, y, z, sx, sy, sz, o) { const m = new THREE.Mesh(geo, gmat(c, o)); m.position.set(x, y, z); m.scale.set(sx, sy, sz); m.castShadow = true; g.add(m); return m; }
+const GG = { sph: new THREE.SphereGeometry(1, 10, 8), ico: new THREE.IcosahedronGeometry(1, 0), cyl: new THREE.CylinderGeometry(1, 1, 1, 10), cone: new THREE.ConeGeometry(1, 1, 8), box: new THREE.BoxGeometry(1, 1, 1), oct: new THREE.OctahedronGeometry(1, 0) };
+const GSLOT = [0, Math.PI, Math.PI * 4 / 3, Math.PI * 5 / 3];   // free spots on the inner ring (benches, NPC and labels use the others)
+function growStage(isl) { return Math.max(0, Math.min(3, LP.q[isl.id] || 0)); }
+function growBuild(isl, st) {
+  const old = GROW.g.get(isl.id); if (old) scene.remove(old);
+  const g = new THREE.Group(); g.position.set(isl.x, TOP + isl.ly, isl.z); scene.add(g); GROW.g.set(isl.id, g);
+  const at = (k, r = 1.48) => [Math.cos(GSLOT[k]) * r, Math.sin(GSLOT[k]) * r];
+  const flowers = k => { const [x, z] = at(k); gPart(g, GG.ico, '#6fa14f', x, .06, z, .26, .1, .22); ['#f4a9c0', '#fcea8b', '#ffffff', '#e94b5a', '#b77ae9'].forEach((c, i) => { const a = i * 1.26; gPart(g, GG.sph, c, x + Math.cos(a) * .14, .15, z + Math.sin(a) * .12, .05, .05, .05); }); };
+  const fruitTree = k => { const [x, z] = at(k); gPart(g, GG.cyl, '#7a4a2a', x, .2, z, .05, .4, .05); gPart(g, GG.ico, '#5f9a48', x, .52, z, .3, .28, .3); for (let i = 0; i < 5; i++) { const a = i * 1.25; gPart(g, GG.sph, i % 2 ? '#f3c34a' : '#e94b5a', x + Math.cos(a) * .2, .48 + (i % 3) * .06, z + Math.sin(a) * .2, .045, .045, .045); } };
+  const cottage = k => { const [x, z] = at(k), h = new THREE.Group(); h.position.set(x, 0, z); h.rotation.y = -GSLOT[k] - Math.PI / 2; g.add(h); gPart(h, GG.box, '#fff4e0', 0, .14, 0, .34, .28, .28); const roof = gPart(h, GG.cone, '#db6a41', 0, .38, 0, .3, .2, .3); roof.rotation.y = Math.PI / 4; gPart(h, GG.box, '#8a5a34', 0, .1, .142, .08, .17, .01); gPart(h, GG.box, '#bfe6ff', .1, .18, .142, .06, .06, .01); };
+  const trophy = k => { const [x, z] = at(k); gPart(g, GG.cyl, '#d9cbb3', x, .06, z, .16, .12, .16); gPart(g, GG.cyl, '#f2c230', x, .2, z, .05, .16, .05, { metalness: .6, roughness: .25, emissive: '#7a5a00', emissiveIntensity: .3 }); gPart(g, GG.sph, '#f2c230', x, .36, z, .12, .1, .12, { metalness: .6, roughness: .25, emissive: '#7a5a00', emissiveIntensity: .3 }); for (const s of [-1, 1]) gPart(g, GG.box, '#f2c230', x + s * .13, .37, z, .04, .08, .02, { metalness: .6, roughness: .25 }); };
+  const flag = k => { const [x, z] = at(k); gPart(g, GG.cyl, '#dddddd', x, .4, z, .015, .8, .015); const f = gPart(g, GG.box, isl.accent, x + .14, .7, z, .28, .17, .01); f.userData.flag = true; gPart(g, GG.oct, '#fff27a', x + .14, .7, z + .01, .05, .05, .01, { emissive: '#ffd84a', emissiveIntensity: 1 }); };
+  if (st >= 1) { flowers(2); flowers(3); }
+  if (st >= 2) { fruitTree(0); cottage(1); }
+  if (st >= 3) { g.remove(...g.children.filter(c => Math.hypot(c.position.x - at(2)[0], c.position.z - at(2)[1]) < .3 || Math.hypot(c.position.x - at(3)[0], c.position.z - at(3)[1]) < .3)); trophy(2); flag(3);
+    const sp = []; for (let i = 0; i < 10; i++) { const m = new THREE.Mesh(GG.oct, gmat('#fff6b0', { emissive: '#ffe066', emissiveIntensity: 1.2 })); m.scale.setScalar(.035); g.add(m); sp.push({ m, a: i / 10 * 6.28, r: .6 + Math.random() * 1.1, h: .4 + Math.random() * .8 }); } g.userData.spark = sp; }
+  dirty = true;
+}
+function growAll(celebrate) {
+  if (typeof LP === 'undefined' || !LP) return;
+  const seen = (LP.grow = LP.grow || {});
+  ISL.forEach(isl => {
+    const st = growStage(isl), had = seen[isl.id] || 0;
+    if (GROW.stage[isl.id] !== st) { growBuild(isl, st); GROW.stage[isl.id] = st; }
+    if (st > had) { seen[isl.id] = st; saveP(); if (celebrate) growCelebrate(isl, st); }
+  });
+}
+function growCelebrate(isl, st) {
+  const msg = [, tr(`🌼 ${codeOf(isl)} 開花了！島上長出花圃`, 'Flowers bloom!'), tr(`🏡 ${codeOf(isl)} 長大了！多了果樹和小屋`, 'Trees and a cottage!'), tr(`🏆 ${codeOf(isl)} 滿分島！立起金獎盃和星星旗`, 'Gold trophy!')][st];
+  toast(msg); try { avSay(st === 3 ? tr('三顆星！這座島變成金光閃閃的滿分島！', 'Three stars — a golden island!') : tr('島長大了！再拿更多星星，島會變得更漂亮！', 'The island grew!'), 3.5); } catch (e) {}
+  for (let i = 0; i < 26; i++) { const a = Math.random() * 6.28, sp = .6 + Math.random() * 1.2; spray(isl.x + Math.cos(a) * .4, TOP + isl.ly + .3, isl.z + Math.sin(a) * .4, Math.cos(a) * sp, 1.2 + Math.random() * 1.2, Math.sin(a) * sp, .03); }
+}
+function growTick(dt, t) {
+  /* rainbows: appear for ~25 s every ~70 s, fading in and out */
+  { const c = (t % 70) / 70, k = c < .36 ? Math.min(1, c / .05, (.36 - c) / .05) : 0; RAINBOWS.forEach(m => { m.material.opacity = .82 * k; m.visible = k > .01; }); }
+  GROW.g.forEach(g => { const sp = g.userData.spark; if (sp) sp.forEach(s => { s.m.position.set(Math.cos(s.a + t * .5) * s.r, s.h + Math.sin(t * 2 + s.a) * .12, Math.sin(s.a + t * .5) * s.r); s.m.rotation.y = t * 3; }); g.children.forEach(c => { if (c.userData.flag) c.rotation.y = Math.sin(t * 3) * .25; }); });
+  GROW.t -= dt; if (GROW.t <= 0) { GROW.t = 1.2; growAll(true); }
+}
+growAll(false);
+window.__grow = { growAll, GROW };
+window.__LPset = (id, q) => { LP.q[id] = q; saveP(); };
 
 /* ---------- archipelago quick-jump chips (海圖切換) ---------- */
 function groupPose(k) {
-  const list = k === 'moon' ? [] : ISL.filter(i => i.subj === k); if (k === 'moon' && ISLETS.moon) { const m = ISLETS.moon.g.position; return { pos: m.clone().add(new V3(9, 17, 32)), target: m.clone().add(new V3(0, 2.5, 0)) }; }
+  const list = k === 'moon' ? [] : ISL.filter(i => i.subj === k); if (k === 'moon' && ISLETS.moon) { const d = ISLETS.moon.dir, m = ISLETS.moon.g.position; controls.maxPolarAngle = THREE.MathUtils.degToRad(87); return { pos: new V3(CENTER.x - d.x * 4, 2.6, CENTER.z - d.z * 4), target: new V3(lerp(CENTER.x, m.x, .35), lerp(2.6, m.y, .35), lerp(CENTER.z, m.z, .35)) }; }
   if (!list.length) return null;
   const cx = list.reduce((a, i) => a + i.x, 0) / list.length, cz = list.reduce((a, i) => a + i.z, 0) / list.length, cy = list.reduce((a, i) => a + i.ly, 0) / list.length;
   const ext = Math.max(...list.map(i => Math.hypot(i.x - cx, i.z - cz))) + R, a = innerWidth / Math.max(1, innerHeight);
@@ -19793,7 +19944,7 @@ function groupPose(k) {
   const items = [['sci', '🌿', ['自然', 'Science']], ['soc', '🏛️', ['社會', 'Social']], ['chi', '📚', ['國語', 'Chinese']], ['moon', '🌙', ['月球', 'Moon']]].filter(([k]) => k === 'moon' ? true : ISL.some(i => i.subj === k));
   nav.innerHTML = items.map(([k, ic, n]) => `<button class="gn gn-${k}" data-gn="${k}" type="button"><span>${ic}</span><b>${esc(T(n))}</b></button>`).join('');
   document.body.appendChild(nav);
-  nav.addEventListener('click', e => { const b = e.target.closest('[data-gn]'); if (!b) return; const pose = groupPose(b.dataset.gn); if (!pose) return; try { if (state.bird) setBird(false, true); } catch (er) {} if (AVA) AVA.follow = false; flyTo(pose); if (b.dataset.gn === 'moon') toast(tr('🌙 月球是六年級的島，之後開放！', 'The moon will host grade 6 — coming later!')); });
+  nav.addEventListener('click', e => { const b = e.target.closest('[data-gn]'); if (!b) return; if (b.dataset.gn !== 'moon') controls.maxPolarAngle = POLAR_MAX; const pose = groupPose(b.dataset.gn); if (!pose) return; try { if (state.bird) setBird(false, true); } catch (er) {} if (AVA) AVA.follow = false; flyTo(pose); if (b.dataset.gn === 'moon') toast(tr('🌙 月球是六年級的島，之後開放！', 'The moon will host grade 6 — coming later!')); });
 }
 /* ---------- sky surprises over the floating islands ---------- */
 const SKYEV = { ev: [], next: 5 };
@@ -19806,11 +19957,12 @@ const SKY_SAY = {
 function skySay(k) { try { if (!AVA || Math.random() < .55) return; const L = SKY_SAY[k]; avSay(L[Math.random() * L.length | 0], 3.2); } catch (e) {} }
 const SKM = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .6, flatShading: true, ...o });
 function skyPick(alt = [2, 4], span = 9) {
-  for (let k = 0; k < 40; k++) {
+  for (let k = 0; k < 80; k++) {
+    const loose = k >= 40;
     const a = Math.random() * 6.28, d = Math.random() * 7, x = controls.target.x + Math.cos(a) * d, z = controls.target.z + Math.sin(a) * d;
-    if (Math.hypot(x - CENTER.x, z - CENTER.z) > WORLD_R + 6) continue;
+    if (!loose && Math.hypot(x - CENTER.x, z - CENTER.z) > WORLD_R + 6) continue;
     const y = TOP + LIFT + alt[0] + Math.random() * (alt[1] - alt[0]);
-    _sv.set(x, y, z).project(camera); if (Math.abs(_sv.x) > .7 || Math.abs(_sv.y) > .7 || _sv.z > 1) continue;
+    _sv.set(x, y, z).project(camera); if (!loose && (Math.abs(_sv.x) > .7 || Math.abs(_sv.y) > .7 || _sv.z > 1)) continue; if (loose && _sv.z > 1) continue;
     camera.getWorldDirection(_so); const h = Math.atan2(-_so.z, _so.x) + (Math.random() < .5 ? 0 : Math.PI) + (Math.random() - .5) * .7;
     return { x, y, z, h, span };
   }
