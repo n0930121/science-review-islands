@@ -638,7 +638,7 @@ window.DATA = {
    ],
    "lesson": "1-1",
    "q": 0,
-   "r": -3,
+   "r": -2,
    "name": [
     "動物如何求生存",
     "How Animals Survive"
@@ -718,7 +718,7 @@ window.DATA = {
    ],
    "lesson": "1-2",
    "q": 1,
-   "r": -3,
+   "r": -2,
    "name": [
     "動物具有社會行為嗎",
     "Do Animals Have Social Behavior?"
@@ -775,7 +775,7 @@ window.DATA = {
    ],
    "lesson": "1-3",
    "q": 2,
-   "r": -3,
+   "r": -2,
    "name": [
     "動物如何延續生命",
     "How Animals Carry On Life"
@@ -845,7 +845,7 @@ window.DATA = {
    ],
    "lesson": "2-1",
    "q": -1,
-   "r": -2,
+   "r": -1,
    "name": [
     "樂音與噪音有什麼不同",
     "Music vs. Noise"
@@ -924,7 +924,7 @@ window.DATA = {
    ],
    "lesson": "2-2",
    "q": 0,
-   "r": -2,
+   "r": -1,
    "name": [
     "樂器如何發出不同的聲音",
     "How Instruments Make Different Sounds"
@@ -980,7 +980,7 @@ window.DATA = {
    ],
    "lesson": "2-3",
    "q": 1,
-   "r": -2,
+   "r": -1,
    "name": [
     "光有什麼特性與現象",
     "Properties and Phenomena of Light"
@@ -1035,8 +1035,8 @@ window.DATA = {
     "Unit 1"
    ],
    "lesson": "1",
-   "q": 7,
-   "r": -3,
+   "q": 5,
+   "r": -2,
    "name": [
     "臺灣的位置與社會規範",
     "Taiwan’s Location & Social Norms"
@@ -1086,8 +1086,8 @@ window.DATA = {
     "Unit 2"
    ],
    "lesson": "2",
-   "q": 7,
-   "r": -2,
+   "q": 5,
+   "r": -1,
    "name": [
     "臺灣的自然環境與生活",
     "Taiwan’s Natural Environment"
@@ -1137,7 +1137,7 @@ window.DATA = {
     "Unit 1 · Transport & Information"
    ],
    "lesson": "1-1",
-   "q": 6,
+   "q": 4,
    "r": 0,
    "name": [
     "臺灣的陸運",
@@ -1197,7 +1197,7 @@ window.DATA = {
     "Unit 1 · Transport & Information"
    ],
    "lesson": "1-2",
-   "q": 7,
+   "q": 5,
    "r": 0,
    "name": [
     "臺灣的船運與空運",
@@ -1257,7 +1257,7 @@ window.DATA = {
     "Unit 1 · Transport & Information"
    ],
    "lesson": "1-3",
-   "q": 8,
+   "q": 6,
    "r": 0,
    "name": [
     "訊息的傳播與影響",
@@ -1317,7 +1317,7 @@ window.DATA = {
     "Unit 2 · My Hometown on the Map"
    ],
    "lesson": "2-1",
-   "q": 6,
+   "q": 4,
    "r": 1,
    "name": [
     "如何閱讀地圖",
@@ -1377,7 +1377,7 @@ window.DATA = {
     "Unit 2 · My Hometown on the Map"
    ],
    "lesson": "2-2",
-   "q": 7,
+   "q": 5,
    "r": 1,
    "name": [
     "認識家鄉地圖",
@@ -1437,8 +1437,8 @@ window.DATA = {
     "Unit 1"
    ],
    "lesson": "1",
-   "q": 6,
-   "r": -6,
+   "q": 7,
+   "r": -2,
    "name": [
     "擁夢飛翔",
     "Unit 1"
@@ -1516,8 +1516,8 @@ window.DATA = {
     "Unit 2"
    ],
    "lesson": "2",
-   "q": 7,
-   "r": -6,
+   "q": 8,
+   "r": -2,
    "name": [
     "生活中的藝術",
     "Unit 2"
@@ -1595,8 +1595,8 @@ window.DATA = {
     "Unit 3"
    ],
    "lesson": "3",
-   "q": 5,
-   "r": -5,
+   "q": 7,
+   "r": -1,
    "name": [
     "生命啟示錄",
     "Unit 3"
@@ -1674,8 +1674,8 @@ window.DATA = {
     "Unit 4"
    ],
    "lesson": "4",
-   "q": 6,
-   "r": -5,
+   "q": 8,
+   "r": -1,
    "name": [
     "與自然共舞",
     "Unit 4"
@@ -13677,11 +13677,11 @@ const MOBILE0 = isMobile();
    ===================================================================== */
 /* layers: 4th-grade islands sit on the sea, 5th-grade islands float in the sky above their subject's archipelago */
 /* layers by grade: 1–3 on the land, 4 on the sea, 5 floating in the sky, 6 on the moon */
-const LIFT = 7.4, LANDY = 1.0;
+const LIFT = 8.2, LANDY = 1.0;
 const LAYER = g => { const n = +g.replace(/\D/g, '') || 4; return n <= 3 ? 'land' : n === 4 ? 'sea' : n === 5 ? 'sky' : 'moon'; };
 const SUBJECT = g => g[0] === 'g' ? 'sci' : g[0] === 's' ? 'soc' : 'chi';
 const SUBJ_NAME = { sci: ['自然群島', 'Science Islands'], soc: ['社會群島', 'Social Studies Islands'], chi: ['國語群島', 'Chinese Islands'] };
-const SKYBACK = d => LAYER(d.grade) === 'sky' || LAYER(d.grade) === 'moon' ? 2 : 0;
+const SKYBACK = d => LAYER(d.grade) === 'sky' || LAYER(d.grade) === 'moon' ? 1 : 0;
 const ISL = D.islands.map((d, i) => ({ ...d, idx: i, x: SQ3 * SPACING * (d.q + SKYBACK(d) / 2 + (d.r - SKYBACK(d)) / 2), z: 1.5 * SPACING * (d.r - SKYBACK(d)), ly: ({ land: LANDY, sea: 0, sky: LIFT, moon: LIFT })[LAYER(d.grade)], layer: LAYER(d.grade), subj: SUBJECT(d.grade) }));
 const ISL_BY = new Map(ISL.map(i => [i.id, i]));
 const CENTER = new V3();
@@ -15421,9 +15421,9 @@ const ISL_OFF = new V3(2.75, 5.3, 6.2), ITEM_OFF = new V3(1.6, 2.5, 3.2);
 let flight = null;
 function fullViewPose() {
   const a = innerWidth / Math.max(1, innerHeight);
-  const ax = ISL.reduce((s, i) => s + i.x, 0) / ISL.length, az = ISL.reduce((s, i) => s + i.z, 0) / ISL.length;
-  const allR = Math.max(...ISL.map(i => Math.hypot(i.x - ax, i.z - az))) + R;
-  const dist = (a >= 1.25 ? 28.5 : a >= .8 ? 38 : 72) * Math.max(1, allR / 10.5);
+  const VIS = ISL.filter(i => i.layer !== 'land'), ax = VIS.reduce((s, i) => s + i.x, 0) / VIS.length, az = VIS.reduce((s, i) => s + i.z, 0) / VIS.length - .6;
+  const allR = Math.max(...VIS.map(i => Math.hypot(i.x - ax, (i.z - az) * 1.25))) + R * .6;
+  const dist = (a >= 1.25 ? 29.5 : a >= .8 ? 38 : 84) * Math.max(1, allR / 10.5);
   const t = new V3(ax, .4 + LIFT * .45, az);
   if (state.sideOpen && !isMobile()) {
     const viewW = 2 * dist * Math.tan(THREE.MathUtils.degToRad(16)) * a;
@@ -16578,7 +16578,7 @@ function frame(now) {
     updateClouds(dt);
     seaTick(dt);
     dinoTick(dt, simTime);
-    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); ambTick(dt, simTime); } catch (e) { console.warn(e); }
+    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); ambTick(dt, simTime); denseTick(dt, simTime); } catch (e) { console.warn(e); }
     dirty = true;
   }
   if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
@@ -20227,6 +20227,131 @@ function ambTick(dt, t) {
 }
 const _up = new V3(0, 1, 0);
 window.__amb = { AMB, weatherNext, firework, LOCKFOG, EXAMCLOUD };
+
+/* =====================================================================
+   16l. filling the world: sea islets, buoys, a ferry loop, floating sky rocks, denser island edges
+   ===================================================================== */
+const DENSE = { buoys: [], skyrocks: [], ferry: null };
+const dm = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .85, flatShading: true, ...o });
+const SEA_ISL = ISL.filter(i => i.layer === 'sea');
+const clearOfIslands = (x, z, pad) => !ISL.some(i => i.layer !== 'land' && Math.hypot(i.x - x, i.z - z) < R + pad);
+function seaSpot(r, pad, tries = 300) {
+  for (let k = 0; k < tries; k++) {
+    const a = r() * Math.PI * 2, d = Math.sqrt(r()) * (WORLD_R + 3), x = CENTER.x + Math.cos(a) * d, z = CENTER.z + Math.sin(a) * d;
+    if (terrainH(x, z) > -.9) continue; if (!clearOfIslands(x, z, pad)) continue; if (SEA_AVOID.some(p => Math.hypot(p.x - x, p.z - z) < pad + .8)) continue;
+    return { x, z };
+  }
+  return null;
+}
+/* 1. little islets: rock + sand, with palms, a lighthouse, or a single cottage */
+{
+  const r = mulberry32(8080);
+  for (let n = 0; n < 11; n++) {
+    const p = seaSpot(r, 1.6); if (!p) continue; SEA_AVOID.push(p);
+    const g = new THREE.Group(); g.position.set(p.x, WATER_Y, p.z); g.rotation.y = r() * 6.28; scene.add(g);
+    const s = .55 + r() * .5; g.scale.setScalar(s);
+    const sand = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 1.3, .22, 9), dm('#ecd9a8')); sand.position.y = .02; sand.receiveShadow = true; g.add(sand);
+    const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(.75, 0), dm('#a89a86')); rock.scale.set(1, .55, .85); rock.position.set(-.2, .25, .1); rock.castShadow = true; g.add(rock);
+    const grass = new THREE.Mesh(new THREE.DodecahedronGeometry(.6, 0), dm('#86b25a')); grass.scale.set(1, .25, .8); grass.position.set(-.2, .55, .1); g.add(grass);
+    const kind = n % 4;
+    if (kind === 0) { // lighthouse
+      for (let k = 0; k < 4; k++) { const c = new THREE.Mesh(new THREE.CylinderGeometry(.2 - k * .02, .22 - k * .02, .3, 10), dm(k % 2 ? '#ffffff' : '#e0533f')); c.position.set(.35, .25 + k * .3, -.1); c.castShadow = true; g.add(c); }
+      const lamp = new THREE.Mesh(new THREE.SphereGeometry(.13, 10, 8), dm('#fff3b0', { emissive: '#ffd84a', emissiveIntensity: 1.2 })); lamp.position.set(.35, 1.5, -.1); g.add(lamp);
+      const roof = new THREE.Mesh(new THREE.ConeGeometry(.2, .22, 10), dm('#2b2b33')); roof.position.set(.35, 1.72, -.1); g.add(roof);
+    } else if (kind === 1 || kind === 3) { // palms
+      for (let k = 0; k < (kind === 1 ? 2 : 1); k++) { const px = .45 - k * .5, pz = -.2 + k * .35; let y = .1, x = px, lean = .25 + r() * .2;
+        for (let j = 0; j < 5; j++) { const seg = new THREE.Mesh(new THREE.CylinderGeometry(.05, .06, .22, 6), dm(j % 2 ? '#8a6a46' : '#a07c52')); seg.position.set(x, y + .11, pz); seg.rotation.z = -lean; g.add(seg); x += Math.sin(lean) * .22; y += Math.cos(lean) * .22; }
+        for (let j = 0; j < 6; j++) { const a = j / 6 * 6.28, l = new THREE.Mesh(new THREE.BoxGeometry(.55, .02, .16), dm(j % 2 ? '#5f9a48' : '#73b05a')); l.position.set(x + Math.cos(a) * .22, y, pz + Math.sin(a) * .22); l.rotation.set(0, -a, -.4); g.add(l); } }
+    } else { // fisher's hut on stilts
+      const hut = new THREE.Group(); hut.position.set(.5, .15, -.1); g.add(hut);
+      const b = new THREE.Mesh(new THREE.BoxGeometry(.45, .32, .38), dm('#c9a26a')); b.position.y = .26; hut.add(b);
+      const rf = new THREE.Mesh(new THREE.ConeGeometry(.38, .26, 4), dm('#5a7fa6')); rf.position.y = .55; rf.rotation.y = Math.PI / 4; hut.add(rf);
+      const net = new THREE.Mesh(new THREE.TorusGeometry(.14, .02, 4, 10), dm('#6b4a2a')); net.position.set(-.3, .25, .2); hut.add(net);
+    }
+  }
+}
+/* 2. buoys bobbing between the archipelagos */
+{
+  const r = mulberry32(919);
+  for (let n = 0; n < 12; n++) {
+    const p = seaSpot(r, .9); if (!p) continue;
+    const g = new THREE.Group(); g.position.set(p.x, WATER_Y, p.z); scene.add(g);
+    const b = new THREE.Mesh(new THREE.CylinderGeometry(.09, .13, .26, 8), dm(n % 3 ? '#e0533f' : '#f3c34a')); b.position.y = .08; g.add(b);
+    const w = new THREE.Mesh(new THREE.CylinderGeometry(.095, .095, .06, 8), dm('#ffffff')); w.position.y = .15; g.add(w);
+    const t = new THREE.Mesh(new THREE.ConeGeometry(.06, .16, 6), dm('#2b2b33')); t.position.y = .3; g.add(t);
+    DENSE.buoys.push({ g, ph: r() * 6 });
+  }
+}
+/* 3. a little ferry that loops around the sea-level archipelagos */
+{
+  const pts = [], hull = SEA_ISL.map(i => new V3(i.x, 0, i.z));
+  if (hull.length) {
+    const c = hull.reduce((a, p) => a.add(p), new V3()).multiplyScalar(1 / hull.length);
+    for (let k = 0; k < 10; k++) {
+      const a = k / 10 * Math.PI * 2, dir = new V3(Math.cos(a), 0, Math.sin(a));
+      let d = Math.max(...hull.map(p => p.clone().sub(c).dot(dir))) + R + 1.4;
+      let x = c.x + dir.x * d, z = c.z + dir.z * d;
+      for (let j = 0; j < 20 && (!clearOfIslands(x, z, 1) || terrainH(x, z) > -.9); j++) { d *= .95; x = c.x + dir.x * d; z = c.z + dir.z * d; }
+      pts.push(new V3(x, WATER_Y + .02, z));
+    }
+    const curve = new THREE.CatmullRomCurve3(pts, true, 'centripetal');
+    const g = new THREE.Group(); scene.add(g);
+    const hullM = new THREE.Mesh(new THREE.BoxGeometry(.5, .2, 1.2), dm('#ffffff')); hullM.position.y = .06; g.add(hullM);
+    const bow = new THREE.Mesh(new THREE.ConeGeometry(.25, .4, 4), dm('#ffffff')); bow.rotation.set(Math.PI / 2, Math.PI / 4, 0); bow.scale.set(1, 1, .4); bow.position.set(0, .06, .78); g.add(bow);
+    const stripe = new THREE.Mesh(new THREE.BoxGeometry(.51, .05, 1.21), dm('#3e8ed0')); stripe.position.y = .1; g.add(stripe);
+    const cab = new THREE.Mesh(new THREE.BoxGeometry(.38, .26, .5), dm('#fff4e0')); cab.position.set(0, .3, -.1); g.add(cab);
+    for (let k = 0; k < 3; k++) { const w = new THREE.Mesh(new THREE.BoxGeometry(.39, .07, .09), dm('#8fd0ff')); w.position.set(0, .33, -.28 + k * .17); g.add(w); }
+    const fun = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .22, 8), dm('#e0533f')); fun.position.set(0, .54, -.22); g.add(fun);
+    g.scale.setScalar(1.3); DENSE.ferry = { g, curve, u: 0 };
+  }
+}
+/* 4. small floating rocks drifting between the sky islands */
+{
+  const sky = ISL.filter(i => i.layer === 'sky'), r = mulberry32(5150);
+  if (sky.length) {
+    const xs = sky.map(i => i.x), zs = sky.map(i => i.z);
+    for (let n = 0; n < 16; n++) {
+      let x, z, ok = false;
+      for (let k = 0; k < 60 && !ok; k++) { x = Math.min(...xs) - 3 + r() * (Math.max(...xs) - Math.min(...xs) + 6); z = Math.min(...zs) - 3 + r() * (Math.max(...zs) - Math.min(...zs) + 5); ok = !sky.some(i => Math.hypot(i.x - x, i.z - z) < R + 1.1) && !ISLETS.list.some(g => Math.hypot(g.position.x - x, g.position.z - z) < 3.4); }
+      if (!ok) continue;
+      const s = .35 + r() * .45, g = new THREE.Group(); g.position.set(x, TOP + LIFT + (r() - .5) * 2.2, z); g.scale.setScalar(s); scene.add(g);
+      const top = new THREE.Mesh(new THREE.CylinderGeometry(.8, .75, .14, 7), dm('#7fb069')); g.add(top);
+      const cone = new THREE.Mesh(new THREE.ConeGeometry(.75, 1.4, 7), dm(r() < .5 ? '#c9a06b' : '#a98463')); cone.rotation.x = Math.PI; cone.position.y = -.77; cone.castShadow = true; g.add(cone);
+      if (r() < .6) { const t = new THREE.Mesh(new THREE.IcosahedronGeometry(.32, 0), dm(r() < .5 ? '#5f9a48' : '#f4a9c0')); t.position.set(.15, .38, 0); g.add(t); const tr0 = new THREE.Mesh(new THREE.CylinderGeometry(.04, .05, .3, 5), dm('#7a4a2a')); tr0.position.set(.15, .15, 0); g.add(tr0); }
+      else { const c = new THREE.Mesh(new THREE.OctahedronGeometry(.2, 0), dm('#9fe6ff', { emissive: '#4fd8ff', emissiveIntensity: .8 })); c.scale.y = 1.8; c.position.y = .3; g.add(c); }
+      DENSE.skyrocks.push({ g, y0: g.position.y, ph: r() * 6, v: .2 + r() * .3 });
+    }
+  }
+}
+/* 5. denser island edges: shrubs, flower tufts, rocks and signposts in the gaps around the paths */
+{
+  const SH = [], r = mulberry32(31337), ico = new THREE.IcosahedronGeometry(1, 0), m = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
+  ISL.forEach(isl => {
+    const items = [...ITEMS.values()].filter(I => I.isl === isl), taken = [];
+    for (let k = 0; k < 40 && taken.length < 9; k++) {
+      const a = r() * Math.PI * 2, d = 1.18 + r() * .3, x = Math.cos(a) * d, z = Math.sin(a) * d;
+      if (items.some(I => Math.hypot(I.x - isl.x - x, I.z - isl.z - z) < I.s * .55 + .18)) continue;
+      if (isl.propLay.some(P => Math.hypot(P.x - x, P.z - z) < P.s * .55 + .18)) continue;
+      if (taken.some(t => Math.hypot(t.x - x, t.z - z) < .3)) continue;
+      if (GSLOT.some(sa => Math.hypot(Math.cos(sa) * 1.48 - x, Math.sin(sa) * 1.48 - z) < .32)) continue;
+      if ([1.15, 1.99, Math.PI / 2 + 1.05].some(ba => Math.hypot(Math.cos(ba) * 1.5 - x, Math.sin(ba) * 1.5 - z) < .3)) continue;
+      taken.push({ x, z });
+      const kind = r(), y = TOP + isl.ly, X = isl.x + x, Z = isl.z + z;
+      if (kind < .5) { const s = .1 + r() * .08; SH.push([X, y + s * .6, Z, s * 1.2, s, s * 1.1, r() < .5 ? '#6fa14f' : '#86b25a']); if (r() < .5) SH.push([X + .06, y + s * 1.2, Z, .035, .035, .035, ['#f4a9c0', '#fcea8b', '#ffffff'][k % 3]]); }
+      else if (kind < .75) { SH.push([X, y + .04, Z, .09, .05, .08, '#b9ac98']); SH.push([X + .08, y + .03, Z + .04, .05, .03, .05, '#a89a86']); }
+      else { const s = .06; for (let f = 0; f < 4; f++) SH.push([X + (r() - .5) * .14, y + .03, Z + (r() - .5) * .14, s * .5, s * .5, s * .5, ['#e94b5a', '#f3c34a', '#b77ae9', '#ffffff'][f]]); SH.push([X, y + .02, Z, .1, .025, .1, '#6fa14f']); }
+    }
+  });
+  const inst = new THREE.InstancedMesh(ico, new THREE.MeshStandardMaterial({ roughness: .9, flatShading: true }), SH.length);
+  SH.forEach(([x, y, z, sx, sy, sz, c], k) => { m.compose(new V3(x, y, z), q.setFromEuler(e.set(0, k * 1.7, 0)), new V3(sx, sy, sz)); inst.setMatrixAt(k, m); inst.setColorAt(k, new THREE.Color(c)); });
+  inst.castShadow = true; inst.receiveShadow = true; scene.add(inst); DENSE.edge = inst;
+}
+function denseTick(dt, t) {
+  DENSE.buoys.forEach(B => { B.g.position.y = WATER_Y + Math.sin(t * 1.6 + B.ph) * .03; B.g.rotation.z = Math.sin(t * 1.1 + B.ph) * .12; });
+  DENSE.skyrocks.forEach(S => { S.g.position.y = S.y0 + Math.sin(t * S.v + S.ph) * .25; S.g.rotation.y += dt * .05; });
+  const F = DENSE.ferry; if (F) { F.u = (F.u + dt * .006) % 1; const p = F.curve.getPointAt(F.u), tg = F.curve.getTangentAt(F.u); F.g.position.set(p.x, WATER_Y + .02 + Math.sin(t * 1.4) * .015, p.z); F.g.rotation.set(Math.sin(t * 1.1) * .03, Math.atan2(tg.x, tg.z), 0); if (Math.random() < dt * 4) splash(p.x - tg.x * .9, p.z - tg.z * .9, .45, 2); }
+}
+window.__dense = DENSE;
 
 /* =====================================================================
    17. start
