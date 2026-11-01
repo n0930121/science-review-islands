@@ -6801,6 +6801,7 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 .fish-it small{display:block;font-size:12px;color:var(--muted)}.fish-it .btn{min-height:34px;padding:0 10px;font-size:13px}
 .ftitles{display:flex;flex-wrap:wrap;gap:8px}.ftitles span{display:grid;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:800;font-size:14px;opacity:.6}.ftitles span.on{opacity:1;border-color:var(--rc);box-shadow:inset 0 3px 0 var(--rc)}.ftitles small{font-weight:600;font-size:11.5px;color:var(--muted)}
 .stab.fishtab{background:#eaf5fb}.stab.fishtab.on{background:#3e8ed0;border-color:#3e8ed0}
+.dino-roar{font:900 26px/1 var(--font);color:#fff;-webkit-text-stroke:2px #3b7a2e;paint-order:stroke fill;text-shadow:0 3px 0 #3b7a2e;animation:bob .3s ease-in-out infinite;pointer-events:none}
 #duel{position:fixed;inset:0;z-index:70;display:grid;grid-template-rows:1fr auto 1fr;background:var(--paper-solid);padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:10px}
 .dside{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:14px;border-radius:20px;background:#fff;border:2px solid var(--line);min-height:0;overflow:auto}
 .dside.p1{transform:rotate(180deg);background:#f3f6fb}
@@ -8281,6 +8282,7 @@ function terrainH(x, z) {
   const terrain = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 1 }));
   scene.add(terrain);
 }
+const LAND_TREES = [];
 {
   const conGeo = BGU.mergeGeometries([
     new THREE.CylinderGeometry(.08, .1, .5, 5).translate(0, .25, 0),
@@ -8312,6 +8314,7 @@ function terrainH(x, z) {
   }
   con.count = nc; brd.count = nb;
   scene.add(con, brd);
+  for (const [mesh, n] of [[con, nc], [brd, nb]]) for (let i = 0; i < n; i++) { const m = new THREE.Matrix4(); mesh.getMatrixAt(i, m); const p = new V3().setFromMatrixPosition(m); LAND_TREES.push({ mesh, i, m, p, fall: 0, dir: 0 }); }
 }
 const silh = [];
 [[92, 2, 12, '#9db3a6', .32], [112, 4, 17, '#a9bab8', .52], [134, 7, 22, '#b9c4c9', .72]].forEach(([rad, base, amp, hex, mix], k) => {
@@ -9828,6 +9831,126 @@ function seaTick(dt) {
   SEA.rings.forEach(r => { if (!r.mesh.visible) return; r.t += dt; const k = r.t / 1.1; r.mesh.scale.setScalar(.05 + k * .35 * r.size); r.mesh.material.opacity = Math.max(0, .8 * (1 - k)); if (k >= 1) r.mesh.visible = false; });
 }
 
+/* =====================================================================
+   land event: a big, friendly T-rex (real proportions) walks out of the forest,
+   pushes trees over, roars at the shore and walks back
+   ===================================================================== */
+const DINO = { ev: null, next: 50 + Math.random() * 40, fallen: [] };
+function dMesh(g, geo, col, x, y, z, sx, sy, sz, rx = 0, ry = 0, rz = 0) { const m = new THREE.Mesh(geo, typeof col === 'string' ? new THREE.MeshStandardMaterial({ color: col, roughness: .75, flatShading: false }) : col); m.position.set(x, y, z); m.scale.set(sx, sy, sz); m.rotation.set(rx, ry, rz); m.castShadow = true; g.add(m); return m; }
+function buildDino() {
+  const S = new THREE.SphereGeometry(1, 20, 14), C = new THREE.ConeGeometry(1, 1, 8), G = '#7cc26a', D = '#5ea34e', B = '#efe6b0';
+  const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
+  // T-rex proportions: ~9 units long, hips ~2.9 high, big head, tiny arms, long counter-balancing tail
+  dMesh(body, S, G, 0, 2.95, 0, .85, 1.0, 2.05, -.08);                  // torso
+  dMesh(body, S, B, 0, 2.55, .35, .7, .62, 1.55, -.12);                // belly
+  for (let k = 0; k < 6; k++) dMesh(body, S, D, 0, 3.85 - k * .04, -1.2 + k * .55, .22, .1, .28);   // back spots
+  const tail = new THREE.Group(); tail.position.set(0, 3.05, -1.8); body.add(tail);
+  [[.72, .74, 1.1, -.6], [.55, .58, 1.0, -1.7], [.4, .42, .95, -2.75], [.27, .29, .9, -3.7], [.16, .17, .8, -4.5]].forEach(([w, h, l, z], k) => dMesh(tail, S, k % 2 ? D : G, 0, -k * .17, z, w, h, l));
+  const neck = dMesh(body, S, G, 0, 3.65, 1.75, .55, .7, .75, -.6);
+  const head = new THREE.Group(); head.position.set(0, 4.15, 2.25); body.add(head);
+  dMesh(head, S, G, 0, .12, .55, .62, .58, 1.05);                      // skull
+  dMesh(head, S, G, 0, .02, 1.25, .45, .38, .55);                     // snout
+  for (const s of [-1, 1]) {
+    dMesh(head, S, '#ffffff', s * .4, .42, .62, .22, .24, .2); dMesh(head, S, '#1f2a33', s * .46, .44, .74, .12, .14, .1); dMesh(head, S, '#ffffff', s * .5, .5, .8, .04, .04, .03);
+    dMesh(head, S, '#f4a9c0', s * .44, .05, .95, .14, .07, .1); dMesh(head, S, D, s * .14, .32, 1.55, .06, .04, .05);
+  }
+  const jaw = new THREE.Group(); jaw.position.set(0, -.12, .25); head.add(jaw);
+  dMesh(jaw, S, B, 0, -.16, .6, .48, .2, .95);
+  for (let k = 0; k < 5; k++) for (const s of [-1, 1]) dMesh(head, C, '#ffffff', s * (.18 + k * .03), -.18, 1.6 - k * .22, .045, .1, .045, Math.PI);
+  dMesh(head, S, '#e57373', 0, -.2, .85, .3, .06, .55);               // tongue
+  const legs = [];
+  for (const s of [-1, 1]) {
+    const hip = new THREE.Group(); hip.position.set(s * .78, 2.85, -.45); body.add(hip);
+    dMesh(hip, S, G, 0, -.55, .25, .45, .9, .6, .35);                  // thigh
+    const knee = new THREE.Group(); knee.position.set(0, -1.25, .55); hip.add(knee);
+    dMesh(knee, S, G, 0, -.55, -.3, .26, .72, .3, -.5);                // shin
+    const ankle = new THREE.Group(); ankle.position.set(0, -1.15, -.62); knee.add(ankle);
+    dMesh(ankle, S, D, 0, -.25, .1, .17, .4, .18, .3);                 // metatarsus
+    dMesh(ankle, S, D, 0, -.48, .38, .3, .12, .55);                    // foot
+    for (const t of [-1, 0, 1]) dMesh(ankle, C, '#fffbe8', t * .13, -.5, .92, .05, .12, .05, Math.PI / 2);
+    legs.push({ hip, knee, ankle, s });
+    const arm = new THREE.Group(); arm.position.set(s * .6, 2.75, 1.55); body.add(arm);
+    dMesh(arm, S, G, 0, -.18, .12, .12, .26, .12, .6); dMesh(arm, S, G, 0, -.38, .32, .09, .18, .09, -.4);
+  }
+  root.userData = { body, head, jaw, tail, neck, legs };
+  root.traverse(o => { o.castShadow = true; });
+  return root;
+}
+function landH(x, z) { return Math.max(.2, terrainH(x, z)); }
+function spawnDino() {
+  const back = Math.atan2(-camXZ.y, -camXZ.x); let best = null, bs = -1e9;
+  for (let k = 0; k < 60; k++) {
+    const a = back + (Math.random() - .5) * 1.6, r0 = 25 + Math.random() * 5, sx = CENTER.x + Math.cos(a) * r0, sz = CENTER.z + Math.sin(a) * r0;
+    const h0 = terrainH(sx, sz); if (h0 < 1.2 || h0 > 9) continue;
+    const ia = Math.atan2(CENTER.z - sz, CENTER.x - sx) + (Math.random() < .5 ? -1 : 1) * (.6 + Math.random() * .4), ux = Math.cos(ia), uz = Math.sin(ia);
+    let L = 0, last = 0; while (L < 16) { const h = terrainH(sx + ux * L, sz + uz * L); if (h < .55) break; last = L; L += .3; }
+    if (last < 5 || L >= 16) continue;
+    const start = new V3(sx, 0, sz), shore = new V3(sx + ux * (last - .2), 0, sz + uz * (last - .2));
+    _sv.set(shore.x, landH(shore.x, shore.z) + 2, shore.z).project(camera); if (_sv.z > 1 || Math.abs(_sv.x) > .95) continue;
+    const score = -Math.abs(_sv.y - .45) * 2 - Math.max(0, _sv.y - .72) * 8 + (Math.abs(_sv.x) > .25 ? .6 : 0) + Math.random() * .3;
+    if (score > bs) { bs = score; best = { start, shore }; }
+  }
+  if (!best) return false;
+  const { start, shore } = best;
+  const g = buildDino(); g.position.set(start.x, landH(start.x, start.z), start.z); scene.add(g);
+  const tag = document.createElement('div'); tag.className = 'dino-roar'; tag.textContent = tr('吼～～～！', 'ROAR!'); tag.hidden = true; const lab = new CSS2DObject(tag); lab.position.set(0, 5.6, 2.4); g.add(lab);
+  const trees = LAND_TREES.filter(t => { const vx = shore.x - start.x, vz = shore.z - start.z, L2 = vx * vx + vz * vz, u = Math.max(0, Math.min(1, ((t.p.x - start.x) * vx + (t.p.z - start.z) * vz) / L2)); return Math.hypot(t.p.x - (start.x + vx * u), t.p.z - (start.z + vz * u)) < 2.3; });
+  DINO.ev = { g, tag, start, shore, t: 0, ph: 'out', walk: 0, trees, yaw: Math.atan2(shore.x - start.x, shore.z - start.z) };
+  g.rotation.y = DINO.ev.yaw;
+  return true;
+}
+window.__dino = () => (DINO.ev ? DINO.ev.ph : spawnDino() ? 'spawned' : 'no spot');
+window.__DINO = DINO;
+window.__dbgCam = () => ({ camera, controls });
+function dinoRoarSound() {
+  const ctx = MUSIC.ctx; if (!ctx || ctx.state !== 'running') return;
+  const t = ctx.currentTime, o = ctx.createOscillator(), o2 = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  o.type = 'sawtooth'; o2.type = 'square'; o.frequency.setValueAtTime(130, t); o.frequency.linearRampToValueAtTime(85, t + 1.6); o2.frequency.setValueAtTime(66, t); o2.frequency.linearRampToValueAtTime(48, t + 1.6);
+  f.type = 'lowpass'; f.frequency.setValueAtTime(900, t); f.frequency.linearRampToValueAtTime(380, t + 1.8);
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.16, t + .15); g.gain.setValueAtTime(.16, t + 1.2); g.gain.linearRampToValueAtTime(0, t + 1.9);
+  o.connect(f); o2.connect(f); f.connect(g); g.connect(ctx.destination); o.start(t); o2.start(t); o.stop(t + 2); o2.stop(t + 2);
+}
+const _dq3 = new THREE.Quaternion(), _dax = new V3(), _dm2 = new THREE.Matrix4(), _dpos = new V3(), _dsc = new V3(), _dqs = new THREE.Quaternion();
+function treeTilt(T, ang) {
+  T.m.decompose(_dpos, _dqs, _dsc);
+  _dax.set(Math.cos(T.dir), 0, -Math.sin(T.dir)); _dq3.setFromAxisAngle(_dax, ang).multiply(_dqs);
+  _dm2.compose(_dpos, _dq3, _dsc); T.mesh.setMatrixAt(T.i, _dm2); T.mesh.instanceMatrix.needsUpdate = true;
+}
+function dinoTick(dt, t) {
+  // fallen trees slowly stand back up after the dinosaur has gone
+  for (let i = DINO.fallen.length - 1; i >= 0; i--) { const T = DINO.fallen[i]; if (T.hold > 0) { T.hold -= dt; continue; } T.fall = Math.max(0, T.fall - dt * .5); treeTilt(T, T.fall); if (T.fall <= 0) { DINO.fallen.splice(i, 1); T.down = false; } }
+  if (!DINO.ev) { DINO.next -= dt; if (DINO.next <= 0) { DINO.next = 120 + Math.random() * 120; spawnDino(); } return; }
+  const E = DINO.ev, g = E.g, U = g.userData; E.t += dt;
+  const target = E.ph === 'out' ? E.shore : E.start, P = g.position, dx = target.x - P.x, dz = target.z - P.z, d = Math.hypot(dx, dz);
+  let walking = false;
+  if (E.ph === 'out' || E.ph === 'back') {
+    if (E.ph === 'back' && E.turn < 1) { E.turn = Math.min(1, E.turn + dt * .6); g.rotation.y = E.yaw + Math.PI * E.turn; }
+    else if (d > .15) { const sp = 1.15 * dt; P.x += dx / d * Math.min(sp, d); P.z += dz / d * Math.min(sp, d); walking = true; }
+    else if (E.ph === 'out') { E.ph = 'roar'; E.t = 0; }
+    else { scene.remove(g); E.tag.remove(); DINO.ev = null; return; }
+  } else if (E.ph === 'roar') {
+    const k = E.t;
+    U.head.rotation.x = -Math.min(.55, k * .8) * (k < 2.6 ? 1 : Math.max(0, 1 - (k - 2.6) * 1.5)); U.jaw.rotation.x = (k > .5 && k < 2.8 ? .55 + Math.sin(k * 30) * .05 : 0);
+    U.body.rotation.x = -(k > .4 && k < 2.8 ? .06 : 0);
+    if (k > .5 && !E.roared) { E.roared = true; E.tag.hidden = false; dinoRoarSound(); for (let n = 0; n < 6; n++) spray(P.x + Math.sin(E.yaw) * 4, P.y + 4.3, P.z + Math.cos(E.yaw) * 4, Math.sin(E.yaw) * 1.5 + (Math.random() - .5), .5 + Math.random(), Math.cos(E.yaw) * 1.5 + (Math.random() - .5), .05); }
+    if (k > 2.9) E.tag.hidden = true;
+    if (k > 3.6) { E.ph = 'back'; E.turn = 0; U.head.rotation.x = 0; U.jaw.rotation.x = 0; U.body.rotation.x = 0; }
+  }
+  P.y = landH(P.x, P.z);
+  // walk cycle: legs swing from the hips, knees bend, body bobs, tail and head sway for balance
+  const w = walking ? 1 : 0, ph = t * 3.2;
+  U.legs.forEach(L => { const s = Math.sin(ph + (L.s > 0 ? 0 : Math.PI)); L.hip.rotation.x = -s * .42 * w; L.knee.rotation.x = Math.max(0, s) * .5 * w; L.ankle.rotation.x = -Math.max(0, -s) * .3 * w; });
+  U.body.position.y = walking ? Math.abs(Math.sin(ph)) * .12 : 0; U.tail.rotation.y = Math.sin(ph * .5) * .18 * (walking ? 1 : .3); if (E.ph !== 'roar') U.head.rotation.y = Math.sin(ph * .5) * .1;
+  if (walking && Math.abs(Math.sin(ph)) < .08 && !E.step) { E.step = true; spray(P.x, P.y + .1, P.z, 0, .6, 0, .06); } else if (Math.abs(Math.sin(ph)) > .3) E.step = false;
+  // push trees over when the dinosaur walks into them
+  for (const T of E.trees) {
+    if (T.down) continue;
+    if (Math.hypot(T.p.x - P.x, T.p.z - P.z) < 1.6) { T.down = true; T.fall = 0; T.hold = 18; const side = Math.sign((T.p.x - P.x) * Math.cos(E.yaw) - (T.p.z - P.z) * Math.sin(E.yaw)) || 1; T.dir = Math.atan2(Math.sin(E.yaw), Math.cos(E.yaw)) + side * .9; T.target = 1.1 + Math.random() * .3; T.anim = 0; DINO.fallen.push(T); }
+  }
+  DINO.fallen.forEach(T => { if (T.anim < 1 && T.hold > 0) { T.anim = Math.min(1, T.anim + dt * 1.6); T.fall = T.target * (1 - Math.pow(1 - T.anim, 3)); treeTilt(T, T.fall); } });
+  dirty = true;
+}
+
 let last = performance.now(), simTime = 0, lastMinApplied = -1, lodState = null, firstFrame = true;
 function frame(now) {
   requestAnimationFrame(frame);
@@ -9841,6 +9964,7 @@ function frame(now) {
     updateWalkers(dt);
     updateClouds(dt);
     seaTick(dt);
+    dinoTick(dt, simTime);
     dirty = true;
   }
   if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
