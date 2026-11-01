@@ -9484,7 +9484,8 @@ async function fbInit() {
 }
 const nref = p => FB.ref(FB.db, `rooms/${NET.code}${p ? '/' + p : ''}`);
 const EMOS = ['👍', '😮', '🎉', '😅', '💪'];
-function netMe() { return { name: ME.name, look: { char: ME.char, shirt: ME.shirt, hair: ME.hair, skin: ME.skin }, eq: { ...AV.eq }, lv: levelInfo().lv, x: +AVA.root.position.x.toFixed(2), z: +AVA.root.position.z.toFixed(2), yaw: +AVA.yaw.toFixed(2), on: FB.serverTimestamp() }; }
+const noU = o => JSON.parse(JSON.stringify(o || {}));
+function netMe() { return { name: ME.name, look: noU({ char: ME.char, shirt: ME.shirt, hair: ME.hair, skin: ME.skin }), eq: noU(AV.eq), lv: levelInfo().lv, x: +AVA.root.position.x.toFixed(2), z: +AVA.root.position.z.toFixed(2), yaw: +AVA.yaw.toFixed(2), on: FB.serverTimestamp() }; }
 
 /* ---------- menu ---------- */
 function openNet(prefill) {
