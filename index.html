@@ -7076,6 +7076,41 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
 }
+/* light-island games + games hall */
+.act .lg-ico{font-size:24px;text-align:center;line-height:1}.act.lgact{background:linear-gradient(160deg,#fffdf3,#fff6df)}
+.lg-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.lg-head .lg-ic{font-size:30px;line-height:1}
+.lg-head>div>b{display:block;font-size:13px;color:var(--coral)}
+.lg-head p{margin:2px 0 0;line-height:1.6}
+.lg-stage{display:flex;justify-content:center}
+.lg-cv{display:block;border-radius:14px;touch-action:none;box-shadow:0 2px 10px #0002;cursor:crosshair;background:#fff;height:auto}
+.lg-bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:center;margin:10px 0;font-weight:700}
+.lg-bar b.ok,.qfb b.ok,p.ok{color:#2f9e44}.lg-bar b.bad,.qfb b.bad{color:#c0392b}
+.lg-watch{font:800 22px/1 ui-monospace,Menlo,monospace;background:#211d1d;color:#7cfc9a;padding:8px 12px;border-radius:9px;min-width:96px;text-align:center}
+.lg-big{min-height:52px;font-size:15px}
+.lg-q{display:grid;gap:8px;margin-top:6px}.lg-q p{margin:0;line-height:1.6}
+.lg-ctrl{display:grid;gap:8px;margin-top:10px}.lg-ctrl>div{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.lg-ctrl b{min-width:90px}
+.chip.on{background:var(--ink);color:#fff}
+.lg-steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.lg-steps span{padding:4px 10px;border-radius:999px;background:#f1e7da;font-size:12px;font-weight:700;color:var(--muted)}.lg-steps .cur{background:var(--yellow);color:var(--ink)}.lg-steps .done{background:#d3f0d8;color:#2f6e3b}
+.rb-picks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.rb-pick{width:54px;height:54px;border-radius:50%;border:3px solid #fff;background:var(--c);color:#fff;font:900 18px var(--font);text-shadow:0 1px 2px #0006;box-shadow:0 2px 8px #0003;cursor:pointer}
+.rb-pick.ok{opacity:.35;transform:scale(.85)}
+.lens-bar label{display:flex;align-items:center;gap:6px}.lens-bar input{width:150px}
+.qfb.lg-msg{display:block}.lg-warn{border-radius:14px;padding:12px 14px;background:#ffe3e0;color:#7a1f14;line-height:1.6}
+.lg-res .lg-lines p{margin:2px 0}.lg-learn{max-width:560px;text-align:left;background:#fff8d6;border-radius:14px;padding:10px 14px;line-height:1.6}.lg-learn p{margin:4px 0 0}
+.lg-rw{display:grid;gap:6px;max-width:560px;width:100%}.lg-rw span{background:#e9f7ec;border-radius:10px;padding:8px 12px;font-weight:700;text-align:left}
+.games section{margin-top:14px}.games .eyebrow{margin-bottom:8px}
+.gsum{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.gsum .kbar{flex:1;min-width:120px;height:8px;border-radius:9px;background:#f1e7da;overflow:hidden;display:block}.gsum .kbar i{display:block;height:100%;background:var(--live)}
+.gnew{background:var(--coral);color:#fff;border-radius:6px;padding:1px 6px;font-size:10px;margin-left:4px}
+.lg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.lgcard{display:grid;gap:3px;justify-items:start;text-align:left;padding:12px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(160deg,#fffdf3,#fff3d6);cursor:pointer;font-family:inherit;color:var(--ink)}
+.lgcard:hover{box-shadow:0 4px 14px #4a2a1420}.lgcard .lg-ic{font-size:28px}.lgcard b{font-size:14px}.lgcard small{color:var(--muted);line-height:1.4}.lgcard em{font-style:normal;color:#e0a100;font-weight:800;letter-spacing:1px}.lgcard i{font-style:normal;font-size:11.5px;color:var(--muted)}
+.lgcard.done{background:linear-gradient(160deg,#f3fff1,#ddf5d9)}
+.games .gh .hcard{min-height:80px}
+.gtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.gisl{display:grid;gap:8px}.grow-isl{border-left:5px solid var(--c);background:#fff;border-radius:12px;padding:10px 12px}.grow-isl>b{display:block;margin-bottom:6px}.grow-isl small{font-weight:600;color:var(--muted)}
+.grow-isl>div{display:flex;flex-wrap:wrap;gap:6px}
+.gchip{border:1px solid var(--line);background:var(--paper-solid);border-radius:999px;padding:6px 12px;min-height:34px;font:600 12.5px var(--font);cursor:pointer;color:var(--ink)}.gchip:hover{background:var(--yellow)}.gchip.ok{background:#e3f6e6;border-color:#bfe3c5;color:#2f6e3b}
 </style>
 </head>
 <body>
@@ -9782,12 +9817,132 @@ function spawnWhale() {
   return true;
 }
 window.__sea = { turtle: () => spawnTurtle(), ship: () => spawnShip(), bottle: () => spawnBottle(), flyfish: () => spawnFlyfish(), fish: () => spawnFish(), dolphin: () => spawnDolphins(), whale: () => spawnWhale(), list: () => SEA.ev.map(e => e.kind + ':' + e.t.toFixed(1)) };
+/* ---------- ten more sea surprises: marlin leap, whale shark, gulls, rainbow, jellyfish, manta, octopus, otters, submarine, waterspout ---------- */
+const SEA3_SAY = {
+  marlin: ['哇！旗魚跳出水面了！', '旗魚是游得最快的魚之一！'], wshark: ['好大的鯨鯊！牠是世界上最大的魚。', '鯨鯊雖然大，只吃小小的浮游生物。'],
+  gulls: ['海鷗在抓魚！', '好多海鷗在飛～'], rainbow: ['看！海上出現彩虹！要背對太陽才看得到喔。', '彩虹是陽光被小水滴分成的色光！'],
+  jelly: ['水母一張一縮地游泳。', '水母沒有骨頭，身體大部分是水。'], manta: ['鬼蝠魟跳起來了！像在水裡飛。'],
+  octo: ['大章魚！牠噴墨汁躲起來了！', '章魚有 8 隻腳，遇到危險會噴墨汁。'], otter: ['海獺手牽手睡覺，才不會漂走！', '海獺躺在水上，好可愛～'],
+  sub: ['黃色潛水艇浮上來了！', '潛水艇用潛望鏡看海面上的東西，裡面有鏡子反射光。'], spout: ['海上出現水龍捲！還好離我們很遠。']
+};
+function sea3Say(k) { try { if (!AVA || Math.random() < .6) return; const L = SEA3_SAY[k]; avSay(L[Math.random() * L.length | 0], 3.2); } catch (e) {} }
+const SM3 = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .55, flatShading: true, ...o });
+function along(e, d) { return [e.x + Math.sin(e.h) * d, e.z + Math.cos(e.h) * d]; }
+/* 1. 旗魚 marlin: two big leaps with its sail fin up */
+function buildMarlin() {
+  const g = new THREE.Group(), blue = SM3('#2c5c9a'), belly = SM3('#d7e6f2'), fin = SM3('#3f78c6', { side: THREE.DoubleSide });
+  sPart(g, SG.sph, blue, 0, .02, 0, .07, .08, .32); sPart(g, SG.sph, belly, 0, -.03, .02, .06, .05, .28);
+  sPart(g, SG2.cone, '#24466f', 0, .01, .42, .018, .26, .018, Math.PI / 2);
+  const sail = new THREE.Mesh(new THREE.CircleGeometry(1, 16, 0, Math.PI), fin); sail.scale.set(.24, .15, 1); sail.rotation.set(0, Math.PI / 2, 0); sail.position.set(0, .06, .04); g.add(sail);
+  for (const s of [-1, 1]) sPart(g, SG2.cone, '#24466f', 0, s * .07, -.36, .015, .16, .05, s * 2.3, 0, 0);
+  for (const s of [-1, 1]) { sPart(g, SG.sph, '#ffffff', s * .045, .04, .22, .018, .018, .018); sPart(g, SG.sph, '#111', s * .052, .04, .225, .009, .009, .009); }
+  for (let k = 0; k < 5; k++) sPart(g, SG.sph, '#7fb3ff', .062, .02, .18 - k * .08, .004, .05, .012);
+  return g;
+}
+function spawnMarlin() { const p = seaPick(3.2, .9); if (!p) return false; const g = buildMarlin(); g.visible = false; scene.add(g); SEA.ev.push({ kind: 'marlin', x: p.x, z: p.z, h: p.h, t: 0, dur: 4.4, g }); sea3Say('marlin'); return true; }
+/* 2. 鯨鯊 whale shark: an island-sized spotted giant cruising just under the surface */
+function buildWshark() {
+  const g = new THREE.Group(), body = SM3('#3c5468'), spot = SM3('#e9f1f6');
+  sPart(g, SG.sph, body, 0, 0, 0, .48, .36, 1.55); sPart(g, SG.sph, SM3('#dfe6ea'), 0, -.12, .1, .4, .2, 1.3);
+  sPart(g, SG2.cone, body, 0, .42, -.15, .05, .42, .26); const tail = new THREE.Group(); tail.position.set(0, 0, -1.45); g.add(tail);
+  sPart(tail, SG2.cone, body, 0, .3, -.15, .04, .6, .2, -.5); sPart(tail, SG2.cone, body, 0, -.2, -.1, .04, .4, .16, Math.PI + .5);
+  for (const s of [-1, 1]) sPart(g, SG2.cone, body, s * .5, -.12, .35, .04, .55, .2, 0, 0, s * 1.9);
+  for (let k = 0; k < 46; k++) { const a = (k * 2.39) % (Math.PI * 1.1) - Math.PI * .05, zz = 1.2 - (k / 46) * 2.3, r = Math.sqrt(Math.max(.05, 1 - (zz / 1.55) ** 2)); sPart(g, SG.sph, spot, Math.cos(a) * .47 * r, Math.sin(a) * .35 * r + .02, zz, .035, .035, .035); }
+  sPart(g, SG2.box, '#22303c', 0, -.04, 1.5, .5, .04, .06);
+  g.userData.tail = tail; return g;
+}
+function spawnWshark() { if (SEA.ev.some(e => e.kind === 'wshark')) return false; const p = bigPick(1.6, [-4, -2, 2, 4]); if (!p) return false; const g = buildWshark(); g.rotation.y = p.h; scene.add(g); SEA.ev.push({ kind: 'wshark', x: p.x, z: p.z, h: p.h, t: 0, dur: 30, g }); sea3Say('wshark'); return true; }
+/* 3. 海鷗 gulls circling and diving for fish */
+function buildGull() { const g = new THREE.Group(), w = SM3('#ffffff'), gr = SM3('#9aa6b2', { side: THREE.DoubleSide }); sPart(g, SG.sph, w, 0, 0, 0, .035, .03, .08); sPart(g, SG.sph, w, 0, .025, .07, .025, .025, .025); sPart(g, SG2.cone, '#f3a64a', 0, .02, .1, .008, .03, .008, Math.PI / 2); const wings = []; for (const s of [-1, 1]) { const p = new THREE.Group(); p.position.set(s * .02, .01, 0); g.add(p); sPart(p, SG2.box, gr, s * .07, 0, 0, .14, .006, .05); wings.push({ p, s }); } g.userData.wings = wings; return g; }
+function spawnGulls() { const p = seaPick(0, .9); if (!p) return false; const list = []; for (let i = 0; i < 6; i++) { const b = buildGull(); scene.add(b); list.push({ g: b, a: Math.random() * 6.3, r: .5 + Math.random() * .6, y: .7 + Math.random() * .5, sp: .8 + Math.random() * .5, dive: -1 }); } SEA.ev.push({ kind: 'gulls', x: p.x, z: p.z, t: 0, dur: 16, list }); sea3Say('gulls'); return true; }
+/* 4. 彩虹 rainbow arc over the sea */
+function spawnRainbow() {
+  if (SEA.ev.some(e => e.kind === 'rainbow')) return false; const p = bigPick(0, [], true); if (!p) return false;
+  const g = new THREE.Group(), cols = ['#ff4d4d', '#ff9a3c', '#ffe03c', '#5cd26b', '#4aa8f0', '#5560e0', '#a35ce0'], mats = [];
+  cols.forEach((c, i) => { const m = new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide }); mats.push(m); const r = new THREE.Mesh(new THREE.TorusGeometry(4.2 - i * .13, .065, 6, 64, Math.PI), m); g.add(r); });
+  g.position.set(p.x, WATER_Y, p.z); g.lookAt(camera.position.x, WATER_Y, camera.position.z); scene.add(g);
+  SEA.ev.push({ kind: 'rainbow', x: p.x, z: p.z, t: 0, dur: 16, g, mats }); sea3Say('rainbow'); return true;
+}
+/* 5. 水母 glowing jellyfish bloom */
+function buildJelly(c) { const g = new THREE.Group(), m = SM3(c, { transparent: true, opacity: .7, emissive: c, emissiveIntensity: .35 }); const bell = sPart(g, SG2.dome, m, 0, 0, 0, .09, .07, .09); const ten = []; for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2, t = sPart(g, SG2.cyl, m, Math.cos(a) * .05, -.08, Math.sin(a) * .05, .006, .16, .006); ten.push(t); } g.userData = { bell, ten }; return g; }
+function spawnJelly() { const p = bigPick(1.2, []) || seaPick(0, .9); if (!p) return false; const list = []; const cols = ['#ff9ad5', '#9ad8ff', '#c7a6ff', '#ffd59a']; for (let i = 0; i < 9; i++) { const j = buildJelly(cols[i % 4]); j.scale.setScalar(2.4); scene.add(j); list.push({ g: j, ox: (Math.random() - .5) * 2, oz: (Math.random() - .5) * 2, ph: Math.random() * 6 }); } SEA.ev.push({ kind: 'jelly', x: p.x, z: p.z, t: 0, dur: 18, list }); sea3Say('jelly'); return true; }
+/* 6. 鬼蝠魟 manta ray breach */
+function buildManta() { const g = new THREE.Group(), top = SM3('#2b3440', { side: THREE.DoubleSide }), bot = SM3('#e8edf1', { side: THREE.DoubleSide }); const wings = []; sPart(g, SG.sph, top, 0, 0, 0, .22, .07, .3); for (const s of [-1, 1]) { const w = new THREE.Group(); w.position.set(s * .15, 0, 0); g.add(w); sPart(w, SG.sph, top, s * .3, 0, -.04, .38, .03, .2); sPart(w, SG.sph, bot, s * .3, -.012, -.04, .36, .025, .18); wings.push({ w, s }); sPart(g, SG2.cone, top, s * .1, 0, .32, .03, .14, .02, Math.PI / 2); } sPart(g, SG2.cyl, top, 0, 0, -.55, .01, .5, .01, Math.PI / 2); g.userData.wings = wings; return g; }
+function spawnManta() { const p = seaPick(2.6, .9); if (!p) return false; const g = buildManta(); g.visible = false; scene.add(g); SEA.ev.push({ kind: 'manta', x: p.x, z: p.z, h: p.h, t: 0, dur: 4.2, g }); sea3Say('manta'); return true; }
+/* 7. 大章魚 octopus waves its arms, then squirts ink and vanishes */
+function buildOcto() { const g = new THREE.Group(), m = SM3('#e0645a'), sp = SM3('#f3b0a8'); sPart(g, SG.sph, m, 0, .32, 0, .2, .26, .2); for (const s of [-1, 1]) { sPart(g, SG.sph, '#ffffff', s * .08, .3, .17, .05, .05, .05); sPart(g, SG.sph, '#222', s * .085, .3, .21, .025, .025, .025); } const arms = []; for (let k = 0; k < 8; k++) { const a = k / 8 * Math.PI * 2, arm = new THREE.Group(); arm.position.set(Math.cos(a) * .15, .1, Math.sin(a) * .15); arm.rotation.y = -a; g.add(arm); const segs = []; let par = arm; for (let q = 0; q < 4; q++) { const sg = new THREE.Group(); sg.position.set(q ? .09 : 0, 0, 0); par.add(sg); sPart(sg, SG.sph, m, .045, 0, 0, .055 - q * .009, .04 - q * .006, .04 - q * .006); if (q < 3) sPart(sg, SG.sph, sp, .045, -.03, 0, .015, .01, .015); segs.push(sg); par = sg; } arms.push({ arm, segs, ph: k }); } g.userData.arms = arms; return g; }
+function spawnOcto() { if (SEA.ev.some(e => e.kind === 'octo')) return false; const p = bigPick(1.1, []) || seaPick(0, 1.1); if (!p) return false; const g = buildOcto(); g.position.set(p.x, WATER_Y - .6, p.z); g.scale.setScalar(1.6); scene.add(g); const ink = new THREE.Mesh(new THREE.CircleGeometry(1, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#1d1a2a', transparent: true, opacity: 0, depthWrite: false })); ink.position.set(p.x, WATER_Y + .015, p.z); scene.add(ink); SEA.ev.push({ kind: 'octo', x: p.x, z: p.z, t: 0, dur: 10, g, list: [{ g }, { g: ink }], ink }); sea3Say('octo'); return true; }
+/* 8. 海獺 two otters floating on their backs holding paws */
+function buildOtter() { const g = new THREE.Group(), fur = SM3('#7a5236'), face = SM3('#d8c3a5'); sPart(g, SG.sph, fur, 0, 0, 0, .07, .045, .16); sPart(g, SG.sph, face, 0, .02, .15, .055, .05, .05); for (const s of [-1, 1]) { sPart(g, SG.sph, '#222', s * .022, .06, .17, .01, .01, .01); sPart(g, SG.sph, fur, s * .045, .05, .13, .018, .018, .018); } sPart(g, SG.sph, '#222', 0, .045, .2, .012, .01, .01); sPart(g, SG.sph, fur, 0, 0, -.18, .03, .015, .07); const paws = []; for (const s of [-1, 1]) paws.push(sPart(g, SG.sph, fur, s * .05, .05, .06, .018, .018, .03)); const shell = sPart(g, SG2.dome, '#f2d7b6', 0, .06, .05, .03, .015, .03); g.userData = { paws, shell }; return g; }
+function spawnOtters() { if (SEA.ev.some(e => e.kind === 'otter')) return false; const p = bigPick(1, [1.2]) || seaPick(0, .9); if (!p) return false; const list = []; for (let i = 0; i < 2; i++) { const o = buildOtter(); o.scale.setScalar(2.8); scene.add(o); list.push({ g: o, s: i ? 1 : -1 }); } SEA.ev.push({ kind: 'otter', x: p.x, z: p.z, h: p.h, t: 0, dur: 24, list }); sea3Say('otter'); return true; }
+/* 9. 黃色潛水艇 surfaces, cruises with its periscope, dives */
+function buildSub() { const g = new THREE.Group(), y = SM3('#f5c518'), d = SM3('#c99a00'); sPart(g, SG2.cyl, y, 0, 0, 0, .32, 1.6, .32, Math.PI / 2); sPart(g, SG.sph, y, 0, 0, .8, .32, .32, .32); sPart(g, SG.sph, y, 0, 0, -.8, .32, .32, .32); sPart(g, SG2.box, y, 0, .38, .15, .24, .32, .5); const peri = new THREE.Group(); peri.position.set(0, .55, .3); g.add(peri); sPart(peri, SG2.cyl, '#8a8f99', 0, .2, 0, .025, .4, .025); sPart(peri, SG2.box, '#8a8f99', 0, .4, .04, .05, .05, .1); for (let k = 0; k < 3; k++) { sPart(g, SG2.cyl, '#bfe6ff', .31, .05, .4 - k * .4, .09, .03, .09, 0, 0, Math.PI / 2); sPart(g, SG2.cyl, d, .3, .05, .4 - k * .4, .11, .02, .11, 0, 0, Math.PI / 2); } const prop = new THREE.Group(); prop.position.set(0, 0, -1.14); g.add(prop); for (let k = 0; k < 3; k++) sPart(prop, SG2.box, d, 0, 0, 0, .04, .3, .02, 0, 0, k * 2.09); sPart(g, SG2.box, d, 0, 0, -1, .02, .5, .2); g.userData = { prop, peri }; return g; }
+function spawnSub() { if (SEA.ev.some(e => e.kind === 'sub')) return false; const p = bigPick(1.2, [-4, -2, 2, 4]); if (!p) return false; const g = buildSub(); g.rotation.y = p.h; scene.add(g); SEA.ev.push({ kind: 'sub', x: p.x, z: p.z, h: p.h, t: 0, dur: 22, g }); sea3Say('sub'); return true; }
+/* 10. 水龍捲 a far-off waterspout */
+function spawnSpout() {
+  if (SEA.ev.some(e => e.kind === 'spout')) return false; const p = bigPick(1, [-2, 2], true); if (!p) return false;
+  const g = new THREE.Group(), mats = [];
+  for (let k = 0; k < 3; k++) { const m = new THREE.MeshBasicMaterial({ color: k ? '#dfe9f2' : '#c7d5e3', transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide }); mats.push(m); const c = new THREE.Mesh(new THREE.CylinderGeometry(.6 - k * .12, .07 + k * .03, 4.2, 14, 1, true), m); c.position.y = 2.1; g.add(c); }
+  const cloud = new THREE.Mesh(new THREE.SphereGeometry(1, 12, 8), new THREE.MeshBasicMaterial({ color: '#8d98a6', transparent: true, opacity: 0, depthWrite: false })); cloud.scale.set(2, .35, 2); cloud.position.y = 4.3; g.add(cloud); mats.push(cloud.material);
+  g.position.set(p.x, WATER_Y, p.z); scene.add(g); SEA.ev.push({ kind: 'spout', x: p.x, z: p.z, h: p.h, t: 0, dur: 12, g, mats }); sea3Say('spout'); return true;
+}
+const SEA3_KINDS = ['marlin', 'wshark', 'gulls', 'rainbow', 'jelly', 'manta', 'octo', 'otter', 'sub', 'spout'];
+function seaTick3(e, dt) {
+  const t = e.t;
+  if (e.kind === 'marlin') {
+    const JUMP = 1.25, GAP = .55, PER = JUMP + GAP, k = Math.floor(t / PER), u = (t - k * PER) / JUMP, [x, z] = along(e, t * 1.4 - 2.6);
+    if (k < 2 && u <= 1) { if (!e.wet) { e.wet = 1; splash(x, z, .9, 14); } e.g.visible = true; e.g.position.set(x, WATER_Y - .1 + Math.sin(u * Math.PI) * (k ? .7 : .95), z); e.g.rotation.set(0, e.h, 0); e.g.rotateX(-Math.cos(u * Math.PI) * 1.05); e.g.rotateZ(Math.sin(u * Math.PI * 2) * .25); }
+    else if (e.wet) { e.wet = 0; e.g.visible = false; splash(x, z, 1, 16); }
+  } else if (e.kind === 'wshark') {
+    const [x, z] = along(e, -4 + t * .27), k = Math.min(1, t / 3, (e.dur - t) / 3);
+    e.g.position.set(x, WATER_Y - .75 + k * .45 + Math.sin(t * .8) * .02, z); e.g.userData.tail.rotation.y = Math.sin(t * 1.6) * .3; e.g.rotation.y = e.h + Math.sin(t * .8) * .04;
+    if (Math.random() < dt * 3 * k) splash(x + Math.sin(e.h) * 1.4, z + Math.cos(e.h) * 1.4, .4, 2);
+  } else if (e.kind === 'gulls') {
+    const fade = Math.min(1, t / 1.5, (e.dur - t) / 1.5);
+    e.list.forEach(b => {
+      b.a += dt * b.sp; let y = WATER_Y + b.y * fade + (1 - fade) * 2;
+      if (b.dive < 0 && Math.random() < dt * .12) b.dive = 0;
+      if (b.dive >= 0) { b.dive += dt; const u = b.dive / 1.2; y -= Math.sin(Math.min(1, u) * Math.PI) * b.y * .95; if (u > .5 && !b.sp2) { b.sp2 = 1; splash(b.g.position.x, b.g.position.z, .3, 5); } if (u >= 1) { b.dive = -1; b.sp2 = 0; } }
+      const x = e.x + Math.cos(b.a) * b.r, z = e.z + Math.sin(b.a) * b.r; b.g.position.set(x, y, z); b.g.rotation.set(0, -b.a, 0); b.g.rotateZ(.35);
+      b.g.userData.wings.forEach(({ p, s }) => { p.rotation.z = s * Math.sin(t * 9 + b.r * 9) * .6; });
+    });
+  } else if (e.kind === 'rainbow') {
+    const k = Math.min(1, t / 3, (e.dur - t) / 3); e.mats.forEach(m => { m.opacity = k * .55; });
+  } else if (e.kind === 'jelly') {
+    const fade = Math.min(1, t / 2, (e.dur - t) / 2);
+    e.list.forEach(j => { const pulse = Math.sin(t * 2.4 + j.ph); j.g.position.set(e.x + j.ox + Math.sin(t * .3 + j.ph) * .1, WATER_Y - .18 + fade * .2 + pulse * .02, e.z + j.oz + t * .03); j.g.userData.bell.scale.set(.09 + pulse * .015, .07 - pulse * .012, .09 + pulse * .015); j.g.userData.ten.forEach((q, i) => { q.rotation.x = Math.sin(t * 2 + i + j.ph) * .3; }); });
+  } else if (e.kind === 'manta') {
+    const u = Math.min(1, Math.max(0, (t - .5) / 1.9)), [x, z] = along(e, t * .9 - 1.6);
+    if (t > .5 && u < 1) { if (!e.wet) { e.wet = 1; splash(x, z, 1, 12); } e.g.visible = true; e.g.position.set(x, WATER_Y - .05 + Math.sin(u * Math.PI) * .85, z); e.g.rotation.set(0, e.h, 0); e.g.rotateX(-Math.cos(u * Math.PI) * .6); e.g.rotateZ(u * Math.PI * .8); e.g.userData.wings.forEach(({ w, s }) => { w.rotation.z = s * Math.sin(t * 7) * .5; }); }
+    else if (e.wet && u >= 1) { e.wet = 0; e.g.visible = false; splash(x, z, 1.3, 20); }
+  } else if (e.kind === 'octo') {
+    const up = Math.min(1, t / 1.5), down = t > 7 ? Math.min(1, (t - 7) / .8) : 0;
+    e.g.position.y = WATER_Y - .6 + up * .5 - down * .9;
+    e.g.userData.arms.forEach(({ arm, segs, ph }) => { arm.rotation.z = .6 + Math.sin(t * 2 + ph) * .3; segs.forEach((s, q) => { s.rotation.z = .25 + Math.sin(t * 3 + ph + q) * .35; }); });
+    if (t > 7 && !e.inked) { e.inked = 1; splash(e.x, e.z, .8, 10); }
+    if (e.inked) { const v = (t - 7) / 3; e.ink.scale.setScalar(.3 + v * 1.4); e.ink.material.opacity = Math.max(0, .75 - v * .75); }
+  } else if (e.kind === 'otter') {
+    const fade = Math.min(1, t / 2, (e.dur - t) / 2), [cx, cz] = along(e, t * .05), spin = t * .25;
+    e.list.forEach(o => { const x = cx + Math.cos(spin) * .26 * o.s, z = cz + Math.sin(spin) * .26 * o.s; o.g.position.set(x, WATER_Y - .06 + fade * .07 + Math.sin(t * 1.5 + o.s) * .01, z); o.g.rotation.set(0, -spin, 0); o.g.userData.paws.forEach((p, i) => { p.position.y = .05 + Math.sin(t * 3 + i) * .01; }); });
+  } else if (e.kind === 'sub') {
+    const [x, z] = along(e, -4 + t * .36), k = Math.min(1, t / 3, (e.dur - t) / 3);
+    e.g.position.set(x, WATER_Y - 1 + k * .92 + Math.sin(t * 1.3) * .02, z); e.g.userData.prop.rotation.z = t * 8; e.g.userData.peri.rotation.y = Math.sin(t * .6) * 1.2; e.g.visible = k > 0;
+    if (Math.random() < dt * 5 * k) splash(x - Math.sin(e.h) * 1.1, z - Math.cos(e.h) * 1.1, .5, 3);
+  } else if (e.kind === 'spout') {
+    const k = Math.min(1, t / 2.5, (e.dur - t) / 2.5), [x, z] = along(e, t * .1);
+    e.g.position.set(x, WATER_Y, z); e.g.children.forEach((c, i) => { if (i < 3) c.rotation.y = t * (3 + i); c.scale.x = c.scale.z = 1 + Math.sin(t * 2 + i) * .08; });
+    e.mats.forEach((m, i) => { m.opacity = k * (i < 3 ? .32 : .55); });
+    if (Math.random() < dt * 14 * k) splash(x + (Math.random() - .5) * .4, z + (Math.random() - .5) * .4, .55, 4);
+  }
+}
+Object.assign(window.__sea || (window.__sea = {}), { SEA, marlin: () => spawnMarlin(), wshark: () => spawnWshark(), gulls: () => spawnGulls(), rainbow: () => spawnRainbow(), jelly: () => spawnJelly(), manta: () => spawnManta(), octo: () => spawnOcto(), otter: () => spawnOtters(), sub: () => spawnSub(), spout: () => spawnSpout() });
 function endEvent(e) { (e.list ? e.list.map(o => o.g) : [e.g]).forEach(g => scene.remove(g)); if (e.cleanup) e.cleanup(); }
+const SEA_W = { list: [[spawnFish, .2], [spawnDolphins, .13], [spawnWhale, .08], [spawnTurtle, .07], [spawnShip, .06], [spawnFlyfish, .06], [spawnBottle, .06], [spawnMarlin, .07], [spawnWshark, .04], [spawnGulls, .05], [spawnRainbow, .03], [spawnJelly, .05], [spawnManta, .04], [spawnOcto, .035], [spawnOtters, .04], [spawnSub, .03], [spawnSpout, .02]] }; SEA_W.sum = SEA_W.list.reduce((a, x) => a + x[1], 0);
 function seaTick(dt) {
   SEA.next -= dt;
   if (SEA.next <= 0) {
     SEA.next = 3 + Math.random() * 5;
-    if (SEA.ev.length < 5) { const r = Math.random(); (r < .32 ? spawnFish : r < .54 ? spawnDolphins : r < .65 ? spawnWhale : r < .76 ? spawnTurtle : r < .85 ? spawnShip : r < .92 ? spawnFlyfish : spawnBottle)() || spawnFish(); }
+    if (SEA.ev.length < 5) { const r = Math.random(); let r2 = r * SEA_W.sum, f = spawnFish; for (const [fn, w] of SEA_W.list) { if (r2 < w) { f = fn; break; } r2 -= w; } f() || spawnFish(); }
   }
   for (let i = SEA.ev.length - 1; i >= 0; i--) {
     const e = SEA.ev[i]; e.t += dt;
@@ -9828,6 +9983,7 @@ function seaTick(dt) {
         if (u > .6 && !e.dove) { e.dove = true; const fx = w.position.x - hx * 1.3 * WS, fz = w.position.z - hz * 1.3 * WS; setTimeout(() => splash(fx, fz, 3, 30), 400); }
       } else w.visible = false;
     }
+    else if (SEA3_KINDS.includes(e.kind)) seaTick3(e, dt);
     else seaTick2(e, dt);
     if (e.t >= e.dur) { endEvent(e); SEA.ev.splice(i, 1); }
   }
@@ -10077,6 +10233,7 @@ function activitiesHTML(isl) {
   if (lab) h += `<button class="act" data-act="lab" data-isl="${isl.id}">${ICON.lab}<span><b>${esc(T(LAB_NAME[lab]))}</b><small>${tr('動手玩實驗', 'Hands-on experiment')}</small></span><em class="ok">${LP.l[isl.id] ? '✓' : ''}</em></button>`;
   if (srt) h += `<button class="act" data-act="sort" data-isl="${isl.id}">${ICON.sort}<span><b>${tr('分類配對', 'Sorting game')}</b><small>${tr(`${srt.length} 回合，把卡片放到正確的格子`, `${srt.length} rounds`)}</small></span><em class="ok">${LP.s[isl.id] ? '✓' : ''}</em></button>`;
   isl.items.filter(it => LD.puzzle && LD.puzzle[it.id]).forEach(it => { h += `<button class="act" data-act="puzzle" data-item="${it.id}">${ICON.puzzle}<span><b>${tr('心智圖拼圖', 'Mind-map puzzle')}${/篇/.test(T(it.name)) ? '・' + esc(T(it.name).split('・')[1] || '') : ''}</b><small>${tr(`${LD.puzzle[it.id].length} 塊拼圖，拼回原位`, `${LD.puzzle[it.id].length} pieces`)}</small></span><em class="ok">${LP.z && LP.z[it.id] ? '✓' : ''}</em></button>`; });
+  if (typeof LGAMES !== 'undefined' && isl.id === LG_ISL) LGAMES.forEach(gm => { const sv = (LP.lg || {})[gm.id] || 0; h += `<button class="act lgact" data-act="lg" data-g="${gm.id}"><span class="lg-ico">${gm.ic}</span><span><b>${esc(T(gm.n))}</b><small>${esc(T(gm.k))}・${esc(T(gm.d))}</small></span><em class="stars">${sv ? starStr(sv) : ''}</em></button>`; });
   fills.forEach(it => { h += `<button class="act" data-act="fill" data-item="${it.id}" data-noselect="1">${ICON.fill}<span><b>${tr('心智圖填空', 'Mind-map fill-in')}${/篇/.test(T(it.name)) ? '・' + esc(T(it.name).split('・')[1] || '') : ''}</b><small>${tr(`${LD.blanks[it.id].length} 個空格`, `${LD.blanks[it.id].length} blanks`)}</small></span><em class="ok">${LP.f[it.id] ? '✓' : ''}</em></button>`; });
   return h + '</div>';
 }
@@ -10112,6 +10269,8 @@ document.addEventListener('click', e => {
   else if (a === 'fill') startFill(ITEMS.get(b.dataset.item));
   else if (a === 'puzzle') startPuzzle(ITEMS.get(b.dataset.item));
   else if (a === 'hub') openHub();
+  else if (a === 'lg') startLG(b.dataset.g);
+  else if (a === 'games') openGames();
   else if (a === 'pass') openPassport();
   else if (a === 'goisl') { closePlay(); selectIsland(b.dataset.isl); }
 }, true);
@@ -11356,6 +11515,7 @@ function fishBtn() {
   const left = ME ? fishLeft() : 0;
   b.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 20L17 4"/><path d="M17 4v9"/><circle cx="17" cy="15" r="2"/></svg><span>${FS ? tr('收竿', 'Stop') : tr('釣魚', 'Fish')}</span><i class="fish-n">${left}</i>`;
   b.title = tr(`釣魚（這一小時還能釣 ${left} 次）`, `Fish (${left} left this hour)`);
+  try { gamesBtn(); } catch (e) {}
 }
 /* fish market inside the shop */
 let FISHVIEW = 'bag', FISHR = 'all', FISHSEL = null;
@@ -11956,11 +12116,11 @@ function tabShop(pane, slot = SHOPSLOT) {
   const card = s => {
     const own = !!AV.owned[s.id], on = AV.eq[s.slot] === s.id, R = RAR[s.r] || RAR.c, locked = lv < R.lv, poor = AV.coins < s.p;
     const act = own ? `<button class="btn" data-eq="${s.id}">${on ? tr('卸下', 'Remove') : tr('穿上', 'Wear')}</button>`
-      : s.earn ? `<button class="btn" disabled>🎣 ${esc(s.earn)}</button>`
+      : s.earn ? `<button class="btn" disabled>${s.how === 'game' ? '🎮' : '🎣'} ${esc(s.earn)}</button>`
       : locked ? `<button class="btn" disabled>${tr(`Lv.${R.lv} 解鎖`, `Unlocks at Lv.${R.lv}`)}</button>`
       : `<button class="btn primary" data-buy="${s.id}" ${poor ? 'disabled' : ''}>${poor ? tr(`還差 ${s.p - AV.coins}`, `Need ${s.p - AV.coins}`) : tr('購買', 'Buy')}</button>`;
     return `<div class="shop-item r-${s.r} ${on ? 'on' : ''} ${SHOPTRY === s.id ? 'trying' : ''}" style="--rc:${R.col}">
-      <div class="si-top"><em>${esc(T(R.n))}</em>${own ? `<small>${on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')}</small>` : s.earn ? `<small>${tr('釣魚限定', 'Fishing only')}</small>` : `<small class="price">${ICON3.leaf}${s.p}</small>`}</div>
+      <div class="si-top"><em>${esc(T(R.n))}</em>${own ? `<small>${on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')}</small>` : s.earn ? `<small>${s.how === 'game' ? tr('遊戲限定', 'Games only') : tr('釣魚限定', 'Fishing only')}</small>` : `<small class="price">${ICON3.leaf}${s.p}</small>`}</div>
       <b>${esc(s.n)}</b>${s.d ? `<p>${esc(s.d)}</p>` : ''}
       <div class="si-btns">${s.slot !== 'title' && s.slot !== 'aura' ? `<button class="btn ghost" data-try="${s.id}">${SHOPTRY === s.id ? tr('取消試穿', 'Stop') : tr('試穿', 'Try')}</button>` : ''}${act}</div></div>`;
   };
@@ -12483,6 +12643,438 @@ function setMusicVol(v) { MUSIC.vol = v; try { localStorage.setItem('scienceIsla
   addEventListener('pointerdown', first, true); addEventListener('keydown', first, true);
   document.addEventListener('visibilitychange', () => { if (!MUSIC.ctx) return; if (document.hidden) MUSIC.ctx.suspend(); else if (MUSIC.on) { MUSIC.ctx.resume(); musicStart(); } });
 }
+
+/* =====================================================================
+   16i. light-island mini games (五2-3 光的特性) + games hall
+   ===================================================================== */
+var LG_ISL = 'g5-23';
+var LGAMES = [
+  { id: 'spear', ic: '🐟', n: ['叉魚大挑戰', 'Spear the fish'], d: ['水裡的魚看起來比較淺，要往哪裡叉？', 'Fish look shallower than they are.'], k: ['光的折射', 'Refraction'], title: ['ti_lg_spear', '叉魚神射手'],
+    lesson: ['光從水裡斜斜射到空氣中會偏折（折射），所以我們看到的魚，位置比真正的魚淺。要叉到魚，就要往看到的位置「再下面一點」叉。', 'Light bends when it leaves water, so fish look shallower. Aim a little lower.'] },
+  { id: 'laser', ic: '🔦', n: ['雷射鏡子迷宮', 'Laser mirror maze'], d: ['轉動鏡子，讓光打到目標', 'Turn mirrors to guide the beam.'], k: ['光直線前進、反射', 'Straight lines & reflection'], title: ['ti_lg_laser', '雷射工程師'],
+    lesson: ['光在同一種物質裡沿直線前進；碰到鏡子會反射，改變前進方向。潛望鏡就是用兩面鏡子讓光轉兩次彎。', 'Light travels in straight lines and reflects off mirrors.'] },
+  { id: 'storm', ic: '⛈️', n: ['雷雨有多遠', 'How far is the storm?'], d: ['看到閃電就按碼錶，聽到雷聲再按一次', 'Time the gap between flash and thunder.'], k: ['光比聲音快', 'Light is faster than sound'], title: ['ti_lg_storm', '閃電測距員'],
+    lesson: ['閃電和雷聲是同時發生的，但光每秒跑約 30 萬公里，幾乎一瞬間就到；聲音每秒只走約 340 公尺。所以先看到閃電、後聽到雷聲，「秒數 × 340」就是大約的距離（公尺）。', 'Light arrives almost instantly; sound travels about 340 m per second. Seconds × 340 = metres.'] },
+  { id: 'rainbow', ic: '🌈', n: ['彩虹製造機', 'Rainbow maker'], d: ['太陽、水霧、站的方向，條件對才有彩虹', 'Sun, mist and where you stand.'], k: ['光的色散、色光', 'Dispersion'], title: ['ti_lg_rain', '彩虹魔法師'],
+    lesson: ['太陽光看起來是白色的，其實是由很多種色光組成。陽光照進小水滴會折射、分散成紅橙黃綠藍靛紫。要看到彩虹，要有陽光、有小水滴，而且要「背對太陽」。三稜鏡也能把白光分成彩色的光。', 'Sunlight is a mix of colours. Water droplets split it into a rainbow; stand with the sun behind you.'] },
+  { id: 'lens', ic: '🔍', n: ['放大鏡偵探', 'Magnifier detective'], d: ['用放大鏡找出藏起來的小字', 'Find the tiny hidden words.'], k: ['凸透鏡成像', 'Convex lenses'], title: ['ti_lg_lens', '放大鏡名偵探'],
+    lesson: ['放大鏡是凸透鏡（中間厚、邊緣薄）。靠近物體時看到放大、正立的像；離得太遠，像會變成倒立的。凸透鏡會把陽光聚在一點，非常燙，千萬不能用它看太陽！', 'A magnifier is a convex lens: close up it shows a big upright image; too far and the image flips. Never look at the sun through it.'] }
+];
+const LG_BY = new Map(LGAMES.map(g => [g.id, g]));
+const lgDone = () => (LP.lg = LP.lg || {});
+/* rewards: titles + an effect that can only be earned by playing */
+LGAMES.forEach(g => { const [id, n] = g.title; if (!SHOP_BY.has(id)) { const s = { id, slot: 'title', n, p: 0, r: 'e', d: `${T(g.n)}拿到三顆星`, earn: `${T(g.n)} 三星`, how: 'game' }; AD.shop.push(s); SHOP_BY.set(id, s); } });
+[{ id: 'ti_lgall', slot: 'title', n: '光之島島主', p: 0, r: 'l', d: '光之島 5 個遊戲全部三星', earn: '光之島遊戲全三星', how: 'game' },
+ { id: 'a_prism', slot: 'aura', n: '稜鏡光環', p: 0, r: 'l', d: '白光被分成七彩色光，繞著你轉。', earn: '光之島遊戲全三星', how: 'game' }].forEach(s => { if (!SHOP_BY.has(s.id)) { AD.shop.push(s); SHOP_BY.set(s.id, s); } });
+AURAS.a_prism = { geo: 'oct', cols: ['#ff5b5b', '#ff9f43', '#ffd93b', '#5ad27a', '#4dabf7', '#5b6cf0', '#b77ae9'], mode: 'orbit', rate: 0, n: 14, size: .024 };
+
+function lgReward(g, stars, prev) {
+  const out = [];
+  if (!stars || !(ADV_READY && ME)) return out;
+  let xp = 0, coins = 0; const cards = [];
+  if (!prev) { xp += 50; coins += 30; const c = randomCard(LG_ISL); if (c) cards.push(c); out.push(tr(`🎉 第一次過關：+50 XP、+30 葉子幣${c ? '、圖鑑卡 1 張' : ''}`, `🎉 First clear: +50 XP, +30 leaves`)); }
+  else { const k = 'lg:' + g.id; if (AV.actDay[k] !== today()) { AV.actDay[k] = today(); xp += 15; coins += 8; out.push(tr('📅 今天第一次過關：+15 XP、+8 葉子幣', '📅 First clear today: +15 XP, +8 leaves')); } }
+  if (stars === 3 && prev < 3) { coins += 40; out.push(tr('⭐ 三星獎勵：+40 葉子幣', '⭐ 3-star bonus: +40 leaves')); }
+  if (stars === 3 && !AV.owned[g.title[0]]) { AV.owned[g.title[0]] = today(); out.push(tr(`🏅 獲得稱號「${g.title[1]}」（到商店「稱號」戴上）`, `🏅 New title: ${g.title[1]}`)); }
+  if (LGAMES.every(x => (lgDone()[x.id] || 0) >= 3)) {
+    if (!AV.owned.ti_lgall) { AV.owned.ti_lgall = today(); out.push(tr('👑 獲得稱號「光之島島主」', '👑 Title: Lord of Light Island')); }
+    if (!AV.owned.a_prism) { AV.owned.a_prism = today(); out.push(tr('✨ 獲得限定特效「稜鏡光環」（到商店「特效」戴上）', '✨ Effect unlocked: Prism halo')); }
+  }
+  saveP();
+  if (xp || coins || cards.length) grant({ xp, coins, cards }, tr('光之島遊戲', 'Light games'));
+  try { bumpDay('game'); } catch (e) {}
+  return out;
+}
+function lgResult(g, stars, lines, again) {
+  const prev = lgDone()[g.id] || 0; LP.lg[g.id] = Math.max(prev, stars); saveP();
+  const rw = lgReward(g, stars, prev), nx = LGAMES[(LGAMES.indexOf(g) + 1) % LGAMES.length];
+  const body = PL.body;
+  body.innerHTML = `<div class="qres lg-res"><div class="bigstars">${starStr(stars)}</div><h3>${stars ? tr('過關！', 'Cleared!') : tr('差一點點，再試一次！', 'So close — try again!')}</h3>
+    <div class="lg-lines">${lines}</div>
+    <div class="lg-learn"><b>💡 ${tr('這個遊戲學到', 'What you learned')}：${esc(T(g.k))}</b><p>${esc(T(g.lesson))}</p></div>
+    ${rw.length ? `<div class="lg-rw">${rw.map(r => `<span>${esc(r)}</span>`).join('')}</div>` : (!ME && stars ? `<p class="hint">${tr('建立冒險角色後，過關可以拿葉子幣、圖鑑卡和稱號喔！', 'Create a character to earn rewards!')}</p>` : '')}
+    <div class="qrow center"><button class="btn" id="lgAgain">${tr('再玩一次', 'Play again')}</button><button class="btn" data-act="games">${tr('遊戲大廳', 'Games hall')}</button><button class="btn primary" data-act="lg" data-g="${nx.id}">${tr('下一個：', 'Next: ')}${esc(T(nx.n))}</button></div></div>`;
+  $('#lgAgain').addEventListener('click', again);
+  if (stars) confetti(body.querySelector('.lg-res'));
+  refreshProgressUI();
+}
+function lgCanvas(host, aspect, maxW = 760) {
+  const w = Math.min(maxW, Math.max(260, host.clientWidth || 600)), h = Math.round(w * aspect), dpr = Math.min(2, devicePixelRatio || 1);
+  const cv = document.createElement('canvas'); cv.width = w * dpr; cv.height = h * dpr; cv.className = 'lg-cv'; cv.style.width = '100%'; cv.style.maxWidth = w + 'px'; cv.style.aspectRatio = `${w} / ${h}`;
+  host.appendChild(cv); const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  const pos = e => { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) * w / r.width, y: (e.clientY - r.top) * h / r.height }; };
+  return { cv, ctx, W: w, H: h, pos };
+}
+function lgLoop(fn) { let last = performance.now(), on = true; const step = now => { if (!on || !document.body.contains(fn.cv)) return; const dt = Math.min(.25, (now - last) / 1000); last = now; fn(dt); requestAnimationFrame(step); }; requestAnimationFrame(step); return () => { on = false; }; }
+function lgHead(g, html) { return `<div class="lg-head"><span class="lg-ic">${g.ic}</span><div><b>${esc(T(g.k))}</b><p>${html}</p></div></div>`; }
+function startLG(id) {
+  const g = LG_BY.get(id); if (!g) return;
+  ({ spear: lgSpear, laser: lgLaser, storm: lgStorm, rainbow: lgRainbow, lens: lgLens })[id](g);
+}
+const lgRound = (ctx, x, y, w, h, r) => { ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, r) : ctx.rect(x, y, w, h); };
+function lgFish(ctx, x, y, s, col, alpha = 1, dir = 1) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.scale(dir * s, s);
+  ctx.fillStyle = col; ctx.strokeStyle = '#2b2b33'; ctx.lineWidth = 2 / s;
+  ctx.beginPath(); ctx.ellipse(0, 0, 22, 11, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(-18, 0); ctx.lineTo(-32, -10); ctx.lineTo(-32, 10); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#2b2b33'; ctx.beginPath(); ctx.arc(11, -3, 2.6, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+}
+
+/* ---------- 1. 叉魚大挑戰 ---------- */
+function lgSpear(g) {
+  const body = openPlay('lg', islHead(ISL_BY.get(LG_ISL)), T(g.n), { wide: true });
+  body.innerHTML = lgHead(g, tr('你站在岸邊往水裡看。<b>看到的魚</b>其實比<b>真正的魚</b>淺！點畫面丟魚叉，叉中 5 條裡的 4 條就過關。', 'Tap to throw. The fish you see is shallower than the real one. Hit 4 of 5.')) + `<div class="lg-stage"></div><div class="lg-bar"><span id="spN"></span><span id="spMsg"></span></div>`;
+  const C = lgCanvas(body.querySelector('.lg-stage'), .62), { ctx, W, H } = C;
+  const SURF = H * .3, EYE = { x: W * .07, y: H * .1 };
+  const S = { n: 0, hit: 0, fish: null, throw: null, t: 0, show: 0 }; if (window.__lg) window.__lg.S = S;
+  const cols = ['#f2a65a', '#5aa9d6', '#e57373', '#8fd3c1', '#f3d36b'];
+  const newFish = () => { const real = SURF + H * (.32 + Math.random() * .3); S.fish = { x: W * (.3 + Math.random() * .55), real, app: SURF + (real - SURF) * .75, v: (Math.random() < .5 ? -1 : 1) * (14 + Math.random() * 16), col: cols[S.n % 5] }; S.throw = null; S.show = 0; };
+  const msg = t => { $('#spMsg').innerHTML = t; };
+  const upd = () => { $('#spN').textContent = tr(`第 ${Math.min(S.n + 1, 5)} / 5 條　叉中 ${S.hit} 條`, `Fish ${Math.min(S.n + 1, 5)}/5 · hits ${S.hit}`); };
+  newFish(); upd(); msg(tr('提示：往看到的魚「下面一點」叉。', 'Tip: aim a little below the fish you see.'));
+  C.cv.addEventListener('pointerdown', e => {
+    if (S.throw || !S.fish) return; const p = C.pos(e); if (p.y < SURF) { msg(tr('要叉在水裡喔！', 'Aim into the water!')); return; }
+    S.throw = { x: p.x, y: p.y, t: 0, ok: Math.abs(p.x - S.fish.x) < 30 && Math.abs(p.y - S.fish.real) < 17 };
+  });
+  const draw = dt => {
+    S.t += dt; const F = S.fish;
+    if (F && !S.throw) { F.x += F.v * dt; if (F.x < W * .22 || F.x > W * .93) F.v *= -1; }
+    ctx.clearRect(0, 0, W, H);
+    const sky = ctx.createLinearGradient(0, 0, 0, SURF); sky.addColorStop(0, '#bfe6ff'); sky.addColorStop(1, '#e9f7ff'); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, SURF);
+    ctx.fillStyle = '#a7d16f'; ctx.fillRect(0, SURF - 6, W * .16, H - SURF + 6); ctx.fillStyle = '#7fae4f'; ctx.fillRect(0, SURF - 6, W * .16, 6);
+    const wat = ctx.createLinearGradient(0, SURF, 0, H); wat.addColorStop(0, '#7cc6e8'); wat.addColorStop(1, '#2f7fb0'); ctx.fillStyle = wat; ctx.fillRect(W * .16, SURF, W, H - SURF);
+    ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 2; ctx.beginPath(); for (let x = W * .16; x <= W; x += 6) ctx.lineTo(x, SURF + Math.sin(x * .05 + S.t * 2) * 1.6); ctx.stroke();
+    ctx.fillStyle = '#c9a26a'; ctx.fillRect(W * .16, H - 14, W, 14);
+    // eye on the bank
+    ctx.fillStyle = '#fff'; ctx.strokeStyle = '#2b2b33'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(EYE.x, EYE.y, 14, 9, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#2b2b33'; ctx.beginPath(); ctx.arc(EYE.x + 4, EYE.y + 2, 4, 0, Math.PI * 2); ctx.fill();
+    if (F) {
+      lgFish(ctx, F.x, F.app, .9, F.col, 1, F.v > 0 ? 1 : -1);
+      const T0 = S.throw;
+      if (T0) {
+        T0.t += dt; const u = Math.min(1, T0.t / .35), sx = T0.x + (EYE.x - T0.x) * .15, sy = SURF - 40, x = sx + (T0.x - sx) * u, y = sy + (T0.y - sy) * u;
+        ctx.strokeStyle = '#6b4426'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x - (T0.x - sx) * .5, y - (T0.y - sy) * .5); ctx.lineTo(x, y); ctx.stroke();
+        ctx.fillStyle = '#9aa3ad'; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+        if (u >= 1) {
+          if (!T0.done) { T0.done = 1; S.n++; if (T0.ok) S.hit++; upd(); msg(T0.ok ? tr('<b class="ok">叉中了！</b> 真正的魚在比較深的地方。', '<b class="ok">Hit!</b>') : tr(`<b class="bad">沒中！</b> 看，實線的才是真正的魚，${T0.y < F.real ? '要再往下一點' : '叉太下面了'}。`, '<b class="bad">Miss!</b> The solid fish is the real one.')); }
+          // reveal: real fish, ray diagram
+          lgFish(ctx, F.x, F.real, .9, F.col, .95, F.v > 0 ? 1 : -1);
+          ctx.setLineDash([6, 5]); ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 1.5; lgRound(ctx, F.x - 30, F.app - 14, 60, 28, 8); ctx.stroke(); ctx.setLineDash([]);
+          const k = (SURF - EYE.y) / (F.app - EYE.y), px = EYE.x + (F.x - EYE.x) * k;
+          ctx.strokeStyle = '#fff35a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(F.x, F.real); ctx.lineTo(px, SURF); ctx.lineTo(EYE.x, EYE.y); ctx.stroke();
+          ctx.setLineDash([5, 5]); ctx.strokeStyle = 'rgba(255,243,90,.75)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px, SURF); ctx.lineTo(F.x, F.app); ctx.stroke(); ctx.setLineDash([]);
+          ctx.font = `700 ${Math.max(11, W * .018)}px ${getComputedStyle(document.body).fontFamily}`; ctx.fillStyle = '#fff';
+          ctx.textAlign = F.x > W * .62 ? 'right' : 'left'; const lx = F.x > W * .62 ? F.x - 40 : F.x + 40; ctx.fillText(tr('看到的魚（虛線框）', 'What you see'), lx, F.app + 5); ctx.fillText(tr('真正的魚', 'Real fish'), lx, F.real + 5); ctx.textAlign = 'left';
+          if (T0.t > 2.6) { if (S.n >= 5) { stop(); const st = S.hit >= 5 ? 3 : S.hit >= 4 ? 2 : S.hit >= 3 ? 1 : 0; lgResult(g, st, `<p>${tr(`5 條魚叉中 <b>${S.hit}</b> 條`, `Hit <b>${S.hit}</b> of 5`)}</p><p class="hint">${tr('5 條全中 3 星、4 條 2 星、3 條 1 星', '5 = 3★, 4 = 2★, 3 = 1★')}</p>`, () => lgSpear(g)); return; } newFish(); }
+        }
+      }
+    }
+  };
+  draw.cv = C.cv; const stop = lgLoop(draw);
+}
+
+/* ---------- 2. 雷射鏡子迷宮 ---------- */
+const LASER_LV = [{"g": ["....#.", ".M..T.", ".....#", "S...M."]}, {"g": ["S.M....", ".M....#", ".....#.", "...#...", "..M..T."]}, {"g": ["....#M.", ".#M.M#.", "#......", "....T..", "S.M..M."]}, {"g": ["#.M.M...", "...M....", "S...M#..", "........", ".#T..M.#", ".#..M..."]}, {"g": [".....##.", "M.#...#.", "..M.M...", "...#....", ".MM....T", "S...M#.M"]}, {"g": ["S...M#.#", "..M.....", "MMM...M.", ".....#..", "##.#M.M.", "..T..#.."]}];
+function laserTrace(G, st) {
+  const H = G.length, W = G[0].length; let sx = 0, sy = 0; G.forEach((r, y) => { const i = r.indexOf('S'); if (i >= 0) { sx = i; sy = y; } });
+  let x = sx, y = sy, dx = 1, dy = 0; const seen = new Set(), path = [[x, y]];
+  for (;;) {
+    x += dx; y += dy;
+    if (x < 0 || y < 0 || x >= W || y >= H) { path.push([x, y]); return { ok: false, path }; }
+    const c = G[y][x], key = `${x},${y},${dx},${dy}`; if (seen.has(key)) return { ok: false, path }; seen.add(key); path.push([x, y]);
+    if (c === '#') return { ok: false, path, wall: true };
+    if (c === 'T') return { ok: true, path };
+    if (c === 'M') { if (st[`${x},${y}`] === '/') [dx, dy] = [-dy, -dx]; else [dx, dy] = [dy, dx]; }
+  }
+}
+function laserMin(G, st) {
+  const ms = []; G.forEach((r, y) => [...r].forEach((c, x) => { if (c === 'M') ms.push(`${x},${y}`); }));
+  let best = 99;
+  for (let m = 0; m < 1 << ms.length; m++) { const s = {}; let d = 0; ms.forEach((k, i) => { s[k] = m >> i & 1 ? '\\' : '/'; if (s[k] !== st[k]) d++; }); if (d < best && laserTrace(G, s).ok) best = d; }
+  return best;
+}
+function lgLaser(g) {
+  const body = openPlay('lg', islHead(ISL_BY.get(LG_ISL)), T(g.n), { wide: true });
+  body.innerHTML = lgHead(g, tr('手電筒的光會<b>直直往前走</b>，碰到鏡子就會<b>反射</b>轉彎。點鏡子可以轉方向，讓光打到🎯。用越少次數過關，星星越多！', 'Tap mirrors to turn them and guide the light to the 🎯.')) + `<div class="lg-stage"></div><div class="lg-bar"><span id="lzN"></span><span id="lzMsg"></span><button class="btn" id="lzReset">${tr('重來這關', 'Reset level')}</button></div>`;
+  const C = lgCanvas(body.querySelector('.lg-stage'), .72, 640), { ctx, W, H } = C;
+  const S = { lv: 0, moves: 0, extra: 0, st: {}, init: {}, min: 0, won: 0, t: 0 }; if (window.__lg) window.__lg.S = S; S.W = W; S.H = H;
+  const setup = () => {
+    const G = LASER_LV[S.lv].g; let tries = 0;
+    do { S.st = {}; G.forEach((r, y) => [...r].forEach((c, x) => { if (c === 'M') S.st[`${x},${y}`] = Math.random() < .5 ? '/' : '\\'; })); tries++; } while ((laserTrace(G, S.st).ok || laserMin(G, S.st) < 1) && tries < 50);
+    S.init = { ...S.st }; S.min = laserMin(G, S.st); S.moves = 0; S.won = 0; upd();
+  };
+  const upd = () => { $('#lzN').textContent = tr(`第 ${S.lv + 1} / ${LASER_LV.length} 關　已轉 ${S.moves} 次`, `Level ${S.lv + 1}/${LASER_LV.length} · ${S.moves} turns`); };
+  const geo = () => { const G = LASER_LV[S.lv].g, gw = G[0].length, gh = G.length, cs = Math.min((W - 20) / gw, (H - 20) / gh); return { G, gw, gh, cs, ox: (W - cs * gw) / 2, oy: (H - cs * gh) / 2 }; };
+  C.cv.addEventListener('pointerdown', e => {
+    if (S.won) return; const p = C.pos(e), { G, cs, ox, oy } = geo(), x = Math.floor((p.x - ox) / cs), y = Math.floor((p.y - oy) / cs);
+    if (!G[y] || G[y][x] !== 'M') return; const k = `${x},${y}`; S.st[k] = S.st[k] === '/' ? '\\' : '/'; S.moves++; upd();
+    if (laserTrace(G, S.st).ok) { S.won = 1; S.extra += Math.max(0, S.moves - S.min); $('#lzMsg').innerHTML = tr('<b class="ok">打中目標了！</b>', '<b class="ok">Target hit!</b>'); setTimeout(() => { if (!document.body.contains(C.cv)) return; if (S.lv + 1 >= LASER_LV.length) { stop(); const st = S.extra <= 3 ? 3 : S.extra <= 8 ? 2 : 1; lgResult(g, st, `<p>${tr(`6 關全部破解！比最少次數多轉了 <b>${S.extra}</b> 次`, `All 6 solved with <b>${S.extra}</b> extra turns`)}</p><p class="hint">${tr('多轉 3 次以內 3 星、8 次以內 2 星', '≤3 extra = 3★, ≤8 = 2★')}</p>`, () => lgLaser(g)); } else { S.lv++; setup(); $('#lzMsg').textContent = ''; } }, 1100); }
+  });
+  $('#lzReset').addEventListener('click', () => { S.st = { ...S.init }; S.extra += S.moves; S.moves = 0; S.won = 0; upd(); });
+  const draw = dt => {
+    S.t += dt; const { G, gw, gh, cs, ox, oy } = geo(); ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#1f2433'; lgRound(ctx, 0, 0, W, H, 14); ctx.fill();
+    for (let y = 0; y < gh; y++) for (let x = 0; x < gw; x++) {
+      const c = G[y][x], X = ox + x * cs, Y = oy + y * cs;
+      ctx.fillStyle = (x + y) % 2 ? '#2a3044' : '#262b3d'; ctx.fillRect(X, Y, cs, cs);
+      if (c === '#') { ctx.fillStyle = '#8a5a44'; ctx.fillRect(X + 2, Y + 2, cs - 4, cs - 4); ctx.strokeStyle = '#6b4426'; ctx.lineWidth = 2; for (let k = 1; k < 3; k++) { ctx.beginPath(); ctx.moveTo(X + 2, Y + k * cs / 3); ctx.lineTo(X + cs - 2, Y + k * cs / 3); ctx.stroke(); } }
+      if (c === 'S') { ctx.fillStyle = '#ffd43b'; lgRound(ctx, X + cs * .12, Y + cs * .32, cs * .6, cs * .36, 6); ctx.fill(); ctx.fillStyle = '#fff3bf'; ctx.beginPath(); ctx.moveTo(X + cs * .72, Y + cs * .26); ctx.lineTo(X + cs * .9, Y + cs * .2); ctx.lineTo(X + cs * .9, Y + cs * .8); ctx.lineTo(X + cs * .72, Y + cs * .74); ctx.fill(); }
+      if (c === 'T') { [[.38, '#e94b5a'], [.26, '#fff'], [.14, '#e94b5a']].forEach(([r, col]) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X + cs / 2, Y + cs / 2, cs * r, 0, Math.PI * 2); ctx.fill(); }); }
+      if (c === 'M') {
+        ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.beginPath(); ctx.arc(X + cs / 2, Y + cs / 2, cs * .42, 0, Math.PI * 2); ctx.fill();
+        const s = S.st[`${x},${y}`]; ctx.lineCap = 'round'; ctx.strokeStyle = '#9fe3ff'; ctx.lineWidth = Math.max(5, cs * .12); ctx.beginPath();
+        if (s === '/') { ctx.moveTo(X + cs * .18, Y + cs * .82); ctx.lineTo(X + cs * .82, Y + cs * .18); } else { ctx.moveTo(X + cs * .18, Y + cs * .18); ctx.lineTo(X + cs * .82, Y + cs * .82); } ctx.stroke();
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke(); ctx.lineCap = 'butt';
+      }
+    }
+    const tr0 = laserTrace(G, S.st), P = tr0.path.map(([x, y]) => [ox + (x + .5) * cs, oy + (y + .5) * cs]);
+    const glow = .75 + Math.sin(S.t * 8) * .25;
+    ctx.lineJoin = 'round'; ctx.strokeStyle = `rgba(255,80,80,${.35 * glow})`; ctx.lineWidth = cs * .22; ctx.beginPath(); P.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke();
+    ctx.strokeStyle = '#ff6b6b'; ctx.lineWidth = Math.max(3, cs * .07); ctx.stroke();
+    if (tr0.ok) { const [x, y] = P[P.length - 1]; ctx.fillStyle = `rgba(255,240,120,${glow})`; ctx.beginPath(); ctx.arc(x, y, cs * .45, 0, Math.PI * 2); ctx.fill(); }
+  };
+  draw.cv = C.cv; const stop = lgLoop(draw); setup();
+}
+
+/* ---------- 3. 雷雨有多遠 ---------- */
+let LG_AC = null;
+function lgThunder(dist) {
+  try {
+    LG_AC = LG_AC || new (window.AudioContext || window.webkitAudioContext)(); const ac = LG_AC; if (ac.state === 'suspended') ac.resume();
+    const len = 2.2, buf = ac.createBuffer(1, ac.sampleRate * len, ac.sampleRate), d = buf.getChannelData(0); let last = 0;
+    for (let i = 0; i < d.length; i++) { const w = Math.random() * 2 - 1; last = (last + .02 * w) / 1.02; const t = i / ac.sampleRate; d[i] = last * 3.5 * Math.min(1, t * 8) * Math.exp(-t * 1.6) * (1 + .6 * Math.sin(t * 9) * Math.sin(t * 3.3)); }
+    const src = ac.createBufferSource(), f = ac.createBiquadFilter(), gn = ac.createGain(); src.buffer = buf; f.type = 'lowpass'; f.frequency.value = 900 - Math.min(600, dist / 5); gn.gain.value = Math.max(.35, 1.2 - dist / 3000);
+    src.connect(f); f.connect(gn); gn.connect(ac.destination); src.start();
+  } catch (e) {}
+}
+function lgStorm(g) {
+  try { LG_AC = LG_AC || new (window.AudioContext || window.webkitAudioContext)(); LG_AC.resume(); } catch (e) {}
+  const body = openPlay('lg', islHead(ISL_BY.get(LG_ISL)), T(g.n), { wide: true });
+  body.innerHTML = lgHead(g, tr('閃電和打雷是<b>同時</b>發生的，但光跑得比聲音快很多。<b>看到閃電</b>就按碼錶，<b>聽到雷聲</b>（或看到「轟隆」）再按一次，算出雷雨有多遠！聲音每秒約走 <b>340 公尺</b>。建議打開聲音。', 'Press when you see the flash, again when the thunder arrives. Sound travels about 340 m/s.')) + `<div class="lg-stage"></div><div class="lg-bar"><span id="stN"></span><span class="lg-watch" id="stW">0.0 ${tr('秒', 's')}</span><button class="btn primary lg-big" id="stBtn"></button></div><div id="stQ"></div>`;
+  const C = lgCanvas(body.querySelector('.lg-stage'), .45), { ctx, W, H } = C;
+  const S = { r: 0, pts: 0, t: 0, phase: 'wait', flashAt: 0, delay: 0, start: null, meas: 0, boom: -9, flash: -9, bolt: null, log: [] }; if (window.__lg) window.__lg.S = S;
+  const btn = $('#stBtn');
+  const round = () => { S.phase = 'wait'; S.t = 0; S.flashAt = 1.5 + Math.random() * 2.5; S.delay = 2 + (Math.random() * 5 | 0); S.start = null; S.meas = 0; S.flash = S.boom = -9; $('#stQ').innerHTML = ''; btn.disabled = false; btn.textContent = tr('⚡ 看到閃電了！', '⚡ I saw the flash!'); $('#stN').textContent = tr(`第 ${S.r + 1} / 3 場雷雨`, `Storm ${S.r + 1}/3`); $('#stW').textContent = `0.0 ${tr('秒', 's')}`; };
+  const mkBolt = () => { const x0 = W * (.35 + Math.random() * .4), pts = [[x0, 0]]; let x = x0, y = 0; while (y < H * .72) { y += H * (.06 + Math.random() * .06); x += (Math.random() - .5) * W * .06; pts.push([x, y]); } return pts; };
+  btn.addEventListener('click', () => {
+    if (S.phase === 'wait' || S.phase === 'flash') {
+      if (S.phase === 'wait') { $('#stQ').innerHTML = `<p class="qfb bad">${tr('還沒有閃電喔！看到天空亮一下再按。', 'No flash yet — wait for it!')}</p>`; return; }
+      S.start = S.t; S.phase = 'timing'; btn.textContent = tr('🔊 聽到雷聲了！', '🔊 I heard the thunder!'); $('#stQ').innerHTML = '';
+    } else if (S.phase === 'timing' || S.phase === 'late') {
+      S.meas = S.t - S.start; S.phase = 'ask'; btn.disabled = true; $('#stW').textContent = `${S.meas.toFixed(1)} ${tr('秒', 's')}`; ask();
+    }
+  });
+  const ask = () => {
+    const sec = Math.max(1, Math.round(S.meas)), ans = sec * 340, acc = Math.abs(S.meas - S.delay) <= .8;
+    const opts = shuffle([ans, sec * 34, sec * 3400, ans + 340 * (sec > 3 ? -2 : 2)]).filter((v, i, a) => a.indexOf(v) === i);
+    $('#stQ').innerHTML = `<div class="lg-q"><p>${tr(`你量到大約 <b>${sec} 秒</b>。聲音每秒走 340 公尺，雷雨離你大約多遠？`, `About <b>${sec} s</b>. How far is the storm?`)}</p><div class="qopts">${opts.map(v => `<button class="qopt" data-v="${v}"><span>${v.toLocaleString()} ${tr('公尺', 'm')}</span></button>`).join('')}</div></div>`;
+    try { $('#stQ').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {}
+    $('#stQ').querySelectorAll('.qopt').forEach(b => b.addEventListener('click', () => {
+      if ($('#stQ').querySelector('.qopt[disabled]')) return; const ok = +b.dataset.v === ans; $('#stQ').querySelectorAll('.qopt').forEach(x => { x.disabled = true; if (+x.dataset.v === ans) x.classList.add('right'); }); if (!ok) b.classList.add('wrong');
+      S.pts += (ok ? 1 : 0) + (acc ? 1 : 0); S.log.push({ ok, acc, sec, real: S.delay });
+      $('#stQ').insertAdjacentHTML('beforeend', `<p class="qfb ${ok ? 'good' : 'bad'}">${ok ? tr('答對了！', 'Correct!') : tr(`答案是 ${sec} × 340 = ${ans.toLocaleString()} 公尺。`, `${sec} × 340 = ${ans} m.`)} ${acc ? tr(`碼錶也量得很準（實際 ${S.delay} 秒）！`, `Good timing (really ${S.delay} s)!`) : tr(`這次碼錶差比較多，實際是 ${S.delay} 秒。`, `The real gap was ${S.delay} s.`)}</p><div class="qrow center"><button class="btn primary" id="stNext">${S.r >= 2 ? tr('看結果', 'Results') : tr('下一場雷雨', 'Next storm')}</button></div>`);
+      $('#stNext').addEventListener('click', () => { S.r++; if (S.r >= 3) { stop(); const st = S.pts >= 6 ? 3 : S.pts >= 4 ? 2 : S.pts >= 3 ? 1 : 0; lgResult(g, st, `<p>${tr(`3 場雷雨拿到 <b>${S.pts}</b> / 6 分（量得準 1 分、距離算對 1 分）`, `<b>${S.pts}</b>/6 points`)}</p>`, () => lgStorm(g)); } else round(); });
+    }));
+  };
+  const draw = dt => {
+    S.t += dt;
+    if (S.phase === 'wait' && S.t >= S.flashAt) { S.phase = 'flash'; S.flash = S.t; S.bolt = mkBolt(); S.thAt = S.t + S.delay; }
+    if ((S.phase === 'flash' || S.phase === 'timing' || S.phase === 'late') && S.thAt && S.t >= S.thAt) { S.thAt = 0; S.boom = S.t; lgThunder(S.delay * 340); if (S.phase === 'flash') S.phase = 'late'; }
+    if (S.start != null && (S.phase === 'timing' || S.phase === 'late')) $('#stW').textContent = `${(S.t - S.start).toFixed(1)} ${tr('秒', 's')}`;
+    if (S.phase === 'late' && S.start == null) { S.start = S.flash; S.phase = 'timing'; btn.textContent = tr('🔊 聽到雷聲了！', '🔊 I heard the thunder!'); $('#stQ').innerHTML = `<p class="qfb bad">${tr('剛剛閃電時忘了按碼錶，幫你從閃電那一刻開始算。', 'You missed the flash — timing from it anyway.')}</p>`; }
+    const fl = Math.max(0, 1 - (S.t - S.flash) / .35), shake = Math.max(0, 1 - (S.t - S.boom) / 1.4);
+    ctx.save(); ctx.clearRect(0, 0, W, H); if (shake) ctx.translate((Math.random() - .5) * 8 * shake, (Math.random() - .5) * 5 * shake);
+    const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, fl ? `rgb(${60 + 190 * fl},${70 + 180 * fl},${110 + 140 * fl})` : '#3b4560'); sky.addColorStop(1, '#5e6a80'); ctx.fillStyle = sky; ctx.fillRect(-10, -10, W + 20, H + 20);
+    ctx.fillStyle = 'rgba(40,45,62,.9)'; for (let i = 0; i < 7; i++) { ctx.beginPath(); ctx.ellipse(W * (i / 6), H * .1, W * .12, H * .12, 0, 0, Math.PI * 2); ctx.fill(); }
+    if (fl && S.bolt) { ctx.strokeStyle = `rgba(255,255,220,${fl})`; ctx.lineWidth = 4; ctx.shadowColor = '#fff'; ctx.shadowBlur = 18; ctx.beginPath(); S.bolt.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); ctx.shadowBlur = 0; }
+    ctx.fillStyle = '#3e5a3e'; ctx.beginPath(); ctx.moveTo(0, H); for (let x = 0; x <= W; x += 20) ctx.lineTo(x, H * .74 - Math.sin(x * .013) * H * .06 - Math.sin(x * .031) * H * .03); ctx.lineTo(W, H); ctx.fill();
+    ctx.fillStyle = '#e9d8b4'; ctx.fillRect(W * .08, H * .72, W * .1, H * .14); ctx.fillStyle = '#c0533f'; ctx.beginPath(); ctx.moveTo(W * .07, H * .72); ctx.lineTo(W * .13, H * .62); ctx.lineTo(W * .19, H * .72); ctx.fill();
+    ctx.fillStyle = fl ? '#fff59a' : '#f7d77a'; ctx.fillRect(W * .115, H * .76, W * .03, H * .04);
+    if (shake) { ctx.font = `900 ${W * .07}px ${getComputedStyle(document.body).fontFamily}`; ctx.fillStyle = `rgba(255,255,255,${shake})`; ctx.textAlign = 'center'; ctx.fillText(tr('轟隆隆～', 'BOOM!'), W * .62, H * .5); ctx.textAlign = 'left'; }
+    ctx.restore();
+  };
+  draw.cv = C.cv; const stop = lgLoop(draw); round();
+}
+
+/* ---------- 4. 彩虹製造機 ---------- */
+function lgRainbow(g) {
+  const body = openPlay('lg', islHead(ISL_BY.get(LG_ISL)), T(g.n), { wide: true });
+  const RB = [['紅', '#e8414b'], ['橙', '#f28c28'], ['黃', '#f5d021'], ['綠', '#4fb35a'], ['藍', '#3d8fe0'], ['靛', '#4b4fb8'], ['紫', '#8e4fc4']];
+  const S = { step: 0, miss: 0, sun: 'am', mist: false, face: 'sun', show: 0, t: 0, ord: 0 }; if (window.__lg) window.__lg.S = S;
+  const QS = [
+    { q: tr('早上太陽在東邊，你要往哪個方向看，才可能看到彩虹？', 'Morning sun in the east. Where should you look for a rainbow?'), o: [tr('西邊', 'West'), tr('東邊', 'East'), tr('正上方', 'Straight up'), tr('哪邊都可以', 'Anywhere')], e: tr('彩虹出現在和太陽相反的方向，要背對太陽。早上太陽在東，彩虹在西。', 'Rainbows appear opposite the sun.') },
+    { q: tr('用什麼東西可以把白色的陽光分成彩色的光？', 'What can split white sunlight into colours?'), o: [tr('三稜鏡', 'A prism'), tr('平面鏡', 'A flat mirror'), tr('黑色紙板', 'Black card'), tr('木頭積木', 'A wooden block')], e: tr('三稜鏡會讓光折射並分散，白光就分成七彩色光，就像小水滴做出彩虹一樣。', 'A prism refracts and spreads light into colours.') }
+  ];
+  const render = () => {
+    body.innerHTML = lgHead(g, tr('白色的陽光裡藏著很多顏色！完成 3 個任務：①調出彩虹 ②把彩虹顏色排好 ③回答 2 題。出錯越少星星越多。', 'Three missions: make a rainbow, order its colours, answer 2 questions.')) + `<div class="lg-steps">${[tr('調出彩虹', 'Make it'), tr('排顏色', 'Order'), tr('小問答', 'Quiz')].map((s, i) => `<span class="${i < S.step ? 'done' : i === S.step ? 'cur' : ''}">${i + 1}. ${s}</span>`).join('')}</div><div class="lg-stage"></div><div id="rbUI"></div>`;
+    const C = lgCanvas(body.querySelector('.lg-stage'), .46), { ctx, W, H } = C; S.C = C;
+    const ui = $('#rbUI');
+    if (S.step === 0) {
+      ui.innerHTML = `<div class="lg-ctrl"><div><b>${tr('太陽', 'Sun')}</b>${[['am', tr('早上（東邊、斜斜的）', 'Morning (low, east)')], ['noon', tr('中午（頭頂正上方）', 'Noon (overhead)')], ['cloud', tr('陰天（被雲遮住）', 'Cloudy')]].map(([v, l]) => `<button class="chip ${S.sun === v ? 'on' : ''}" data-sun="${v}">${l}</button>`).join('')}</div>
+        <div><b>${tr('水管', 'Hose')}</b>${[[true, tr('噴出細細的水霧', 'Fine mist on')], [false, tr('關掉', 'Off')]].map(([v, l]) => `<button class="chip ${S.mist === v ? 'on' : ''}" data-mist="${v}">${l}</button>`).join('')}</div>
+        <div><b>${tr('你站的方向', 'You face')}</b>${[['sun', tr('面向太陽', 'Toward the sun')], ['back', tr('背對太陽', 'Back to the sun')]].map(([v, l]) => `<button class="chip ${S.face === v ? 'on' : ''}" data-face="${v}">${l}</button>`).join('')}</div>
+        <div class="qrow center"><button class="btn primary" id="rbTry">${tr('看看有沒有彩虹！', 'Check for a rainbow!')}</button></div><div id="rbFb"></div></div>`;
+      ui.querySelectorAll('[data-sun]').forEach(b => b.addEventListener('click', () => { S.sun = b.dataset.sun; S.show = 0; render(); }));
+      ui.querySelectorAll('[data-mist]').forEach(b => b.addEventListener('click', () => { S.mist = b.dataset.mist === 'true'; S.show = 0; render(); }));
+      ui.querySelectorAll('[data-face]').forEach(b => b.addEventListener('click', () => { S.face = b.dataset.face; S.show = 0; render(); }));
+      $('#rbTry').addEventListener('click', () => {
+        const why = S.sun === 'cloud' ? tr('陰天陽光被雲擋住了，沒有陽光就沒有彩虹。', 'No sunlight on a cloudy day.') : S.sun === 'noon' ? tr('中午太陽太高了，彩虹會落到地平線下面看不到。早上或傍晚太陽斜斜的時候比較容易看到。', 'At noon the sun is too high; rainbows show when the sun is low.') : !S.mist ? tr('要有很多小水滴，陽光才能被分成彩色的光。打開水霧試試看！', 'You need lots of tiny water drops.') : S.face === 'sun' ? tr('彩虹在太陽的「相反方向」，要背對太陽才看得到。', 'Rainbows are opposite the sun — turn around.') : '';
+        if (why) { S.miss++; S.show = 0; $('#rbFb').innerHTML = `<p class="qfb bad">❌ ${why}</p>`; }
+        else { S.show = 1; $('#rbFb').innerHTML = `<p class="qfb good">🌈 ${tr('出現彩虹了！陽光照進小水滴，被分成七種顏色。', 'A rainbow! Sunlight split by the drops.')}</p><div class="qrow center"><button class="btn primary" id="rbN">${tr('下一個任務', 'Next mission')}</button></div>`; $('#rbN').addEventListener('click', () => { S.step = 1; S.ord = 0; render(); }); }
+      });
+    } else if (S.step === 1) {
+      S.show = 1;
+      ui.innerHTML = `<p class="hint">${tr('彩虹由<b>外</b>到<b>內</b>是什麼顏色？依照順序點下面的顏色。', 'Tap the colours from the <b>outside</b> to the <b>inside</b>.')}</p><div class="rb-picks">${shuffle(RB.map((c, i) => [c, i])).map(([[n, col], i]) => `<button class="rb-pick" data-i="${i}" style="--c:${col}">${n}</button>`).join('')}</div><div id="rbFb"></div>`;
+      ui.querySelectorAll('.rb-pick').forEach(b => b.addEventListener('click', () => {
+        if (b.disabled) return; const i = +b.dataset.i;
+        if (i === S.ord) { b.disabled = true; b.classList.add('ok'); S.ord++; if (S.ord >= 7) { $('#rbFb').innerHTML = `<p class="qfb good">${tr('紅、橙、黃、綠、藍、靛、紫，完全正確！', 'Red to violet — perfect!')}</p><div class="qrow center"><button class="btn primary" id="rbN">${tr('下一個任務', 'Next mission')}</button></div>`; $('#rbN').addEventListener('click', () => { S.step = 2; S.qi = 0; render(); }); } }
+        else { S.miss++; b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); $('#rbFb').innerHTML = `<p class="qfb bad">${tr(`不是${RB[i][0]}喔，最外圈開始是紅色。`, 'Not that one — start from red on the outside.')}</p>`; }
+      }));
+    } else {
+      S.show = 1; const Q = QS[S.qi], opts = shuffle(Q.o.map((t, i) => ({ t, ok: !i })));
+      ui.innerHTML = `<div class="lg-q"><p><b>${S.qi + 1} / 2</b>　${Q.q}</p><div class="qopts">${opts.map((o, k) => `<button class="qopt" data-k="${k}"><span class="ql">${'ABCD'[k]}</span><span>${o.t}</span></button>`).join('')}</div><div id="rbFb"></div></div>`;
+      ui.querySelectorAll('.qopt').forEach(b => b.addEventListener('click', () => {
+        if (ui.querySelector('.qopt[disabled]')) return; const ok = opts[+b.dataset.k].ok; ui.querySelectorAll('.qopt').forEach((x, k) => { x.disabled = true; if (opts[k].ok) x.classList.add('right'); }); if (!ok) { b.classList.add('wrong'); S.miss++; }
+        $('#rbFb').innerHTML = `<p class="qfb ${ok ? 'good' : 'bad'}">${ok ? tr('答對了！', 'Correct!') : tr('不對喔。', 'Not quite.')} ${Q.e}</p><div class="qrow center"><button class="btn primary" id="rbN">${S.qi ? tr('看結果', 'Results') : tr('下一題', 'Next')}</button></div>`;
+        $('#rbN').addEventListener('click', () => { if (S.qi) { stop(); const st = S.miss <= 1 ? 3 : S.miss <= 3 ? 2 : 1; lgResult(g, st, `<p>${tr(`3 個任務完成，一共出錯 <b>${S.miss}</b> 次`, `Done with <b>${S.miss}</b> mistakes`)}</p><p class="hint">${tr('出錯 1 次以內 3 星、3 次以內 2 星', '≤1 = 3★, ≤3 = 2★')}</p>`, () => lgRainbow(g)); } else { S.qi = 1; render(); } });
+      }));
+    }
+    if (S.stop) S.stop();
+    const draw = dt => {
+      S.t += dt; ctx.clearRect(0, 0, W, H); const cloud = S.sun === 'cloud';
+      const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, cloud ? '#9aa6b2' : '#8fd0ff'); sky.addColorStop(1, cloud ? '#c8d0d8' : '#e4f5ff'); ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+      const sx = S.sun === 'noon' ? W * .5 : W * .1, sy = S.sun === 'noon' ? H * .1 : H * .3;
+      if (!cloud) { ctx.fillStyle = '#ffd43b'; ctx.beginPath(); ctx.arc(sx, sy, H * .08, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#ffd43b'; ctx.lineWidth = 3; for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4 + S.t * .3; ctx.beginPath(); ctx.moveTo(sx + Math.cos(a) * H * .11, sy + Math.sin(a) * H * .11); ctx.lineTo(sx + Math.cos(a) * H * .15, sy + Math.sin(a) * H * .15); ctx.stroke(); } }
+      else { ctx.fillStyle = '#7d8793'; for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.ellipse(W * (.05 + i * .19), H * .14, W * .13, H * .11, 0, 0, Math.PI * 2); ctx.fill(); } }
+      ctx.font = `700 ${Math.max(11, W * .02)}px ${getComputedStyle(document.body).fontFamily}`; ctx.fillStyle = '#41505c'; ctx.fillText(tr('東', 'E'), 8, H - 30); ctx.fillText(tr('西', 'W'), W - 24, H - 30);
+      if (S.show) { const cx = W * .72, cy = H * .98; RB.forEach(([, col], i) => { ctx.strokeStyle = col; ctx.globalAlpha = Math.min(1, S.t * 2) * .85; ctx.lineWidth = H * .035; ctx.beginPath(); ctx.arc(cx, cy, H * (.72 - i * .035), Math.PI, Math.PI * 2); ctx.stroke(); }); ctx.globalAlpha = 1; }
+      ctx.fillStyle = '#8bc46a'; ctx.fillRect(0, H * .82, W, H * .18);
+      const kx = W * .42, ky = H * .82; ctx.fillStyle = '#ffd3b0'; ctx.beginPath(); ctx.arc(kx, ky - H * .3, H * .055, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#3e8ed0'; lgRound(ctx, kx - H * .05, ky - H * .25, H * .1, H * .15, 6); ctx.fill(); ctx.fillStyle = '#2b2b33'; ctx.fillRect(kx - H * .04, ky - H * .1, H * .03, H * .1); ctx.fillRect(kx + H * .01, ky - H * .1, H * .03, H * .1);
+      const fx = S.face === 'sun' ? -1 : 1; ctx.fillStyle = '#2b2b33'; ctx.beginPath(); ctx.arc(kx + fx * H * .025, ky - H * .31, H * .01, 0, Math.PI * 2); ctx.fill();
+      ctx.font = `${H * .07}px sans-serif`; ctx.fillText(S.face === 'sun' ? '👀←' : '→👀', kx - H * .09, ky - H * .4);
+      if (S.mist) { ctx.strokeStyle = '#4fb35a'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(kx + H * .05 * fx, ky - H * .18); ctx.lineTo(kx + H * .12 * fx, ky - H * .2); ctx.stroke(); for (let i = 0; i < 40; i++) { const u = ((S.t * .6 + i / 40) % 1), x = kx + fx * (H * .12 + u * W * .25), y = ky - H * .2 - Math.sin(u * Math.PI) * H * .25 + ((i * 37) % 11 - 5) * 2; ctx.fillStyle = `rgba(200,235,255,${.8 - u * .6})`; ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI * 2); ctx.fill(); } }
+    };
+    draw.cv = C.cv; S.stop = lgLoop(draw);
+  };
+  const stop = () => S.stop && S.stop();
+  render();
+}
+
+/* ---------- 5. 放大鏡偵探 ---------- */
+function lgLens(g) {
+  const body = openPlay('lg', islHead(ISL_BY.get(LG_ISL)), T(g.n), { wide: true });
+  body.innerHTML = lgHead(g, tr('紙上藏了 5 個看不清楚的小字。移動放大鏡、調整放大鏡和紙的距離，看清楚後<b>點一下</b>小字就找到了！影像倒過來時是找不到的喔。', 'Move the lens and adjust its distance. Tap a tiny word once you can read it upright.')) + `<div class="lg-stage"></div><div class="lg-bar lens-bar"><label>${tr('放大鏡離紙', 'Lens distance')}<span>${tr('近', 'near')}</span><input type="range" id="lnD" min="0" max="100" value="78"><span>${tr('遠', 'far')}</span></label><span id="lnN"></span><button class="btn" id="lnSun">☀️ ${tr('拿放大鏡看太陽', 'Look at the sun')}</button></div><div id="lnQ"></div>`;
+  const C = lgCanvas(body.querySelector('.lg-stage'), .58), { ctx, W, H } = C;
+  const WORDS = shuffle(['光', '折射', '反射', '凸透鏡', '焦點', '色光', '影子', '直線', '三稜鏡', '彩虹']).slice(0, 5);
+  const page = document.createElement('canvas'), PS = 3; page.width = W * PS; page.height = H * PS; const pc = page.getContext('2d'); pc.scale(PS, PS);
+  const ff = getComputedStyle(document.body).fontFamily;
+  pc.fillStyle = '#fbf6e9'; pc.fillRect(0, 0, W, H); pc.strokeStyle = '#e6dcc4'; for (let y = 24; y < H; y += 22) { pc.beginPath(); pc.moveTo(0, y); pc.lineTo(W, y); pc.stroke(); }
+  const doodle = ['🌲', '🐞', '🍃', '⭐', '🐟', '🌼', '🍄', '🐌', '☁️', '🐦'];
+  for (let i = 0; i < 46; i++) { pc.font = `${8 + Math.random() * 10}px sans-serif`; pc.globalAlpha = .55; pc.fillText(doodle[i % doodle.length], Math.random() * (W - 20) + 6, Math.random() * (H - 20) + 16); }
+  pc.globalAlpha = 1; pc.fillStyle = '#9a8f80'; for (let i = 0; i < 70; i++) { pc.font = `3.2px ${ff}`; pc.fillText(['水', '空氣', '玻璃', '鏡子', '太陽', '月亮', '杯子', '筷子'][i % 8], Math.random() * (W - 20) + 6, Math.random() * (H - 10) + 8); }
+  const spots = []; WORDS.forEach(w => { let x, y, k = 0; do { x = 40 + Math.random() * (W - 90); y = 30 + Math.random() * (H - 50); k++; } while (spots.some(s => Math.hypot(s.x - x, s.y - y) < 70) && k < 80); spots.push({ w, x, y, found: false }); });
+  spots.forEach(s => { pc.font = `700 3.4px ${ff}`; pc.fillStyle = '#c0392b'; pc.textAlign = 'center'; pc.fillText(s.w, s.x, s.y + 1.2); pc.textAlign = 'left'; });
+  const S = { mx: W / 2, my: H / 2, t: 0, found: 0, t0: performance.now(), sun: 0, tips: 0, done: 0 }; if (window.__lg) window.__lg.S = S; S.spots = spots; S.geo = { W, H };
+  const lensState = () => { const d = +$('#lnD').value / 100; if (d < .45) return { up: true, mag: 1.6 + (d / .45) * 2.4, blur: 0 }; if (d < .58) return { up: true, mag: 4.5, blur: 6 + (d - .45) * 60, fuzzy: true }; return { up: false, mag: 2.4 - (d - .58) * 3, blur: .6 }; };
+  const upd = () => { $('#lnN').textContent = tr(`找到 ${S.found} / 5 個`, `${S.found}/5 found`); }; upd();
+  const move = e => { const p = C.pos(e); S.mx = p.x; S.my = p.y; };
+  C.cv.addEventListener('pointermove', move);
+  C.cv.addEventListener('pointerdown', e => {
+    move(e); if (S.done) return; const L = lensState();
+    if (!L.up) { msg(tr('影像<b>倒過來</b>了，字也看不清楚！把放大鏡<b>靠近</b>紙一點（拉桿往「近」）。', 'The image is <b>upside down</b>! Move the lens closer.')); return; }
+    if (L.fuzzy) { msg(tr('太模糊了，再調整一下距離。', 'Too blurry — adjust the distance.')); return; }
+    const s = spots.find(s => !s.found && Math.hypot(s.x - S.mx, s.y - S.my) < 22);
+    if (!s) { msg(tr('這裡沒有藏字，換個地方找找看。', 'Nothing here — keep looking.')); return; }
+    if (L.mag < 2.4) { msg(tr('字還太小看不清楚，放大一點（距離拉遠一點，但不要超過一半）。', 'Still too small — magnify more.')); return; }
+    s.found = true; S.found++; upd(); msg(tr(`<b class="ok">找到「${s.w}」！</b>`, `<b class="ok">Found “${s.w}”!</b>`));
+    if (S.found >= 5) { S.done = 1; S.sec = Math.round((performance.now() - S.t0) / 1000); quiz(); }
+  });
+  const msg = h => { $('#lnQ').innerHTML = `<p class="qfb lg-msg">${h}</p>`; };
+  $('#lnSun').addEventListener('click', () => { S.sun = 1; S.sunWarn = (S.sunWarn || 0) + 1; $('#lnQ').innerHTML = `<div class="lg-warn">⚠️ <b>${tr('千萬不可以！', 'Never do this!')}</b> ${tr('放大鏡（凸透鏡）會把陽光聚在一個點，那裡又亮又燙，可以讓紙燒起來，眼睛看會受傷甚至失明。', 'A lens focuses sunlight into a hot bright point — it can burn paper and blind your eyes.')}</div>`; setTimeout(() => { S.sun = 0; }, 2600); });
+  const QS = [
+    { q: tr('放大鏡是哪一種透鏡？', 'What kind of lens is a magnifier?'), o: [tr('凸透鏡（中間厚、邊緣薄）', 'Convex (thick middle)'), tr('凹透鏡（中間薄、邊緣厚）', 'Concave (thin middle)'), tr('平面鏡', 'Flat mirror'), tr('三稜鏡', 'Prism')] },
+    { q: tr('放大鏡離物體太遠時，看到的像會怎樣？', 'What happens when the lens is too far away?'), o: [tr('變成倒立的', 'It turns upside down'), tr('一定變更大', 'Always bigger'), tr('變成彩色', 'Turns rainbow'), tr('完全不會變', 'No change')] },
+    { q: tr('可以用放大鏡看太陽嗎？', 'Can you look at the sun through a magnifier?'), o: [tr('不行，會傷害眼睛', 'No, it hurts your eyes'), tr('可以，看得比較清楚', 'Yes, it is clearer'), tr('陰天才可以', 'Only when cloudy'), tr('戴眼鏡就可以', 'Yes with glasses')] }
+  ];
+  let miss = 0;
+  const quiz = (i = 0) => {
+    const Q = QS[i], opts = shuffle(Q.o.map((t, k) => ({ t, ok: !k })));
+    $('#lnQ').innerHTML = `<div class="lg-q"><p class="ok"><b>${tr(`5 個字全找到了！用了 ${S.sec} 秒。`, `All found in ${S.sec}s!`)}</b>${tr('最後回答小偵探問題：', ' Final questions:')}</p><p><b>${i + 1} / 3</b>　${Q.q}</p><div class="qopts">${opts.map((o, k) => `<button class="qopt" data-k="${k}"><span class="ql">${'ABCD'[k]}</span><span>${o.t}</span></button>`).join('')}</div><div id="lnFb"></div></div>`;
+    try { $('#lnQ').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {}
+    $('#lnQ').querySelectorAll('.qopt').forEach(b => b.addEventListener('click', () => {
+      if ($('#lnQ').querySelector('.qopt[disabled]')) return; const ok = opts[+b.dataset.k].ok; $('#lnQ').querySelectorAll('.qopt').forEach((x, k) => { x.disabled = true; if (opts[k].ok) x.classList.add('right'); }); if (!ok) { b.classList.add('wrong'); miss++; }
+      $('#lnFb').innerHTML = `<div class="qrow center"><button class="btn primary" id="lnN2">${i < 2 ? tr('下一題', 'Next') : tr('看結果', 'Results')}</button></div>`;
+      $('#lnN2').addEventListener('click', () => { if (i < 2) quiz(i + 1); else { stop(); const st = miss === 0 && S.sec <= 120 ? 3 : miss <= 1 ? 2 : 1; lgResult(g, st, `<p>${tr(`找字用了 <b>${S.sec}</b> 秒，問題答錯 <b>${miss}</b> 題`, `<b>${S.sec}</b>s, <b>${miss}</b> wrong`)}</p><p class="hint">${tr('2 分鐘內找完而且全對 3 星', 'Under 2 min and all correct = 3★')}</p>`, () => lgLens(g)); } });
+    }));
+  };
+  const draw = dt => {
+    S.t += dt; const L = lensState(), R = Math.min(W, H) * .2;
+    ctx.clearRect(0, 0, W, H); ctx.drawImage(page, 0, 0, W, H);
+    spots.forEach(s => { if (s.found) { ctx.strokeStyle = '#2f9e44'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(s.x, s.y, 9, 0, Math.PI * 2); ctx.stroke(); } });
+    ctx.save(); ctx.beginPath(); ctx.arc(S.mx, S.my, R, 0, Math.PI * 2); ctx.clip();
+    ctx.fillStyle = '#fbf6e9'; ctx.fillRect(S.mx - R, S.my - R, R * 2, R * 2);
+    ctx.translate(S.mx, S.my); if (!L.up) ctx.rotate(Math.PI); ctx.scale(L.mag, L.mag);
+    if (L.blur) ctx.filter = `blur(${L.blur}px)`; ctx.drawImage(page, -S.mx, -S.my, W, H); ctx.filter = 'none';
+    ctx.restore();
+    const gl = ctx.createRadialGradient(S.mx - R * .3, S.my - R * .3, R * .1, S.mx, S.my, R); gl.addColorStop(0, 'rgba(255,255,255,.25)'); gl.addColorStop(1, 'rgba(160,210,255,.12)'); ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(S.mx, S.my, R, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#3a3f4a'; ctx.lineWidth = 7; ctx.stroke(); ctx.strokeStyle = '#8a5a34'; ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(S.mx + R * .74, S.my + R * .74); ctx.lineTo(S.mx + R * 1.35, S.my + R * 1.35); ctx.stroke(); ctx.lineCap = 'butt';
+    ctx.font = `700 ${Math.max(11, W * .018)}px ${ff}`; ctx.fillStyle = L.up ? (L.fuzzy ? '#a66' : '#2f6e3b') : '#c0392b'; ctx.fillText(L.fuzzy ? tr('模糊', 'Blurry') : L.up ? tr(`正立・放大 ${L.mag.toFixed(1)} 倍`, `Upright ×${L.mag.toFixed(1)}`) : tr('倒立！', 'Upside down!'), 10, H - 10);
+    if (S.sun) { ctx.fillStyle = 'rgba(255,240,150,.85)'; ctx.fillRect(0, 0, W, H); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(W / 2, H / 2, 6 + Math.sin(S.t * 30) * 2, 0, Math.PI * 2); ctx.fill(); ctx.font = `900 ${W * .05}px ${ff}`; ctx.fillStyle = '#c0392b'; ctx.textAlign = 'center'; ctx.fillText(tr('🔥 好燙！不能看！', '🔥 Too hot! Never!'), W / 2, H * .3); ctx.textAlign = 'left'; }
+  };
+  draw.cv = C.cv; const stop = lgLoop(draw);
+}
+
+/* ---------- games hall (toolbar button next to 釣魚) ---------- */
+function gamesBtn() {
+  let b = $('#btnGames');
+  if (!b) { b = document.createElement('button'); b.className = 'btn'; b.id = 'btnGames'; b.type = 'button'; const f = $('#btnFish'); $('#tools').insertBefore(b, f ? f.nextSibling : ($('#btnMusic') || $('#btnHelp'))); b.addEventListener('click', openGames); }
+  b.innerHTML = `<svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="11" rx="5"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="15.5" cy="11.5" r=".6"/><circle cx="17.5" cy="13.5" r=".6"/></svg><span>${tr('遊戲', 'Games')}</span>`;
+  b.title = tr('遊戲大廳：所有結合遊戲的關卡', 'Games hall');
+}
+function gameStats() {
+  const list = [];
+  ISL.forEach(isl => {
+    if (LD.labs[isl.id]) list.push(!!LP.l[isl.id]);
+    if (LD.sort[isl.id]) list.push(!!LP.s[isl.id]);
+    isl.items.forEach(it => { if (LD.puzzle && LD.puzzle[it.id]) list.push(!!(LP.z && LP.z[it.id])); if (LD.blanks[it.id]) list.push(!!LP.f[it.id]); });
+  });
+  LGAMES.forEach(gm => list.push(!!(lgDone()[gm.id])));
+  return { done: list.filter(Boolean).length, all: list.length };
+}
+let GAMESGRADE = null;
+function openGames() {
+  const body = openPlay('games', tr('遊戲大廳', 'Games hall'), tr('邊玩邊學！', 'Learn by playing!'), { wide: true });
+  const st = gameStats(), LGd = lgDone();
+  const grades = Object.keys(D.grades).filter(gk => ISL.some(i => i.grade === gk && (LD.labs[i.id] || LD.sort[i.id] || i.items.some(it => LD.blanks[it.id] || (LD.puzzle && LD.puzzle[it.id])))));
+  if (!GAMESGRADE || !grades.includes(GAMESGRADE)) GAMESGRADE = grades.includes('g5') ? 'g5' : grades[0];
+  const chip = (act, attrs, name, ok) => `<button class="gchip ${ok ? 'ok' : ''}" data-act="${act}" ${attrs}>${ok ? '✓ ' : ''}${esc(name)}</button>`;
+  const islRows = ISL.filter(i => i.grade === GAMESGRADE).map(isl => {
+    let c = '';
+    if (LD.labs[isl.id]) c += chip('lab', `data-isl="${isl.id}"`, T(LAB_NAME[LD.labs[isl.id]]), LP.l[isl.id]);
+    if (LD.sort[isl.id]) c += chip('sort', `data-isl="${isl.id}"`, tr('分類配對', 'Sorting'), LP.s[isl.id]);
+    isl.items.forEach(it => { const sub = /篇/.test(T(it.name)) ? '・' + (T(it.name).split('・')[1] || '') : ''; if (LD.puzzle && LD.puzzle[it.id]) c += chip('puzzle', `data-item="${it.id}"`, tr('拼圖', 'Puzzle') + sub, LP.z && LP.z[it.id]); if (LD.blanks[it.id]) c += chip('fill', `data-item="${it.id}"`, tr('填空', 'Fill-in') + sub, LP.f[it.id]); });
+    if (isl.id === LG_ISL) LGAMES.forEach(gm => { c += chip('lg', `data-g="${gm.id}"`, gm.ic + ' ' + T(gm.n), LGd[gm.id]); });
+    return c ? `<div class="grow-isl" style="--c:${isl.accent}"><b>${esc(codeOf(isl))} ${esc(T(isl.label))}${unlocked(isl) ? '' : ` <small>🔒 ${tr('闖關問答未解鎖，小遊戲可以先玩', 'quiz locked, games open')}</small>`}</b><div>${c}</div></div>` : '';
+  }).join('');
+  body.innerHTML = `<div class="games">
+    <div class="gsum"><b>${tr(`已完成 ${st.done} / ${st.all} 個遊戲關卡`, `${st.done} / ${st.all} game levels done`)}</b><i class="kbar"><i style="width:${Math.round(st.done / Math.max(1, st.all) * 100)}%"></i></i></div>
+    <section><div class="eyebrow">🌟 ${tr('光之島小遊戲（五2-3 光的特性）', 'Light Island games (5-2-3)')} <span class="gnew">NEW</span></div>
+      <div class="lg-grid">${LGAMES.map(gm => `<button class="lgcard ${LGd[gm.id] ? 'done' : ''}" data-act="lg" data-g="${gm.id}"><span class="lg-ic">${gm.ic}</span><b>${esc(T(gm.n))}</b><small>${esc(T(gm.d))}</small><em>${LGd[gm.id] ? starStr(LGd[gm.id]) : tr('還沒玩', 'New')}</em><i>🏅 ${esc(gm.title[1])}${ME && AV.owned[gm.title[0]] ? ' ✓' : ''}</i></button>`).join('')}</div>
+      <p class="hint">${tr('過關可拿 XP、葉子幣和圖鑑卡；三星送專屬稱號；5 個全三星還有「光之島島主」稱號和限定特效「稜鏡光環」！', 'Clear for XP, leaves and cards; 3 stars earns a title; all five 3-star unlocks a special effect!')}</p></section>
+    <section><div class="eyebrow">${tr('全島遊戲', 'All-island games')}</div><div class="hub gh">
+      <button class="hcard" id="gDaily"><b>📅 ${tr('每日一題', 'Daily question')}</b><span>${LP.d && LP.d.done === today() ? tr('今天已完成 ✓', 'Done today ✓') : tr('每天一題', 'One a day')}</span></button>
+      <button class="hcard" id="gHunt"><b>🗺️ ${tr('島上尋寶', 'Treasure hunt')}</b><span>${LP.h ? tr(`最佳：找到 ${LP.h} 個`, `Best: ${LP.h}`) : tr('看線索，到 3D 島上找答案', 'Find answers on the islands')}</span></button>
+      <button class="hcard" id="gSurv"><b>🦔 ${tr('動物求生大作戰', 'Animal survival')}</b><span>${LP.sv ? tr(`最佳：救了 ${LP.sv} 隻`, `Best: ${LP.sv}`) : tr('天敵來了，選對保護方式', 'Pick the right defence')}</span></button>
+      <button class="hcard" id="gDuel"><b>👨‍👧 ${tr('親子快問快答', 'Two-player quiz')}</b><span>${tr('同一台裝置兩人搶答', 'Two players, one device')}</span></button>
+      <button class="hcard" id="gNet"><b>⚔️ ${tr('連線搶答擂台', 'Online battle')}</b><span>${AV && AV.net ? tr(`${AV.net.w} 勝 ${AV.net.l} 敗`, `${AV.net.w}W ${AV.net.l}L`) : tr('兩台裝置連線比賽', 'Two devices')}</span></button>
+    </div></section>
+    <section><div class="eyebrow">${tr('各島關卡遊戲', 'Island game levels')}</div>
+      <div class="gtabs">${grades.map(gk => `<button class="chip ${gk === GAMESGRADE ? 'on' : ''}" data-gg="${gk}">${esc(T(D.grades[gk].name))}</button>`).join('')}</div>
+      <div class="gisl">${islRows}</div></section></div>`;
+  body.querySelectorAll('[data-gg]').forEach(b => b.addEventListener('click', () => { GAMESGRADE = b.dataset.gg; openGames(); }));
+  $('#gDaily').addEventListener('click', startDaily); $('#gHunt').addEventListener('click', startHunt); $('#gSurv').addEventListener('click', startSurvival); $('#gDuel').addEventListener('click', setupDuel); $('#gNet').addEventListener('click', () => openNet());
+}
+gamesBtn();
+window.__lg = { start: startLG, games: openGames, LASER_LV, laserTrace };
 
 /* =====================================================================
    17. start
