@@ -13269,6 +13269,7 @@ body.fp-on #fpPad{display:grid}#fpPad button{border:0;border-radius:14px;backgro
 body.fp-on #card,body.fp-on #side{display:none}body.fp-on #stage{cursor:grab}
 @media (hover:hover) and (pointer:fine){body.fp-on #fpPad [data-k]{display:none}body.fp-on #fpPad{display:block}}
 #btnFP[aria-pressed="true"]{background:var(--ink);color:#fff}
+body.hide-labels .isl-label,body.hide-labels .grade-tag,body.hide-labels .subj-tag,body.hide-labels .islet-tag{visibility:hidden!important}
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
 
@@ -13533,6 +13534,7 @@ body.fp-on #card,body.fp-on #side{display:none}body.fp-on #stage{cursor:grab}
   </div>
   <div class="hud-sep"></div>
   <div class="hud-group">
+    <button class="btn tbtn" id="tgLabels" aria-pressed="false" title="隱藏島名、群島名等名稱（快捷鍵 N）" data-en-title="Hide island names (N)"><svg viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6C3.9 8.3 2 12 2 12s3.5 7 10 7a9.6 9.6 0 0 0 4.4-1"/></svg><span data-en="Hide names">隱藏名稱</span></button>
     <button class="btn tbtn" id="tgNames" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-4 3v-3H6a2 2 0 0 1-2-2z"/></svg><span data-en="Names">名牌</span></button>
     <button class="btn tbtn" id="tgCarry" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8l-8 4-8-4z M4 8l8 4 8-4 M12 12v8"/></svg><span data-en="Carry">搬運</span></button>
     <button class="btn tbtn" id="tgFlows" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 18c4 0 4-12 8-12s4 12 8 12"/><circle cx="4" cy="18" r="1.6"/><circle cx="20" cy="18" r="1.6"/></svg><span data-en="Routes">路線</span></button>
@@ -15891,6 +15893,10 @@ function toggle(id, key, after) {
   btn.addEventListener('click', () => { state[key] = !state[key]; btn.setAttribute('aria-pressed', String(state[key])); after && after(state[key]); dirty = true; });
 }
 toggle('tgNames', 'showNames');
+function setHideLabels(on) { document.body.classList.toggle('hide-labels', on); const b = $('#tgLabels'); b.setAttribute('aria-pressed', String(on)); b.querySelector('span').textContent = on ? tr('顯示名稱', 'Show names') : tr('隱藏名稱', 'Hide names'); try { store.set('scienceIslands.hideLabels', on ? '1' : ''); } catch (e) {} dirty = true; }
+$('#tgLabels').addEventListener('click', () => setHideLabels(!document.body.classList.contains('hide-labels')));
+addEventListener('keydown', e => { if ((e.key || '').toLowerCase() === 'n' && !e.repeat && !e.ctrlKey && !e.metaKey && !(e.target.closest && e.target.closest('input,select,textarea'))) setHideLabels(!document.body.classList.contains('hide-labels')); });
+try { if (store.get('scienceIslands.hideLabels')) setHideLabels(true); } catch (e) {}
 toggle('tgCarry', 'showCarry');
 toggle('tgFlows', 'showFlows', updateFlowVisibility);
 toggle('tgPause', 'paused');
