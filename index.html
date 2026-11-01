@@ -10669,10 +10669,13 @@ function labLight(isl) {
       const W = cv.width, H = cv.height, gx = W * .5, wy = H * .45, gw = 170 * s;
       g.fillStyle = 'rgba(200,230,240,.25)'; g.fillRect(gx - gw / 2, H * .15, gw, H * .78); g.fillStyle = 'rgba(111,179,192,.55)'; g.fillRect(gx - gw / 2, wy, gw, H * .93 - wy);
       g.strokeStyle = 'rgba(255,255,255,.7)'; g.lineWidth = 2 * s; g.strokeRect(gx - gw / 2, H * .15, gw, H * .78);
-      const tilt = (20 + val * .5) * Math.PI / 180, top = [gx - 140 * s * Math.sin(tilt) - 30 * s, H * .05], hit = [gx - 30 * s + 0 * s, wy];
-      ray([top, hit], '#db6a41', 8 * s);
-      const shift = 10 * s + val * .35 * s, bend = .55;
-      ray([[hit[0] + shift, wy], [hit[0] + shift + (hit[0] - top[0]) * bend * ((H * .9 - wy) / (wy - top[1])), H * .9]], '#db6a41', 8 * s);
+      // the straw rests on the bottom of the glass and leans against the rim, so it always stays inside the cup
+      const L = gx - gw / 2, R = gx + gw / 2, T = H * .15, B = H * .93, foot = [L + gw * .16, B - 6 * s];
+      const maxTan = (R - gw * .1 - foot[0]) / (foot[1] - T), tan = Math.min(maxTan, Math.tan((12 + val * .38) * Math.PI / 180));
+      const xAt = y => foot[0] + tan * (foot[1] - y), topY = H * .04, hitX = xAt(wy);
+      ray([[xAt(topY), topY], [hitX, wy]], '#db6a41', 8 * s);
+      const shift = Math.min(R - 6 * s - hitX, 8 * s + val * .3 * s), appBottom = Math.max(L + 6 * s, Math.min(R - 6 * s, hitX + shift - (hitX - foot[0]) * .72));
+      ray([[hitX + shift, wy], [appBottom, foot[1]]], '#db6a41', 8 * s);
       g.fillStyle = '#fff'; g.font = `700 ${13 * s}px sans-serif`; g.fillText(tr('水面', 'Water line'), gx + gw / 2 + 8 * s, wy + 4 * s);
       $('#lNote').textContent = tr('光斜斜進入不同的介質時，方向會發生偏折，這就是折射。例：水杯裡的吸管看起來像折斷了、水池看起來比實際淺。', 'Light bends when entering a new material: refraction.');
     },
