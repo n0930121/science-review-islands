@@ -6776,6 +6776,21 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 #btnMusic .mus-x{display:none;position:absolute;left:50%;top:50%;width:22px;height:2px;background:var(--coral);transform:translate(-50%,-50%) rotate(-40deg);border-radius:2px}
 #btnMusic.off .mus-x{display:block}
 .mus-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.mus-now{font-size:13px;color:var(--muted)}.mus-vol{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.mus-vol input{width:110px}
+.shop-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 8px}
+.stab{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font:700 14px/1 var(--font);color:var(--ink);cursor:pointer}
+.stab small{font-size:11px;color:var(--muted);font-weight:600}.stab.on{background:var(--ink);color:#fff;border-color:var(--ink)}.stab.on small{color:#ddd}
+.shop-grid .shop-item{position:relative;border-top:4px solid var(--rc,#7aa36b);align-content:start}
+.shop-item .si-top{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.shop-item .si-top em{font-style:normal;font-size:11px;font-weight:800;color:#fff;background:var(--rc);padding:2px 8px;border-radius:999px}
+.shop-item .si-top small{font-size:13px;font-weight:800;color:var(--muted)}.shop-item .si-top .price{color:#3f7a3a}
+.shop-item p{margin:0;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.shop-item .si-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}.shop-item .si-btns .btn{min-height:34px;padding:0 12px;font-size:13px}
+.shop-item.r-e{background:linear-gradient(180deg,#f7f1fd,#fff 60%)}.shop-item.r-l{background:linear-gradient(180deg,#fff6df,#fff 60%);box-shadow:0 0 0 1px #f0c64a inset}
+.shop-item.trying{outline:3px dashed var(--rc);outline-offset:2px}
+.btn.ghost{background:transparent}
+.shop-col{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;margin:6px 0}.shop-col .bar{flex:1;max-width:180px;height:7px;border-radius:9px;background:#f1e7da;overflow:hidden}.shop-col .bar i{display:block;height:100%;background:#d99a1e}
+.shop-trying{font-weight:800;color:var(--coral);margin:4px 0}
+.me-tag i.ttl{font-style:normal;font:800 10.5px/1 var(--font);color:#fff;background:var(--rc,#7aa36b);padding:3px 7px;border-radius:999px;white-space:nowrap}
 #duel{position:fixed;inset:0;z-index:70;display:grid;grid-template-rows:1fr auto 1fr;background:var(--paper-solid);padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:10px}
 .dside{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:14px;border-radius:20px;background:#fff;border:2px solid var(--line);min-height:0;overflow:auto}
 .dside.p1{transform:rotate(180deg);background:#f3f6fb}
@@ -10769,6 +10784,188 @@ const amat = (hex, extra) => { const k = hex + (extra ? JSON.stringify(extra) : 
 function part(parent, geo, col, x, y, z, sx = 1, sy = 1, sz = 1, rx = 0, ry = 0, rz = 0, extra) {
   const m = new THREE.Mesh(geo, amat(col, extra)); m.position.set(x, y, z); m.scale.set(sx, sy, sz); m.rotation.set(rx, ry, rz); m.castShadow = true; parent.add(m); return m;
 }
+/* =====================================================================
+   16g. big shop: rarities, more slots (hand / aura / title), animated cosmetics
+   ===================================================================== */
+const RAR = { c: { n: ['普通', 'Common'], col: '#7aa36b', lv: 1 }, r: { n: ['稀有', 'Rare'], col: '#3e8ed0', lv: 2 }, e: { n: ['史詩', 'Epic'], col: '#8e5bc7', lv: 4 }, l: { n: ['傳說', 'Legendary'], col: '#d99a1e', lv: 7 } };
+const SLOT_NAMES = { hat: ['帽子', 'Hats'], back: ['背飾', 'Back'], pet: ['寵物', 'Pets'], hand: ['手持', 'Hand'], aura: ['特效', 'Effects'], title: ['稱號', 'Titles'] };
+const SHOP_MORE = [
+  // hats
+  ['h_straw', 'hat', '草帽', 60, 'c', '夏天出門防晒必備。'], ['h_beanie', 'hat', '毛線帽', 80, 'c', '頂端有毛球，溫暖又可愛。'], ['h_catears', 'hat', '貓耳髮箍', 120, 'c', '戴上就變成小貓咪。'],
+  ['h_chef', 'hat', '廚師帽', 150, 'r', '蓬蓬的白色高帽。'], ['h_pirate', 'hat', '海盜帽', 320, 'r', '揚帆出海，尋找知識寶藏！'], ['h_wizard', 'hat', '魔法師帽', 480, 'r', '帽子上的星星會一閃一閃。'],
+  ['h_dino', 'hat', '恐龍帽', 560, 'r', '背上一排尖刺，超有氣勢。'], ['h_flower', 'hat', '花冠', 650, 'e', '六朵小花圍成一圈。'], ['h_miner', 'hat', '礦工燈帽', 720, 'e', '頭燈會發光，晚上也看得見。'],
+  ['h_halo', 'hat', '天使光環', 1200, 'e', '漂浮在頭上、慢慢旋轉的金色光環。'], ['h_starcrown', 'hat', '星光王冠', 2200, 'l', '鑲滿寶石，還有星光繞著轉。'], ['h_unicorn', 'hat', '彩虹獨角獸角', 3200, 'l', '會變換彩虹顏色的獨角。'],
+  // back
+  ['b_schoolbag', 'back', '黃色書包', 70, 'c', '上學必備。'], ['b_leafcape', 'back', '葉子披風', 260, 'r', '一片片綠葉組成的披風。'], ['b_snail', 'back', '蝸牛殼', 330, 'r', '走到哪，家就背到哪。'],
+  ['b_guitar', 'back', '吉他', 420, 'r', '還記得音箱讓聲音變大嗎？'], ['b_solar', 'back', '太陽能板', 680, 'e', '收集陽光變成電。'], ['b_rocket', 'back', '火箭背包', 900, 'e', '噴嘴會噴出火焰！'],
+  ['b_angel', 'back', '天使翅膀', 1500, 'e', '會輕輕拍動的白色羽翼。'], ['b_rainbow', 'back', '彩虹披風', 1800, 'l', '七彩披風隨風飄動。'], ['b_dragon', 'back', '龍之翼', 2600, 'l', '巨大的龍翅膀，邊緣發著光。'],
+  // pets
+  ['p_chick', 'pet', '小雞', 100, 'c', '嘰嘰喳喳跟著你。'], ['p_frog', 'pet', '青蛙', 130, 'c', '鼓起鳴囊呱呱叫。'], ['p_cat', 'pet', '小貓', 160, 'c', '尾巴翹得高高的。'],
+  ['p_rabbit', 'pet', '小白兔', 220, 'r', '長耳朵豎起來。'], ['p_butterfly', 'pet', '蝴蝶', 300, 'r', '在你身邊翩翩飛舞。'], ['p_penguin', 'pet', '企鵝', 380, 'r', '搖搖擺擺走路。'],
+  ['p_owl', 'pet', '貓頭鷹', 520, 'r', '大眼睛的夜行性鳥類。'], ['p_flamingo', 'pet', '紅鶴', 700, 'e', '細長的腳和粉紅羽毛。'], ['p_panda', 'pet', '貓熊', 900, 'e', '黑白分明，圓滾滾。'],
+  ['p_dolphin', 'pet', '泡泡海豚', 1200, 'e', '住在泡泡裡的小海豚。'], ['p_dino', 'pet', '小恐龍', 1600, 'l', '背上有一排骨板。'], ['p_phoenix', 'pet', '鳳凰', 3500, 'l', '全身發光，飛過會留下火花。'],
+  ['p_dragon', 'pet', '小飛龍', 4200, 'l', '會拍翅膀飛行的小龍。'],
+  // hand
+  ['t_magnifier', 'hand', '放大鏡', 60, 'c', '凸透鏡可以把東西放大。'], ['t_net', 'hand', '捕蟲網', 90, 'c', '觀察完記得放回大自然。'], ['t_balloon', 'hand', '紅氣球', 120, 'c', '跟著你飄來飄去。'],
+  ['t_icecream', 'hand', '冰淇淋', 150, 'c', '三球口味。'], ['t_umbrella', 'hand', '雨傘', 200, 'r', '臺灣多雨，出門帶傘。'], ['t_telescope', 'hand', '望遠鏡', 260, 'r', '觀察月相的好幫手。'],
+  ['t_flask', 'hand', '發光試管', 320, 'r', '試管裡的液體會發光。'], ['t_wand', 'hand', '魔法棒', 800, 'e', '揮一揮，星光閃閃。'], ['t_scepter', 'hand', '星星權杖', 2000, 'l', '權杖上的星星會旋轉發光。'],
+  // aura (particle effects)
+  ['a_flowers', 'aura', '小花足跡', 400, 'r', '走過的地方開出小花。'], ['a_leaves', 'aura', '落葉飄飄', 500, 'r', '身邊有葉子慢慢飄落。'], ['a_bubbles', 'aura', '泡泡', 600, 'r', '泡泡從身邊往上飄。'],
+  ['a_notes', 'aura', '彩色光點', 700, 'e', '彩色光點像音符一樣跳出來。'], ['a_snow', 'aura', '雪花', 900, 'e', '頭上飄著小雪。'], ['a_stardust', 'aura', '星塵', 1200, 'e', '閃亮的星塵環繞全身。'],
+  ['a_fireflies', 'aura', '螢光環繞', 1500, 'e', '一群螢光繞著你飛。'], ['a_rainbow', 'aura', '彩虹足跡', 2400, 'l', '每一步都留下彩虹。'], ['a_galaxy', 'aura', '銀河光環', 4800, 'l', '一整圈旋轉的銀河。'],
+  // titles (shown under your name)
+  ['ti_sci', 'title', '見習科學家', 50, 'c', '名牌下方顯示稱號。'], ['ti_exp', 'title', '小小探險家', 120, 'c', ''], ['ti_fix', 'title', '錯題剋星', 260, 'r', ''],
+  ['ti_buzz', 'title', '搶答高手', 400, 'r', ''], ['ti_star', 'title', '觀星達人', 600, 'r', ''], ['ti_eco', 'title', '生態守護者', 900, 'e', ''],
+  ['ti_sound', 'title', '聲光魔法師', 1300, 'e', ''], ['ti_tw', 'title', '臺灣通', 1800, 'e', ''], ['ti_king', 'title', '知識之王', 3000, 'l', ''], ['ti_legend', 'title', '傳說學霸', 5000, 'l', '']
+].map(([id, slot, n, p, r, d]) => ({ id, slot, n, p, r, d }));
+{ const base = { h_cap: 'c', h_leaf: 'c', h_grad: 'c', h_helmet: 'r', h_crown: 'r', b_bag: 'c', b_cape: 'c', b_wings: 'r', p_turtle: 'c', p_dog: 'c', p_bee: 'c', p_firefly: 'r' };
+  AD.shop.forEach(s => { s.r = s.r || base[s.id] || 'c'; s.d = s.d || ''; });
+  SHOP_MORE.forEach(s => { if (!AD.shop.some(x => x.id === s.id)) AD.shop.push(s); }); }
+const SHOP_BY = new Map(AD.shop.map(s => [s.id, s]));
+const glowX = c => ({ emissive: c, emissiveIntensity: 1.1 });
+const cosReg = (root, m, type, o = {}) => { (root.userData.anims = root.userData.anims || []).push({ m, type, base: { y: m.position.y, s: m.scale.clone(), r: m.rotation.clone() }, ...o }); return m; };
+/* hats, back items and hand items for the avatar */
+function buildCos(root, body, parts, eq, y) {
+  const hy = .3 + y, P = (...a) => part(body, ...a);
+  switch (eq.hat) {
+    case 'h_straw': P(W_GEO.cyl, '#e8cf8a', 0, hy + .03, 0, .25, .01, .25, -.08); P(W_GEO.dome, '#e2c27a', 0, hy + .03, 0, .15, .08, .15, -.08); P(W_GEO.cyl, COL.coral, 0, hy + .045, 0, .152, .014, .152, -.08); break;
+    case 'h_beanie': P(W_GEO.dome, '#5aa9d6', 0, hy - .01, 0, .162, .13, .162, -.08); P(W_GEO.torus, '#3e7fb0', 0, hy - .005, .004, .16, .16, .2, Math.PI / 2 - .08); P(W_GEO.head, '#ffffff', 0, hy + .07, -.006, .35, .35, .35); break;
+    case 'h_catears': P(W_GEO.torus, COL.ink, 0, hy + .03, 0, .15, .15, .08, 0, Math.PI / 2); for (const s of [-1, 1]) { P(W_GEO.cone, COL.ink, s * .045, hy + .07, 0, .045, .06, .03, 0, 0, -s * .3); P(W_GEO.cone, '#f4a9c0', s * .045, hy + .066, .008, .025, .035, .01, 0, 0, -s * .3); } break;
+    case 'h_chef': P(W_GEO.cyl, '#ffffff', 0, hy + .03, 0, .13, .06, .13); P(W_GEO.head, '#ffffff', 0, hy + .085, 0, 1.25, .8, 1.25); P(W_GEO.head, '#f7f7f7', .03, hy + .095, .02, .8, .6, .8); break;
+    case 'h_pirate': P(W_GEO.dome, '#2b2b33', 0, hy, 0, .165, .09, .165); P(W_GEO.box, '#2b2b33', 0, hy + .01, 0, .3, .03, .14, 0, 0, 0); P(W_GEO.box, COL.gold, 0, hy + .028, .07, .3, .008, .008); P(W_GEO.head, '#ffffff', 0, hy + .05, .075, .2, .2, .12); P(W_GEO.box, '#ffffff', 0, hy + .035, .078, .03, .006, .006, 0, 0, .7); P(W_GEO.box, '#ffffff', 0, hy + .035, .078, .03, .006, .006, 0, 0, -.7); break;
+    case 'h_wizard': {
+      P(W_GEO.cyl, '#5b3d9a', 0, hy + .02, 0, .27, .012, .27); const c = P(W_GEO.cone, '#6c4bb3', -.01, hy + .15, -.01, .17, .26, .17, -.12, 0, .12);
+      for (let k = 0; k < 4; k++) { const st = P(W_GEO.eye, '#ffe27a', Math.cos(k * 1.7) * .05, hy + .07 + k * .045, .06 - k * .012, 1.1, 1.1, 1.1, 0, 0, 0, glowX('#ffd84a')); cosReg(root, st, 'twinkle', { ph: k }); } c.castShadow = true; break; }
+    case 'h_dino': P(W_GEO.dome, '#6cbf5a', 0, hy - .01, 0, .18, .14, .18, -.08); for (let k = 0; k < 5; k++) P(W_GEO.cone, '#f3a64a', 0, hy + .07 - k * .01, .04 - k * .035, .03, .045, .02, -.3 - k * .25); for (const s of [-1, 1]) { P(W_GEO.head, '#ffffff', s * .04, hy + .05, .05, .22, .22, .22); P(W_GEO.eye, COL.ink, s * .04, hy + .052, .065, .9, .9, .9); } break;
+    case 'h_flower': P(W_GEO.torus, '#5c9a4f', 0, hy + .015, 0, .15, .15, .1, Math.PI / 2 - .1); for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2, x = Math.cos(a) * .072, z = Math.sin(a) * .072, c = ['#f4a9c0', '#fcea8b', '#ffffff'][k % 3]; for (let p = 0; p < 5; p++) { const b = p / 5 * Math.PI * 2; P(W_GEO.head, c, x + Math.cos(b) * .012, hy + .025, z + Math.sin(b) * .012, .16, .1, .16); } P(W_GEO.head, '#f3c34a', x, hy + .03, z, .12, .1, .12); } break;
+    case 'h_miner': { P(W_GEO.dome, '#f5c542', 0, hy, 0, .165, .11, .165, -.06); P(W_GEO.cyl, '#e0ac2a', 0, hy + .002, .01, .18, .01, .19, -.06); P(W_GEO.cyl, '#555', 0, hy + .05, .075, .045, .03, .045, Math.PI / 2); const l = P(W_GEO.cyl, '#fff6c8', 0, hy + .05, .092, .036, .006, .036, Math.PI / 2, 0, 0, glowX('#fff2a8')); cosReg(root, l, 'pulse'); break; }
+    case 'h_halo': { const h = P(W_GEO.torus, '#ffd95a', 0, hy + .1, 0, .13, .13, .06, Math.PI / 2, 0, 0, glowX('#ffcf3a')); cosReg(root, h, 'halo'); break; }
+    case 'h_starcrown': {
+      P(W_GEO.cyl, COL.gold, 0, hy + .04, 0, .13, .045, .13, 0, 0, 0, { metalness: .6, roughness: .3 });
+      for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2; P(W_GEO.cone, COL.gold, Math.cos(a) * .06, hy + .1, Math.sin(a) * .06, .028, .07, .028, 0, 0, 0, { metalness: .6, roughness: .3 }); P(W_GEO.eye, ['#e94b5a', '#4bb3e9', '#5ad27a', '#b77ae9'][k % 4], Math.cos(a) * .066, hy + .045, Math.sin(a) * .066, 1, 1, 1, 0, 0, 0, glowX(['#e94b5a', '#4bb3e9', '#5ad27a', '#b77ae9'][k % 4])); }
+      const orb = new THREE.Group(); orb.position.y = hy + .09; body.add(orb); for (let k = 0; k < 3; k++) { const a = k / 3 * Math.PI * 2; part(orb, W_GEO.eye, '#fffbe0', Math.cos(a) * .12, 0, Math.sin(a) * .12, 1.3, 1.3, 1.3, 0, 0, 0, glowX('#fff2a8')); } cosReg(root, orb, 'spin', { sp: 1.6 }); break; }
+    case 'h_unicorn': {
+      const horn = P(W_GEO.cone, '#ffffff', 0, hy + .1, .03, .045, .16, .045, .35, 0, 0, glowX('#ffffff')); cosReg(root, horn, 'hue');
+      for (let k = 0; k < 7; k++) P(W_GEO.head, ['#ff6b6b', '#ffa94d', '#ffd43b', '#69db7c', '#4dabf7', '#748ffc', '#da77f2'][k], 0, hy + .03 - k * .018, -.04 - k * .012, .3, .3, .3);
+      for (const s of [-1, 1]) P(W_GEO.cone, '#ffffff', s * .05, hy + .05, -.01, .03, .05, .02, 0, 0, -s * .3); break; }
+  }
+  switch (eq.back) {
+    case 'b_schoolbag': P(W_GEO.box, '#f5c542', 0, .17 + y, -.07, .1, .11, .045); P(W_GEO.box, '#e0ac2a', 0, .13 + y, -.094, .08, .03, .006); for (const s of [-1, 1]) P(W_GEO.box, '#c98a1a', s * .035, .19 + y, -.045, .012, .1, .01); break;
+    case 'b_leafcape': for (let k = 0; k < 7; k++) { const x = (k % 3 - 1) * .045, yy = .22 - Math.floor(k / 3) * .055; P(W_GEO.head, ['#5c9a4f', '#7cc07a', '#4f8a3f'][k % 3], x, yy + y, -.06 - Math.floor(k / 3) * .006, .55, .8, .12, .1, 0, (k % 3 - 1) * .3); } break;
+    case 'b_snail': for (let k = 0; k < 4; k++) P(W_GEO.torus, ['#c47a3a', '#d98e4a', '#e8a65e', '#f3c17d'][k], 0, .19 + y + k * .012, -.09 - k * .004, .16 - k * .035, .16 - k * .035, .2, 0, Math.PI / 2); P(W_GEO.head, '#b8682e', 0, .19 + y, -.09, .9, .9, .55); break;
+    case 'b_guitar': { const g = new THREE.Group(); g.position.set(0, .17 + y, -.07); g.rotation.z = .5; body.add(g); part(g, W_GEO.head, '#c98a4a', 0, -.03, 0, .85, .85, .3); part(g, W_GEO.head, '#c98a4a', 0, .03, 0, .65, .65, .3); part(g, W_GEO.cyl, '#3b2a1f', 0, -.02, -.012, .03, .003, .03, Math.PI / 2); part(g, W_GEO.box, '#7a4a2a', 0, .11, 0, .018, .15, .012); part(g, W_GEO.box, '#3b2a1f', 0, .19, 0, .03, .035, .014); break; }
+    case 'b_solar': for (const s of [-1, 1]) { P(W_GEO.box, '#24406b', s * .075, .23 + y, -.07, .12, .1, .008, .2, s * .5, s * .25, { metalness: .5, roughness: .25, emissive: '#1b3a66', emissiveIntensity: .4 }); P(W_GEO.box, '#b8c4d6', s * .075, .23 + y, -.074, .122, .004, .009, .2, s * .5, s * .25); } P(W_GEO.box, '#888', 0, .2 + y, -.06, .03, .06, .02); break;
+    case 'b_rocket': for (const s of [-1, 1]) { P(W_GEO.cyl, '#d8dde3', s * .035, .19 + y, -.075, .045, .13, .045, 0, 0, 0, { metalness: .6, roughness: .3 }); P(W_GEO.cone, COL.coral, s * .035, .275 + y, -.075, .046, .05, .046); const f = P(W_GEO.cone, '#ffb347', s * .035, .1 + y, -.075, .035, .07, .035, Math.PI, 0, 0, glowX('#ff8c1a')); cosReg(root, f, 'flame', { ph: s }); } break;
+    case 'b_angel': for (const s of [-1, 1]) { const w = new THREE.Group(); w.position.set(s * .04, .22 + y, -.065); body.add(w); for (let k = 0; k < 3; k++) part(w, W_GEO.head, k ? '#f4f6fb' : '#ffffff', s * (.06 + k * .03), .02 - k * .03, -k * .006, .9 - k * .15, .45, .1, 0, 0, s * (.5 + k * .25)); cosReg(root, w, 'flap', { side: s, amp: .35, sp: 4 }); } break;
+    case 'b_rainbow': { const c = new THREE.Group(); c.position.set(0, .25 + y, -.058); body.add(c); ['#ff6b6b', '#ffa94d', '#ffd43b', '#69db7c', '#4dabf7', '#748ffc', '#da77f2'].forEach((col, k) => part(c, W_GEO.box, col, (k - 3) * .019, -.1, 0, .02, .2, .006)); cosReg(root, c, 'cape'); break; }
+    case 'b_dragon': for (const s of [-1, 1]) { const w = new THREE.Group(); w.position.set(s * .04, .23 + y, -.065); body.add(w); part(w, W_GEO.cyl, '#3a2350', s * .11, .05, 0, .012, .24, .012, 0, 0, s * 1.1); for (let k = 0; k < 3; k++) part(w, W_GEO.cone, '#6b3fa0', s * (.07 + k * .055), -.01 - k * .015, 0, .07, .16, .01, 0, 0, Math.PI + s * (.15 + k * .15), { emissive: '#a35ce0', emissiveIntensity: .25 }); cosReg(root, w, 'flap', { side: s, amp: .25, sp: 2.4 }); } break;
+  }
+  if (eq.hand && parts.armR) {
+    const h = new THREE.Group(); h.position.set(0, -.088, .006); parts.armR.add(h); const H = (...a) => part(h, ...a);
+    switch (eq.hand) {
+      case 't_magnifier': H(W_GEO.cyl, '#7a4a2a', 0, -.01, .02, .012, .05, .012, Math.PI / 2.4); H(W_GEO.torus, '#333', 0, .005, .065, .06, .06, .06); H(W_GEO.cyl, '#bfe3f2', 0, .005, .065, .052, .004, .052, Math.PI / 2, 0, 0, { transparent: true, opacity: .55 }); break;
+      case 't_net': H(W_GEO.cyl, '#b48560', 0, .05, .02, .01, .16, .01, .5); H(W_GEO.torus, '#888', 0, .14, .065, .08, .08, .05, .5); H(W_GEO.cone, '#f6f6f6', 0, .12, .085, .07, .08, .07, 2.1, 0, 0, { transparent: true, opacity: .65 }); break;
+      case 't_balloon': { H(W_GEO.cyl, '#ffffff', 0, .09, 0, .003, .2, .003); const b = H(W_GEO.head, '#e94b5a', 0, .22, 0, 1.2, 1.4, 1.2, 0, 0, 0, { roughness: .3 }); cosReg(root, b, 'bob'); break; }
+      case 't_icecream': H(W_GEO.cone, '#d9a066', 0, .005, .01, .035, .07, .035, Math.PI); ['#f7c5d6', '#fff3c4', '#8b5a3c'].forEach((c, k) => H(W_GEO.head, c, 0, .045 + k * .028, .01, .45, .42, .45)); break;
+      case 't_umbrella': H(W_GEO.cyl, '#555', 0, .1, 0, .008, .22, .008); H(W_GEO.dome, '#4dabf7', 0, .2, 0, .32, .12, .32); H(W_GEO.dome, '#ffffff', 0, .201, 0, .1, .05, .33); break;
+      case 't_telescope': H(W_GEO.cyl, '#3e4f7d', 0, .02, .04, .03, .14, .03, 1.1); H(W_GEO.cyl, COL.gold, 0, .05, .1, .036, .02, .036, 1.1); break;
+      case 't_flask': { H(W_GEO.cyl, '#dfeff3', 0, .03, .01, .03, .09, .03, 0, 0, 0, { transparent: true, opacity: .45 }); const l = H(W_GEO.cyl, '#7cf2b0', 0, .015, .01, .026, .05, .026, 0, 0, 0, glowX('#3fe08a')); cosReg(root, l, 'pulse'); break; }
+      case 't_wand': { H(W_GEO.cyl, '#2b2b33', 0, .05, .02, .008, .14, .008, .4); const st = H(W_GEO.eye, '#ffe27a', 0, .12, .05, 2.4, 2.4, .9, 0, 0, 0, glowX('#ffd84a')); cosReg(root, st, 'spin', { sp: 3 }); break; }
+      case 't_scepter': { H(W_GEO.cyl, COL.gold, 0, .07, .015, .012, .2, .012, .25, 0, 0, { metalness: .7, roughness: .25 }); const g = new THREE.Group(); g.position.set(0, .18, .04); h.add(g); for (let k = 0; k < 5; k++) { const a = k / 5 * Math.PI * 2; part(g, W_GEO.cone, '#ffe27a', Math.cos(a) * .022, Math.sin(a) * .022, 0, .02, .04, .012, 0, 0, a - Math.PI / 2, glowX('#ffd84a')); } part(g, W_GEO.head, '#fff6c8', 0, 0, 0, .35, .35, .2, 0, 0, 0, glowX('#ffe27a')); cosReg(root, g, 'spin', { sp: 2 }); break; }
+    }
+  }
+}
+/* new pets */
+function buildPet2(id, g) {
+  const P = (...a) => part(g, ...a), root = g;
+  switch (id) {
+    case 'p_chick': P(W_GEO.head, '#ffd84a', 0, .04, 0, .6, .55, .65); P(W_GEO.head, '#ffd84a', 0, .09, .03, .42, .42, .42); P(W_GEO.cone, '#f39a2b', 0, .09, .065, .015, .025, .015, Math.PI / 2); P(W_GEO.eye, COL.ink, .015, .1, .055, .6, .6, .6); P(W_GEO.eye, COL.ink, -.015, .1, .055, .6, .6, .6); break;
+    case 'p_frog': P(W_GEO.head, '#6cbf5a', 0, .03, 0, .7, .45, .75); for (const s of [-1, 1]) { P(W_GEO.head, '#ffffff', s * .025, .065, .025, .22, .22, .22); P(W_GEO.eye, COL.ink, s * .025, .068, .038, .7, .7, .7); P(W_GEO.head, '#5aa84a', s * .045, .01, -.02, .3, .15, .45); } break;
+    case 'p_cat': P(W_GEO.head, '#f0a35e', 0, .045, -.01, .6, .55, .8); P(W_GEO.head, '#f0a35e', 0, .095, .05, .5, .48, .48); for (const s of [-1, 1]) { P(W_GEO.cone, '#f0a35e', s * .022, .13, .05, .018, .03, .014); P(W_GEO.eye, COL.ink, s * .015, .1, .082, .6, .6, .6); } P(W_GEO.cyl, '#f0a35e', 0, .09, -.07, .012, .09, .012, -.5); break;
+    case 'p_rabbit': P(W_GEO.head, '#ffffff', 0, .045, 0, .62, .55, .75); P(W_GEO.head, '#ffffff', 0, .095, .045, .45, .45, .45); for (const s of [-1, 1]) { P(W_GEO.head, '#ffffff', s * .014, .15, .04, .14, .55, .1); P(W_GEO.head, '#f4a9c0', s * .014, .15, .046, .07, .4, .05); P(W_GEO.eye, '#c0392b', s * .016, .1, .076, .6, .6, .6); } P(W_GEO.head, '#ffffff', 0, .05, -.055, .25, .25, .25); break;
+    case 'p_butterfly': { P(W_GEO.head, '#3b3535', 0, 0, 0, .12, .12, .5); for (const s of [-1, 1]) { const w = new THREE.Group(); g.add(w); part(w, W_GEO.head, '#ff9f43', s * .035, .005, .01, .5, .06, .45, 0, 0, 0, { emissive: '#ff9f43', emissiveIntensity: .2 }); part(w, W_GEO.head, '#4dabf7', s * .028, .002, -.025, .35, .05, .3); cosReg(root, w, 'wing', { side: s, sp: 14, amp: .9 }); } g.userData.fly = .32; break; }
+    case 'p_penguin': P(W_GEO.head, '#2b2b33', 0, .06, 0, .55, .8, .55); P(W_GEO.head, '#ffffff', 0, .055, .018, .42, .65, .4); P(W_GEO.cone, '#f39a2b', 0, .095, .045, .012, .02, .012, Math.PI / 2); for (const s of [-1, 1]) { P(W_GEO.eye, COL.ink, s * .013, .1, .035, .5, .5, .5); P(W_GEO.head, '#f39a2b', s * .015, .005, .01, .2, .06, .3); } break;
+    case 'p_owl': { P(W_GEO.head, '#9b6b43', 0, 0, 0, .6, .7, .55); for (const s of [-1, 1]) { P(W_GEO.head, '#fff3c4', s * .018, .015, .03, .25, .25, .12); P(W_GEO.eye, COL.ink, s * .018, .015, .04, .8, .8, .8); P(W_GEO.cone, '#7a4f2e', s * .03, .055, 0, .012, .025, .012); const w = new THREE.Group(); g.add(w); part(w, W_GEO.head, '#7a4f2e', s * .04, 0, -.005, .2, .5, .35); cosReg(root, w, 'wing', { side: s, sp: 9, amp: .6 }); } P(W_GEO.cone, '#f3c34a', 0, .0, .045, .008, .016, .008, Math.PI / 2); g.userData.fly = .42; break; }
+    case 'p_flamingo': P(W_GEO.head, '#f48fb1', 0, .1, 0, .55, .45, .75); P(W_GEO.cyl, '#f48fb1', 0, .15, .03, .012, .09, .012, .3); P(W_GEO.head, '#f48fb1', 0, .2, .045, .3, .3, .35); P(W_GEO.cone, '#2b2b33', 0, .19, .07, .01, .025, .01, Math.PI / 2 + .6); for (const s of [-1, 1]) P(W_GEO.cyl, '#e57399', s * .01, .04, 0, .006, .1, .006); break;
+    case 'p_panda': P(W_GEO.head, '#ffffff', 0, .05, -.01, .7, .62, .8); P(W_GEO.head, '#ffffff', 0, .105, .045, .55, .5, .5); for (const s of [-1, 1]) { P(W_GEO.head, '#2b2b33', s * .03, .14, .04, .16, .16, .1); P(W_GEO.head, '#2b2b33', s * .016, .11, .072, .14, .17, .08); P(W_GEO.head, '#2b2b33', s * .035, .02, .02, .22, .3, .25); } P(W_GEO.eye, COL.ink, 0, .098, .083, .6, .5, .5); break;
+    case 'p_dolphin': { const d = new THREE.Group(); g.add(d); part(d, W_GEO.head, '#7d93a8', 0, 0, 0, .35, .35, .9); part(d, W_GEO.cone, '#7d93a8', 0, 0, .07, .02, .04, .02, Math.PI / 2); part(d, W_GEO.cone, '#7d93a8', 0, .03, -.01, .01, .03, .025, -.4); part(d, W_GEO.head, '#7d93a8', 0, 0, -.065, .4, .06, .15); cosReg(root, d, 'swim'); P(W_GEO.head, '#cdeefc', 0, 0, 0, 1.35, 1.35, 1.35, 0, 0, 0, { transparent: true, opacity: .25, roughness: .1 }); g.userData.fly = .35; break; }
+    case 'p_dino': P(W_GEO.head, '#6cbf5a', 0, .06, 0, .65, .6, .9); P(W_GEO.head, '#6cbf5a', 0, .12, .06, .45, .45, .55); P(W_GEO.cyl, '#6cbf5a', 0, .05, -.08, .02, .1, .02, -1.1); for (let k = 0; k < 4; k++) P(W_GEO.cone, '#f3a64a', 0, .11 - k * .005, .02 - k * .03, .018, .03, .012, -.2); for (const s of [-1, 1]) { P(W_GEO.eye, COL.ink, s * .02, .135, .095, .6, .6, .6); P(W_GEO.cyl, '#5aa84a', s * .025, .015, 0, .018, .04, .018); } break;
+    case 'p_phoenix': { P(W_GEO.head, '#ff7a3d', 0, 0, 0, .45, .45, .7, 0, 0, 0, glowX('#ff6a00')); P(W_GEO.head, '#ffb347', 0, .035, .035, .3, .3, .3, 0, 0, 0, glowX('#ff9f1a')); P(W_GEO.cone, '#ffd84a', 0, .035, .065, .008, .02, .008, Math.PI / 2); for (let k = 0; k < 3; k++) P(W_GEO.cone, ['#ffd84a', '#ff7a3d', '#e84a5f'][k], (k - 1) * .012, -.005, -.07 - k * .01, .01, .09, .006, -1.9 + (k - 1) * .2, 0, 0, glowX('#ff6a00')); for (const s of [-1, 1]) { const w = new THREE.Group(); g.add(w); part(w, W_GEO.cone, '#ffb347', s * .05, .01, 0, .06, .12, .012, 0, 0, s * 1.4, glowX('#ff8c1a')); part(w, W_GEO.cone, '#e84a5f', s * .07, .0, -.01, .04, .08, .01, 0, 0, s * 1.5, glowX('#e8343f')); cosReg(root, w, 'wing', { side: s, sp: 6, amp: .7 }); } g.userData.fly = .5; g.userData.sparks = '#ffb347'; break; }
+    case 'p_dragon': { P(W_GEO.head, '#3fae7a', 0, 0, 0, .5, .45, .85); P(W_GEO.head, '#3fae7a', 0, .04, .06, .38, .35, .45); for (const s of [-1, 1]) { P(W_GEO.cone, COL.gold, s * .015, .07, .05, .008, .03, .008, -.3); P(W_GEO.eye, '#ffd84a', s * .018, .05, .085, .6, .6, .6, 0, 0, 0, glowX('#ffd84a')); const w = new THREE.Group(); g.add(w); part(w, W_GEO.cone, '#2f8a5f', s * .06, .02, 0, .07, .13, .01, 0, 0, s * 1.4, { emissive: '#5ae0a0', emissiveIntensity: .25 }); cosReg(root, w, 'wing', { side: s, sp: 5, amp: .6 }); } P(W_GEO.cone, '#3fae7a', 0, 0, -.09, .02, .08, .02, -1.6); for (let k = 0; k < 3; k++) P(W_GEO.cone, COL.gold, 0, .035, .02 - k * .03, .012, .02, .008); g.userData.fly = .55; g.userData.sparks = '#7cf2b0'; break; }
+    default: return false;
+  }
+  return true;
+}
+/* per-frame motion for animated parts */
+function cosAnim(root, t) {
+  const A = root && root.userData.anims; if (!A) return;
+  for (const a of A) {
+    const m = a.m;
+    if (a.type === 'twinkle' || a.type === 'pulse') { const k = .75 + .35 * Math.sin(t * (a.type === 'pulse' ? 3 : 5) + (a.ph || 0) * 1.7); m.scale.copy(a.base.s).multiplyScalar(k); }
+    else if (a.type === 'halo') { m.position.y = a.base.y + Math.sin(t * 2) * .008; m.rotation.z = t * .8; }
+    else if (a.type === 'spin') m.rotation.y = t * (a.sp || 1.5);
+    else if (a.type === 'hue') { const c = m.material.color.setHSL((t * .15) % 1, .8, .7); m.material.emissive && m.material.emissive.copy(c); }
+    else if (a.type === 'flame') { const k = .8 + .3 * Math.abs(Math.sin(t * 18 + a.ph * 2)); m.scale.set(a.base.s.x, a.base.s.y * k, a.base.s.z); }
+    else if (a.type === 'flap') m.rotation.y = a.side * (Math.sin(t * a.sp) * a.amp);
+    else if (a.type === 'wing') m.rotation.z = a.side * Math.sin(t * a.sp) * a.amp;
+    else if (a.type === 'cape') m.rotation.x = .12 + Math.sin(t * 2.2) * .08;
+    else if (a.type === 'bob') { m.position.y = a.base.y + Math.sin(t * 2) * .012; m.rotation.z = Math.sin(t * 1.3) * .1; }
+    else if (a.type === 'swim') m.rotation.y = Math.sin(t * 2) * .6;
+  }
+}
+/* own materials for animated parts (shared materials would make every copy change colour) */
+function cosOwnMats(root) { (root.userData.anims || []).forEach(a => { if (a.type === 'hue') a.m.material = a.m.material.clone(); }); }
+/* aura particles */
+const AURAS = {
+  a_flowers: { geo: 'sph', cols: ['#f4a9c0', '#fcea8b', '#ffffff'], mode: 'trail', rate: 10, life: 1.6, size: .025 },
+  a_leaves: { geo: 'cone', cols: ['#7cc07a', '#e8a65e', '#d98e4a'], mode: 'fall', rate: 6, life: 2.2, size: .03 },
+  a_bubbles: { geo: 'sph', cols: ['#cdeefc', '#e7f7ff'], mode: 'rise', rate: 7, life: 2, size: .03 },
+  a_notes: { geo: 'oct', cols: ['#e94b5a', '#4bb3e9', '#5ad27a', '#f3c34a', '#b77ae9'], mode: 'rise', rate: 6, life: 1.6, size: .028 },
+  a_snow: { geo: 'oct', cols: ['#ffffff', '#eaf6ff'], mode: 'fall', rate: 12, life: 2, size: .018 },
+  a_stardust: { geo: 'oct', cols: ['#fff2a8', '#ffffff', '#ffd84a'], mode: 'around', rate: 14, life: 1.2, size: .02 },
+  a_fireflies: { geo: 'sph', cols: ['#fff27a', '#d8ff7a'], mode: 'orbit', rate: 0, n: 7, size: .022 },
+  a_rainbow: { geo: 'sph', cols: ['#ff6b6b', '#ffa94d', '#ffd43b', '#69db7c', '#4dabf7', '#748ffc', '#da77f2'], mode: 'trail', rate: 22, life: 1.8, size: .03 },
+  a_galaxy: { geo: 'oct', cols: ['#b77ae9', '#4dabf7', '#ffffff', '#ff8fd0', '#fff2a8'], mode: 'orbit', rate: 10, n: 18, life: 1.4, size: .022 }
+};
+const AP = { meshes: {}, list: [], acc: 0 };
+function auraMesh(kind) {
+  if (AP.meshes[kind]) return AP.meshes[kind];
+  const geo = kind === 'oct' ? new THREE.OctahedronGeometry(1) : kind === 'cone' ? new THREE.ConeGeometry(.7, 1.6, 5) : new THREE.SphereGeometry(1, 8, 6);
+  const m = new THREE.InstancedMesh(geo, new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: .9, depthWrite: false }), 260);
+  m.count = 0; m.frustumCulled = false; m.renderOrder = 6; scene.add(m); AP.meshes[kind] = m; return m;
+}
+const _am = new THREE.Matrix4(), _aq = new THREE.Quaternion(), _as = new V3(), _ae = new THREE.Euler(), _ac = new THREE.Color();
+function auraTick(dt, t, root, id, moving) {
+  const A = id && AURAS[id];
+  if (A && root) {
+    const P = root.position;
+    if (A.mode === 'orbit') {
+      const m = auraMesh(A.geo); let n = 0;
+      for (let k = 0; k < A.n; k++) { const a = t * (1.2 + (k % 3) * .3) + k / A.n * Math.PI * 2, r = .35 + (k % 3) * .06, yy = .35 + Math.sin(t * 2 + k) * .18 + (k % 4) * .08; _as.setScalar(A.size * (1 + .35 * Math.sin(t * 6 + k))); _am.compose(new V3(P.x + Math.cos(a) * r, P.y + yy, P.z + Math.sin(a) * r), _aq.identity(), _as); m.setMatrixAt(n, _am); m.setColorAt(n, _ac.set(A.cols[k % A.cols.length])); n++; }
+      AP.orbit = { mesh: m, n };
+    }
+    AP.acc += dt * (A.mode === 'trail' && !moving ? A.rate * .15 : A.rate);
+    while (AP.acc >= 1 && AP.list.length < 240) {
+      AP.acc -= 1; const c = A.cols[Math.random() * A.cols.length | 0], a = Math.random() * Math.PI * 2, r = .12 + Math.random() * .25;
+      const p = new V3(P.x + Math.cos(a) * r, P.y + .02, P.z + Math.sin(a) * r), v = new V3();
+      if (A.mode === 'rise') { p.y += .15 + Math.random() * .3; v.set((Math.random() - .5) * .1, .35 + Math.random() * .2, (Math.random() - .5) * .1); }
+      else if (A.mode === 'fall') { p.y += .9 + Math.random() * .3; v.set((Math.random() - .5) * .15, -.35, (Math.random() - .5) * .15); }
+      else if (A.mode === 'around') { p.y += .1 + Math.random() * .7; v.set(-Math.sin(a) * .4, .1, Math.cos(a) * .4); }
+      AP.list.push({ p, v, c, life: 0, max: A.life || 1.5, size: A.size, geo: A.geo, mode: A.mode, rot: Math.random() * 6 });
+    }
+  } else AP.orbit = null;
+  const counts = {};
+  for (let i = AP.list.length - 1; i >= 0; i--) { const q = AP.list[i]; q.life += dt; if (q.life >= q.max) { AP.list.splice(i, 1); continue; } q.p.addScaledVector(q.v, dt); if (q.mode === 'fall') q.p.x += Math.sin(t * 2 + q.rot) * dt * .1; q.rot += dt * 2; }
+  Object.values(AP.meshes).forEach(m => { if (!AP.orbit || AP.orbit.mesh !== m) m.count = 0; });
+  for (const q of AP.list) {
+    const m = auraMesh(q.geo), base = AP.orbit && AP.orbit.mesh === m ? AP.orbit.n : 0, n = (counts[q.geo] = (counts[q.geo] ?? base));
+    if (n >= 259) continue; const k = 1 - q.life / q.max; _as.setScalar(q.size * (q.mode === 'trail' ? Math.min(1, q.life * 6) * k : .4 + .6 * k));
+    _aq.setFromEuler(_ae.set(q.rot, q.rot * .7, 0)); _am.compose(q.p, _aq, _as); m.setMatrixAt(n, _am); m.setColorAt(n, _ac.set(q.c)); counts[q.geo] = n + 1;
+  }
+  Object.entries(AP.meshes).forEach(([g, m]) => { const base = AP.orbit && AP.orbit.mesh === m ? AP.orbit.n : 0; m.count = Math.max(base, counts[g] || 0); m.instanceMatrix.needsUpdate = true; if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+}
+const titleName = id => { const s = id && SHOP_BY.get(id); return s ? s.n : ''; };
+
 function buildChibi(look, eq = {}, forPreview = false) {
   const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
   const ch = look.char || 'student', shirt = look.shirt || '#db6a41', hair = look.hair || '#2d2424', skin = look.skin || '#f1c9a5', pants = '#3e4f7d';
@@ -10806,10 +11003,12 @@ function buildChibi(look, eq = {}, forPreview = false) {
   if (eq.back === 'b_cape') part(body, W_GEO.box, '#c8363d', 0, .1 + y, -.055, .13, .22, .01, .15);
   if (eq.back === 'b_wings') for (const s of [-1, 1]) { part(body, W_GEO.head, '#f4a9c0', s * .1, .25 + y, -.07, 1.05, .78, .1, 0, s * .35, s * .55, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#fbd3df', s * .085, .15 + y, -.065, .72, .55, .1, 0, s * .35, -s * .45, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#ffffff', s * .11, .26 + y, -.075, .4, .3, .11, 0, s * .35, s * .55, { transparent: true, opacity: .55 }); }
   root.userData.parts = parts; root.userData.body = body;
+  buildCos(root, body, parts, eq, y); cosOwnMats(root);
   return root;
 }
 function buildPet(id) {
   const g = new THREE.Group();
+  if (buildPet2(id, g)) { cosOwnMats(g); return g; }
   if (id === 'p_turtle') { part(g, W_GEO.dome, '#5c8f4f', 0, .02, 0, .12, .08, .14); part(g, W_GEO.head, '#9cc27a', 0, .04, .09, .35, .3, .35); for (const [x, z] of [[-.05, .05], [.05, .05], [-.05, -.05], [.05, -.05]]) part(g, W_GEO.head, '#9cc27a', x, .015, z, .2, .15, .2); }
   if (id === 'p_dog') { part(g, W_GEO.body, '#c99a6b', 0, -.06, 0, .9, .7, 1.4, Math.PI / 2); part(g, W_GEO.head, '#c99a6b', 0, .1, .09, .7, .65, .7); for (const s of [-1, 1]) part(g, W_GEO.head, '#8a5a3a', s * .04, .14, .08, .2, .35, .12); part(g, W_GEO.eye, COL.ink, 0, .1, .14, 1.2, 1.2, 1.2); for (const [x, z] of [[-.03, .05], [.03, .05], [-.03, -.05], [.03, -.05]]) part(g, W_GEO.leg, '#c99a6b', x, .06, z, .8, .8, .8); }
   if (id === 'p_bee') { part(g, W_GEO.head, '#f3c34a', 0, 0, 0, .55, .45, .7); part(g, W_GEO.head, COL.ink, 0, 0, -.01, .56, .46, .15); for (const s of [-1, 1]) part(g, W_GEO.head, '#ffffff', s * .03, .04, 0, .35, .12, .3, 0, 0, s * .4, { transparent: true, opacity: .8 }); g.userData.fly = .3; }
@@ -10824,7 +11023,7 @@ const homeNode = isl => isl.idx * 12 + 2;
 function startIsland() { const g = ME && ME.grade === 'g5' ? 'g5' : 'g4'; return ISL.find(i => i.grade === g); }
 function buildAvatar() {
   if (!ME) return;
-  if (AVA) { scene.remove(AVA.root); if (AVA.pet) scene.remove(AVA.pet); }
+  if (AVA) { scene.remove(AVA.root); if (AVA.pet) scene.remove(AVA.pet); if (AVA.tagEl) AVA.tagEl.remove(); }
   const root = buildChibi(ME, AV.eq); root.scale.setScalar(1.9);
   let node = AV.at; if (!(node >= 0 && node < NODES.length)) node = homeNode(startIsland());
   const p = nodePos(node); root.position.copy(p);
@@ -10845,7 +11044,7 @@ function buildAvatar() {
   updateTag();
   try { if (!localStorage.getItem('scienceIslands.walkTip')) { localStorage.setItem('scienceIslands.walkTip', '1'); setTimeout(() => avSay(tr('點島上的地面我就走過去；用電腦也可以按 W A S D 走路！', 'Tap the ground and I walk there — or use W A S D!'), 6), 1500); } } catch (e) {}
 }
-function updateTag() { if (!AVA) return; const li = levelInfo(); AVA.tagEl.innerHTML = `<b>${esc(ME.name)}</b><span>Lv.${li.lv}</span>${AVA.say ? `<em>${esc(AVA.sayText)}</em>` : ''}`; }
+function updateTag() { if (!AVA) return; const li = levelInfo(), ti = AV.eq.title && SHOP_BY.get(AV.eq.title); AVA.tagEl.innerHTML = `<b>${esc(ME.name)}</b>${ti ? `<i class="ttl" style="--rc:${RAR[ti.r].col}">${esc(ti.n)}</i>` : ''}<span>Lv.${li.lv}</span>${AVA.say ? `<em>${esc(AVA.sayText)}</em>` : ''}`; }
 function avSay(text, sec = 4) { if (!AVA) return; AVA.say = sec; AVA.sayText = text; updateTag(); dirty = true; }
 function routeNodes(src, dst) {
   const path = dijkstra(src, dst);
@@ -10995,6 +11194,8 @@ var advTick = function (dt, now) {
     AVA.pet.children.length; if (fly) AVA.pet.position.y = R0.position.y + fly + Math.sin(t * 3) * .04; else AVA.pet.position.y = R0.position.y;
     AVA.pet.rotation.y = AVA.yaw;
   }
+  cosAnim(R0, t); if (AVA.pet) { cosAnim(AVA.pet, t); const sp = AVA.pet.userData.sparks; if (sp && Math.random() < dt * 9 && AP.list.length < 240) AP.list.push({ p: AVA.pet.position.clone().add(new V3((Math.random() - .5) * .1, 0, (Math.random() - .5) * .1)), v: new V3((Math.random() - .5) * .1, -.25, (Math.random() - .5) * .1), c: sp, life: 0, max: .9, size: .016, geo: 'oct', mode: 'rise', rot: 0 }); }
+  auraTick(dt, t, R0, AV.eq.aura, moving);
   if (AVA.say > 0) { AVA.say -= dt; if (AVA.say <= 0) { AVA.say = 0; updateTag(); } }
   dirty = true;
 };
@@ -11178,7 +11379,7 @@ function makePreview(host) {
   const stand = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.2, .14, 40), amat('#f1e5d8')); stand.position.y = -.07; sc.add(stand);
   let g = null, pet = null, raf = 0, ang = .5, alive = true;
   const size = () => { const w = cv.clientWidth || 220; rr.setSize(w, w, false); };
-  const loop = () => { if (!alive) return; raf = requestAnimationFrame(loop); if (!reduced) ang += .012; if (g) g.rotation.y = ang; if (pet) { pet.position.set(Math.sin(ang - 1) * .9, pet.userData.fly ? 1 : 0, Math.cos(ang - 1) * .9); pet.rotation.y = ang; } size(); rr.render(sc, cam); };
+  const loop = () => { if (!alive) return; raf = requestAnimationFrame(loop); { const tt = performance.now() / 1000; if (g) cosAnim(g, tt); if (pet) cosAnim(pet, tt); } if (!reduced) ang += .012; if (g) g.rotation.y = ang; if (pet) { pet.position.set(Math.sin(ang - 1) * .9, pet.userData.fly ? 1 : 0, Math.cos(ang - 1) * .9); pet.rotation.y = ang; } size(); rr.render(sc, cam); };
   loop();
   return {
     set(look, eq = {}) { if (g) sc.remove(g); if (pet) sc.remove(pet); g = buildChibi(look, eq, true); g.scale.setScalar(5); sc.add(g); pet = eq.pet ? buildPet(eq.pet) : null; if (pet) { pet.scale.setScalar(pet.userData.fly ? 6 : 4); sc.add(pet); } },
@@ -11275,17 +11476,40 @@ function tabCards(pane) {
   });
   pane.innerHTML = h;
 }
-function tabShop(pane) {
-  pane.innerHTML = `<div class="shop-top"><div class="shop-pv"></div><div><p class="coins-big">${ICON3.leaf}<b>${AV.coins}</b> ${tr('葉子幣', 'leaves')}</p><p class="hint">${tr('答對題目、完成活動和任務都能賺葉子幣。商店只換外觀，不會影響答題。', 'Earn leaves by learning. Items are cosmetic only.')}</p></div></div>
-    ${['hat', 'back', 'pet'].map(slot => `<section class="qsec"><div class="eyebrow">${{ hat: tr('帽子', 'Hats'), back: tr('背飾', 'Back'), pet: tr('寵物', 'Pets') }[slot]}</div><div class="shop-grid">
-      ${AD.shop.filter(s => s.slot === slot).map(s => { const own = !!AV.owned[s.id], on = AV.eq[slot] === s.id; return `<div class="shop-item ${on ? 'on' : ''}"><b>${esc(s.n)}</b><span>${own ? (on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')) : `${ICON3.leaf}${s.p}`}</span>${own ? `<button class="btn" data-eq="${s.id}">${on ? tr('卸下', 'Remove') : tr('穿上', 'Equip')}</button>` : `<button class="btn primary" data-buy="${s.id}" ${AV.coins < s.p ? 'disabled' : ''}>${tr('購買', 'Buy')}</button>`}</div>`; }).join('')}</div></section>`).join('')}`;
-  if (BOOKPV) BOOKPV.dispose(); BOOKPV = makePreview(pane.querySelector('.shop-pv')); BOOKPV.set(ME, AV.eq);
+let SHOPSLOT = 'hat', SHOPTRY = null;
+function tabShop(pane, slot = SHOPSLOT) {
+  SHOPSLOT = slot;
+  const lv = levelInfo().lv, items = AD.shop.filter(s => s.slot === slot).sort((x, y) => x.p - y.p);
+  const ownN = AD.shop.filter(s => AV.owned[s.id]).length, tryS = SHOPTRY && SHOP_BY.get(SHOPTRY);
+  const eqPv = { ...AV.eq }; if (tryS) eqPv[tryS.slot] = tryS.id;
+  const card = s => {
+    const own = !!AV.owned[s.id], on = AV.eq[s.slot] === s.id, R = RAR[s.r] || RAR.c, locked = lv < R.lv, poor = AV.coins < s.p;
+    const act = own ? `<button class="btn" data-eq="${s.id}">${on ? tr('卸下', 'Remove') : tr('穿上', 'Wear')}</button>`
+      : locked ? `<button class="btn" disabled>${tr(`Lv.${R.lv} 解鎖`, `Unlocks at Lv.${R.lv}`)}</button>`
+      : `<button class="btn primary" data-buy="${s.id}" ${poor ? 'disabled' : ''}>${poor ? tr(`還差 ${s.p - AV.coins}`, `Need ${s.p - AV.coins}`) : tr('購買', 'Buy')}</button>`;
+    return `<div class="shop-item r-${s.r} ${on ? 'on' : ''} ${SHOPTRY === s.id ? 'trying' : ''}" style="--rc:${R.col}">
+      <div class="si-top"><em>${esc(T(R.n))}</em>${own ? `<small>${on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')}</small>` : `<small class="price">${ICON3.leaf}${s.p}</small>`}</div>
+      <b>${esc(s.n)}</b>${s.d ? `<p>${esc(s.d)}</p>` : ''}
+      <div class="si-btns">${s.slot !== 'title' && s.slot !== 'aura' ? `<button class="btn ghost" data-try="${s.id}">${SHOPTRY === s.id ? tr('取消試穿', 'Stop') : tr('試穿', 'Try')}</button>` : ''}${act}</div></div>`;
+  };
+  pane.innerHTML = `<div class="shop-top"><div class="shop-pv"></div><div><p class="coins-big">${ICON3.leaf}<b>${AV.coins}</b> ${tr('葉子幣', 'leaves')}</p>
+      <p class="hint">${tr('答對題目、完成活動、每日任務和連線對戰都能賺葉子幣。商品分成普通、稀有、史詩、傳說四種，越精緻越貴；史詩要 Lv.4、傳說要 Lv.7 才能買。商店只換外觀，不會影響答題。', 'Earn leaves by learning. Epic items unlock at Lv.4, legendary at Lv.7.')}</p>
+      <p class="shop-col">${tr(`收藏 ${ownN} / ${AD.shop.length} 件`, `Collected ${ownN} / ${AD.shop.length}`)}<span class="bar"><i style="width:${Math.round(ownN / AD.shop.length * 100)}%"></i></span></p>
+      ${tryS ? `<p class="shop-trying">${tr(`試穿中：${tryS.n}`, `Trying: ${tryS.n}`)}</p>` : ''}${AV.eq.title ? `<p class="hint">${tr('目前稱號：', 'Title: ')}<b>${esc(titleName(AV.eq.title))}</b></p>` : ''}</div></div>
+    <div class="shop-tabs" role="tablist">${Object.keys(SLOT_NAMES).map(k => `<button class="stab ${k === slot ? 'on' : ''}" data-slot="${k}" role="tab" aria-selected="${k === slot}">${esc(T(SLOT_NAMES[k]))}<small>${AD.shop.filter(x => x.slot === k && AV.owned[x.id]).length}/${AD.shop.filter(x => x.slot === k).length}</small></button>`).join('')}</div>
+    ${slot === 'aura' ? `<p class="hint">${tr('特效會在島上的角色身邊出現（預覽圖看不到），走路時效果更明顯。', 'Effects appear around your character on the islands.')}</p>` : slot === 'title' ? `<p class="hint">${tr('稱號會顯示在角色名牌下方，連線對戰時對手也看得到。', 'Titles show under your name tag.')}</p>` : ''}
+    <div class="shop-grid">${items.map(card).join('')}</div>`;
+  if (BOOKPV) BOOKPV.dispose(); BOOKPV = makePreview(pane.querySelector('.shop-pv')); BOOKPV.set(ME, eqPv);
+  pane.querySelectorAll('[data-slot]').forEach(b => b.addEventListener('click', () => { SHOPTRY = null; tabShop(pane, b.dataset.slot); }));
+  pane.querySelectorAll('[data-try]').forEach(b => b.addEventListener('click', () => { SHOPTRY = SHOPTRY === b.dataset.try ? null : b.dataset.try; tabShop(pane); }));
   pane.querySelectorAll('[data-buy]').forEach(b => b.addEventListener('click', () => {
-    const s = AD.shop.find(x => x.id === b.dataset.buy); if (AV.coins < s.p) return;
-    AV.coins -= s.p; AV.owned[s.id] = today(); AV.eq[s.slot] = s.id; saveP(); toast(tr(`買到「${s.n}」！`, `Bought ${s.n}!`)); buildAvatar(); updateMeBar(); tabShop(pane);
+    const s = SHOP_BY.get(b.dataset.buy); if (!s || AV.coins < s.p || levelInfo().lv < (RAR[s.r] || RAR.c).lv) return;
+    AV.coins -= s.p; AV.owned[s.id] = today(); AV.eq[s.slot] = s.id; SHOPTRY = null; saveP();
+    toast(tr(`買到「${s.n}」！`, `Bought ${s.n}!`)); if (s.r === 'e' || s.r === 'l') confetti(pane);
+    buildAvatar(); updateMeBar(); checkAch(); tabShop(pane);
   }));
   pane.querySelectorAll('[data-eq]').forEach(b => b.addEventListener('click', () => {
-    const s = AD.shop.find(x => x.id === b.dataset.eq); AV.eq[s.slot] = AV.eq[s.slot] === s.id ? null : s.id; saveP(); buildAvatar(); tabShop(pane);
+    const s = SHOP_BY.get(b.dataset.eq); AV.eq[s.slot] = AV.eq[s.slot] === s.id ? null : s.id; saveP(); buildAvatar(); tabShop(pane);
   }));
 }
 function tabAch(pane) {
@@ -11604,7 +11828,7 @@ async function netLeave() {
   if (!NET) return; const N = NET; NET = null;
   try { if (N.off) N.off(); } catch (e) {}
   clearTimeout(N.qTimer);
-  if (N.remote) { scene.remove(N.remote.root); if (N.remote.pet) scene.remove(N.remote.pet); }
+  if (N.remote) { scene.remove(N.remote.root); if (N.remote.pet) scene.remove(N.remote.pet); N.remote.tagEl.remove(); }
   const el = $('#nd'); if (el) el.remove(); document.body.classList.remove('net-on');
   if (PL.kind === 'net-lobby') { PL.onClose = null; closePlay(true); }
   try { history.replaceState(null, '', location.pathname); } catch (e) {}
@@ -11620,10 +11844,10 @@ async function netLeave() {
 /* ---------- the opponent's avatar ---------- */
 function netRemote(opp) {
   const R = NET.remote;
-  if (!opp) { if (R) { scene.remove(R.root); if (R.pet) scene.remove(R.pet); NET.remote = null; } return; }
+  if (!opp) { if (R) { scene.remove(R.root); if (R.pet) scene.remove(R.pet); R.tagEl.remove(); NET.remote = null; } return; }
   const sig = JSON.stringify([opp.look, opp.eq, opp.name]);
   if (!R || R.sig !== sig || R.id !== opp.id) {
-    if (R) { scene.remove(R.root); if (R.pet) scene.remove(R.pet); }
+    if (R) { scene.remove(R.root); if (R.pet) scene.remove(R.pet); R.tagEl.remove(); }
     const root = buildChibi(opp.look || {}, opp.eq || {}); root.scale.setScalar(1.9); root.position.set(opp.x, RING_Y, opp.z); scene.add(root);
     const tagEl = document.createElement('div'); tagEl.className = 'me-tag opp'; const tag = new CSS2DObject(tagEl); tag.position.set(0, .53, 0); root.add(tag);
     let pet = null; if (opp.eq && opp.eq.pet) { pet = buildPet(opp.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(root.position); scene.add(pet); }
@@ -11657,6 +11881,7 @@ function netTick(dt, now) {
   r.root.userData.body.position.y = r.hop > 0 ? Math.abs(Math.sin(r.hop * 9)) * .06 : (moving ? Math.abs(Math.sin(t * 9)) * .012 : Math.sin(t * 2) * .004);
   if (r.hop > 0) r.hop -= dt;
   if (r.say > 0) { r.say -= dt; if (r.say <= 0) remoteTag(); }
+  cosAnim(r.root, t); if (r.pet) cosAnim(r.pet, t);
   if (r.pet) { const fly = r.pet.userData.fly || 0; r.pet.position.lerp(new V3(P.x - Math.cos(r.root.rotation.y) * .34, P.y, P.z + Math.sin(r.root.rotation.y) * .34), Math.min(1, dt * 4)); r.pet.position.y = P.y + (fly ? fly + Math.sin(t * 3) * .04 : 0); r.pet.rotation.y = r.root.rotation.y; }
   dirty = true;
 }
