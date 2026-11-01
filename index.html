@@ -7597,7 +7597,7 @@ resize();
 const SG = { sph: new THREE.SphereGeometry(1, 14, 10), cone: new THREE.ConeGeometry(1, 1, 8), ring: new THREE.RingGeometry(.78, 1, 36).rotateX(-Math.PI / 2) };
 const SEA = { ev: [], next: 2.5, rings: [], drops: [] };
 const seaMat = c => new THREE.MeshStandardMaterial({ color: c, roughness: .55, flatShading: false });
-const DROP_N = 400;
+const DROP_N = 900;
 const dropMesh = new THREE.InstancedMesh(SG.sph, new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: .9 }), DROP_N);
 dropMesh.count = 0; dropMesh.frustumCulled = false; dropMesh.renderOrder = 5; scene.add(dropMesh);
 const _dm = new THREE.Matrix4(), _dq = new THREE.Quaternion(), _ds = new V3(), _dp = new V3(), _sv = new V3();
@@ -7675,11 +7675,35 @@ function spawnDolphins() {
   SEA.ev.push({ kind: 'dolphin', x: p.x, z: p.z, h: p.h, t: 0, dur: 6.2, list });
   return true;
 }
+/* whale ≈ two islands long (island ≈ 4 units across) */
+const WS = 3.2;
+const _sr = new THREE.Raycaster(), _so = new V3();
+function seaHidden(x, z) { _so.set(x, WATER_Y + .3, z); const dir = _so.clone().sub(camera.position), L = dir.length(); _sr.set(camera.position, dir.normalize()); _sr.far = L; return _sr.intersectObjects([...groundMeshes, walls], false).length > 0; }
+function whalePick() {
+  let best = null, bd = 1e9;
+  for (const needView of [true, false]) {
+    for (let k = 0; k < 220; k++) {
+      const a = Math.random() * Math.PI * 2, rr = 6 + Math.random() * 7.5, x = CENTER.x + Math.cos(a) * rr, z = CENTER.z + Math.sin(a) * rr;
+      camera.getWorldDirection(_so); const h = Math.atan2(-_so.z, _so.x) + (Math.random() < .5 ? 0 : Math.PI) + (Math.random() - .5) * .6;
+      const hx = Math.sin(h), hz = Math.cos(h);
+      if (!seaOK(x, z, 2.4)) continue;
+      let ok = true; for (const t of [-5.6, -3.5, -1.5, 1.6, 3.4, 4.6]) if (!seaOK(x + hx * t, z + hz * t, .5)) { ok = false; break; }
+      if (!ok) continue;
+      if (needView) { _sv.set(x, WATER_Y, z).project(camera); if (Math.abs(_sv.x) > .75 || Math.abs(_sv.y) > .85 || _sv.z > 1) continue; }
+      let hid = 0; for (const t of [-3, 0, 3]) if (seaHidden(x + hx * t, z + hz * t)) hid++;
+      if (needView && hid) continue;
+      const d = Math.hypot(camera.position.x - x, camera.position.z - z) * (.8 + Math.random() * .4) + hid * 50;
+      if (d < bd) { bd = d; best = { x, z, h }; }
+    }
+    if (best) return best;
+  }
+  return null;
+}
 function spawnWhale() {
   if (SEA.ev.some(e => e.kind === 'whale')) return false;
-  const p = seaPick(2.4, 1.7); if (!p) return false;
-  const w = buildWhale(); w.scale.setScalar(.9); w.position.set(p.x, WATER_Y - .5, p.z); w.rotation.y = p.h; scene.add(w);
-  SEA.ev.push({ kind: 'whale', x: p.x, z: p.z, h: p.h, t: 0, dur: 10, g: w, spouted: false, dove: false });
+  const p = whalePick(); if (!p) return false;
+  const w = buildWhale(); w.scale.setScalar(WS); w.position.set(p.x, WATER_Y - 1.7, p.z); w.rotation.y = p.h; scene.add(w);
+  SEA.ev.push({ kind: 'whale', x: p.x, z: p.z, h: p.h, t: 0, dur: 11.5, g: w, spouted: false, dove: false });
   return true;
 }
 window.__sea = { fish: () => spawnFish(), dolphin: () => spawnDolphins(), whale: () => spawnWhale(), list: () => SEA.ev.map(e => e.kind + ':' + e.t.toFixed(1)) };
@@ -7717,16 +7741,16 @@ function seaTick(dt) {
         } else if (d.wet) { d.wet = false; d.g.visible = false; splash(x, z, .7, 12); }
       });
     } else if (e.kind === 'whale') {
-      const w = e.g, t = e.t, hx = Math.sin(e.h), hz = Math.cos(e.h), mv = t * .12;
+      const w = e.g, t = e.t, hx = Math.sin(e.h), hz = Math.cos(e.h), mv = t * .35, top = WATER_Y - .26 * WS + .62;
       w.position.x = e.x + hx * mv; w.position.z = e.z + hz * mv;
-      if (t < 1.6) { w.position.y = lerp(WATER_Y - .5, WATER_Y - .08, smooth(0, 1, t / 1.6)); w.rotation.set(0, e.h, 0); if (t > 1.3 && !e.ring) { e.ring = 1; splash(w.position.x, w.position.z, 1.3, 10); } }
-      else if (t < 5.2) {
-        w.position.y = WATER_Y - .08 + Math.sin(t * 1.6) * .015;
-        if (t > 2 && t < 3.6) { const bx = w.position.x + hx * .42 * .9, bz = w.position.z + hz * .42 * .9; for (let k = 0; k < 4; k++) spray(bx + (Math.random() - .5) * .04, WATER_Y + .2, bz + (Math.random() - .5) * .04, (Math.random() - .5) * .35, 1.5 + Math.random() * .7, (Math.random() - .5) * .35, .022 + Math.random() * .012); }
-      } else if (t < 8.2) {
-        const u = (t - 5.2) / 3; w.rotation.set(0, e.h, 0); w.rotateX(smooth(0, 1, u * 1.6) * .95);
-        w.position.y = WATER_Y - .08 - u * .9; w.userData.fluke.rotation.x = -Math.sin(u * Math.PI) * .5;
-        if (u > .55 && !e.dove) { e.dove = true; const fx = w.position.x - hx * .9, fz = w.position.z - hz * .9; setTimeout(() => splash(fx, fz, 1.1, 14), 500); }
+      if (t < 2) { w.position.y = lerp(WATER_Y - .26 * WS - 1, top, smooth(0, 1, t / 2)); w.rotation.set(0, e.h, 0); if (t > 1.5 && !e.ring) { e.ring = 1; splash(w.position.x, w.position.z, 3.2, 26); } }
+      else if (t < 6) {
+        w.position.y = top + Math.sin(t * 1.4) * .04;
+        if (t > 2.4 && t < 4.4) { const f = .42 * WS, bx = w.position.x + hx * f, bz = w.position.z + hz * f; for (let k = 0; k < 7; k++) spray(bx + (Math.random() - .5) * .12, top + .3, bz + (Math.random() - .5) * .12, (Math.random() - .5) * .9, 3.4 + Math.random() * 1.4, (Math.random() - .5) * .9, .05 + Math.random() * .035); }
+      } else if (t < 9.5) {
+        const u = (t - 6) / 3.5; w.rotation.set(0, e.h, 0); w.rotateX(smooth(0, 1, u * 1.7) * .5);
+        w.position.y = top - u * 3; w.userData.fluke.rotation.x = -Math.sin(u * Math.PI) * .6;
+        if (u > .6 && !e.dove) { e.dove = true; const fx = w.position.x - hx * 1.3 * WS, fz = w.position.z - hz * 1.3 * WS; setTimeout(() => splash(fx, fz, 3, 30), 400); }
       } else w.visible = false;
     }
     if (e.t >= e.dur) { endEvent(e); SEA.ev.splice(i, 1); }
@@ -7735,7 +7759,7 @@ function seaTick(dt) {
   let n = 0;
   for (let i = SEA.drops.length - 1; i >= 0; i--) {
     const d = SEA.drops[i]; d.life += dt; d.v.y -= 3.2 * dt; d.p.addScaledVector(d.v, dt);
-    if (d.p.y < WATER_Y || d.life > 2.5) { SEA.drops.splice(i, 1); continue; }
+    if (d.p.y < WATER_Y || d.life > 3.6) { SEA.drops.splice(i, 1); continue; }
   }
   for (const d of SEA.drops) { if (n >= DROP_N) break; _ds.setScalar(d.s); _dm.compose(d.p, _dq, _ds); dropMesh.setMatrixAt(n++, _dm); }
   dropMesh.count = n; dropMesh.instanceMatrix.needsUpdate = true;
@@ -8884,7 +8908,13 @@ function buildAvatar() {
   const tagEl = document.createElement('div'); tagEl.className = 'me-tag';
   const tag = new CSS2DObject(tagEl); tag.position.set(0, .53, 0); root.add(tag);
   let pet = null; if (AV.eq.pet) { pet = buildPet(AV.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(p).add(new V3(-.3, 0, .2)); scene.add(pet); }
-  const boat = new THREE.Group(); part(boat, W_GEO.box, '#ffffff', 0, -.02, 0, .26, .07, .5); part(boat, W_GEO.box, COL.wood, 0, .03, 0, .2, .02, .38); boat.visible = false; root.add(boat);
+  const boat = new THREE.Group();
+  part(boat, W_GEO.box, '#ffffff', 0, -.035, -.02, .3, .09, .56); part(boat, W_GEO.box, COL.coral, 0, -.005, -.02, .305, .022, .565);
+  part(boat, W_GEO.box, COL.wood, 0, .012, -.02, .24, .015, .48); part(boat, W_GEO.cone, '#ffffff', 0, -.035, .3, .15, .14, .045, Math.PI / 2);
+  part(boat, W_GEO.cyl, COL.wood, 0, .17, .12, .018, .34, .018);
+  part(boat, W_GEO.cone, '#fcea8b', 0, .2, .07, .012, .3, .17, 0, Math.PI / 2, 0);
+  part(boat, W_GEO.cyl, COL.coral, 0, .36, .12, .03, .02, .03);
+  boat.visible = false; root.add(boat);
   const mark = new THREE.Mesh(new THREE.RingGeometry(.07, .1, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#db6a41', transparent: true, depthWrite: false })); mark.visible = false; mark.renderOrder = 6; mark.userData.t = 9; scene.add(mark);
   if (AVA && AVA.mark) scene.remove(AVA.mark);
   AVA = { root, tag, tagEl, pet, boat, mark, node, isl: ISL[NODES[node].isl], path: null, s: 0, len: 0, yaw: 0, say: 0, lockSay: 0, target: null };
@@ -8944,8 +8974,9 @@ function advGoto(islId, fromSelect, point) {
   if (!pts) { const a = here, b2 = goal; pts = []; for (let i = 0; i <= 24; i++) { const t = i / 24; pts.push(new V3(lerp(a.x, b2.x, t), lerp(RING_Y, WATER_Y + .06, Math.sin(Math.PI * t) ** .3), lerp(a.z, b2.z, t))); } boat = true; }
   const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
   const len = cum[cum.length - 1];
-  AVA.path = { pts, cum, len, isl, boat, speed: Math.max(1.6, len / (boat ? 4.5 : 3.2)) }; AVA.s = 0; AVA.boat.visible = boat;
+  AVA.path = { pts, cum, len, isl, boat, speed: Math.max(1.6, len / (boat ? 6.5 : 3.2)) }; AVA.s = 0; AVA.boat.visible = boat;
   if (reduced || AV.fast) { AVA.s = len; }
+  AVA.follow = len > 2.5 && !(reduced || AV.fast); AVA.followZ = false;
   dirty = true;
 }
 /* tap the ground: first tap selects the island, then the avatar walks to the tapped spot */
@@ -8969,7 +9000,8 @@ function walkKeyOK(e) {
 addEventListener('keydown', e => { const k = (e.key || '').toLowerCase(); if (k.length === 1 && 'wasd'.includes(k) && walkKeyOK(e)) { WKEYS.add(k); e.preventDefault(); } });
 addEventListener('keyup', e => WKEYS.delete((e.key || '').toLowerCase()));
 addEventListener('blur', () => WKEYS.clear());
-const _fw = new V3(), _rt = new V3(), _mv = new V3();
+const _fw = new V3(), _rt = new V3(), _mv = new V3(), _fd = new V3();
+renderer.domElement.addEventListener('pointerdown', () => { if (AVA) AVA.follow = false; });
 function walkStep(dx, dz) {
   const P = AVA.root.position, g = groundAt(P.x + dx, P.z + dz);
   if (!g) return false;
@@ -8978,6 +9010,7 @@ function walkStep(dx, dz) {
   camera.position.x += dx; camera.position.z += dz; controls.target.x += dx; controls.target.z += dz;
   return true;
 }
+window.__ava = () => AVA && { x: +AVA.root.position.x.toFixed(2), y: +AVA.root.position.y.toFixed(2), z: +AVA.root.position.z.toFixed(2), path: !!AVA.path, boat: !!(AVA.path && AVA.path.boat), s: AVA.path ? +AVA.s.toFixed(2) : null, len: AVA.path ? +AVA.path.len.toFixed(2) : null, isl: AVA.isl && AVA.isl.id };
 function onArrive(isl) {
   AVA.node = nearestNode(AVA.root.position, isl); AVA.isl = isl;
   AV.at = AVA.node; saveP();
@@ -9016,13 +9049,22 @@ var advTick = function (dt, now) {
     _ap.lerpVectors(pa.pts[lo], pa.pts[lo + 1], k); _ad.subVectors(pa.pts[lo + 1], pa.pts[lo]).setY(0);
     R0.position.copy(_ap); if (_ad.lengthSq() > 1e-6) AVA.yaw = Math.atan2(_ad.x, _ad.z);
     moving = true;
+    if (AVA.follow && !AVA.followZ) { AVA.followZ = true; const cd = camera.position.distanceTo(controls.target); if (cd > 8) zoomGoal = 8; }
+    if (AVA.follow) { flight = null; _fd.set(R0.position.x - controls.target.x, 0, R0.position.z - controls.target.z).multiplyScalar(Math.min(1, dt * 2.5)); controls.target.add(_fd); camera.position.add(_fd); }
     if (AVA.s >= pa.len) { AVA.path = null; AVA.boat.visible = false; onArrive(pa.isl); }
   }
   R0.rotation.y += ((AVA.yaw - R0.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 10);
-  const ph = t * 9;
-  if (ME.char !== 'cyclist') { const sw = moving ? Math.sin(ph) * .6 : 0; P0.legL.rotation.x = sw; P0.legR.rotation.x = -sw; P0.armL.rotation.x = -sw * .8; P0.armR.rotation.x = sw * .8; }
+  const ph = t * 9, rowing = !!(AVA.path && AVA.path.boat);
+  R0.rotation.z = rowing ? Math.sin(t * 2.4) * .07 : 0; R0.rotation.x = rowing ? Math.sin(t * 1.7) * .04 : 0;
+  if (rowing && R0.position.y < WATER_Y + .25) {
+    AVA.wake = (AVA.wake || 0) - dt; const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw);
+    if (AVA.wake <= 0) { AVA.wake = .09; for (const sd of [-1, 1]) spray(R0.position.x - hx * .45 + hz * .2 * sd, WATER_Y + .02, R0.position.z - hz * .45 - hx * .2 * sd, -hx * .3 + hz * .35 * sd, .5 + Math.random() * .3, -hz * .3 - hx * .35 * sd, .02); }
+    AVA.ringT = (AVA.ringT || 0) - dt; if (AVA.ringT <= 0) { AVA.ringT = .45; splash(R0.position.x - hx * .5, R0.position.z - hz * .5, .7, 0); }
+  }
+  if (rowing) { P0.legL.rotation.x = P0.legR.rotation.x = -1.35; const rw = Math.sin(t * 5); P0.armL.rotation.x = P0.armR.rotation.x = -1.1 + rw * .55; R0.userData.body.position.y = -.05; }
+  else if (ME.char !== 'cyclist') { const sw = moving ? Math.sin(ph) * .6 : 0; P0.legL.rotation.x = sw; P0.legR.rotation.x = -sw; P0.armL.rotation.x = -sw * .8; P0.armR.rotation.x = sw * .8; }
   else if (moving) { P0.legL.rotation.x = -1.1 + Math.sin(ph * .7) * .45; P0.legR.rotation.x = -1.1 - Math.sin(ph * .7) * .45; }
-  R0.userData.body.position.y = moving ? Math.abs(Math.sin(ph)) * .012 : Math.sin(t * 2) * .004;
+  if (!rowing) R0.userData.body.position.y = moving ? Math.abs(Math.sin(ph)) * .012 : Math.sin(t * 2) * .004;
   if (AVA.pet) {
     const back = new V3(-Math.sin(AVA.yaw) * .1 - Math.cos(AVA.yaw) * .34, 0, -Math.cos(AVA.yaw) * .1 + Math.sin(AVA.yaw) * .34).add(R0.position);
     AVA.pet.position.lerp(back, Math.min(1, dt * 4)); const fly = AVA.pet.userData.fly || 0;
