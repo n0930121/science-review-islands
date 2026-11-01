@@ -6805,6 +6805,14 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 .zzz{font:900 18px/1 var(--font);color:#6f7fb5;-webkit-text-stroke:1px #fff;paint-order:stroke fill;animation:zz 2.4s ease-in-out infinite;pointer-events:none}
 @keyframes zz{0%{opacity:0;translate:0 6px}30%{opacity:1}100%{opacity:0;translate:14px -18px}}
 .flash{position:fixed;inset:0;z-index:80;background:#fff;pointer-events:none;animation:flash .45s ease-out forwards}@keyframes flash{from{opacity:.85}to{opacity:0}}
+.fish-sub{display:flex;gap:6px;flex-wrap:wrap}.dex-filter{display:flex;gap:6px;flex-wrap:wrap}
+.dex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
+.dex-cell{position:relative;display:grid;justify-items:center;gap:2px;padding:8px 4px 6px;border-radius:12px;border:1px solid var(--line);background:#f4efe8;cursor:pointer;font:700 12px/1.25 var(--font);color:var(--muted)}
+.dex-cell i{position:absolute;top:3px;left:6px;font:600 9.5px/1 var(--mono);font-style:normal;color:#b4a99c}
+.dex-cell.got{background:#fff;color:var(--ink);border-color:var(--rc);box-shadow:inset 0 3px 0 var(--rc)}.dex-cell.sel{outline:3px solid var(--rc);outline-offset:1px}
+.dex-cell span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dex-detail{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px;border-radius:14px;background:#fff;border:2px solid var(--rc)}
+.dex-detail em{font-style:normal;font-size:11px;font-weight:800;color:#fff;background:var(--rc);padding:2px 8px;border-radius:999px}.dex-detail b{display:block;font-size:20px;margin:4px 0}.dex-detail p{margin:0 0 4px;font-size:13.5px}.dex-detail small{color:var(--muted);font-size:12px}
 #duel{position:fixed;inset:0;z-index:70;display:grid;grid-template-rows:1fr auto 1fr;background:var(--paper-solid);padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:10px}
 .dside{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:14px;border-radius:20px;background:#fff;border:2px solid var(--line);min-height:0;overflow:auto}
 .dside.p1{transform:rotate(180deg);background:#f3f6fb}
@@ -11347,7 +11355,20 @@ function fishBtn() {
   b.title = tr(`釣魚（這一小時還能釣 ${left} 次）`, `Fish (${left} left this hour)`);
 }
 /* fish market inside the shop */
+let FISHVIEW = 'bag', FISHR = 'all', FISHSEL = null;
+function fishDex() {
+  const list = FISH.filter(f => FISHR === 'all' || f.r === FISHR), sel = FISHSEL && FISH_BY.get(FISHSEL), got = id => AV.fishDex[id];
+  return `<div class="dex-filter">${['all', 'c', 'u', 'r', 'e', 'l'].map(r => `<button class="stab ${FISHR === r ? 'on' : ''}" data-fr="${r}">${r === 'all' ? tr('全部', 'All') : esc(T(RAR[r].n))}<small>${(r === 'all' ? FISH : FISH.filter(f => f.r === r)).filter(f => got(f.id)).length}/${(r === 'all' ? FISH : FISH.filter(f => f.r === r)).length}</small></button>`).join('')}</div>
+    ${sel ? (() => { const d = got(sel.id), R = RAR[sel.r]; return `<div class="dex-detail" style="--rc:${R.col}">${d ? fishSvg(R.col, 64) : fishSvg('#c9c2b8', 64)}<div><em>${esc(T(R.n))}</em><b>${d ? esc(sel.n) : '？？？'}</b><p>${d ? esc(sel.f || tr('還沒有這種魚的小知識。', 'No fact yet.')) : tr('還沒釣到，不知道是什麼魚……', 'Not caught yet.')}</p><small>${d ? tr(`第一次釣到：${d.d} · 共釣到 ${d.n} 條 · 賣價 ${sel.p}`, `First caught ${d.d} · ${d.n} caught · ${sel.p} each`) : tr(`No.${sel.id.slice(1)} · ${T(R.n)}`, `No.${sel.id.slice(1)}`)}</small></div><button class="btn" data-fsel="">${tr('關閉', 'Close')}</button></div>`; })() : ''}
+    <div class="dex-grid">${list.map(f => { const d = got(f.id), R = RAR[f.r]; return `<button class="dex-cell ${d ? 'got' : ''} ${FISHSEL === f.id ? 'sel' : ''}" data-fsel="${f.id}" style="--rc:${R.col}" title="${d ? esc(f.n) : '？'}"><i>${f.id.slice(1)}</i>${fishSvg(d ? R.col : '#d8d2c8', 30)}<span>${d ? esc(f.n) : '？'}</span></button>`; }).join('')}</div>`;
+}
 function fishMarket(pane) {
+  fishInit();
+  const sub = `<div class="fish-sub"><button class="stab ${FISHVIEW === 'bag' ? 'on' : ''}" data-fv="bag">${tr('魚簍・賣魚', 'Bag & sell')}</button><button class="stab ${FISHVIEW === 'dex' ? 'on' : ''}" data-fv="dex">📖 ${tr('魚類圖鑑', 'Fish encyclopedia')}<small>${Object.keys(AV.fishDex).length}/${FISH.length}</small></button></div>`;
+  if (FISHVIEW === 'dex') return `<div class="fish-mk">${sub}${fishDex()}</div>`;
+  return sub + _fishMarket(pane);
+}
+function _fishMarket(pane) {
   fishInit(); const S = fishStats(), bag = Object.entries(AV.fishBag).filter(([, n]) => n > 0).map(([id, n]) => ({ f: FISH_BY.get(id), n })).filter(x => x.f).sort((a, b) => b.f.p - a.f.p);
   const worth = bag.reduce((a, x) => a + x.f.p * x.n, 0), by = r => FISH.filter(f => f.r === r), seen = r => by(r).filter(f => AV.fishDex[f.id]).length;
   return `<div class="fish-mk">
@@ -11360,6 +11381,9 @@ function fishMarket(pane) {
   </div>`;
 }
 function fishMarketBind(pane, rerender) {
+  pane.querySelectorAll('[data-fv]').forEach(b => b.addEventListener('click', () => { FISHVIEW = b.dataset.fv; FISHSEL = null; rerender(); }));
+  pane.querySelectorAll('[data-fr]').forEach(b => b.addEventListener('click', () => { FISHR = b.dataset.fr; FISHSEL = null; rerender(); }));
+  pane.querySelectorAll('[data-fsel]').forEach(b => b.addEventListener('click', () => { FISHSEL = b.dataset.fsel || null; rerender(); }));
   const sell = (id, n) => { const f = FISH_BY.get(id), have = AV.fishBag[id] || 0, k = Math.min(n, have); if (!f || !k) return 0; AV.fishBag[id] = have - k; AV.coins += f.p * k; AV.fishSold = (AV.fishSold || 0) + f.p * k; return f.p * k; };
   pane.querySelectorAll('[data-sell]').forEach(b => b.addEventListener('click', () => { const g = sell(b.dataset.sell, 1); saveP(); updateMeBar(); checkFishTitles(); toast(tr(`賣出 +${g} 葉子幣`, `+${g} leaves`)); rerender(); }));
   const all = pane.querySelector('#fmAll'); if (all) all.addEventListener('click', () => { let g = 0; Object.keys(AV.fishBag).forEach(id => { g += sell(id, AV.fishBag[id]); }); saveP(); updateMeBar(); checkFishTitles(); toast(tr(`全部賣出 +${g} 葉子幣`, `+${g} leaves`)); rerender(); });
