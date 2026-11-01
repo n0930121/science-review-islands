@@ -13270,6 +13270,20 @@ body.fp-on #card,body.fp-on #side{display:none}body.fp-on #stage{cursor:grab}
 @media (hover:hover) and (pointer:fine){body.fp-on #fpPad [data-k]{display:none}body.fp-on #fpPad{display:block}}
 #btnFP[aria-pressed="true"]{background:var(--ink);color:#fff}
 body.hide-labels .isl-label,body.hide-labels .grade-tag,body.hide-labels .subj-tag,body.hide-labels .islet-tag{visibility:hidden!important}
+.mon-btn,.ship-btn{pointer-events:auto;border:2px solid #fff;border-radius:999px;padding:4px 9px;font:800 12px/1 var(--font);cursor:pointer;box-shadow:0 3px 10px #0003;white-space:nowrap}
+.mon-btn{background:#7a4fc4;color:#fff}.ship-btn{background:#1f6f8b;color:#fff;font-size:13px;padding:6px 12px}
+.mon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:6px 0 12px}.mon-card{display:grid;gap:3px;text-align:left;border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff;font-family:inherit;color:var(--ink)}.mon-card.wild{background:#f3ecff;cursor:pointer}.mon-card small{color:var(--muted)}.mon-card p{margin:0;font-size:12.5px;line-height:1.5;color:var(--muted)}.mon-card span{font-weight:800;color:#7a4fc4}
+.rep{display:grid;gap:12px}.rep-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}.rep-kpi div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid}.rep-kpi b{font:900 26px/1.1 var(--font)}.rep-kpi small{font-size:14px;color:var(--muted)}.rep-kpi span{font-size:12.5px;color:var(--muted)}
+.rep-bars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:150px;align-items:end;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.rb{display:grid;grid-template-rows:1fr auto auto;height:100%;text-align:center;gap:2px}.rb i{display:flex;flex-direction:column-reverse;align-self:end;background:#cfe6d3;border-radius:6px 6px 2px 2px;overflow:hidden;min-height:2px}.rb em{display:block;background:#4f9a5a}.rb b{font-size:12px}.rb span{font-size:12px;color:var(--muted)}
+.rep-sec h4{margin:0 0 6px}.rep-isl{display:flex;justify-content:space-between;width:100%;border:1px solid var(--line);border-left:6px solid var(--c);border-radius:12px;background:#fff;padding:8px 12px;margin-bottom:6px;font-family:inherit;color:var(--ink);cursor:pointer}.rep-isl span{color:#c0392b;font-weight:700}
+body.print-report > :not(#play){display:none!important}body.print-report #play{position:static!important}
+.tmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.tm-s{background:#f6ead0;border:2px dashed #b88a4a;border-radius:16px;padding:12px;display:grid;gap:8px}.tm-s h4{margin:0;display:flex;justify-content:space-between}
+.tm-grid{position:relative;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:4px;background:radial-gradient(circle at 30% 30%,#e9d3a2,#c9a466);border-radius:10px;padding:6px}.tm-p{aspect-ratio:1;border-radius:6px;display:grid;place-items:center;background:#7b5a34;color:#e9d3a2;font:800 12px var(--font)}.tm-p.on{background:transparent;color:#5a3a1a;border:1px dashed #8a6436}.tm-x{position:absolute;right:12%;bottom:14%;color:#c0392b;font:900 26px var(--font);opacity:.85}
+.mer{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}.mer-i{border:2px solid var(--rc);border-radius:14px;padding:12px;background:#fff;display:grid;gap:4px}.mer-i em{font-style:normal;font-size:12px;color:var(--rc);font-weight:800}.mer-i b{font-size:16px}.mer-i p{margin:0}.mer-i s{color:var(--muted)}.mer-i strong{color:#c0392b;font-size:18px}
+.photo-prev{width:100%;border-radius:14px;box-shadow:0 4px 16px #0003}
+.pmsg{display:grid;gap:6px}.pmsg label{display:grid;gap:2px}.pmsg small{color:var(--muted)}.pmsg textarea{font:15px/1.6 var(--font);border:2px solid var(--line);border-radius:10px;padding:8px}
+.letter{background:#fffaf0!important}.letter-t{font:700 20px/1.7 var(--font);margin:6px 0}.letter-d{color:var(--muted);font-size:12px}
+.act.bossact{background:linear-gradient(160deg,#fff7d6,#ffe9a8)}
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
 
@@ -16214,6 +16228,7 @@ function spawnBottle() {
   btn.addEventListener('pointerdown', ev => ev.stopPropagation());
   btn.addEventListener('click', ev => {
     ev.stopPropagation(); if (e.got) return; e.got = true; btn.remove(); e.t = e.dur - .8;
+    if (e.parent && LP.pmsg && !LP.pmsg.read) { LP.pmsg.read = today(); saveP(); splash(p.x, p.z, .5, 8); const el = document.createElement('div'); el.className = 'card-pop letter-pop'; el.innerHTML = `<div class="kcard letter"><small>${tr('💌 漂流瓶裡有一封信', '💌 A letter in the bottle')}</small><p class="letter-t">${esc(LP.pmsg.text)}</p><span class="letter-d">${esc(LP.pmsg.date || '')}</span></div>`; document.body.appendChild(el); requestAnimationFrame(() => el.classList.add('on')); confetti(el.firstElementChild); el.addEventListener('click', () => el.remove()); try { avSay(tr('是家人寫給我的信！', 'A letter from my family!'), 4); } catch (er) {} return; }
     const fact = BOTTLE_FACTS[Math.random() * BOTTLE_FACTS.length | 0], c = 8 + (Math.random() * 18 | 0);
     if (typeof ADV_READY !== 'undefined' && ADV_READY && ME) { grant({ coins: c }, tr('撿到漂流瓶', 'Message bottle')); }
     toast(tr(`📜 瓶中信：${fact}`, `📜 ${fact}`)); splash(p.x, p.z, .5, 8);
@@ -16578,7 +16593,7 @@ function frame(now) {
     updateClouds(dt);
     seaTick(dt);
     dinoTick(dt, simTime);
-    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); ambTick(dt, simTime); denseTick(dt, simTime); } catch (e) { console.warn(e); }
+    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); ambTick(dt, simTime); denseTick(dt, simTime); funTick(dt, simTime); } catch (e) { console.warn(e); }
     dirty = true;
   }
   if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
@@ -16683,6 +16698,7 @@ function activitiesHTML(isl) {
   if (srt) h += `<button class="act" data-act="sort" data-isl="${isl.id}">${ICON.sort}<span><b>${tr('分類配對', 'Sorting game')}</b><small>${tr(`${srt.length} 回合，把卡片放到正確的格子`, `${srt.length} rounds`)}</small></span><em class="ok">${LP.s[isl.id] ? '✓' : ''}</em></button>`;
   isl.items.filter(it => LD.puzzle && LD.puzzle[it.id]).forEach(it => { h += `<button class="act" data-act="puzzle" data-item="${it.id}">${ICON.puzzle}<span><b>${tr('心智圖拼圖', 'Mind-map puzzle')}${/篇/.test(T(it.name)) ? '・' + esc(T(it.name).split('・')[1] || '') : ''}</b><small>${tr(`${LD.puzzle[it.id].length} 塊拼圖，拼回原位`, `${LD.puzzle[it.id].length} pieces`)}</small></span><em class="ok">${LP.z && LP.z[it.id] ? '✓' : ''}</em></button>`; });
   if (typeof LGAMES !== 'undefined' && isl.id === LG_ISL) LGAMES.forEach(gm => { const sv = (LP.lg || {})[gm.id] || 0; h += `<button class="act lgact" data-act="lg" data-g="${gm.id}"><span class="lg-ico">${gm.ic}</span><span><b>${esc(T(gm.n))}</b><small>${esc(T(gm.k))}・${esc(T(gm.d))}</small></span><em class="stars">${sv ? starStr(sv) : ''}</em></button>`; });
+  if (q && (LP.q[isl.id] || 0) >= 3) h += `<button class="act bossact" data-act="boss" data-isl="${isl.id}"><span class="lg-ico">👑</span><span><b>${tr('島主挑戰', 'Island boss')}</b><small>${LP.boss && LP.boss[isl.id] ? tr('已打敗 ✓ 可以再挑戰', 'Defeated ✓') : tr('5 題全對才能打敗島主，拿皇冠徽章', 'All 5 right for a crown badge')}</small></span><em class="ok">${LP.boss && LP.boss[isl.id] ? '👑' : ''}</em></button>`;
   fills.forEach(it => { h += `<button class="act" data-act="fill" data-item="${it.id}" data-noselect="1">${ICON.fill}<span><b>${tr('心智圖填空', 'Mind-map fill-in')}${/篇/.test(T(it.name)) ? '・' + esc(T(it.name).split('・')[1] || '') : ''}</b><small>${tr(`${LD.blanks[it.id].length} 個空格`, `${LD.blanks[it.id].length} blanks`)}</small></span><em class="ok">${LP.f[it.id] ? '✓' : ''}</em></button>`; });
   return h + '</div>';
 }
@@ -16719,6 +16735,7 @@ document.addEventListener('click', e => {
   else if (a === 'puzzle') startPuzzle(ITEMS.get(b.dataset.item));
   else if (a === 'hub') openHub();
   else if (a === 'lg') startLG(b.dataset.g);
+  else if (a === 'boss') startBoss(ISL_BY.get(b.dataset.isl));
   else if (a === 'games') openGames();
   else if (a === 'pass') openPassport();
   else if (a === 'goisl') { closePlay(); selectIsland(b.dataset.isl); }
@@ -16806,19 +16823,21 @@ function openPassport() {
         const extras = [LD.labs[isl.id] ? (LP.l[isl.id] ? tr('實驗✓', 'Lab✓') : tr('實驗', 'Lab')) : '', LD.sort[isl.id] ? (LP.s[isl.id] ? tr('配對✓', 'Sort✓') : tr('配對', 'Sort')) : '',
           ...isl.items.filter(it => LD.blanks[it.id]).map(it => LP.f[it.id] ? tr('填空✓', 'Fill✓') : tr('填空', 'Fill')),
           ...isl.items.filter(it => LD.puzzle && LD.puzzle[it.id]).map(it => LP.z && LP.z[it.id] ? tr('拼圖✓', 'Puzzle✓') : tr('拼圖', 'Puzzle'))].filter(Boolean);
-        h += `<button class="stamp ${s ? 'on' : ''} ${op ? '' : 'lk'}" data-act="goisl" data-isl="${isl.id}" style="--c:${isl.accent}"><b>${esc(isl.lesson)}</b><span>${esc(T(isl.label))}</span><em>${op ? starStr(s) : tr('未解鎖', 'Locked')}</em><small>${extras.map(esc).join(' · ')}</small></button>`;
+        h += `<button class="stamp ${s ? 'on' : ''} ${op ? '' : 'lk'}" data-act="goisl" data-isl="${isl.id}" style="--c:${isl.accent}"><b>${esc(isl.lesson)}</b><span>${esc(T(isl.label))}</span><em>${op ? starStr(s) : tr('未解鎖', 'Locked')}${LP.boss && LP.boss[isl.id] ? ' 👑' : ''}</em><small>${extras.map(esc).join(' · ')}</small></button>`;
       });
       h += '</div></div>';
     });
     h += '</section>';
   });
   h += PARENT_OK ? `<div class="pass-foot"><label class="sw"><input type="checkbox" id="passAll" ${LP.all ? 'checked' : ''}> <span>${tr('家長模式：全部關卡直接解鎖', 'Parent mode: unlock everything')}</span></label>
-    <button class="btn" id="passReset">${tr('清除進度', 'Reset progress')}</button><button class="btn" id="passLock">${tr('收起家長設定', 'Hide parent settings')}</button></div>`
+    <button class="btn" id="passReset">${tr('清除進度', 'Reset progress')}</button><button class="btn" id="passLock">${tr('收起家長設定', 'Hide parent settings')}</button></div>
+    <div class="pass-foot pmsg"><label for="pmText"><b>💌 ${tr('親子留言瓶', 'Message bottle')}</b><small>${tr('寫一句鼓勵的話，孩子會在海上撿到漂流瓶打開。', 'Write a note; your child finds it in a bottle at sea.')}</small></label><textarea id="pmText" maxlength="120" rows="2" placeholder="${tr('例如：這週好認真，週末一起去看海！', 'e.g. Great work this week!')}">${LP.pmsg && !LP.pmsg.read ? esc(LP.pmsg.text) : ''}</textarea><button class="btn primary" id="pmSave">${tr('放進漂流瓶', 'Put it in a bottle')}</button><span class="hint">${LP.pmsg ? (LP.pmsg.read ? tr(`上一封已在 ${LP.pmsg.read} 被打開`, `Last one opened ${LP.pmsg.read}`) : tr('漂流瓶已經在海上漂了', 'Bottle is out at sea')) : ''}</span></div>`
     : `<div class="pass-foot parent-gate" id="passGate" hidden></div>`;
   h += `<p class="src">${tr('進度只存在這台裝置的瀏覽器裡。', 'Progress is saved in this browser only.')}</p></div>`;
   body.innerHTML = h;
   if (PARENT_OK) {
   $('#passLock').addEventListener('click', () => { PARENT_OK = false; openPassport(); });
+  $('#pmSave').addEventListener('click', () => { const t = $('#pmText').value.trim(); if (!t) return; LP.pmsg = { text: t, date: today(), read: null }; saveP(); toast(tr('💌 已放進漂流瓶，孩子會在海上撿到！', 'Bottle sent!')); openPassport(); });
   $('#passAll').addEventListener('change', e => { LP.all = e.target.checked; saveP(); refreshProgressUI(); openPassport(); });
   $('#passReset').addEventListener('click', e => {
     const b = e.currentTarget;
@@ -17427,6 +17446,9 @@ function openHub() {
     <button class="hcard" id="hSurv"><b>${tr('動物求生大作戰', 'Animal survival')}</b><span>${tr('五 1-1：天敵來了，選對保護方式！', 'Pick the right defence!')}</span><em>${LP.sv ? tr(`最佳：救了 ${LP.sv} 隻`, `Best: ${LP.sv}`) : ''}</em></button>
     <button class="hcard big net-card" id="hNet"><b>${tr('連線搶答擂台', 'Online quiz battle')}</b><span>${tr('兩台電腦或手機連線，比比看誰先答對！', 'Two devices, race to answer!')}</span><em>${AV && AV.net ? tr(`${AV.net.w} 勝 ${AV.net.l} 敗`, `${AV.net.w}W ${AV.net.l}L`) : 'NEW'}</em></button>
     <button class="hcard" id="hDuel"><b>${tr('親子快問快答', 'Two-player quiz')}</b><span>${tr('同一台裝置兩個人搶答', 'Two players, one device')}</span><em></em></button>
+    <button class="hcard" id="hMon"><b>👾 ${tr('錯題怪獸', 'Mistake monsters')}</b><span>${tr(`島上有 ${typeof FUN !== 'undefined' ? FUN.mon.size : 0} 隻・已收服 ${Object.keys(LP.mcap || {}).length} 隻`, 'Catch them by answering right')}</span><em></em></button>
+    <button class="hcard" id="hMap"><b>🗺️ ${tr('藏寶圖', 'Treasure map')}</b><span>${tr('每過一課得到一塊碎片', 'A piece for every lesson passed')}</span><em></em></button>
+    <button class="hcard" id="hRep"><b>📊 ${tr('本週成績單', 'Weekly report')}</b><span>${tr('答題數、答對率、要加強的課', 'Answers, accuracy, weak spots')}</span><em></em></button>
     <button class="hcard" data-act="pass"><b>${tr('學習護照', 'Passport')}</b><span>${tr(`已拿到 ${totalStars()} 顆星`, `${totalStars()} stars`)}</span><em></em></button>
   </div>
   <div class="hub-set">
@@ -17438,6 +17460,7 @@ function openHub() {
   $('#hDaily').addEventListener('click', startDaily);
   if ($('#hBook')) $('#hBook').addEventListener('click', () => openBook('quest'));
   $('#hReview').addEventListener('click', startReview);
+  $('#hMon').addEventListener('click', () => monDex()); $('#hMap').addEventListener('click', () => openMap()); $('#hRep').addEventListener('click', () => openReport());
   $('#hHunt').addEventListener('click', startHunt);
   $('#hSurv').addEventListener('click', startSurvival);
   $('#hDuel').addEventListener('click', setupDuel);
@@ -20352,6 +20375,228 @@ function denseTick(dt, t) {
   const F = DENSE.ferry; if (F) { F.u = (F.u + dt * .006) % 1; const p = F.curve.getPointAt(F.u), tg = F.curve.getTangentAt(F.u); F.g.position.set(p.x, WATER_Y + .02 + Math.sin(t * 1.4) * .015, p.z); F.g.rotation.set(Math.sin(t * 1.1) * .03, Math.atan2(tg.x, tg.z), 0); if (Math.random() < dt * 4) splash(p.x - tg.x * .9, p.z - tg.z * .9, .45, 2); }
 }
 window.__dense = DENSE;
+
+/* =====================================================================
+   16m. play extras: mistake monsters, weekly report, island bosses, treasure map,
+        seasons, festivals, the weekly merchant ship, photo studio, parent message bottle
+   ===================================================================== */
+const FUN = { mon: new Map(), t: 0 };
+LP.log = LP.log || {}; LP.mcap = LP.mcap || {}; LP.boss = LP.boss || {}; LP.slog = LP.slog || {}; LP.chest = LP.chest || {};
+const fm = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .6, flatShading: true, ...o });
+/* answer log for the weekly report (every answered question passes through noteAnswer) */
+const _noteAnswer0 = noteAnswer;
+noteAnswer = function (key, ok, review) {
+  try { const d = today(), L = (LP.log[d] = LP.log[d] || { n: 0, ok: 0, isl: {} }), q = QBY.get(key); L.n++; if (ok) L.ok++; if (q && !ok) L.isl[q.iid] = (L.isl[q.iid] || 0) + 1; } catch (e) {}
+  _noteAnswer0(key, ok, review);
+};
+/* stars gained per day (for the report) */
+const _growCel0 = growCelebrate;
+growCelebrate = function (isl, st) { const d = today(); LP.slog[d] = (LP.slog[d] || 0) + 1; saveP(); _growCel0(isl, st); };
+
+/* ---------- 1. mistake monsters: every wrong answer roams its island until you catch it by answering right ---------- */
+const MON_NAMES = ['迷糊怪', '粗心獸', '忘光光', '搞混精', '跳題蟲', '錯字龍', '看錯鬼', '漏字怪', '亂猜獸', '健忘鼠', '分心怪', '馬虎蛙'];
+const monName = key => MON_NAMES[hashStr(key) % MON_NAMES.length];
+function monBuild(key, isl) {
+  const r = mulberry32(hashStr(key)), g = new THREE.Group(), hue = r(), col = new THREE.Color().setHSL(hue, .55, .6), dark = col.clone().multiplyScalar(.6);
+  const body = new THREE.Mesh(new THREE.SphereGeometry(.13, 12, 10), fm(col.getStyle())); body.scale.set(1, .85 + r() * .3, 1); body.position.y = .13; body.castShadow = true; g.add(body);
+  for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(.035, 8, 6), fm('#ffffff')); e.position.set(s * .05, .17, .11); g.add(e); const p = new THREE.Mesh(new THREE.SphereGeometry(.017, 6, 5), fm('#222')); p.position.set(s * .05, .17, .14); g.add(p);
+    if (r() < .7) { const h = new THREE.Mesh(new THREE.ConeGeometry(.025, .08, 5), fm(dark.getStyle())); h.position.set(s * .07, .27, 0); h.rotation.z = -s * .4; g.add(h); }
+    const f = new THREE.Mesh(new THREE.SphereGeometry(.035, 6, 5), fm(dark.getStyle())); f.scale.set(1, .5, 1.4); f.position.set(s * .06, .02, .03); g.add(f); }
+  const m = new THREE.Mesh(new THREE.TorusGeometry(.03, .008, 4, 10, Math.PI), fm('#3a2020')); m.position.set(0, .1, .125); m.rotation.z = Math.PI; g.add(m);
+  const btn = document.createElement('button'); btn.className = 'mon-btn'; btn.type = 'button'; btn.textContent = '👾 ' + monName(key);
+  btn.addEventListener('pointerdown', e => e.stopPropagation()); btn.addEventListener('click', e => { e.stopPropagation(); monFight(key); });
+  const lab = new CSS2DObject(btn); lab.position.set(0, .42, 0); g.add(lab);
+  scene.add(g); return { g, btn, isl, a: r() * 6.28, d: 1.1 + r() * .45, v: (.25 + r() * .3) * (r() < .5 ? 1 : -1), ph: r() * 6 };
+}
+function monSync() {
+  const keys = Object.keys(LP.w).filter(k => QBY.has(k)), want = new Set(), perIsl = {};
+  keys.forEach(k => { const q = QBY.get(k), isl = ISL_BY.get(q.iid); if (!isl || !unlocked(isl)) return; perIsl[isl.id] = (perIsl[isl.id] || 0) + 1; if (perIsl[isl.id] <= 3) want.add(k); });
+  FUN.mon.forEach((M, k) => { if (!want.has(k)) { scene.remove(M.g); M.btn.remove(); FUN.mon.delete(k); } });
+  want.forEach(k => { if (!FUN.mon.has(k)) { const q = QBY.get(k); FUN.mon.set(k, monBuild(k, ISL_BY.get(q.iid))); } });
+}
+function monFight(key) {
+  const q = QBY.get(key); if (!q) return;
+  runQs([q], tr(`👾 錯題怪獸：${monName(key)}`, `Mistake monster: ${monName(key)}`), tr('答對就能收服牠！', 'Answer right to catch it!'), {
+    onAnswer: (qq, ok) => {
+      _noteAnswer0(qq.key, ok, true); advEvent('answer', { ok });
+      if (ok) { delete LP.w[qq.key]; LP.mcap[qq.key] = today(); saveP(); const M = FUN.mon.get(qq.key); if (M) { for (let i = 0; i < 20; i++) { const a = Math.random() * 6.28; spray(M.g.position.x, M.g.position.y + .2, M.g.position.z, Math.cos(a), 1.2 + Math.random(), Math.sin(a), .025); } }
+        if (ADV_READY && ME) grant({ coins: 6, xp: 10 }, tr('收服錯題怪獸', 'Monster caught'));
+        toast(tr(`🎉 收服了「${monName(qq.key)}」！錯題怪獸圖鑑 ${Object.keys(LP.mcap).length} 隻`, 'Caught!')); monSync(); }
+      else toast(tr('怪獸跑掉了！看完解說，等一下再來抓牠。', 'It got away — read the explanation and try again later.'));
+    },
+    onDone: () => closePlay()
+  });
+}
+function monDex() {
+  const caps = Object.entries(LP.mcap).sort((a, b) => b[1].localeCompare(a[1]));
+  const body = openPlay('mon', tr('錯題怪獸圖鑑', 'Mistake monsters'), tr(`已收服 ${caps.length} 隻・島上還有 ${FUN.mon.size} 隻`, `${caps.length} caught · ${FUN.mon.size} roaming`), { wide: true });
+  body.innerHTML = `<p class="hint">${tr('每答錯一題，就有一隻錯題怪獸跑到那座島上。點怪獸頭上的名字，答對那一題就能收服牠（也會從錯題本畢業）。', 'Each wrong answer becomes a monster on its island. Tap it and answer correctly to catch it.')}</p>
+    ${FUN.mon.size ? `<div class="eyebrow">${tr('還在島上遊蕩', 'Still roaming')}</div><div class="mon-grid">${[...FUN.mon.entries()].map(([k, M]) => `<button class="mon-card wild" data-mk="${esc(k)}"><b>👾 ${esc(monName(k))}</b><small>${esc(codeOf(M.isl))} ${esc(T(M.isl.label))}</small><span>${tr('去抓牠', 'Catch it')}</span></button>`).join('')}</div>` : ''}
+    <div class="eyebrow">${tr('已收服', 'Caught')}</div>${caps.length ? `<div class="mon-grid">${caps.map(([k, d]) => { const q = QBY.get(k); return `<div class="mon-card"><b>⭐ ${esc(monName(k))}</b><small>${q ? esc(codeOf(ISL_BY.get(q.iid))) : ''}・${esc(d)}</small><p>${q ? esc(q.q) : ''}</p></div>`; }).join('')}</div>` : `<p class="hint">${tr('還沒有收服任何怪獸。', 'None caught yet.')}</p>`}`;
+  body.querySelectorAll('[data-mk]').forEach(b => b.addEventListener('click', () => monFight(b.dataset.mk)));
+}
+
+/* ---------- 2. weekly report for parents ---------- */
+function weekDays() { const t = new Date(); t.setHours(0, 0, 0, 0); const dow = (t.getDay() + 6) % 7, out = []; for (let i = 0; i < 7; i++) { const d = new Date(t); d.setDate(t.getDate() - dow + i); out.push(dstr(d)); } return out; }
+function openReport() {
+  const days = weekDays(), wd = ['一', '二', '三', '四', '五', '六', '日'], L = days.map(d => LP.log[d] || { n: 0, ok: 0, isl: {} });
+  const n = L.reduce((a, x) => a + x.n, 0), ok = L.reduce((a, x) => a + x.ok, 0), act = L.filter(x => x.n).length, stars = days.reduce((a, d) => a + (LP.slog[d] || 0), 0);
+  const wrongIsl = {}; L.forEach(x => Object.entries(x.isl).forEach(([k, v]) => wrongIsl[k] = (wrongIsl[k] || 0) + v));
+  const top = Object.entries(wrongIsl).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => ({ isl: ISL_BY.get(k), v })).filter(x => x.isl);
+  const caught = Object.values(LP.mcap).filter(d => days.includes(d)).length, mx = Math.max(1, ...L.map(x => x.n));
+  const body = openPlay('report', tr('本週成績單', 'Weekly report'), tr(`${days[0]} ～ ${days[6]}`, `${days[0]} – ${days[6]}`), { wide: true });
+  body.innerHTML = `<div class="rep">
+    <div class="rep-kpi"><div><b>${n}</b><span>${tr('答題數', 'Answered')}</span></div><div><b>${n ? Math.round(ok / n * 100) : 0}%</b><span>${tr('答對率', 'Accuracy')}</span></div><div><b>${act}<small>/7</small></b><span>${tr('有複習的天數', 'Active days')}</span></div><div><b>${stars}</b><span>${tr('新拿到的星星', 'New stars')}</span></div><div><b>${caught}</b><span>${tr('收服錯題怪獸', 'Monsters caught')}</span></div></div>
+    <div class="rep-bars">${L.map((x, i) => `<div class="rb"><i style="height:${Math.round(x.n / mx * 100)}%"><em style="height:${x.n ? Math.round(x.ok / x.n * 100) : 0}%"></em></i><b>${x.n || ''}</b><span>${wd[i]}</span></div>`).join('')}</div>
+    <p class="hint">${tr('長條是每天答題數，深色是答對的部分。', 'Bars: questions per day; dark part = correct.')}</p>
+    <div class="rep-sec"><h4>${tr('最需要加強的課', 'Needs work')}</h4>${top.length ? top.map(x => `<button class="rep-isl" data-act="goisl" data-isl="${x.isl.id}" style="--c:${x.isl.accent}"><b>${esc(codeOf(x.isl))} ${esc(T(x.isl.name))}</b><span>${tr(`本週答錯 ${x.v} 次`, `${x.v} wrong this week`)}</span></button>`).join('') : `<p class="hint">${tr('這週還沒有答錯的紀錄。', 'No mistakes logged this week.')}</p>`}</div>
+    <div class="rep-sec"><h4>${tr('目前狀況', 'Right now')}</h4><p>${tr(`錯題本還有 <b>${wrongCount()}</b> 題、島上有 <b>${FUN.mon.size}</b> 隻錯題怪獸；全部一共拿到 <b>${totalStars()}</b> 顆星。`, `${wrongCount()} in the mistake book, ${totalStars()} stars in total.`)}</p>${examDays() != null && examDays() >= 0 ? `<p>${tr(`距離段考還有 <b>${examDays()}</b> 天。`, `${examDays()} days to the exam.`)}</p>` : ''}</div>
+    <p class="hint">${tr('答題紀錄從這次更新後開始累積，只存在這台裝置。', 'Logging started with this update and stays on this device.')}</p>
+    <div class="qrow center"><button class="btn" id="repPrint">${tr('列印 / 存成 PDF', 'Print / save as PDF')}</button></div></div>`;
+  $('#repPrint').addEventListener('click', () => { document.body.classList.add('print-report'); setTimeout(() => { print(); document.body.classList.remove('print-report'); }, 50); });
+}
+
+/* ---------- 3. island bosses: after three stars, beat the island's boss (5 hard questions, all right) for a crown badge ---------- */
+const BOSS_TITLE = { sci: '博士', soc: '長老', chi: '大師' };
+const bossName = isl => `${T(isl.label)}${BOSS_TITLE[isl.subj] || '島主'}`;
+function startBoss(isl) {
+  const bank = LD.quiz[isl.id] || []; if (!bank.length) return;
+  const qs = shuffle(bank.map((q, i) => ({ ...q, key: `${isl.id}#${i}`, iid: isl.id }))).sort((a, b) => (LP.w[b.key] ? 1 : 0) - (LP.w[a.key] ? 1 : 0)).slice(0, Math.min(5, bank.length));
+  let miss = 0;
+  runQs(qs, tr(`👑 島主挑戰：${bossName(isl)}`, `Boss: ${bossName(isl)}`), tr('5 題全對才能打敗島主！', 'Get all 5 right to win!'), {
+    onAnswer: (q, ok) => { noteAnswer(q.key, ok, false); advEvent('answer', { ok }); if (!ok) miss++; },
+    onDone: (sc, n, body) => {
+      const win = sc === n, first = win && !LP.boss[isl.id];
+      if (win) { LP.boss[isl.id] = today(); saveP(); if (first && ADV_READY && ME) grant({ xp: 80, coins: 60 }, tr('打敗島主', 'Boss defeated')); const wins = Object.keys(LP.boss).length; if (ADV_READY && ME && wins >= 5 && !AV.owned.ti_boss5) { AV.owned.ti_boss5 = today(); saveP(); setTimeout(() => toast(tr('🏅 獲得稱號「群島霸主」！', 'Title: Archipelago champion!')), 1200); } }
+      body.innerHTML = `<div class="qres lg-res"><div class="bigstars">${win ? '👑' : '💪'}</div><h3>${win ? tr(`打敗了${bossName(isl)}！`, 'Boss defeated!') : tr(`答對 ${sc} / ${n}，差一點點！`, `${sc}/${n} — so close!`)}</h3>
+        <p>${win ? tr(`獲得「${T(isl.label)}」皇冠徽章${first ? '、+80 XP、+60 葉子幣' : ''}，護照上會出現 👑。`, 'Crown badge earned.') : tr('島主說：「把錯的題目弄懂，再來挑戰我吧！」', 'Learn the ones you missed and come back!')}</p>
+        <div class="qrow center"><button class="btn" id="bossAgain">${tr('再挑戰一次', 'Try again')}</button><button class="btn primary" data-act="goisl" data-isl="${isl.id}">${tr('回到島上', 'Back to island')}</button></div></div>`;
+      $('#bossAgain').addEventListener('click', () => startBoss(isl)); if (win) confetti(body.querySelector('.lg-res')); refreshProgressUI();
+    }
+  });
+}
+if (!SHOP_BY.has('ti_boss5')) { const s = { id: 'ti_boss5', slot: 'title', n: '群島霸主', p: 0, r: 'l', d: '打敗 5 位島主', earn: '打敗 5 位島主', how: 'game' }; AD.shop.push(s); SHOP_BY.set(s.id, s); }
+
+/* ---------- 4. treasure map: each passed lesson reveals a piece; a full archipelago opens its chest ---------- */
+const CHEST = { sci: ['ti_tr_sci', '自然尋寶家'], soc: ['ti_tr_soc', '社會尋寶家'], chi: ['ti_tr_chi', '國語尋寶家'] };
+Object.values(CHEST).forEach(([id, n]) => { if (!SHOP_BY.has(id)) { const s = { id, slot: 'title', n, p: 0, r: 'e', d: '藏寶圖拼完、打開寶箱', earn: '藏寶圖寶箱', how: 'game' }; AD.shop.push(s); SHOP_BY.set(id, s); } });
+if (!SHOP_BY.has('a_treasure')) { const s = { id: 'a_treasure', slot: 'aura', n: '寶藏金幣', p: 0, r: 'l', d: '金幣繞著你轉。', earn: '打開 3 個藏寶箱', how: 'game' }; AD.shop.push(s); SHOP_BY.set(s.id, s); }
+AURAS.a_treasure = { geo: 'oct', cols: ['#ffd84a', '#f2b51b', '#fff2a8'], mode: 'orbit', rate: 0, n: 10, size: .026 };
+function openMap() {
+  const body = openPlay('map', tr('藏寶圖', 'Treasure map'), tr('每通過一課（拿到 1 顆星）就得到一塊碎片', 'Pass a lesson to earn a piece'), { wide: true });
+  const subj = Object.keys(CHEST).filter(k => ISL.some(i => i.subj === k));
+  body.innerHTML = `<div class="tmap">${subj.map(k => { const L = ISL.filter(i => i.subj === k), got = L.filter(i => (LP.q[i.id] || 0) >= 1).length, done = got === L.length, opened = LP.chest[k];
+    return `<section class="tm-s tm-${k}"><h4>${({ sci: '🌿 自然群島', soc: '🏛️ 社會群島', chi: '📚 國語群島' })[k]} <small>${got} / ${L.length}</small></h4>
+      <div class="tm-grid" style="--n:${Math.ceil(Math.sqrt(L.length))}">${L.map(i => `<div class="tm-p ${(LP.q[i.id] || 0) >= 1 ? 'on' : ''}" title="${esc(codeOf(i))}"><span>${(LP.q[i.id] || 0) >= 1 ? esc(codeOf(i)) : '?'}</span></div>`).join('')}<div class="tm-x">✕</div></div>
+      <button class="btn ${done && !opened ? 'primary' : ''}" data-chest="${k}" ${done && !opened ? '' : 'disabled'}>${opened ? tr('寶箱已打開 ✓', 'Chest opened ✓') : done ? tr('🎁 打開寶箱！', '🎁 Open the chest!') : tr(`還差 ${L.length - got} 塊`, `${L.length - got} to go`)}</button></section>`; }).join('')}</div>
+    <p class="hint">${tr('寶箱裡有限定稱號；3 個寶箱都打開，還會得到限定特效「寶藏金幣」。', 'Each chest has a title; open all three for a special effect.')}</p>`;
+  body.querySelectorAll('[data-chest]').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.chest; if (LP.chest[k]) return; LP.chest[k] = today(); saveP();
+    if (ADV_READY && ME) { AV.owned[CHEST[k][0]] = today(); grant({ coins: 80, xp: 60 }, tr('打開寶箱', 'Chest')); if (Object.keys(LP.chest).length >= 3) AV.owned.a_treasure = today(); saveP(); }
+    toast(tr(`🎁 寶箱打開了！獲得稱號「${CHEST[k][1]}」`, 'Chest opened!')); confetti(b.closest('section')); setTimeout(openMap, 1200);
+  }));
+}
+
+/* ---------- 5. seasons by the real calendar: spring petals, summer fireflies, autumn leaves, winter snow ---------- */
+const SEASON = (() => { const m = new Date().getMonth() + 1; return m >= 3 && m <= 5 ? 'spring' : m <= 8 && m >= 6 ? 'summer' : m >= 9 && m <= 11 ? 'autumn' : 'winter'; })();
+{
+  const N = 260, cols = { spring: ['#f7c6d6', '#ffffff', '#f4a9c0'], summer: ['#fff27a', '#d8ff7a'], autumn: ['#e2793f', '#c8492f', '#f2b134', '#a65a2a'], winter: ['#ffffff', '#eef6ff'] }[SEASON];
+  const geo = SEASON === 'winter' ? new THREE.OctahedronGeometry(.035, 0) : SEASON === 'summer' ? new THREE.SphereGeometry(.03, 6, 5) : new THREE.PlaneGeometry(.09, .06);
+  const mat = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, roughness: .8, emissive: SEASON === 'summer' ? '#fff27a' : '#000000', emissiveIntensity: SEASON === 'summer' ? 1.4 : 0 });
+  const inst = new THREE.InstancedMesh(geo, mat, N); inst.frustumCulled = false; scene.add(inst);
+  const P = Array.from({ length: N }, (_, i) => ({ x: 0, y: -99, z: 0, s: Math.random() * 6, c: i })); P.forEach((p, i) => inst.setColorAt(i, new THREE.Color(cols[i % cols.length])));
+  FUN.season = { inst, P };
+}
+const _sm = new THREE.Matrix4(), _sq = new THREE.Quaternion(), _se = new THREE.Euler(), _ss = new V3(1, 1, 1), _sp = new V3();
+function seasonTick(dt, t) {
+  const S = FUN.season; if (!S) return; const c = controls.target, span = Math.min(30, 8 + camera.position.distanceTo(c) * .45), night = ENV.night || 0;
+  S.P.forEach((p, i) => {
+    if (SEASON === 'summer') { if (p.y < -50) { p.x = c.x + (Math.random() - .5) * span; p.z = c.z + (Math.random() - .5) * span; p.y = c.y + Math.random() * 2; } p.x += Math.sin(t + p.s) * dt * .3; p.y += Math.sin(t * 1.3 + p.s * 2) * dt * .2; _ss.setScalar(night > .4 && Math.sin(t * 3 + p.s * 5) > -.2 ? 1 : 0); if (Math.abs(p.x - c.x) > span || Math.abs(p.z - c.z) > span) p.y = -99; }
+    else { const fall = SEASON === 'winter' ? .55 : .7; if (p.y < WATER_Y || p.y < -50) { p.x = c.x + (Math.random() - .5) * span; p.z = c.z + (Math.random() - .5) * span; p.y = c.y + 4 + Math.random() * 8; } p.y -= dt * fall; p.x += Math.sin(t * .8 + p.s) * dt * .35; p.z += Math.cos(t * .6 + p.s) * dt * .2; _ss.setScalar(1); }
+    _se.set(t * 1.5 + p.s, t + p.s * 2, 0); _sm.compose(_sp.set(p.x, p.y, p.z), _sq.setFromEuler(_se), _ss); S.inst.setMatrixAt(i, _sm);
+  });
+  S.inst.instanceMatrix.needsUpdate = true;
+}
+
+/* ---------- 6. festivals: decorations on the islands and double leaves while they last ---------- */
+const FESTS = [
+  { id: 'xmas', n: ['聖誕節', 'Christmas'], ic: '🎄', on: (m, d) => m === 12 && d >= 18 && d <= 26 },
+  { id: 'newyear', n: ['新年', 'New Year'], ic: '🎉', on: (m, d) => (m === 12 && d === 31) || (m === 1 && d <= 2) },
+  { id: 'cny', n: ['農曆新年', 'Lunar New Year'], ic: '🧧', on: (m, d, y) => ({ 2027: [2, 4, 2, 12], 2028: [1, 24, 2, 1] })[y] ? ((M => (m > M[0] || (m === M[0] && d >= M[1])) && (m < M[2] || (m === M[2] && d <= M[3])))(({ 2027: [2, 4, 2, 12], 2028: [1, 24, 2, 1] })[y])) : false },
+  { id: 'moonfest', n: ['中秋節', 'Mid-Autumn'], ic: '🥮', on: (m, d, y) => { const D = { 2026: [9, 25], 2027: [9, 15], 2028: [10, 3] }[y]; if (!D) return false; const a = new Date(y, D[0] - 1, D[1]), b = new Date(y, m - 1, d); return Math.abs((b - a) / 864e5) <= 3; } },
+  { id: 'halloween', n: ['萬聖節', 'Halloween'], ic: '🎃', on: (m, d) => m === 10 && d >= 25 }
+];
+const FEST = (() => { const q = new URLSearchParams(location.search).get('fest'); if (q) return FESTS.find(f => f.id === q) || null; const t = new Date(); return FESTS.find(f => f.on(t.getMonth() + 1, t.getDate(), t.getFullYear())) || null; })();
+if (FEST) {
+  const _grant0 = grant; grant = function (o, why) { if (o && o.coins) o = { ...o, coins: o.coins * 2 }; return _grant0(o, why); };
+  ISL.forEach((isl, k) => {
+    const g = new THREE.Group(), a = Math.PI / 2 + .45, x = Math.cos(a) * 1.25, z = Math.sin(a) * 1.25; g.position.set(isl.x + x, TOP + isl.ly, isl.z + z); scene.add(g);
+    if (FEST.id === 'xmas' || FEST.id === 'newyear') { for (let j = 0; j < 3; j++) { const c = new THREE.Mesh(new THREE.ConeGeometry(.22 - j * .05, .25, 7), fm('#2f7a3f')); c.position.y = .2 + j * .17; g.add(c); } const st = new THREE.Mesh(new THREE.OctahedronGeometry(.05), fm('#ffd84a', { emissive: '#ffd84a', emissiveIntensity: 1.2 })); st.position.y = .7; g.add(st); for (let j = 0; j < 6; j++) { const b = new THREE.Mesh(new THREE.SphereGeometry(.022, 6, 5), fm(['#e94b5a', '#4bb3e9', '#ffd84a'][j % 3], { emissive: ['#e94b5a', '#4bb3e9', '#ffd84a'][j % 3], emissiveIntensity: .8 })); const aa = j * 1.1; b.position.set(Math.cos(aa) * (.17 - j * .015), .2 + j * .07, Math.sin(aa) * (.17 - j * .015)); g.add(b); } }
+    else if (FEST.id === 'halloween') { const p = new THREE.Mesh(new THREE.SphereGeometry(.13, 10, 8), fm('#f08a24', { emissive: '#b04a00', emissiveIntensity: .5 })); p.scale.y = .8; p.position.y = .1; g.add(p); const s = new THREE.Mesh(new THREE.CylinderGeometry(.015, .02, .06, 5), fm('#4a6a2a')); s.position.y = .22; g.add(s); for (const sx of [-1, 1]) { const e = new THREE.Mesh(new THREE.ConeGeometry(.025, .03, 3), fm('#ffe27a', { emissive: '#ffd84a', emissiveIntensity: 1.5 })); e.position.set(sx * .045, .13, .11); e.rotation.x = Math.PI / 2; g.add(e); } }
+    else { for (let j = 0; j < 2; j++) { const L = new THREE.Mesh(new THREE.SphereGeometry(.09, 10, 8), fm('#e0333f', { emissive: '#ff5a3a', emissiveIntensity: .7 })); L.scale.y = 1.2; L.position.set(j * .25, .55, 0); g.add(L); const pole = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, .5, 5), fm('#5a3a22')); pole.position.set(j * .25, .25, 0); g.add(pole); const tas = new THREE.Mesh(new THREE.CylinderGeometry(.01, .02, .08, 5), fm('#ffd84a')); tas.position.set(j * .25, .41, 0); g.add(tas); } }
+  });
+  if (FEST.id === 'moonfest' && ISLETS.moon) { const rab = new THREE.Group(); rab.position.set(0, 5.05, 0); ISLETS.moon.g.add(rab); const w = fm('#ffffff', { fog: false }); const b = new THREE.Mesh(new THREE.SphereGeometry(.35, 10, 8), w); b.position.y = .35; rab.add(b); const h = new THREE.Mesh(new THREE.SphereGeometry(.22, 10, 8), w); h.position.set(0, .75, .1); rab.add(h); for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.CapsuleGeometry(.05, .35, 3, 6), w); e.position.set(s * .08, 1.1, .05); rab.add(e); } }
+  setTimeout(() => toast(tr(`${FEST.ic} ${FEST.n[0]}快樂！活動期間葉子幣加倍`, `${FEST.ic} Happy ${FEST.n[1]}! Double leaves`)), 2500);
+}
+
+/* ---------- 7. the weekly merchant ship: docks at a different island each week with three discounted items ---------- */
+const WEEK = (() => { const t = new Date(); const d = new Date(t.getFullYear(), 0, 1); return t.getFullYear() * 100 + Math.ceil(((t - d) / 864e5 + d.getDay() + 1) / 7); })();
+{
+  const seaI = ISL.filter(i => i.layer === 'sea'); const dock = seaI[WEEK % seaI.length];
+  if (dock && typeof buildShip === 'function') {
+    const out = new V3(dock.x - CENTER.x, 0, dock.z - CENTER.z).normalize(); if (!out.lengthSq()) out.set(0, 0, 1);
+    const g = buildShip(); g.scale.setScalar(.55); g.position.set(dock.x + out.x * (R + 1.1), WATER_Y + .02, dock.z + out.z * (R + 1.1)); g.rotation.y = Math.atan2(out.z, -out.x); scene.add(g);
+    const btn = document.createElement('button'); btn.className = 'ship-btn'; btn.type = 'button'; btn.textContent = tr('⛵ 神秘商船', '⛵ Merchant ship');
+    btn.addEventListener('pointerdown', e => e.stopPropagation()); btn.addEventListener('click', e => { e.stopPropagation(); openMerchant(); });
+    const lab = new CSS2DObject(btn); lab.position.set(0, 3.6, 0); g.add(lab); FUN.ship = { g, dock };
+  }
+}
+function merchantItems() { const pool = AD.shop.filter(s => !s.earn && s.p > 0 && s.slot !== 'title'), r = mulberry32(WEEK * 7 + 3), out = []; while (out.length < 3 && pool.length) { const k = Math.floor(r() * pool.length); out.push(pool.splice(k, 1)[0]); } return out.map(s => ({ s, price: Math.max(10, Math.round(s.p * .7)) })); }
+function openMerchant() {
+  const body = openPlay('ship', tr('神秘商船', 'Merchant ship'), tr('本週限定・7 折', 'This week only · 30% off'), { wide: true });
+  const render = () => {
+    const L = merchantItems();
+    body.innerHTML = `<p class="hint">${tr('每週會停在不同的島，帶來 3 樣打 7 折的商品；下週就換貨了。', 'A new island and three discounted items every week.')}</p>${ME ? `<p>${tr(`你有 <b>${AV.coins}</b> 葉子幣`, `You have <b>${AV.coins}</b> leaves`)}</p>` : `<p class="hint">${tr('先建立冒險角色才能買東西。', 'Create a character to shop.')}</p>`}
+      <div class="mer">${L.map(({ s, price }) => { const own = ME && AV.owned[s.id], R0 = RAR[s.r] || RAR.c; return `<div class="mer-i" style="--rc:${R0.col}"><em>${esc(T(R0.n))}・${esc(T(SLOT_NAMES[s.slot] || ['', '']))}</em><b>${esc(s.n)}</b><p><s>${s.p}</s> <strong>${price}</strong> ${tr('葉子幣', 'leaves')}</p><button class="btn ${own ? '' : 'primary'}" data-buy="${s.id}" data-p="${price}" ${own || !ME || AV.coins < price ? 'disabled' : ''}>${own ? tr('已擁有', 'Owned') : tr('購買', 'Buy')}</button></div>`; }).join('')}</div>`;
+    body.querySelectorAll('[data-buy]').forEach(b => b.addEventListener('click', () => { const p = +b.dataset.p; if (!ME || AV.coins < p) return; AV.coins -= p; AV.owned[b.dataset.buy] = today(); saveP(); updateMeBar(); toast(tr(`買到了「${SHOP_BY.get(b.dataset.buy).n}」！到商店穿上吧`, 'Bought!')); render(); }));
+  };
+  render();
+}
+
+/* ---------- 8. photo studio: snapshot the 3D view with a sticker ---------- */
+function takePhoto() {
+  renderer.render(scene, camera);
+  const src = renderer.domElement, W = 1200, H = Math.round(W * src.height / src.width), c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+  x.drawImage(src, 0, 0, W, H);
+  const ff = getComputedStyle(document.body).fontFamily, todayStars = LP.slog[today()] || 0, name = ME ? ME.name : tr('小探險家', 'Explorer');
+  x.fillStyle = 'rgba(255,250,242,.92)'; x.beginPath(); x.roundRect ? x.roundRect(24, H - 118, 520, 94, 22) : x.rect(24, H - 118, 520, 94); x.fill();
+  x.fillStyle = '#2b2b33'; x.font = `900 34px ${ff}`; x.fillText(`📸 ${name}${tr('的冒險', "'s adventure")}`, 46, H - 70);
+  x.font = `700 22px ${ff}`; x.fillStyle = '#6e625a'; x.fillText(`${today()}・${todayStars ? tr(`今天拿到 ${todayStars} 顆星！`, `${todayStars} stars today!`) : tr(`一共 ${totalStars()} 顆星`, `${totalStars()} stars`)}・${tr('小學知識群島', 'Knowledge Islands')}`, 46, H - 38);
+  const url = c.toDataURL('image/png');
+  const body = openPlay('photo', tr('照相館', 'Photo studio'), tr('拍好了！', 'Snap!'), { wide: true });
+  body.innerHTML = `<img class="photo-prev" src="${url}" alt="${tr('拍下的照片', 'Your photo')}"><div class="qrow center"><a class="btn primary" href="${url}" download="知識群島-${today()}.png">${tr('存下照片', 'Save photo')}</a><button class="btn" id="phAgain">${tr('再拍一張', 'Take another')}</button></div><p class="hint">${tr('小技巧：先按「隱藏名稱」再拍，畫面會更乾淨。', 'Tip: hide names first for a cleaner shot.')}</p>`;
+  $('#phAgain').addEventListener('click', () => { closePlay(); setTimeout(takePhoto, 300); });
+  const fl = document.createElement('div'); fl.className = 'flash'; document.body.appendChild(fl); setTimeout(() => fl.remove(), 450);
+}
+{
+  const b = document.createElement('button'); b.className = 'btn'; b.id = 'btnPhoto'; b.type = 'button'; b.title = tr('照相館：拍下現在的畫面', 'Photo studio');
+  b.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span>${tr('拍照', 'Photo')}</span>`;
+  $('#tools').insertBefore(b, $('#btnMusic') || $('#btnHelp')); b.addEventListener('click', takePhoto);
+}
+
+/* ---------- 9. parent message bottle: written behind the parent check, found at sea by the child ---------- */
+function bottleTick(dt) {
+  if (!LP.pmsg || LP.pmsg.read) return; FUN.bt = (FUN.bt || 8) - dt; if (FUN.bt > 0) return; FUN.bt = 20;
+  if (SEA.ev.some(e => e.kind === 'bottle')) return; try { const ok = spawnBottle(); if (ok) { const e = SEA.ev[SEA.ev.length - 1]; e.parent = true; e.dur = 120; } } catch (er) {}
+}
+
+/* ---------- hub entries + per-frame ---------- */
+function funTick(dt, t) {
+  FUN.t -= dt; if (FUN.t <= 0) { FUN.t = 2; monSync(); }
+  FUN.mon.forEach(M => { M.a += M.v * dt * .4; const x = M.isl.x + Math.cos(M.a) * M.d, z = M.isl.z + Math.sin(M.a) * M.d; M.g.position.set(x, TOP + M.isl.ly + Math.abs(Math.sin(t * 5 + M.ph)) * .06, z); M.g.rotation.y = -M.a + (M.v > 0 ? 0 : Math.PI); });
+  seasonTick(dt, t); bottleTick(dt);
+}
+window.__fun = { FUN, note: (k, ok) => noteAnswer(k, ok, false), keys: () => [...QBY.keys()], monSync, monFight, openReport, startBoss, openMap, openMerchant, takePhoto, SEASON, FEST };
 
 /* =====================================================================
    17. start
