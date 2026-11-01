@@ -8325,6 +8325,33 @@ body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body
 .cr-box{display:grid;gap:10px}.cr-parcel{border:2px dashed #c9a26a;background:#fff8ea;border-radius:16px;padding:14px;display:grid;gap:4px}.cr-parcel small{color:#a07a3c;font-weight:800}.cr-parcel b{font-size:20px}.cr-parcel p{margin:0;line-height:1.6}.cr-ask{margin:0;font-weight:800}
 .cr-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.cr-isl{display:grid;gap:2px;text-align:left;padding:10px 12px;border-radius:14px;border:1px solid var(--line);border-left:6px solid var(--c);background:#fff;cursor:pointer;font-family:inherit;color:var(--ink)}
 .cr-isl em{font-style:normal;font-weight:800;color:var(--c)}.cr-isl b{font-size:15px}.cr-isl small{color:var(--muted)}.cr-isl.right{background:#e3f6e6}.cr-isl.wrong{background:#ffe3e0}
+.fish-bite{display:inline-flex;align-items:center;gap:8px;padding:12px 18px!important;font-size:18px!important;animation:fbpulse .45s ease-in-out infinite!important}
+.fish-bite.fixed{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom,0px));z-index:94;translate:-50% 0;font-size:22px!important;padding:16px 26px!important}
+.fish-ex{font:900 34px/1 var(--font);color:#fff;background:#e94b5a;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;border:3px solid #fff;box-shadow:0 4px 12px #0005;animation:fbpulse .4s ease-in-out infinite}
+.fish-bite i{font-style:normal;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:#e94b5a;font-weight:900;font-size:22px}
+@keyframes fbpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.fcatch{position:fixed;inset:0;z-index:96;display:grid;place-items:center;background:rgba(18,14,28,.58);opacity:0;transition:opacity .3s;overflow:hidden;padding:16px}
+.fcatch.on{opacity:1}
+.fc-rays{position:absolute;left:50%;top:50%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--rc) 55%,transparent) 0 8deg,transparent 8deg 22deg);animation:fcspin 14s linear infinite;opacity:.55;-webkit-mask:radial-gradient(circle,#000 0,transparent 60%);mask:radial-gradient(circle,#000 0,transparent 60%)}
+@keyframes fcspin{to{transform:rotate(360deg)}}
+.fc-card{position:relative;width:min(420px,92vw);max-height:92vh;overflow:auto;background:#fffaf2;border-radius:24px;border:4px solid var(--rc);box-shadow:0 0 0 6px #fff8,0 0 60px color-mix(in srgb,var(--rc) 70%,transparent),0 30px 80px #0006;padding:18px 20px 16px;display:grid;gap:8px;justify-items:center;text-align:center;transform:scale(.4) rotate(-6deg);transition:transform .55s cubic-bezier(.2,1.5,.4,1)}
+.fcatch.on .fc-card{transform:scale(1) rotate(0)}
+.fc-banner{margin-top:-4px;background:var(--rc);color:#fff;font:900 22px/1 var(--font);padding:10px 22px;border-radius:999px;box-shadow:0 4px 0 color-mix(in srgb,var(--rc) 70%,#000);letter-spacing:2px;text-shadow:0 2px 0 #0003}
+.fc-rar{display:flex;gap:8px;align-items:center;font-weight:800;color:var(--rc)}.fc-rar span{color:#f2b51b;letter-spacing:2px;font-size:18px}
+.fc-fish{position:relative;animation:fcjump 1.1s cubic-bezier(.3,1.6,.5,1) both;filter:drop-shadow(0 10px 10px #0002)}
+.fc-fish svg{animation:fcwiggle 1.4s ease-in-out 1.1s infinite}
+@keyframes fcjump{0%{transform:translateY(120px) scale(.3) rotate(40deg);opacity:0}60%{opacity:1}100%{transform:none}}
+@keyframes fcwiggle{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg) translateY(-6px)}}
+.fc-drop{position:absolute;width:10px;height:14px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#7cc6e8;left:10%;top:60%;animation:fcdrop 1s ease-out .5s both}
+.fc-drop.b{left:80%;top:50%;animation-delay:.6s}.fc-drop.c{left:45%;top:85%;animation-delay:.7s}
+@keyframes fcdrop{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx,-30px),60px);opacity:0}}
+.fc-drop.b{--dx:30px}
+.fc-name{display:flex;align-items:center;gap:8px;justify-content:center}.fc-name b{font:900 32px/1.1 var(--font)}
+.fc-new{background:#e94b5a;color:#fff;font:900 13px var(--font);padding:4px 8px;border-radius:8px;transform:rotate(-8deg);animation:fbpulse .8s ease-in-out infinite}
+.r-l .fc-name b{background:linear-gradient(90deg,#ff5b5b,#ff9f43,#ffd93b,#5ad27a,#4dabf7,#b77ae9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fc-sub{margin:0;font-weight:700;color:var(--muted)}.fc-fact{margin:0;background:#fff3c4;border-radius:12px;padding:8px 12px;line-height:1.6;text-align:left}
+.fc-stats{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.fc-stats span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12.5px}
+.fc-btns{display:flex;gap:8px;margin-top:4px}.fc-btns .btn{min-height:46px;font-size:15px}
 .lg-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
 .lg-head .lg-ic{font-size:30px;line-height:1}
 .lg-head>div>b{display:block;font-size:13px;color:var(--coral)}
@@ -9752,7 +9779,7 @@ NEIGH.forEach(([i, j]) => {
   const na = near(i, br.ax, br.az), nb = near(j, br.bx, br.bz);
   link(na, nb, Math.hypot(NODES[na].x - NODES[nb].x, NODES[na].z - NODES[nb].z), br);
 });
-function dijkstra(src, dst) {
+function dijkstra(src, dst, ok) {
   const n = NODES.length, dist = new Array(n).fill(Infinity), prev = new Array(n).fill(-1), done = new Array(n).fill(false);
   dist[src] = 0;
   for (let it = 0; it < n; it++) {
@@ -9760,7 +9787,7 @@ function dijkstra(src, dst) {
     for (let i = 0; i < n; i++) if (!done[i] && dist[i] < best) { best = dist[i]; u = i; }
     if (u < 0 || u === dst) break;
     done[u] = true;
-    for (const e of ADJ[u]) { const nd = dist[u] + e.w; if (nd < dist[e.to]) { dist[e.to] = nd; prev[e.to] = u; } }
+    for (const e of ADJ[u]) { if (ok && !ok(e.to)) continue; const nd = dist[u] + e.w; if (nd < dist[e.to]) { dist[e.to] = nd; prev[e.to] = u; } }
   }
   const path = []; for (let v = dst; v >= 0; v = prev[v]) path.unshift(v);
   return path;
@@ -11124,7 +11151,7 @@ function buildOtter() { const g = new THREE.Group(), fur = SM3('#7a5236'), face 
 function spawnOtters() { if (SEA.ev.some(e => e.kind === 'otter')) return false; const p = bigPick(1, [1.2]) || seaPick(0, .9); if (!p) return false; const list = []; for (let i = 0; i < 2; i++) { const o = buildOtter(); o.scale.setScalar(2.8); scene.add(o); list.push({ g: o, s: i ? 1 : -1 }); } SEA.ev.push({ kind: 'otter', x: p.x, z: p.z, h: p.h, t: 0, dur: 24, list }); sea3Say('otter'); return true; }
 /* 9. 黃色潛水艇 surfaces, cruises with its periscope, dives */
 function buildSub() { const g = new THREE.Group(), y = SM3('#f5c518'), d = SM3('#c99a00'); sPart(g, SG2.cyl, y, 0, 0, 0, .32, 1.6, .32, Math.PI / 2); sPart(g, SG.sph, y, 0, 0, .8, .32, .32, .32); sPart(g, SG.sph, y, 0, 0, -.8, .32, .32, .32); sPart(g, SG2.box, y, 0, .38, .15, .24, .32, .5); const peri = new THREE.Group(); peri.position.set(0, .55, .3); g.add(peri); sPart(peri, SG2.cyl, '#8a8f99', 0, .2, 0, .025, .4, .025); sPart(peri, SG2.box, '#8a8f99', 0, .4, .04, .05, .05, .1); for (let k = 0; k < 3; k++) { sPart(g, SG2.cyl, '#bfe6ff', .31, .05, .4 - k * .4, .09, .03, .09, 0, 0, Math.PI / 2); sPart(g, SG2.cyl, d, .3, .05, .4 - k * .4, .11, .02, .11, 0, 0, Math.PI / 2); } const prop = new THREE.Group(); prop.position.set(0, 0, -1.14); g.add(prop); for (let k = 0; k < 3; k++) sPart(prop, SG2.box, d, 0, 0, 0, .04, .3, .02, 0, 0, k * 2.09); sPart(g, SG2.box, d, 0, 0, -1, .02, .5, .2); g.userData = { prop, peri }; return g; }
-function spawnSub() { if (SEA.ev.some(e => e.kind === 'sub')) return false; const p = bigPick(1.2, [-4, -2, 2, 4]); if (!p) return false; const g = buildSub(); g.rotation.y = p.h; scene.add(g); SEA.ev.push({ kind: 'sub', x: p.x, z: p.z, h: p.h, t: 0, dur: 22, g }); sea3Say('sub'); return true; }
+function spawnSub() { if (SEA.ev.some(e => e.kind === 'sub')) return false; const p = bigPick(1.9, [-4.5, -2.2, 2.2, 4.5]); if (!p) return false; const g = buildSub(); g.scale.setScalar(1.7); g.rotation.y = p.h; scene.add(g); SEA.ev.push({ kind: 'sub', x: p.x, z: p.z, h: p.h, t: 0, dur: 22, g }); sea3Say('sub'); return true; }
 /* 10. 水龍捲 a far-off waterspout */
 function spawnSpout() {
   if (SEA.ev.some(e => e.kind === 'spout')) return false; const p = bigPick(1, [-2, 2], true); if (!p) return false;
@@ -11173,8 +11200,8 @@ function seaTick3(e, dt) {
     e.list.forEach(o => { const x = cx + Math.cos(spin) * .26 * o.s, z = cz + Math.sin(spin) * .26 * o.s; o.g.position.set(x, WATER_Y - .06 + fade * .07 + Math.sin(t * 1.5 + o.s) * .01, z); o.g.rotation.set(0, -spin, 0); o.g.userData.paws.forEach((p, i) => { p.position.y = .05 + Math.sin(t * 3 + i) * .01; }); });
   } else if (e.kind === 'sub') {
     const [x, z] = along(e, -4 + t * .36), k = Math.min(1, t / 3, (e.dur - t) / 3);
-    e.g.position.set(x, WATER_Y - 1 + k * .92 + Math.sin(t * 1.3) * .02, z); e.g.userData.prop.rotation.z = t * 8; e.g.userData.peri.rotation.y = Math.sin(t * .6) * 1.2; e.g.visible = k > 0;
-    if (Math.random() < dt * 5 * k) splash(x - Math.sin(e.h) * 1.1, z - Math.cos(e.h) * 1.1, .5, 3);
+    e.g.position.set(x, WATER_Y - 1.6 + k * 1.5 + Math.sin(t * 1.3) * .03, z); e.g.userData.prop.rotation.z = t * 8; e.g.userData.peri.rotation.y = Math.sin(t * .6) * 1.2; e.g.visible = k > 0;
+    if (Math.random() < dt * 6 * k) splash(x - Math.sin(e.h) * 1.9, z - Math.cos(e.h) * 1.9, .8, 4);
   } else if (e.kind === 'spout') {
     const k = Math.min(1, t / 2.5, (e.dur - t) / 2.5), [x, z] = along(e, t * .1);
     e.g.position.set(x, WATER_Y, z); e.g.children.forEach((c, i) => { if (i < 3) c.rotation.y = t * (3 + i); c.scale.x = c.scale.z = 1 + Math.sin(t * 2 + i) * .08; });
@@ -12703,7 +12730,7 @@ function fishStart() {
 }
 function fishStop(msg) {
   if (!FS) return; const F = FS; FS = null;
-  if (F.rod) F.rod.parent && F.rod.parent.remove(F.rod); if (F.line) scene.remove(F.line); if (F.bob) scene.remove(F.bob); if (F.lab) { F.lab.element.remove(); F.lab.parent && F.lab.parent.remove(F.lab); }
+  if (F.rod) F.rod.parent && F.rod.parent.remove(F.rod); if (F.line) scene.remove(F.line); if (F.bob) scene.remove(F.bob); if (F.lab) { F.lab.element.remove(); F.lab.parent && F.lab.parent.remove(F.lab); } if (F.biteEl) F.biteEl.remove(); if (F.jf) scene.remove(F.jf);
   if (F.held) F.held.parent && F.held.parent.remove(F.held);
   if (msg) avSay(msg, 3); fishBtn();
 }
@@ -12729,8 +12756,14 @@ function fishTick(dt, t, R0, P0) {
   let by = WATER_Y + .02 + Math.sin(t * 3) * .01;
   if (F.st === 'cast') { const k = Math.min(1, F.t / .6); F.bob.position.lerpVectors(_tp, F.water, k); F.bob.position.y = lerp(_tp.y, by, k) + Math.sin(k * Math.PI) * .4; if (k >= 1) { F.st = 'wait'; F.t = 0; F.wait = window.__fishFast ? .2 : 3 + Math.random() * 4; splash(F.water.x, F.water.z, .4, 4); } }
   else if (F.st === 'wait') { F.bob.position.y = by; if (F.t > F.wait) { F.st = 'bite'; F.t = 0; splash(F.water.x, F.water.z, .5, 8); fishBite(); } }
-  else if (F.st === 'bite') { F.bob.position.y = by - .05 - Math.abs(Math.sin(t * 18)) * .05; if (F.t > 1.8) { fishStop(tr('哎呀，魚跑掉了！下次要快一點按「收竿」', 'It got away!')); } }
-  else if (F.st === 'reel') { const k = Math.min(1, F.t / .5); F.bob.position.lerpVectors(F.water, _tp, k); if (k >= 1) fishCatch(); }
+  else if (F.st === 'bite') { F.bob.position.y = by - .05 - Math.abs(Math.sin(t * 18)) * .05; if (Math.random() < dt * 6) splash(F.water.x, F.water.z, .35, 3); if (F.t > 2.8) { fishStop(tr('哎呀，魚跑掉了！下次要快一點按「收竿」', 'It got away!')); } }
+  else if (F.st === 'reel') {
+    const k = Math.min(1, F.t / .5); F.bob.position.lerpVectors(F.water, _tp, k);
+    const u = Math.min(1, F.t / 1.05), J = F.jf;
+    if (J) { const hx = R0.position.x, hz = R0.position.z, hy = R0.position.y + .62; J.position.set(lerp(F.water.x, hx, u), lerp(WATER_Y, hy, u) + Math.sin(u * Math.PI) * .9, lerp(F.water.z, hz, u)); J.rotation.set(0, F.dir + Math.PI, 0); J.rotateX(-Math.cos(u * Math.PI) * 1.1); J.rotateZ(Math.sin(t * 14) * .5); J.userData.tail.rotation.y = Math.sin(t * 30) * .6; if (Math.random() < dt * 30 && u < .8) spray(J.position.x, J.position.y, J.position.z, (Math.random() - .5) * .6, Math.random() * .4, (Math.random() - .5) * .6, .02); }
+    if (u >= 1) { if (J) scene.remove(J); F.jf = null; F.st = 'done'; F.t = 0; fishCatch(F.fish); }
+  }
+  else if (F.st === 'done') { P0.armL.rotation.x = P0.armR.rotation.x = -2.6; }
   const pos = F.line.geometry.attributes.position, a = _tp, b = F.bob.position;
   for (let i = 0; i < 10; i++) { const u = i / 9; pos.setXYZ(i, lerp(a.x, b.x, u), lerp(a.y, b.y, u) - Math.sin(u * Math.PI) * (F.st === 'bite' ? .02 : .12), lerp(a.z, b.z, u)); }
   pos.needsUpdate = true;
@@ -12738,21 +12771,55 @@ function fishTick(dt, t, R0, P0) {
 function fishBite() {
   const b = document.createElement('button'); b.className = 'fish-bite'; b.type = 'button'; b.textContent = tr('上鉤了！收竿！', 'Bite! Reel in!');
   b.addEventListener('pointerdown', e => e.stopPropagation()); b.addEventListener('click', e => { e.stopPropagation(); fishReel(); });
-  const lab = new CSS2DObject(b); lab.position.set(0, .8, 0); AVA.root.add(lab); FS.lab = lab; avSay(tr('有魚上鉤！', 'A bite!'), 1.8);
+  b.innerHTML = `<i>!</i>${tr('上鉤了！快按我收竿！', 'Bite! Tap to reel in!')}`; b.classList.add('fixed'); document.body.appendChild(b); FS.biteEl = b;
+  const ex = document.createElement('div'); ex.className = 'fish-ex'; ex.textContent = '!';
+  const lab = new CSS2DObject(ex); lab.position.set(0, .8, 0); AVA.root.add(lab); FS.lab = lab; avSay(tr('有魚上鉤！', 'A bite!'), 2.4);
+  splash(FS.water.x, FS.water.z, .8, 14); fishSfx('bite'); try { navigator.vibrate && navigator.vibrate([80, 60, 80]); } catch (e) {}
 }
-function fishReel() { if (!FS || FS.st !== 'bite') return; FS.st = 'reel'; FS.t = 0; if (FS.lab) { FS.lab.element.remove(); FS.lab.parent.remove(FS.lab); FS.lab = null; } }
+function fishReel() {
+  if (!FS || FS.st !== 'bite') return; FS.st = 'reel'; FS.t = 0; if (FS.lab) { FS.lab.element.remove(); FS.lab.parent.remove(FS.lab); FS.lab = null; } if (FS.biteEl) { FS.biteEl.remove(); FS.biteEl = null; }
+  const f = FS.fish = rollFish(), col = RAR[f.r].col, J = new THREE.Group(), s = f.r === 'l' ? 1.5 : f.r === 'e' ? 1.3 : 1.1;
+  part(J, W_GEO.head, col, 0, 0, 0, .45 * s, .35 * s, .9 * s); const tail = new THREE.Group(); tail.position.set(0, 0, -.09 * s); J.add(tail); part(tail, W_GEO.cone, col, 0, 0, -.03 * s, .06 * s, .06 * s, .02 * s, -Math.PI / 2);
+  part(J, W_GEO.head, '#ffffff', .03 * s, .02 * s, .06 * s, .06, .06, .06); J.userData.tail = tail; scene.add(J); FS.jf = J;
+  splash(FS.water.x, FS.water.z, 1.1, 22); fishSfx('splash'); avSay(tr('嘿咻——拉上來！', 'Heave!'), 1.4);
+}
+let FISH_AC = null;
+function fishSfx(kind, rar) {
+  try {
+    FISH_AC = FISH_AC || new (window.AudioContext || window.webkitAudioContext)(); const ac = FISH_AC; if (ac.state === 'suspended') ac.resume(); const t0 = ac.currentTime;
+    const tone = (f, at, dur, type = 'sine', vol = .18) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.setValueAtTime(f, t0 + at); g.gain.setValueAtTime(0, t0 + at); g.gain.linearRampToValueAtTime(vol, t0 + at + .02); g.gain.exponentialRampToValueAtTime(.001, t0 + at + dur); o.connect(g); g.connect(ac.destination); o.start(t0 + at); o.stop(t0 + at + dur + .05); };
+    if (kind === 'bite') { tone(520, 0, .12, 'square', .08); tone(780, .14, .12, 'square', .08); }
+    else if (kind === 'splash') { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.setValueAtTime(700, t0); o.frequency.exponentialRampToValueAtTime(140, t0 + .25); g.gain.setValueAtTime(.2, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + .3); o.connect(g); g.connect(ac.destination); o.start(); o.stop(t0 + .35); }
+    else if (kind === 'catch') { const n = { c: [523, 659, 784], u: [523, 659, 784, 1047], r: [523, 659, 784, 1047, 1319], e: [392, 523, 659, 784, 1047, 1319], l: [392, 523, 659, 784, 1047, 1319, 1568, 2093] }[rar] || [523, 659, 784]; n.forEach((f, i) => tone(f, i * .09, .35, 'triangle', .16)); if (rar === 'e' || rar === 'l') n.forEach((f, i) => tone(f * 2, .1 + i * .09, .4, 'sine', .06)); }
+  } catch (e) {}
+}
 addEventListener('keydown', e => { if (FS && FS.st === 'bite' && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); fishReel(); } });
-function fishCatch() {
-  const f = rollFish(), R = RAR[f.r]; fishInit();
+const FISH_STARS = { c: 1, u: 2, r: 3, e: 4, l: 5 };
+function fishCatch(f) {
+  f = f || rollFish(); const R = RAR[f.r]; fishInit();
   AV.fishBag[f.id] = (AV.fishBag[f.id] || 0) + 1; const isNew = !AV.fishDex[f.id]; AV.fishDex[f.id] = { d: AV.fishDex[f.id] ? AV.fishDex[f.id].d : today(), n: (AV.fishDex[f.id] ? AV.fishDex[f.id].n : 0) + 1 };
   saveP(); checkFishTitles();
-  const held = new THREE.Group(); held.position.set(0, .62, 0); part(held, W_GEO.head, R.col, 0, 0, 0, .45, .35, .9); part(held, W_GEO.cone, R.col, 0, 0, -.08, .05, .05, .02, -Math.PI / 2); AVA.root.add(held); FS.held = held;
-  avSay(tr(`釣到${f.n}！`, `Caught a ${f.n}!`), 3); AVA.hop = .6;
-  const el = document.createElement('div'); el.className = 'card-pop fish-pop';
-  el.innerHTML = `<div class="kcard" style="--c:${R.col}">${isNew ? '<span class="knew">NEW</span>' : ''}<small>${esc(T(R.n))} · ${tr('釣到了！', 'Caught!')}</small><div class="fp-row">${fishSvg(R.col, 56)}<b>${esc(f.n)}</b></div>${f.f ? `<p>${esc(f.f)}</p>` : ''}<div class="kfoot"><span>${tr(`賣價 ${f.p} 葉子幣`, `Sells for ${f.p}`)}</span><span>${tr(`魚類圖鑑 ${Object.keys(AV.fishDex).length} / ${FISH.length}`, `Dex ${Object.keys(AV.fishDex).length}/${FISH.length}`)}</span></div><p class="fp-left">${tr(`這一小時還能釣 ${fishLeft()} 次`, `${fishLeft()} casts left this hour`)}</p></div>`;
-  document.body.appendChild(el); requestAnimationFrame(() => el.classList.add('on')); if (f.r === 'e' || f.r === 'l') confetti(el.firstElementChild);
-  el.addEventListener('click', () => el.remove()); setTimeout(() => { el.classList.remove('on'); setTimeout(() => el.remove(), 450); }, 4200);
-  setTimeout(() => fishStop(), 2600);
+  const held = new THREE.Group(); held.position.set(0, .62, 0); part(held, W_GEO.head, R.col, 0, 0, 0, .45, .35, .9); part(held, W_GEO.cone, R.col, 0, 0, -.08, .05, .05, .02, -Math.PI / 2); AVA.root.add(held); if (FS) FS.held = held;
+  avSay(tr(`釣到${f.n}了！`, `Caught a ${f.n}!`), 4); AVA.hop = .6; fishSfx('catch', f.r); splash(AVA.root.position.x, AVA.root.position.z, .6, 10);
+  const st = FISH_STARS[f.r] || 1, cnt = AV.fishDex[f.id].n, el = document.createElement('div');
+  el.className = `fcatch r-${f.r}`; el.setAttribute('role', 'dialog'); el.style.setProperty('--rc', R.col);
+  el.innerHTML = `<div class="fc-rays"></div><div class="fc-card">
+    <div class="fc-banner">🎣 ${tr('釣到了！', 'You caught one!')}</div>
+    <div class="fc-rar"><span>${'★'.repeat(st)}${'☆'.repeat(5 - st)}</span>${esc(T(R.n))}</div>
+    <div class="fc-fish">${fishSvg(R.col, 170)}<i class="fc-drop"></i><i class="fc-drop b"></i><i class="fc-drop c"></i></div>
+    <div class="fc-name">${isNew ? `<span class="fc-new">NEW!</span>` : ''}<b>${esc(f.n)}</b></div>
+    <p class="fc-sub">${isNew ? tr('🎉 第一次釣到！已經登記到魚類圖鑑', '🎉 First catch! Added to your encyclopedia') : tr(`這是你釣到的第 ${cnt} 條${f.n}`, `Your #${cnt} ${f.n}`)}</p>
+    ${f.f ? `<p class="fc-fact">💡 ${esc(f.f)}</p>` : ''}
+    <div class="fc-stats"><span>🍃 ${tr(`賣價 <b>${f.p}</b> 葉子幣`, `Sells for <b>${f.p}</b>`)}</span><span>📖 ${tr(`圖鑑 <b>${Object.keys(AV.fishDex).length}</b> / ${FISH.length}`, `Dex <b>${Object.keys(AV.fishDex).length}</b>/${FISH.length}`)}</span><span>🎣 ${tr(`這小時還能釣 <b>${fishLeft()}</b> 次`, `<b>${fishLeft()}</b> casts left`)}</span></div>
+    <div class="fc-btns"><button class="btn" id="fcDex">📖 ${tr('看魚類圖鑑', 'Encyclopedia')}</button><button class="btn primary" id="fcOk">${tr('收進魚簍', 'Put in bag')}</button></div></div>`;
+  document.body.appendChild(el); requestAnimationFrame(() => el.classList.add('on'));
+  setTimeout(() => { const c = el.querySelector('.fc-card'); if (c) { confetti(c); if (st >= 3) setTimeout(() => confetti(c), 500); if (st >= 5) setTimeout(() => confetti(c), 1000); } }, 250);
+  const close = () => { if (!el.isConnected) return; el.classList.remove('on'); setTimeout(() => el.remove(), 350); removeEventListener('keydown', key, true); fishStop(); };
+  const key = e => { if (e.key === 'Enter' || e.key === 'Escape' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); close(); } };
+  addEventListener('keydown', key, true);
+  el.addEventListener('click', e => { if (e.target === el || e.target.classList.contains('fc-rays')) close(); });
+  el.querySelector('#fcOk').addEventListener('click', close);
+  el.querySelector('#fcDex').addEventListener('click', () => { close(); SHOPSLOT = 'fish'; FISHVIEW = 'dex'; FISHSEL = f.id; FISHR = 'all'; openBook('shop'); });
 }
 /* toolbar button */
 function fishBtn() {
@@ -12920,7 +12987,9 @@ function buildAvatar() {
 function updateTag() { if (!AVA) return; const li = levelInfo(), ti = AV.eq.title && SHOP_BY.get(AV.eq.title); AVA.tagEl.innerHTML = `<b>${esc(ME.name)}</b>${ti ? `<i class="ttl" style="--rc:${RAR[ti.r].col}">${esc(ti.n)}</i>` : ''}<span>Lv.${li.lv}</span>${AVA.say ? `<em>${esc(AVA.sayText)}</em>` : ''}`; }
 function avSay(text, sec = 4) { if (!AVA) return; AVA.say = sec; AVA.sayText = text; updateTag(); dirty = true; }
 function routeNodes(src, dst) {
-  const path = dijkstra(src, dst);
+  /* never walk through a locked island (its bridge fence is closed); if there is no open way, the caller sails instead */
+  const si = Math.floor(src / 12), di = Math.floor(dst / 12);
+  const path = dijkstra(src, dst, v => { const k = Math.floor(v / 12); return k === si || k === di || !ISL[k] || unlocked(ISL[k]); });
   if (path[0] !== src) return null;
   const pts = [nodePos(path[0])];
   for (let i = 0; i < path.length - 1; i++) {
@@ -13084,8 +13153,8 @@ function rebuildFences() {
   NEIGH.forEach(([i, j]) => {
     const A = ISL[i], B = ISL[j]; if (unlocked(A) === unlocked(B)) return;
     const br = BRIDGE.get(i + '-' + j); if (!br) return;
-    const mx = (br.ax + br.bx) / 2, mz = (br.az + br.bz) / 2, ang = Math.atan2(br.bz - br.az, br.bx - br.ax);
-    const g = new THREE.Group(); g.position.set(mx, TOP + br.h, mz); g.rotation.y = -ang;
+    const tt = unlocked(B) ? .38 : .62, mx = lerp(br.ax, br.bx, tt), mz = lerp(br.az, br.bz, tt), ang = Math.atan2(br.bz - br.az, br.bx - br.ax);
+    const g = new THREE.Group(); g.position.set(mx, TOP + .03 + Math.sin(Math.PI * tt) * br.h, mz); g.rotation.y = -ang;
     for (const s of [-1, 1]) part(g, W_GEO.cyl, COL.dark, 0, 0, s * .18, .035, .32, .035);
     for (const [yy, c] of [[.12, COL.coral], [.24, '#ffffff']]) part(g, W_GEO.box, c, 0, yy, 0, .03, .06, .42);
     FENCE.add(g);
