@@ -4860,6 +4860,43 @@ input[type=range]{width:100%;accent-color:var(--coral);min-height:32px}
 .surv-stage.caught{box-shadow:inset 0 0 0 4px #d9534f;filter:saturate(.6)}
 .tbar{width:100%;height:8px;border-radius:9px;background:rgba(255,255,255,.6);overflow:hidden}
 .tbar i{display:block;height:100%;width:100%;background:var(--coral)}
+.net{display:grid;gap:14px}
+.net-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.net-join{cursor:default}
+.net-code{display:flex;gap:8px;margin-top:8px}
+.net-code input{width:7.5em;font:800 26px/1 var(--mono);letter-spacing:.3em;text-align:center;padding:8px 6px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.net-msg{margin:0;min-height:1.4em;font-weight:700;color:var(--muted)}.net-msg.bad{color:#c0392b}
+.hint.small{font-size:12.5px}
+.net-room{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:16px;background:#fff6e0;border:1.5px solid #f0c64a}
+.net-room b{font:900 40px/1 var(--mono);letter-spacing:.25em;color:var(--coral)}.net-room .btn{margin-left:auto}
+.net-players{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.np{display:grid;justify-items:center;gap:4px;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:center}
+.np i{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--coral);color:#fff;font:800 22px/1 var(--font);font-style:normal}
+.np.me i{background:#3e8ed0}.np.wait{opacity:.6}.np.wait i{background:#c9bdb0}
+.np span{font-size:12.5px;color:var(--muted)}.np-vs{font:900 20px/1 var(--num);color:var(--coral)}
+.net-isl{display:grid;gap:6px}.net-isl span{font-size:13px;color:var(--muted)}.net-isl select{font:600 15px/1.3 var(--font);padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#fff}
+.net-wait{font-weight:700;color:var(--muted);align-self:center}
+.net-card{background:linear-gradient(135deg,#fff6e0,#fff)}.net-card em{color:var(--coral);font-style:normal;font-weight:800}
+#nd{position:fixed;inset:0;z-index:60;pointer-events:none;display:grid;grid-template-rows:auto 1fr auto;padding:max(12px,env(safe-area-inset-top,0px)) 12px max(12px,env(safe-area-inset-bottom,0px))}
+#nd>*{pointer-events:auto}
+.nd-top{justify-self:center;display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;width:min(640px,100%);padding:10px 14px;border-radius:18px;background:rgba(255,253,249,.94);box-shadow:var(--shadow)}
+.nd-p{display:flex;align-items:center;gap:10px;min-width:0}.nd-p.opp{justify-content:flex-end}
+.nd-p b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nd-sc{font:900 28px/1 var(--num);color:#3e8ed0}.nd-p.opp .nd-sc{color:var(--coral)}
+.nd-mid{display:grid;gap:5px;justify-items:center;font:700 13px/1 var(--font);color:var(--muted)}
+.nd-bar{width:120px;height:7px;border-radius:9px;background:#f1e7da;overflow:hidden}.nd-bar i{display:block;height:100%;width:100%;background:var(--coral)}
+.nd-card{grid-row:3;justify-self:center;width:min(640px,100%);display:grid;gap:10px;padding:16px;border-radius:20px;background:rgba(255,253,249,.97);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.nd-q{font:800 18px/1.45 var(--font)}
+.nd-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nd-opts .qopt{min-height:48px}
+.qopt.picked{outline:3px solid #3e8ed0;outline-offset:1px}
+.nd-msg{min-height:1.4em;font-weight:800;color:var(--muted)}.nd-msg.good{color:#2e8b57}.nd-msg.bad{color:var(--coral)}
+.nd-foot{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.nd-emo{display:flex;gap:6px}.nd-e{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:20px;cursor:pointer}
+.nd-e:active{transform:scale(.9)}
+.nd-end{display:grid;gap:8px;text-align:center}.nd-end h3{margin:0;font-size:24px}.nd-rw{margin:0;font-weight:800;color:#3f7a3a}
+body.net-on #card,body.net-on #side,body.net-on #tools,body.net-on #timeFab,body.net-on #hud{visibility:hidden}
+.me-tag.opp b{background:#3e8ed0}
+@media (max-width:600px){.net-row{grid-template-columns:1fr}.nd-opts{grid-template-columns:1fr}.nd-q{font-size:16px}.nd-top{grid-template-columns:1fr auto 1fr;padding:8px 10px}.nd-bar{width:70px}.nd-sc{font-size:22px}}
 #duel{position:fixed;inset:0;z-index:70;display:grid;grid-template-rows:1fr auto 1fr;background:var(--paper-solid);padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:10px}
 .dside{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:14px;border-radius:20px;background:#fff;border:2px solid var(--line);min-height:0;overflow:auto}
 .dside.p1{transform:rotate(180deg);background:#f3f6fb}
@@ -7785,6 +7822,7 @@ function frame(now) {
   updateFlight(dt);
   updateZoom(dt);
   if (advTick) advTick(dt, now);
+  netTick(dt, now);
   if (controls.update()) dirty = true;
   if (!dirty) return;
   dirty = false;
@@ -8593,6 +8631,7 @@ function openHub() {
     <button class="hcard" id="hReview"><b>${tr('錯題本', 'Mistake book')}</b><span>${wc ? tr(`共 ${wc} 題，今天要複習 ${due} 題`, `${wc} saved, ${due} due`) : tr('目前沒有錯題', 'No mistakes yet')}</span><em>${due ? tr('開始複習', 'Review') : ''}</em></button>
     <button class="hcard" id="hHunt"><b>${tr('島上尋寶', 'Island treasure hunt')}</b><span>${tr('看線索，到 3D 島上找出答案', 'Find answers on the islands')}</span><em>${LP.h ? tr(`最佳：找到 ${LP.h} 個`, `Best: ${LP.h}`) : ''}</em></button>
     <button class="hcard" id="hSurv"><b>${tr('動物求生大作戰', 'Animal survival')}</b><span>${tr('五 1-1：天敵來了，選對保護方式！', 'Pick the right defence!')}</span><em>${LP.sv ? tr(`最佳：救了 ${LP.sv} 隻`, `Best: ${LP.sv}`) : ''}</em></button>
+    <button class="hcard big net-card" id="hNet"><b>${tr('連線搶答擂台', 'Online quiz battle')}</b><span>${tr('兩台電腦或手機連線，比比看誰先答對！', 'Two devices, race to answer!')}</span><em>${AV && AV.net ? tr(`${AV.net.w} 勝 ${AV.net.l} 敗`, `${AV.net.w}W ${AV.net.l}L`) : 'NEW'}</em></button>
     <button class="hcard" id="hDuel"><b>${tr('親子快問快答', 'Two-player quiz')}</b><span>${tr('同一台裝置兩個人搶答', 'Two players, one device')}</span><em></em></button>
     <button class="hcard" data-act="pass"><b>${tr('學習護照', 'Passport')}</b><span>${tr(`已拿到 ${totalStars()} 顆星`, `${totalStars()} stars`)}</span><em></em></button>
   </div>
@@ -8607,6 +8646,7 @@ function openHub() {
   $('#hHunt').addEventListener('click', startHunt);
   $('#hSurv').addEventListener('click', startSurvival);
   $('#hDuel').addEventListener('click', setupDuel);
+  $('#hNet').addEventListener('click', () => openNet());
   $('#hVoice').addEventListener('change', e => { LP.voice = e.target.checked; saveP(); if (LP.voice) speak(tr('語音唸題已開啟', 'Read aloud is on')); });
   $('#hExam').addEventListener('change', e => { LP.exam = e.target.value || ''; saveP(); updateExamNote(); openHub(); });
 }
@@ -9416,6 +9456,330 @@ function advRefresh() { if (!ADV_READY) return; rebuildFences(); refreshNpcs(); 
 buildAvatar(); rebuildFences(); refreshNpcs(); updateMeBar(); dayState(); checkAch();
 if (!ME) setTimeout(() => openStart('first'), 50);
 else setTimeout(() => avSay(tr(`${ME.name}，今天要去哪座島？`, `Where to today, ${ME.name}?`), 4), 1500);
+
+/* =====================================================================
+   16e. online quiz battle (Firebase Realtime Database, anonymous auth)
+   ===================================================================== */
+const FB_CFG = {
+  apiKey: 'AIzaSyBJxHPheT9tieukCk2aXz84DxoqY_JRg3A',
+  authDomain: 'science-review-islands.firebaseapp.com',
+  databaseURL: 'https://science-review-islands-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'science-review-islands',
+  storageBucket: 'science-review-islands.firebasestorage.app',
+  messagingSenderId: '371060961678',
+  appId: '1:371060961678:web:22c8f49e3e2c86a49474df'
+};
+const FB_VER = '10.12.2', NQ = 7, QSEC = 12;
+let FB = null, NET = null;
+async function fbInit() {
+  if (FB) return FB;
+  const base = `https://www.gstatic.com/firebasejs/${FB_VER}/`;
+  const [A, U, D] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-database.js')]);
+  const app = A.initializeApp(FB_CFG);
+  // per-tab identity: two tabs / two devices = two players
+  const auth = U.initializeAuth(app, { persistence: U.browserSessionPersistence });
+  if (!auth.currentUser) await U.signInAnonymously(auth);
+  FB = { ...D, db: D.getDatabase(app), uid: auth.currentUser.uid };
+  return FB;
+}
+const nref = p => FB.ref(FB.db, `rooms/${NET.code}${p ? '/' + p : ''}`);
+const EMOS = ['👍', '😮', '🎉', '😅', '💪'];
+function netMe() { return { name: ME.name, look: { char: ME.char, shirt: ME.shirt, hair: ME.hair, skin: ME.skin }, eq: { ...AV.eq }, lv: levelInfo().lv, x: +AVA.root.position.x.toFixed(2), z: +AVA.root.position.z.toFixed(2), yaw: +AVA.yaw.toFixed(2), on: FB.serverTimestamp() }; }
+
+/* ---------- menu ---------- */
+function openNet(prefill) {
+  const body = openPlay('net', tr('連線搶答擂台', 'Online quiz battle'), tr('兩台裝置一起搶答', 'Two devices, one quiz'));
+  if (!ME) { body.innerHTML = `<p class="hint">${tr('先建立你的角色，才能上場對戰喔！', 'Create your character first!')}</p><div class="qrow center"><button class="btn primary" id="nStart">${tr('建立角色', 'Create character')}</button></div>`; $('#nStart').addEventListener('click', () => { closePlay(true); openStart('first'); }); return; }
+  body.innerHTML = `<div class="net">
+    <p class="hint">${tr('一台按「開房間」，另一台輸入房號加入。兩個角色會站上同一座島，同一題先答對的人得分！', 'One device opens a room, the other joins with the code. First correct answer scores!')}</p>
+    <div class="net-row">
+      <button class="hcard big" id="nHost"><b>${tr('開房間', 'Open a room')}</b><span>${tr('拿到 4 位數房號給對手', 'Get a 4-digit code')}</span><em></em></button>
+      <div class="hcard big net-join"><b>${tr('加入房間', 'Join a room')}</b><span>${tr('輸入對手給你的房號', 'Enter the code')}</span>
+        <div class="net-code"><input id="nCode" inputmode="numeric" maxlength="4" pattern="[0-9]*" placeholder="0000" value="${prefill || ''}" aria-label="${tr('房號', 'Room code')}"><button class="btn primary" id="nJoin">${tr('加入', 'Join')}</button></div></div>
+    </div>
+    <p class="net-msg" id="nMsg" role="status"></p>
+    <p class="hint small">${tr('只會傳送暱稱、角色裝扮、位置和分數；不能打字聊天，只能送表情。', 'Only nickname, outfit, position and score are shared. No chat, just emoji.')}</p>
+  </div>`;
+  $('#nHost').addEventListener('click', netHost);
+  $('#nJoin').addEventListener('click', () => netJoin($('#nCode').value.trim()));
+  $('#nCode').addEventListener('keydown', e => { if (e.key === 'Enter') netJoin($('#nCode').value.trim()); });
+  if (prefill) netJoin(prefill);
+}
+const nMsg = (t, bad) => { const m = $('#nMsg'); if (m) { m.textContent = t; m.classList.toggle('bad', !!bad); } };
+async function netConnect() {
+  nMsg(tr('連線中…', 'Connecting…'));
+  try { await fbInit(); return true; }
+  catch (e) { console.warn(e); nMsg(tr('連不上對戰伺服器。請確認網路正常；學校或公司網路有時會擋連線，可以換手機網路試試。', 'Could not reach the battle server. Check your network.'), true); return false; }
+}
+async function netHost() {
+  if (!(await netConnect())) return;
+  for (let k = 0; k < 10; k++) {
+    const code = String(1000 + Math.floor(Math.random() * 9000));
+    try {
+      const r = await FB.runTransaction(FB.ref(FB.db, `rooms/${code}/host`), cur => cur ? undefined : FB.uid);
+      if (!r.committed) continue;
+      NET = { code, host: true };
+      const isl = (AVA && AVA.isl) || startIsland();
+      await FB.set(nref('game'), { state: 'lobby', isl: isl.id, created: FB.serverTimestamp(), score: { [FB.uid]: 0 } });
+      await netEnter();
+      return;
+    } catch (e) { console.warn(e); nMsg(tr('開房間失敗：伺服器拒絕寫入（可能是資料庫規則還沒設定好）。', 'Could not open a room (database rules?).'), true); return; }
+  }
+  nMsg(tr('房號都被用掉了，請再按一次。', 'Please try again.'), true);
+}
+async function netJoin(code) {
+  if (!/^\d{4}$/.test(code || '')) { nMsg(tr('房號是 4 位數字喔！', 'The code has 4 digits.'), true); return; }
+  if (!(await netConnect())) return;
+  try {
+    const snap = await FB.get(FB.ref(FB.db, `rooms/${code}`)), room = snap.val();
+    if (!room || !room.game || room.game.state === 'gone') { nMsg(tr(`找不到房間 ${code}，請確認房號。`, `Room ${code} not found.`), true); return; }
+    const ps = Object.keys(room.players || {}).filter(u => u !== FB.uid);
+    if (ps.length >= 2) { nMsg(tr('這個房間已經滿了。', 'This room is full.'), true); return; }
+    if (room.game.state !== 'lobby') { nMsg(tr('這個房間已經開始比賽了。', 'This game has already started.'), true); return; }
+    NET = { code, host: room.host === FB.uid };
+    await netEnter();
+  } catch (e) { console.warn(e); nMsg(tr('加入失敗，請再試一次。', 'Could not join. Try again.'), true); }
+}
+
+/* ---------- in the room ---------- */
+async function netEnter() {
+  Object.assign(NET, { room: null, qi: -1, ans: null, timers: [], syncT: 0, lastSent: '', remote: null, emoSeen: {}, resSeen: -1, streak: {}, ended: false, rewarded: false });
+  const meRef = nref('players/' + FB.uid);
+  await FB.set(meRef, netMe());
+  FB.onDisconnect(meRef).remove();
+  if (NET.host) FB.onDisconnect(nref('game/state')).set('gone');
+  NET.off = FB.onValue(nref(), s => netRoom(s.val()));
+  try { history.replaceState(null, '', location.pathname + '?room=' + NET.code); } catch (e) {}
+}
+function netOpp(room) { const id = Object.keys((room && room.players) || {}).find(u => u !== FB.uid); return id ? { id, ...room.players[id] } : null; }
+function netRoom(room) {
+  if (!NET) return;
+  const prev = NET.room; NET.room = room;
+  if (!room || !room.game) { netEnd(tr('房間已關閉。', 'The room was closed.')); return; }
+  const g = room.game, opp = netOpp(room);
+  netRemote(opp);
+  if (opp && opp.emoT && NET.emoSeen[opp.id] !== opp.emoT) { NET.emoSeen[opp.id] = opp.emoT; if (Date.now() - opp.emoT < 8000) remoteSay(opp.emo, 2.5); }
+  if (g.state === 'gone' && !NET.ended) { netEnd(tr('房主離開了，比賽結束。', 'The host left.')); return; }
+  if (g.state === 'lobby') { netLobby(room); return; }
+  if (g.state === 'playing') {
+    if (!opp && !NET.ended) { netEnd(tr('對手離線了，比賽結束。', 'Your opponent left.')); return; }
+    if (!$('#nd')) netStage(room);
+    if (g.qi !== NET.qi) netQuestion(room);
+    if (g.res && g.res.qi === g.qi && NET.resSeen !== g.qi) netReveal(room);
+    netScores(room);
+    if (NET.host) netJudge(room);
+    return;
+  }
+  if (g.state === 'done') netDone(room);
+}
+function netLobby(room) {
+  const g = room.game, opp = netOpp(room), isl = ISL_BY.get(g.isl) || ISL[0];
+  if (NET.doneShown) netLobbyReset();
+  if ($('#nd')) { $('#nd').remove(); document.body.classList.remove('net-on'); }
+  const sig = [opp && opp.id, opp && opp.name, opp && opp.lv, g.isl].join('|');
+  if (PL.kind === 'net-lobby' && NET.lobbySig === sig) return; NET.lobbySig = sig;
+  if (PL.kind !== 'net-lobby') openPlay('net-lobby', tr('連線搶答擂台', 'Online quiz battle'), tr('等待對手', 'Waiting room'), { onClose: () => netLeave() });
+  const body = PL.body;
+  const opts = ISL.filter(i => LD.quiz[i.id]).map(i => `<option value="${i.id}" ${i.id === g.isl ? 'selected' : ''}>${esc(codeOf(i))} ${esc(T(i.label))}</option>`).join('');
+  body.innerHTML = `<div class="net">
+    <div class="net-room"><span>${tr('房號', 'Room code')}</span><b>${NET.code}</b><button class="btn" id="nCopy">${tr('複製邀請連結', 'Copy invite link')}</button></div>
+    <div class="net-players">
+      <div class="np me"><i>${esc(ME.name.slice(0, 1))}</i><b>${esc(ME.name)}</b><span>${NET.host ? tr('房主', 'Host') : tr('挑戰者', 'Challenger')}</span></div>
+      <div class="np-vs">VS</div>
+      <div class="np ${opp ? '' : 'wait'}">${opp ? `<i>${esc(opp.name.slice(0, 1))}</i><b>${esc(opp.name)}</b><span>Lv.${opp.lv || 1}</span>` : `<i>?</i><b>${tr('等待加入…', 'Waiting…')}</b><span>${tr(`請對手輸入房號 ${NET.code}`, `Code ${NET.code}`)}</span>`}</div>
+    </div>
+    <label class="net-isl"><span>${tr('比賽題目', 'Questions from')}</span>${NET.host ? `<select id="nIsl">${opts}<option value="g4" ${g.isl === 'g4' ? 'selected' : ''}>${tr('小四全部課程', 'All grade 4')}</option><option value="g5" ${g.isl === 'g5' ? 'selected' : ''}>${tr('小五全部課程', 'All grade 5')}</option></select>` : `<b>${g.isl === 'g4' ? tr('小四全部課程', 'All grade 4') : g.isl === 'g5' ? tr('小五全部課程', 'All grade 5') : esc(codeOf(isl) + ' ' + T(isl.label))}</b>`}</label>
+    <p class="hint">${tr(`共 ${NQ} 題，每題 ${QSEC} 秒。先答對的人 +100 分，連續搶到再加分；答錯這題就不能再答。`, `${NQ} questions, ${QSEC}s each. First correct +100, streak bonus.`)}</p>
+    <div class="qrow center">${NET.host ? `<button class="btn primary" id="nGo" ${opp ? '' : 'disabled'}>${tr('開始比賽！', 'Start!')}</button>` : `<span class="net-wait">${tr('等房主按開始…', 'Waiting for the host…')}</span>`}<button class="btn" id="nLeave">${tr('離開', 'Leave')}</button></div>
+  </div>`;
+  $('#nLeave').addEventListener('click', () => closePlay());
+  $('#nCopy').addEventListener('click', () => { const u = location.origin + location.pathname + '?room=' + NET.code; (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast(tr('邀請連結已複製', 'Link copied')), () => prompt(tr('複製這個連結傳給對手：', 'Copy this link:'), u)); });
+  if (NET.host) {
+    $('#nIsl').addEventListener('change', e => FB.update(nref('game'), { isl: e.target.value }));
+    if ($('#nGo')) $('#nGo').addEventListener('click', netStart);
+  }
+}
+function netPool(sel) {
+  const p = ALLQ.map((q, i) => ({ q, i })).filter(({ q }) => sel === 'g4' || sel === 'g5' ? ISL_BY.get(q.iid).grade === sel : q.iid === sel);
+  return p.length >= 4 ? p : ALLQ.map((q, i) => ({ q, i })).filter(({ q }) => ISL_BY.get(q.iid).grade === (ISL_BY.get(sel) || {}).grade);
+}
+async function netStart() {
+  const room = NET.room, opp = netOpp(room); if (!opp) return;
+  const pool = shuffle(netPool(room.game.isl)).slice(0, NQ);
+  const qs = pool.map(p => p.i), perms = pool.map(p => shuffle(p.q.o.map((_, k) => k)));
+  NET.streak = {};
+  await FB.remove(nref('answers'));
+  await FB.update(nref('game'), { state: 'playing', qs, perms, qi: 0, qStart: FB.serverTimestamp(), res: null, score: { [FB.uid]: 0, [opp.id]: 0 }, t0: Date.now() });
+}
+
+/* ---------- stage: both avatars on one island ---------- */
+function netStageIsl(g) { const s = g.isl; return ISL_BY.get(s) || ISL.find(i => i.grade === s) || ISL[0]; }
+function netStage(room) {
+  closePlay(true);
+  const g = room.game, isl = netStageIsl(g);
+  const el = document.createElement('div'); el.id = 'nd';
+  el.innerHTML = `<div class="nd-top"><div class="nd-p me"><b>${esc(ME.name)}</b><span class="nd-sc" id="ndMe">0</span></div><div class="nd-mid"><span id="ndNum"></span><div class="nd-bar"><i id="ndBar"></i></div></div><div class="nd-p opp"><span class="nd-sc" id="ndOpp">0</span><b id="ndOppName"></b></div></div>
+    <div class="nd-card"><div class="nd-q" id="ndQ"></div><div class="nd-opts" id="ndOpts"></div><div class="nd-msg" id="ndMsg" role="status"></div>
+    <div class="nd-foot"><div class="nd-emo">${EMOS.map(e => `<button class="nd-e" data-e="${e}" aria-label="${e}">${e}</button>`).join('')}</div><button class="btn" id="ndQuit">${tr('離開', 'Leave')}</button></div></div>`;
+  document.body.appendChild(el);
+  el.querySelectorAll('.nd-e').forEach(b => b.addEventListener('click', () => netEmo(b.dataset.e)));
+  $('#ndQuit').addEventListener('click', () => { if (confirm(tr('確定要離開比賽嗎？', 'Leave the game?'))) netLeave(); });
+  document.body.classList.add('net-on');
+  // place both avatars on the stage island, facing each other
+  closeCard && closeCard();
+  const sx = NET.host ? -.55 : .55;
+  if (AVA) { AVA.path = null; AVA.boat.visible = false; AVA.follow = false; AVA.root.position.set(isl.x + sx, RING_Y, isl.z + .35); AVA.yaw = sx < 0 ? Math.PI / 2 : -Math.PI / 2; AVA.isl = isl; }
+  flyTo(framing(new V3(isl.x, TOP, isl.z + .35), ISL_OFF.clone().multiplyScalar(.62), false));
+  netSync(true);
+}
+function netScores(room) {
+  const g = room.game, opp = netOpp(room), sc = g.score || {};
+  const a = $('#ndMe'), b = $('#ndOpp'); if (!a) return;
+  a.textContent = sc[FB.uid] || 0; b.textContent = opp ? (sc[opp.id] || 0) : 0;
+  $('#ndOppName').textContent = opp ? opp.name : tr('（離線）', '(left)');
+}
+function netQuestion(room) {
+  const g = room.game; NET.qi = g.qi; NET.ans = null; NET.qT0 = performance.now();
+  const q = ALLQ[g.qs[g.qi]], perm = g.perms[g.qi];
+  $('#ndNum').textContent = tr(`第 ${g.qi + 1} / ${g.qs.length} 題`, `Q ${g.qi + 1} / ${g.qs.length}`);
+  $('#ndQ').textContent = q.q; $('#ndMsg').textContent = ''; $('#ndMsg').className = 'nd-msg';
+  $('#ndOpts').innerHTML = perm.map((k, j) => `<button class="qopt" data-o="${k}"><span class="ql">${'ABCD'[j]}</span><span>${esc(q.o[k])}</span></button>`).join('');
+  $('#ndOpts').querySelectorAll('.qopt').forEach(b => b.addEventListener('click', () => netAnswer(+b.dataset.o, b)));
+  if (LP.voice) speak(q.q);
+}
+async function netAnswer(o, btn) {
+  const g = NET.room.game; if (NET.ans != null || NET.resSeen === g.qi) return;
+  NET.ans = o; btn.classList.add('picked');
+  const ok = o === 0;
+  $('#ndOpts').querySelectorAll('.qopt').forEach(b => b.disabled = true);
+  if (!ok) { btn.classList.add('wrong'); $('#ndMsg').textContent = tr('答錯了！這題等對手作答…', 'Wrong! Waiting for your opponent…'); avSay(tr('啊！答錯了', 'Oops!'), 2); }
+  else $('#ndMsg').textContent = tr('答對了！看看是誰比較快…', 'Correct! Who was faster…');
+  try { await FB.set(nref(`answers/${g.qi}/${FB.uid}`), { o, t: FB.serverTimestamp() }); } catch (e) { console.warn(e); }
+}
+/* host judges: first correct answer by server time wins the question */
+function netJudge(room) {
+  const g = room.game; if (g.res && g.res.qi === g.qi) return;
+  const ans = (room.answers || {})[g.qi] || {}, ids = Object.keys(room.players || {});
+  const list = Object.entries(ans).filter(([, a]) => a && typeof a.t === 'number');
+  const right = list.filter(([, a]) => a.o === 0).sort((x, y) => x[1].t - y[1].t);
+  const allIn = ids.every(id => ans[id]);
+  if (right.length || allIn) return netResolve(room, right.length ? right[0][0] : null);
+  if (NET.judgeQ !== g.qi) { NET.judgeQ = g.qi; clearTimeout(NET.qTimer); NET.qTimer = setTimeout(() => { const r = NET && NET.room; if (r && r.game.qi === g.qi && !(r.game.res && r.game.res.qi === g.qi)) netResolve(r, null); }, QSEC * 1000 + 400); }
+}
+async function netResolve(room, w) {
+  const g = room.game; if (NET.resolving === g.qi) return; NET.resolving = g.qi; clearTimeout(NET.qTimer);
+  const sc = { ...(g.score || {}) }; let pts = 0;
+  Object.keys(room.players || {}).forEach(id => { if (id !== w) NET.streak[id] = 0; });
+  if (w) { NET.streak[w] = (NET.streak[w] || 0) + 1; pts = 100 + (NET.streak[w] - 1) * 20; sc[w] = (sc[w] || 0) + pts; }
+  await FB.update(nref('game'), { res: { qi: g.qi, w: w || '', pts }, score: sc });
+  setTimeout(async () => {
+    const r = NET && NET.room; if (!r || r.game.qi !== g.qi) return;
+    if (g.qi + 1 < g.qs.length) await FB.update(nref('game'), { qi: g.qi + 1, qStart: FB.serverTimestamp(), res: null });
+    else await FB.update(nref('game'), { state: 'done' });
+  }, 2800);
+}
+function netReveal(room) {
+  const g = room.game, res = g.res, opp = netOpp(room); NET.resSeen = g.qi;
+  const q = ALLQ[g.qs[g.qi]];
+  $('#ndOpts').querySelectorAll('.qopt').forEach(b => { b.disabled = true; if (+b.dataset.o === 0) b.classList.add('right'); });
+  const m = $('#ndMsg');
+  if (res.w === FB.uid) { m.textContent = tr(`搶答成功！+${res.pts}`, `You got it! +${res.pts}`); m.className = 'nd-msg good'; AVA.hop = .7; avSay(tr('搶到了！', 'Got it!'), 2); }
+  else if (res.w) { m.textContent = tr(`${opp ? opp.name : '對手'} 搶先答對了！答案：${q.o[0]}`, `${opp ? opp.name : 'Opponent'} was first! Answer: ${q.o[0]}`); m.className = 'nd-msg bad'; if (NET.remote) NET.remote.hop = .7; remoteSay(tr('搶到了！', 'Got it!'), 2); }
+  else { m.textContent = tr(`都沒有人答對，答案是：${q.o[0]}`, `Nobody got it. Answer: ${q.o[0]}`); m.className = 'nd-msg'; }
+}
+function netDone(room) {
+  if (NET.doneShown) return; NET.doneShown = true;
+  const g = room.game, opp = netOpp(room), sc = g.score || {}, me = sc[FB.uid] || 0, ot = opp ? (sc[opp.id] || 0) : 0;
+  const res = me > ot ? 'w' : me < ot ? 'l' : 'd';
+  const rw = { w: { coins: 40, xp: 30 }, d: { coins: 25, xp: 20 }, l: { coins: 15, xp: 15 } }[res];
+  if (!NET.rewarded) {
+    NET.rewarded = true; AV.net = AV.net || { w: 0, l: 0, d: 0 }; AV.net[res]++;
+    grant(rw, tr('連線對戰', 'Online battle')); advEvent('duel', {});
+    if (res === 'w' && AV.net.w === 3) toast(tr('累積 3 勝！你是搶答小高手！', '3 wins!'));
+  }
+  if (res === 'w') { AVA.hop = 1; avSay(tr('我贏了！', 'I won!'), 4); } else if (res === 'l') { if (NET.remote) NET.remote.hop = 1; avSay(tr('下次再來！', 'Next time!'), 4); }
+  const el = $('#nd'); if (!el) return;
+  el.querySelector('.nd-card').innerHTML = `<div class="nd-end"><h3>${res === 'w' ? tr('你贏了！🏆', 'You win! 🏆') : res === 'l' ? tr(`${opp ? opp.name : '對手'} 贏了！`, 'You lose!') : tr('平手！', 'Draw!')}</h3>
+    <p class="dfinal">${me} : ${ot}</p><p class="nd-rw">🍃 +${rw.coins} ${tr('葉子幣', 'leaves')} · +${rw.xp} XP</p>
+    <p class="hint">${tr(`對戰紀錄：${AV.net.w} 勝 ${AV.net.l} 敗 ${AV.net.d} 和`, `Record: ${AV.net.w}W ${AV.net.l}L ${AV.net.d}D`)}</p>
+    <div class="qrow center">${NET.host ? `<button class="btn primary" id="ndAgain">${tr('再來一場', 'Rematch')}</button>` : `<span class="net-wait">${tr('等房主決定要不要再來一場…', 'Waiting for the host…')}</span>`}<button class="btn" id="ndBye">${tr('離開', 'Leave')}</button></div></div>`;
+  if (res === 'w') confetti(el.querySelector('.nd-card'));
+  $('#ndBye').addEventListener('click', () => netLeave());
+  if ($('#ndAgain')) $('#ndAgain').addEventListener('click', async () => { await FB.remove(nref('answers')); await FB.update(nref('game'), { state: 'lobby', res: null, qi: -1 }); });
+}
+function netLobbyReset() { if (NET) { NET.lobbySig = ''; NET.doneShown = false; NET.rewarded = false; NET.qi = -1; NET.resSeen = -1; NET.resolving = -1; NET.judgeQ = -1; } }
+async function netEmo(e) { if (!NET || !FB) return; avSay(e, 2.5); try { await FB.update(nref('players/' + FB.uid), { emo: e, emoT: Date.now() }); } catch (x) {} }
+function netEnd(msg) {
+  if (!NET || NET.ended) return; NET.ended = true;
+  const el = $('#nd');
+  if (el) el.querySelector('.nd-card').innerHTML = `<div class="nd-end"><h3>${esc(msg)}</h3><div class="qrow center"><button class="btn primary" id="ndBye">${tr('回到島上', 'Back to the islands')}</button></div></div>`, $('#ndBye').addEventListener('click', () => netLeave());
+  else { toast(msg); netLeave(); }
+}
+async function netLeave() {
+  if (!NET) return; const N = NET; NET = null;
+  try { if (N.off) N.off(); } catch (e) {}
+  clearTimeout(N.qTimer);
+  if (N.remote) { scene.remove(N.remote.root); if (N.remote.pet) scene.remove(N.remote.pet); }
+  const el = $('#nd'); if (el) el.remove(); document.body.classList.remove('net-on');
+  if (PL.kind === 'net-lobby') closePlay(true);
+  try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  if (FB) {
+    try {
+      await FB.remove(FB.ref(FB.db, `rooms/${N.code}/players/${FB.uid}`));
+      if (N.host) { await FB.set(FB.ref(FB.db, `rooms/${N.code}/game/state`), 'gone'); await FB.remove(FB.ref(FB.db, `rooms/${N.code}/answers`)); }
+    } catch (e) {}
+  }
+  refreshProgressUI();
+}
+
+/* ---------- the opponent's avatar ---------- */
+function netRemote(opp) {
+  const R = NET.remote;
+  if (!opp) { if (R) { scene.remove(R.root); if (R.pet) scene.remove(R.pet); NET.remote = null; } return; }
+  const sig = JSON.stringify([opp.look, opp.eq, opp.name]);
+  if (!R || R.sig !== sig || R.id !== opp.id) {
+    if (R) { scene.remove(R.root); if (R.pet) scene.remove(R.pet); }
+    const root = buildChibi(opp.look || {}, opp.eq || {}); root.scale.setScalar(1.9); root.position.set(opp.x, RING_Y, opp.z); scene.add(root);
+    const tagEl = document.createElement('div'); tagEl.className = 'me-tag opp'; const tag = new CSS2DObject(tagEl); tag.position.set(0, .53, 0); root.add(tag);
+    let pet = null; if (opp.eq && opp.eq.pet) { pet = buildPet(opp.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(root.position); scene.add(pet); }
+    NET.remote = { id: opp.id, sig, root, tagEl, pet, name: opp.name, lv: opp.lv || 1, say: 0, sayText: '', hop: 0, tx: opp.x, tz: opp.z, yaw: opp.yaw || 0 };
+    remoteTag();
+  }
+  const r = NET.remote; r.tx = opp.x; r.tz = opp.z; r.yaw = opp.yaw || 0; r.lv = opp.lv || r.lv;
+}
+function remoteTag() { const r = NET && NET.remote; if (!r) return; r.tagEl.innerHTML = `<b>${esc(r.name)}</b><span>Lv.${r.lv}</span>${r.say > 0 ? `<em>${esc(r.sayText)}</em>` : ''}`; }
+function remoteSay(t, s) { const r = NET && NET.remote; if (!r) return; r.say = s; r.sayText = t; remoteTag(); }
+function netSync(force) {
+  if (!NET || !FB || !AVA) return;
+  const k = [AVA.root.position.x.toFixed(2), AVA.root.position.z.toFixed(2), AVA.yaw.toFixed(1)].join(',');
+  if (!force && k === NET.lastSent) return; NET.lastSent = k;
+  FB.update(nref('players/' + FB.uid), { x: +AVA.root.position.x.toFixed(2), z: +AVA.root.position.z.toFixed(2), yaw: +AVA.yaw.toFixed(2) }).catch(() => {});
+}
+function netTick(dt, now) {
+  if (!NET) return;
+  NET.syncT = (NET.syncT || 0) - dt; if (NET.syncT <= 0) { NET.syncT = .15; netSync(); }
+  const g = NET.room && NET.room.game;
+  if (g && g.state === 'playing' && $('#ndBar') && NET.qT0 && !(g.res && g.res.qi === g.qi)) $('#ndBar').style.width = Math.max(0, 100 - (performance.now() - NET.qT0) / (QSEC * 10)) + '%';
+  if (AVA && AVA.hop > 0) { AVA.hop -= dt; AVA.root.userData.body.position.y = Math.abs(Math.sin(AVA.hop * 9)) * .06; }
+  const r = NET.remote; if (!r) return;
+  const P = r.root.position, dx = r.tx - P.x, dz = r.tz - P.z, d = Math.hypot(dx, dz), t = now / 1000, parts = r.root.userData.parts;
+  let moving = false;
+  if (d > 4) P.set(r.tx, RING_Y, r.tz); else if (d > .01) { const st = Math.min(d, Math.max(1.6, d * 4) * dt); P.x += dx / d * st; P.z += dz / d * st; moving = d > .03; }
+  const g2 = islAt(P.x, P.z); P.y = g2 ? RING_Y : (bridgeAt(P.x, P.z) ? TOP + .05 : RING_Y);
+  const yaw = moving ? Math.atan2(dx, dz) : r.yaw;
+  r.root.rotation.y += ((yaw - r.root.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 10);
+  const sw = moving ? Math.sin(t * 9) * .6 : 0; if (parts.legL) { parts.legL.rotation.x = sw; parts.legR.rotation.x = -sw; parts.armL.rotation.x = -sw * .8; parts.armR.rotation.x = sw * .8; }
+  r.root.userData.body.position.y = r.hop > 0 ? Math.abs(Math.sin(r.hop * 9)) * .06 : (moving ? Math.abs(Math.sin(t * 9)) * .012 : Math.sin(t * 2) * .004);
+  if (r.hop > 0) r.hop -= dt;
+  if (r.say > 0) { r.say -= dt; if (r.say <= 0) remoteTag(); }
+  if (r.pet) { const fly = r.pet.userData.fly || 0; r.pet.position.lerp(new V3(P.x - Math.cos(r.root.rotation.y) * .34, P.y, P.z + Math.sin(r.root.rotation.y) * .34), Math.min(1, dt * 4)); r.pet.position.y = P.y + (fly ? fly + Math.sin(t * 3) * .04 : 0); r.pet.rotation.y = r.root.rotation.y; }
+  dirty = true;
+}
+/* invite links: ?room=1234 opens the join screen */
+{
+  const m = /[?&]room=(\d{4})/.exec(location.search);
+  if (m) setTimeout(() => openNet(m[1]), 1800);
+}
 
 /* =====================================================================
    17. start
