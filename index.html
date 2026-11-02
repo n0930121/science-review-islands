@@ -16254,6 +16254,44 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 #grpNav .gn-grp.mini > :not(.gn-tog){display:none}#grpNav .gn-grp.mini .gn-tog i{transform:rotate(180deg)}#grpNav .gn-grp.mini .gn-tog b{display:none}
 #grpNav .gn-g b{color:var(--ink)}#grpNav .gn-g.empty{opacity:.55}
 @media (max-width:800px){#grpNav{flex-direction:column;align-items:flex-end;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important}#grpNav .gn-tog b{display:none}#grpNav .gn-grp{gap:2px;padding:3px}#grpNav .gn{min-height:32px}}
+/* YW-CSS-BEGIN */
+.yw-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.yw-tabs .btn{gap:4px}
+.yw-les{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.yw-les .chip.on{background:var(--ink);color:#fff}
+.yw-warn{background:#fff3d6;border-radius:12px;padding:8px 12px;font-size:13px}
+.yw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px;margin:6px 0 14px}.yw-grid.wide{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+.yw-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:78px;padding:8px 6px;border:0;border-radius:16px;background:#fff;box-shadow:0 2px 8px #4a2a1416;cursor:pointer;font:inherit;color:var(--ink);transition:transform .15s,background .15s}
+.yw-tile b{font-size:26px;font-weight:800;line-height:1.5}.yw-tile small{font-size:12px;color:#7a6a5a}.yw-tile.sm{min-height:62px}.yw-tile.sm b{font-size:22px}
+.yw-tile:hover{background:var(--yellow)}.yw-tile.on{background:#ffe08a;transform:scale(1.06)}.yw-tile.mute{opacity:.6;cursor:default}
+.bz{display:inline-flex;align-items:center;vertical-align:middle;margin:0 .04em}.bc{line-height:1.15}
+.bp{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:.34em;line-height:1.02;font-weight:700;color:#c25b6e;margin-left:.08em;min-width:1em;font-style:normal}
+.bp i{font-style:normal;display:block}.bp .bt{position:absolute;right:-.85em;top:50%;transform:translateY(-70%);font-size:1.1em}.bp .bn{line-height:.6}
+.zy{font-family:"BpmfZihiSans","DFKai-SB","BiauKai","Kaiti TC",var(--font);letter-spacing:.04em}
+.yw-stage{position:relative;min-height:210px;border-radius:20px;background:linear-gradient(160deg,#fffaf0,#fdeccb);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;overflow:hidden}
+.yw-row{display:flex;align-items:center;gap:40px;transition:gap .5s}.yw-row.join{gap:2px}
+.yw-sym{font-size:58px;font-weight:800;color:var(--ink);opacity:0;transform:translateY(-40px) scale(.6);transition:opacity .4s,transform .5s cubic-bezier(.3,1.6,.5,1)}
+.yw-sym.in{opacity:1;transform:none}
+.yw-tone{font-size:46px;font-weight:800;color:#e0533f;opacity:0;transform:translateY(-30px);transition:all .4s;min-width:.2em}.yw-tone.in{opacity:1;transform:none}
+.yw-tname{font-size:14px;color:#a07c52;opacity:0;transition:opacity .4s;min-height:18px}.yw-tname.in{opacity:1}
+.yw-char{font-size:72px;font-weight:900;color:#3e8ed0;opacity:0;transform:scale(.3);transition:all .5s cubic-bezier(.3,1.6,.5,1);line-height:1.1}.yw-char.in{opacity:1;transform:none}
+.yw-story{background:#fffaf0;border-radius:20px;padding:14px 16px;margin-bottom:10px}
+.yw-line{font-size:30px;line-height:2.1;margin:2px 0;padding:0 8px;border-radius:12px;cursor:pointer;transition:background .2s}
+.yw-line.on{background:#fff0bf}.yw-c{border-radius:6px;transition:background .15s}.yw-c.cur{background:#ffd34d}
+.yw-stroke{display:flex;flex-direction:column;align-items:center}.yw-hw{width:240px;max-width:80vw;height:240px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 2px #f0e4d0;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.yw-hw svg{background-image:linear-gradient(#f3e8d8 1px,transparent 1px),linear-gradient(90deg,#f3e8d8 1px,transparent 1px);background-size:50% 50%;background-position:center}
+.yw-sinfo{font-weight:700;min-height:20px;margin-bottom:6px}.yw-load{color:#9a8a7a;font-size:13px}.yw-stroke .yw-grid{width:100%}
+.yw-listen{display:flex;flex-direction:column;align-items:center;gap:10px}
+.yw-ear{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;border-radius:50%;width:120px;height:120px;background:#ffe9a8;font-size:44px;cursor:pointer;box-shadow:0 4px 14px #4a2a1420}.yw-ear span{font-size:12px;font-weight:700}
+.yw-ask{font-weight:700}.yw-opts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.yw-opt{min-width:110px;min-height:84px;border:0;border-radius:18px;background:#fff;box-shadow:0 2px 10px #4a2a1418;font:800 34px/1 var(--font);cursor:pointer;color:var(--ink)}
+.yw-opt.ok{background:#bfe8b0}.yw-opt.no{background:#f7c2b8}.yw-opt.dim{opacity:.45}.yw-fb{min-height:26px;font-weight:700}
+.yw-done{text-align:center}.yw-done b{font-size:40px;color:#f3b31a;letter-spacing:4px}
+@media (max-width:600px){.yw-line{font-size:27px}.yw-sym{font-size:46px}.yw-char{font-size:60px}.yw-opt{min-width:90px;font-size:28px}}
+.yw-scene-btn{width:34px;height:34px;border-radius:50%;border:0;background:#ff7a59;color:#fff;font:900 14px/1 var(--font);box-shadow:0 3px 10px #4a2a1440;cursor:pointer;pointer-events:auto;animation:ywPulse 2.4s ease-in-out infinite}
+.yw-scene-btn::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid #ff7a59;animation:ywRing 2.4s ease-out infinite}
+@keyframes ywPulse{0%,100%{box-shadow:0 3px 10px #4a2a1440}50%{box-shadow:0 3px 18px #ff7a59aa}}
+@keyframes ywRing{0%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.5)}}
+.act.yw-act{background:linear-gradient(160deg,#fff1f6,#ffe0ec)}
+/* YW-CSS-END */
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
 
@@ -19568,7 +19606,7 @@ function frame(now) {
     updateClouds(dt);
     seaTick(dt);
     dinoTick(dt, simTime);
-    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); ambTick(dt, simTime); denseTick(dt, simTime); funTick(dt, simTime); } catch (e) { console.warn(e); }
+    try { isletTick(dt, simTime); skyEvTick(dt, simTime); growTick(dt, simTime); ambTick(dt, simTime); denseTick(dt, simTime); funTick(dt, simTime); ywTick(dt, simTime); } catch (e) { console.warn(e); }
     dirty = true;
   }
   if (Math.floor(clockMin) !== lastMinApplied) { lastMinApplied = Math.floor(clockMin); applyTime(clockMin); updateHud(); }
@@ -19670,6 +19708,7 @@ function activitiesHTML(isl) {
     ? `<button class="act main" data-act="quiz" data-isl="${isl.id}">${ICON.quiz}<span><b>${tr('闖關問答', 'Quiz')}</b><small>${tr(`每次 5 題，答對 3 題過關`, '5 questions, 3 to pass')}</small></span><em class="stars">${starStr(st)}</em></button>`
     : `<div class="act locked">${ICON.lock}<span><b>${tr('闖關問答（未解鎖）', 'Quiz (locked)')}</b><small>${tr(`先過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」這一關`, `Pass ${codeOf(prevIsl(isl))} first`)}</small></span></div>`;
   if (lab) h += `<button class="act" data-act="lab" data-isl="${isl.id}">${ICON.lab}<span><b>${esc(T(LAB_NAME[lab]))}</b><small>${tr('動手玩實驗', 'Hands-on experiment')}</small></span><em class="ok">${LP.l[isl.id] ? '✓' : ''}</em></button>`;
+  if (typeof YW !== 'undefined' && YW[isl.id]) h += `<button class="act main yw-act" data-act="yw" data-isl="${isl.id}"><span class="lg-ico">🎧</span><span><b>${tr('語文教室', 'Language room')}</b><small>${tr('唸給我聽、拼讀動畫、有聲小故事、筆順、聽力遊戲', 'Read aloud, spelling, stories, strokes, listening')}</small></span></button>`;
   if (srt) h += `<button class="act" data-act="sort" data-isl="${isl.id}">${ICON.sort}<span><b>${tr('分類配對', 'Sorting game')}</b><small>${tr(`${srt.length} 回合，把卡片放到正確的格子`, `${srt.length} rounds`)}</small></span><em class="ok">${LP.s[isl.id] ? '✓' : ''}</em></button>`;
   isl.items.filter(it => LD.puzzle && LD.puzzle[it.id]).forEach(it => { h += `<button class="act" data-act="puzzle" data-item="${it.id}">${ICON.puzzle}<span><b>${tr('心智圖拼圖', 'Mind-map puzzle')}${/篇/.test(T(it.name)) ? '・' + esc(T(it.name).split('・')[1] || '') : ''}</b><small>${tr(`${LD.puzzle[it.id].length} 塊拼圖，拼回原位`, `${LD.puzzle[it.id].length} pieces`)}</small></span><em class="ok">${LP.z && LP.z[it.id] ? '✓' : ''}</em></button>`; });
   if (typeof LGAMES !== 'undefined' && isl.id === LG_ISL) LGAMES.forEach(gm => { const sv = (LP.lg || {})[gm.id] || 0; h += `<button class="act lgact" data-act="lg" data-g="${gm.id}"><span class="lg-ico">${gm.ic}</span><span><b>${esc(T(gm.n))}</b><small>${esc(T(gm.k))}・${esc(T(gm.d))}</small></span><em class="stars">${sv ? starStr(sv) : ''}</em></button>`; });
@@ -23585,6 +23624,308 @@ function funTick(dt, t) {
 }
 window.__fun = { FUN, note: (k, ok) => noteAnswer(k, ok, false), keys: () => [...QBY.keys()], monSync, monFight, openReport, startBoss, openMap, openMerchant, takePhoto, SEASON, FEST };
 
+/* YW-JS-BEGIN */
+/* ---------- 16n. grade-1 language room: read aloud, spelling animation, talking stories, stroke order, listening game ---------- */
+const YW = {"z1-1":[{"no":1,"t":"踢踏踢","book":"首冊","syms":[["ㄅ","爸","ㄅㄚˋ"],["ㄇ","媽","ㄇㄚ"],["ㄊ","踢","ㄊㄧ"],["ㄧ","踢","ㄊㄧ"],["ㄚ","爸","ㄅㄚˋ"],["ㄧㄚ","鴨","ㄧㄚ"]],"syl":[["ㄅㄚˋ","爸"],["ㄇㄚ","媽"],["ㄊㄧ","踢"],["ㄧㄚ","鴨"]],"words":[["爸爸","ㄅㄚˋ ˙ㄅㄚ"],["媽媽","ㄇㄚ ˙ㄇㄚ"]],"story":[[["小","ㄒㄧㄠˇ"],["鴨","ㄧㄚ"],["跟","ㄍㄣ"],["著","˙ㄓㄜ"],["爸","ㄅㄚˋ"],["爸","˙ㄅㄚ"],["媽","ㄇㄚ"],["媽","˙ㄇㄚ"],["學","ㄒㄩㄝˊ"],["跳","ㄊㄧㄠˋ"],["舞","ㄨˇ"],["。",""]],[["踢","ㄊㄧ"],["一","ㄧ"],["踢","ㄊㄧ"],["，",""],["踏","ㄊㄚˋ"],["一","ㄧ"],["踏","ㄊㄚˋ"],["，",""]],[["小","ㄒㄧㄠˇ"],["鴨","ㄧㄚ"],["笑","ㄒㄧㄠˋ"],["哈","ㄏㄚ"],["哈","ㄏㄚ"],["。",""]]]},{"no":2,"t":"木馬","book":"首冊","syms":[["ㄉ","弟","ㄉㄧˋ"],["ㄨ","木","ㄇㄨˋ"],["ㄝ","爺","ㄧㄝˊ"],["ㄠ","搖","ㄧㄠˊ"],["ㄧㄠ","搖","ㄧㄠˊ"],["ㄨㄚ","蛙","ㄨㄚ"],["ㄧㄝ","爺","ㄧㄝˊ"]],"syl":[["ㄇㄨˋ","木"],["ㄇㄚˇ","馬"],["ㄧㄝˊ","爺"],["ㄉㄧˋ","弟"],["ㄧㄠˊ","搖"]],"words":[["木馬","ㄇㄨˋ ㄇㄚˇ"],["爺爺","ㄧㄝˊ ˙ㄧㄝ"],["弟弟","ㄉㄧˋ ˙ㄉㄧ"]],"story":[[["爺","ㄧㄝˊ"],["爺","˙ㄧㄝ"],["做","ㄗㄨㄛˋ"],["了","˙ㄌㄜ"],["一","ㄧ"],["個","ㄍㄜˋ"],["木","ㄇㄨˋ"],["馬","ㄇㄚˇ"],["。",""]],[["弟","ㄉㄧˋ"],["弟","˙ㄉㄧ"],["坐","ㄗㄨㄛˋ"],["上","ㄕㄤˋ"],["木","ㄇㄨˋ"],["馬","ㄇㄚˇ"],["，",""]],[["搖","ㄧㄠˊ"],["啊","˙ㄚ"],["搖","ㄧㄠˊ"],["，",""],["搖","ㄧㄠˊ"],["啊","˙ㄚ"],["搖","ㄧㄠˊ"],["，",""]],[["弟","ㄉㄧˋ"],["弟","˙ㄉㄧ"],["笑","ㄒㄧㄠˋ"],["著","˙ㄓㄜ"],["說","ㄕㄨㄛ"],["：",""],["「",""],["爺","ㄧㄝˊ"],["爺","˙ㄧㄝ"],["最","ㄗㄨㄟˋ"],["好","ㄏㄠˇ"],["！",""],["」",""]]]},{"no":3,"t":"晚安","book":"首冊","syms":[["ㄆ","泡","ㄆㄠˋ"],["ㄌ","來","ㄌㄞˊ"],["ㄏ","好","ㄏㄠˇ"],["ㄩ","月","ㄩㄝˋ"],["ㄢ","安","ㄢ"],["ㄨㄢ","彎","ㄨㄢ"],["ㄩㄝ","月","ㄩㄝˋ"]],"syl":[["ㄨㄢˇ","晚"],["ㄢ","安"],["ㄨㄢ","彎"],["ㄩㄝˋ","月"]],"words":[["晚安","ㄨㄢˇ ㄢ"]],"story":[[["天","ㄊㄧㄢ"],["黑","ㄏㄟ"],["了","˙ㄌㄜ"],["，",""]],[["小","ㄒㄧㄠˇ"],["兔","ㄊㄨˋ"],["還","ㄏㄞˊ"],["想","ㄒㄧㄤˇ"],["玩","ㄨㄢˊ"],["，",""]],[["媽","ㄇㄚ"],["媽","˙ㄇㄚ"],["輕","ㄑㄧㄥ"],["輕","ㄑㄧㄥ"],["的","˙ㄉㄜ"],["說","ㄕㄨㄛ"],["：",""]],[["「",""],["晚","ㄨㄢˇ"],["安","ㄢ"],["，",""],["晚","ㄨㄢˇ"],["安","ㄢ"],["。",""],["」",""]]]}],"z1-2":[{"no":4,"t":"紙飛機","book":"首冊","syms":[["ㄈ","飛","ㄈㄟ"],["ㄋ","你","ㄋㄧˇ"],["ㄐ","機","ㄐㄧ"],["ㄓ","紙","ㄓˇ"],["ㄘ","草","ㄘㄠˇ"],["ㄜ","河","ㄏㄜˊ"],["ㄟ","飛","ㄈㄟ"]],"syl":[["ㄓˇ","紙"],["ㄈㄟ","飛"],["ㄐㄧ","機"],["ㄏㄜˊ","河"],["ㄘㄠˇ","草"],["ㄇㄟˊ","莓"]],"words":[["紙飛機","ㄓˇ ㄈㄟ ㄐㄧ"],["河馬","ㄏㄜˊ ㄇㄚˇ"],["草莓","ㄘㄠˇ ㄇㄟˊ"]],"story":[[["我","ㄨㄛˇ"],["在","ㄗㄞˋ"],["紙","ㄓˇ"],["上","ㄕㄤˋ"],["寫","ㄒㄧㄝˇ"],["了","˙ㄌㄜ"],["一","ㄧ"],["句","ㄐㄩˋ"],["話","ㄏㄨㄚˋ"],["，",""]],[["做","ㄗㄨㄛˋ"],["成","ㄔㄥˊ"],["一","ㄧ"],["架","ㄐㄧㄚˋ"],["紙","ㄓˇ"],["飛","ㄈㄟ"],["機","ㄐㄧ"],["。",""]],[["紙","ㄓˇ"],["飛","ㄈㄟ"],["機","ㄐㄧ"],["飛","ㄈㄟ"],["呀","˙ㄧㄚ"],["飛","ㄈㄟ"],["，",""]],[["飛","ㄈㄟ"],["到","ㄉㄠˋ"],["豬","ㄓㄨ"],["妹","ㄇㄟˋ"],["妹","˙ㄇㄟ"],["的","˙ㄉㄜ"],["家","ㄐㄧㄚ"],["。",""]]]},{"no":5,"t":"好漂亮","book":"首冊","syms":[["ㄒ","象","ㄒㄧㄤˋ"],["ㄔ","車","ㄔㄜ"],["ㄕ","上","ㄕㄤˋ"],["ㄗ","子","ㄗˇ"],["ㄤ","上","ㄕㄤˋ"],["ㄧㄤ","象","ㄒㄧㄤˋ"],["ㄨㄤ","王","ㄨㄤˊ"]],"syl":[["ㄒㄧㄤˋ","象"],["ㄉㄚˋ","大"],["ㄏㄠˇ","好"],["ㄆㄧㄠˋ","漂"],["ㄌㄧㄤˋ","亮"],["ㄨㄤˊ","王"]],"words":[["大象","ㄉㄚˋ ㄒㄧㄤˋ"],["好漂亮","ㄏㄠˇ ㄆㄧㄠˋ ㄌㄧㄤˋ"]],"story":[[["大","ㄉㄚˋ"],["象","ㄒㄧㄤˋ"],["的","˙ㄉㄜ"],["鼻","ㄅㄧˊ"],["子","˙ㄗ"],["長","ㄔㄤˊ"],["長","ㄔㄤˊ"],["的","˙ㄉㄜ"],["，",""]],[["老","ㄌㄠˇ"],["虎","ㄏㄨˇ"],["的","˙ㄉㄜ"],["毛","ㄇㄠˊ"],["好","ㄏㄠˇ"],["漂","ㄆㄧㄠˋ"],["亮","ㄌㄧㄤˋ"],["，",""]],[["每","ㄇㄟˇ"],["一","ㄧ"],["隻","ㄓ"],["動","ㄉㄨㄥˋ"],["物","ㄨˋ"],["，",""]],[["都","ㄉㄡ"],["有","ㄧㄡˇ"],["自","ㄗˋ"],["己","ㄐㄧˇ"],["的","˙ㄉㄜ"],["長","ㄔㄤˊ"],["處","ㄔㄨˋ"],["。",""]]]},{"no":6,"t":"剪刀石頭布","book":"首冊","syms":[["ㄍ","個","ㄍㄜˋ"],["ㄛ","我","ㄨㄛˇ"],["ㄞ","開","ㄎㄞ"],["ㄡ","走","ㄗㄡˇ"],["ㄧㄡ","有","ㄧㄡˇ"],["ㄧㄢ","剪","ㄐㄧㄢˇ"],["ㄨㄛ","我","ㄨㄛˇ"]],"syl":[["ㄐㄧㄢˇ","剪"],["ㄉㄠ","刀"],["ㄕˊ","石"],["ㄅㄨˋ","布"],["ㄨㄛˇ","我"]],"words":[["剪刀","ㄐㄧㄢˇ ㄉㄠ"],["石頭","ㄕˊ ˙ㄊㄡ"]],"story":[[["停","ㄊㄧㄥˊ"],["電","ㄉㄧㄢˋ"],["了","˙ㄌㄜ"],["，",""],["爸","ㄅㄚˋ"],["爸","˙ㄅㄚ"],["伸","ㄕㄣ"],["出","ㄔㄨ"],["手","ㄕㄡˇ"],["，",""]],[["變","ㄅㄧㄢˋ"],["出","ㄔㄨ"],["剪","ㄐㄧㄢˇ"],["刀","ㄉㄠ"],["、",""],["石","ㄕˊ"],["頭","˙ㄊㄡ"],["、",""],["布","ㄅㄨˋ"],["。",""]],[["我","ㄨㄛˇ"],["們","˙ㄇㄣ"],["一","ㄧ"],["起","ㄑㄧˇ"],["玩","ㄨㄢˊ"],["，",""]],[["大","ㄉㄚˋ"],["家","ㄐㄧㄚ"],["笑","ㄒㄧㄠˋ"],["哈","ㄏㄚ"],["哈","ㄏㄚ"],["。",""]]]}],"z1-3":[{"no":7,"t":"不來梅樂隊","book":"首冊","syms":[["ㄑ","氣","ㄑㄧˋ"],["ㄖ","熱","ㄖㄜˋ"],["ㄥ","朋","ㄆㄥˊ"],["ㄧㄛ","",""],["ㄨㄟ","隊","ㄉㄨㄟˋ"],["ㄨㄥ","公","ㄍㄨㄥ"]],"syl":[["ㄍㄨㄥ","公"],["ㄐㄧ","雞"],["ㄑㄧˋ","氣"],["ㄑㄧㄡˊ","球"],["ㄖㄜˋ","熱"],["ㄉㄨㄟˋ","隊"]],"words":[["公雞","ㄍㄨㄥ ㄐㄧ"],["氣球","ㄑㄧˋ ㄑㄧㄡˊ"],["熱鬧","ㄖㄜˋ ˙ㄋㄠ"]],"story":[[["小","ㄒㄧㄠˇ"],["狗","ㄍㄡˇ"],["、",""],["貓","ㄇㄠ"],["咪","ㄇㄧ"],["、",""],["公","ㄍㄨㄥ"],["雞","ㄐㄧ"],["，",""]],[["一","ㄧ"],["起","ㄑㄧˇ"],["組","ㄗㄨˇ"],["成","ㄔㄥˊ"],["樂","ㄩㄝˋ"],["隊","ㄉㄨㄟˋ"],["。",""]],[["大","ㄉㄚˋ"],["家","ㄐㄧㄚ"],["又","ㄧㄡˋ"],["唱","ㄔㄤˋ"],["又","ㄧㄡˋ"],["跳","ㄊㄧㄠˋ"],["，",""]],[["真","ㄓㄣ"],["是","ㄕˋ"],["熱","ㄖㄜˋ"],["鬧","˙ㄋㄠ"],["！",""]]]},{"no":8,"t":"小蝌蚪找媽媽","book":"首冊","syms":[["ㄎ","蝌","ㄎㄜ"],["ㄙ","色","ㄙㄜˋ"],["ㄣ","跟","ㄍㄣ"],["ㄧㄥ","青","ㄑㄧㄥ"],["ㄨㄣ","春","ㄔㄨㄣ"],["ㄩㄢ","圓","ㄩㄢˊ"]],"syl":[["ㄎㄜ","蝌"],["ㄉㄡˇ","蚪"],["ㄑㄧㄥ","青"],["ㄨㄚ","蛙"],["ㄩㄢˊ","圓"]],"words":[["蝌蚪","ㄎㄜ ㄉㄡˇ"],["青蛙","ㄑㄧㄥ ㄨㄚ"]],"story":[[["小","ㄒㄧㄠˇ"],["蝌","ㄎㄜ"],["蚪","ㄉㄡˇ"],["在","ㄗㄞˋ"],["水","ㄕㄨㄟˇ"],["裡","ㄌㄧˇ"],["游","ㄧㄡˊ"],["，",""]],[["牠","ㄊㄚ"],["在","ㄗㄞˋ"],["找","ㄓㄠˇ"],["媽","ㄇㄚ"],["媽","˙ㄇㄚ"],["。",""]],[["最","ㄗㄨㄟˋ"],["後","ㄏㄡˋ"],["牠","ㄊㄚ"],["找","ㄓㄠˇ"],["到","ㄉㄠˋ"],["了","˙ㄌㄜ"],["，",""]],[["綠","ㄌㄩˋ"],["色","ㄙㄜˋ"],["的","˙ㄉㄜ"],["青","ㄑㄧㄥ"],["蛙","ㄨㄚ"],["媽","ㄇㄚ"],["媽","˙ㄇㄚ"],["。",""]]]},{"no":9,"t":"動物狂歡節","book":"首冊","syms":[["ㄦ","耳","ㄦˇ"],["ㄧㄞ","崖","ㄧㄞˊ"],["ㄧㄣ","音","ㄧㄣ"],["ㄨㄞ","外","ㄨㄞˋ"],["ㄩㄣ","雲","ㄩㄣˊ"],["ㄩㄥ","泳","ㄩㄥˇ"]],"syl":[["ㄉㄨㄥˋ","動"],["ㄨˋ","物"],["ㄅㄞˊ","白"],["ㄩㄣˊ","雲"],["ㄦˇ","耳"],["ㄐㄧ","機"]],"words":[["動物","ㄉㄨㄥˋ ㄨˋ"],["白雲","ㄅㄞˊ ㄩㄣˊ"],["耳機","ㄦˇ ㄐㄧ"]],"story":[[["獅","ㄕ"],["子","˙ㄗ"],["大","ㄉㄚˋ"],["王","ㄨㄤˊ"],["來","ㄌㄞˊ"],["了","˙ㄌㄜ"],["，",""]],[["天","ㄊㄧㄢ"],["鵝","ㄜˊ"],["、",""],["烏","ㄨ"],["龜","ㄍㄨㄟ"],["也","ㄧㄝˇ"],["來","ㄌㄞˊ"],["了","˙ㄌㄜ"],["。",""]],[["大","ㄉㄚˋ"],["家","ㄐㄧㄚ"],["唱","ㄔㄤˋ"],["歌","ㄍㄜ"],["跳","ㄊㄧㄠˋ"],["舞","ㄨˇ"],["，",""]],[["動","ㄉㄨㄥˋ"],["物","ㄨˋ"],["們","˙ㄇㄣ"],["好","ㄏㄠˇ"],["快","ㄎㄨㄞˋ"],["樂","ㄌㄜˋ"],["！",""]]]}],"z1-4":[{"no":1,"t":"小船","book":"一上","chars":[["小","ㄒㄧㄠˇ","小",1],["上","ㄕㄤˋ","上",1],["走","ㄗㄡˇ","走",1],["左","ㄗㄨㄛˇ","左",1],["右","ㄧㄡˋ","右",1],["向","ㄒㄧㄤˋ","向",1],["魚","ㄩˊ","魚",1],["也","ㄧㄝˇ","也",1],["來","ㄌㄞˊ","來",1],["加","ㄐㄧㄚ","加",1]],"words":[["小船",""],["加油",""],["一左一右",""],["小魚",""]],"story":[[["紙","ㄓˇ"],["做","ㄗㄨㄛˋ"],["的","˙ㄉㄜ"],["小","ㄒㄧㄠˇ"],["船","ㄔㄨㄢˊ"],["，",""]],[["在","ㄗㄞˋ"],["水","ㄕㄨㄟˇ"],["上","ㄕㄤˋ"],["走","ㄗㄡˇ"],["。",""]],[["小","ㄒㄧㄠˇ"],["魚","ㄩˊ"],["游","ㄧㄡˊ"],["過","ㄍㄨㄛˋ"],["來","ㄌㄞˊ"],["，",""]],[["幫","ㄅㄤ"],["小","ㄒㄧㄠˇ"],["船","ㄔㄨㄢˊ"],["加","ㄐㄧㄚ"],["油","ㄧㄡˊ"],["。",""]]]},{"no":2,"t":"印手印","book":"一上","chars":[["開","ㄎㄞ","開",1],["出","ㄔㄨ","出",1],["招","ㄓㄠ","招",1],["車","ㄔㄜ","車",1],["子","ㄗˇ","子",1],["地","ㄉㄧˋ","地上",0],["花","ㄏㄨㄚ","花",1],["朵","ㄉㄨㄛˇ","朵",1],["在","ㄗㄞˋ","在",1],["笑","ㄒㄧㄠˋ","笑",1]],"words":[["車子",""],["小花",""],["開心",""],["笑一笑",""]],"story":[[["張","ㄓㄤ"],["開","ㄎㄞ"],["小","ㄒㄧㄠˇ"],["手","ㄕㄡˇ"],["，",""]],[["印","ㄧㄣˋ"],["出","ㄔㄨ"],["一","ㄧ"],["朵","ㄉㄨㄛˇ"],["花","ㄏㄨㄚ"],["，",""]],[["再","ㄗㄞˋ"],["印","ㄧㄣˋ"],["一","ㄧ"],["輛","ㄌㄧㄤˋ"],["車","ㄔㄜ"],["子","˙ㄗ"],["，",""]],[["大","ㄉㄚˋ"],["家","ㄐㄧㄚ"],["都","ㄉㄡ"],["笑","ㄒㄧㄠˋ"],["了","˙ㄌㄜ"],["。",""]]]},{"no":3,"t":"吹泡泡","book":"一上","chars":[["泡","ㄆㄠˋ","泡",1],["玩","ㄨㄢˊ","玩",1],["大","ㄉㄚˋ","大",1],["起","ㄑㄧˇ","起",1],["好","ㄏㄠˇ","好",1],["多","ㄉㄨㄛ","多",1],["我","ㄨㄛˇ","我",1],["你","ㄋㄧˇ","你",1],["抱","ㄅㄠˋ","抱",1],["的","","我的",0]],"words":[["吹泡泡",""],["好多",""],["抱抱",""],["一起玩",""]],"story":[[["我","ㄨㄛˇ"],["吹","ㄔㄨㄟ"],["泡","ㄆㄠˋ"],["泡","ㄆㄠˋ"],["，",""],["你","ㄋㄧˇ"],["吹","ㄔㄨㄟ"],["泡","ㄆㄠˋ"],["泡","ㄆㄠˋ"],["，",""]],[["好","ㄏㄠˇ"],["多","ㄉㄨㄛ"],["泡","ㄆㄠˋ"],["泡","ㄆㄠˋ"],["飛","ㄈㄟ"],["上","ㄕㄤˋ"],["天","ㄊㄧㄢ"],["。",""]],[["大","ㄉㄚˋ"],["泡","ㄆㄠˋ"],["泡","ㄆㄠˋ"],["抱","ㄅㄠˋ"],["抱","ㄅㄠˋ"],["小","ㄒㄧㄠˇ"],["泡","ㄆㄠˋ"],["泡","ㄆㄠˋ"],["，",""]],[["一","ㄧ"],["起","ㄑㄧˇ"],["去","ㄑㄩˋ"],["玩","ㄨㄢˊ"],["。",""]]]},{"no":4,"t":"你好","book":"一上","chars":[["爸","ㄅㄚˋ","爸",1],["到","ㄉㄠˋ","到",1],["青","ㄑㄧㄥ","青",1],["叫","ㄐㄧㄠˋ","叫",1],["下","ㄒㄧㄚˋ","下",1],["那","ㄋㄚˋ",null,0],["和","ㄏㄢˋ",null,0],["要","ㄧㄠˋ","要",1],["他","ㄊㄚ","他",1],["朋","ㄆㄥˊ","朋",1],["友","ㄧㄡˇ","友",1]],"words":[["你好",""],["爸爸",""],["山上",""],["朋友",""]],"story":[[["我","ㄨㄛˇ"],["跟","ㄍㄣ"],["爸","ㄅㄚˋ"],["爸","˙ㄅㄚ"],["到","ㄉㄠˋ"],["山","ㄕㄢ"],["上","ㄕㄤˋ"],["，",""]],[["大","ㄉㄚˋ"],["叫","ㄐㄧㄠˋ"],["一","ㄧ"],["聲","ㄕㄥ"],["：",""],["「",""],["你","ㄋㄧˇ"],["好","ㄏㄠˇ"],["！",""],["」",""]],[["山","ㄕㄢ"],["也","ㄧㄝˇ"],["說","ㄕㄨㄛ"],["：",""],["「",""],["你","ㄋㄧˇ"],["好","ㄏㄠˇ"],["！",""],["」",""]],[["山","ㄕㄢ"],["也","ㄧㄝˇ"],["想","ㄒㄧㄤˇ"],["跟","ㄍㄣ"],["我","ㄨㄛˇ"],["玩","ㄨㄢˊ"],["。",""]]]}],"z1-5":[{"no":5,"t":"外星人","book":"一上","chars":[["外","ㄨㄞˋ","外",1],["住","ㄓㄨˋ","住",1],["個","ㄍㄜˋ","個",1],["這","ㄓㄜˋ","這裡",0],["裡","ㄌㄧˇ","裡",1],["有","ㄧㄡˇ","有",1],["沒","ㄇㄟˊ","沒",1],["是","ㄕˋ","是",1],["什","ㄕㄣˊ","什麼",0],["們","","我們",0]],"words":[["外星人",""],["地球",""],["星球",""],["有沒有",""]],"story":[[["外","ㄨㄞˋ"],["星","ㄒㄧㄥ"],["人","ㄖㄣˊ"],["，",""],["外","ㄨㄞˋ"],["星","ㄒㄧㄥ"],["人","ㄖㄣˊ"],["，",""]],[["你","ㄋㄧˇ"],["住","ㄓㄨˋ"],["在","ㄗㄞˋ"],["哪","ㄋㄚˇ"],["個","˙ㄍㄜ"],["星","ㄒㄧㄥ"],["球","ㄑㄧㄡˊ"],["？",""]],[["我","ㄨㄛˇ"],["們","˙ㄇㄣ"],["住","ㄓㄨˋ"],["在","ㄗㄞˋ"],["地","ㄉㄧˋ"],["球","ㄑㄧㄡˊ"],["，",""]],[["這","ㄓㄜˋ"],["裡","ㄌㄧˇ"],["有","ㄧㄡˇ"],["青","ㄑㄧㄥ"],["山","ㄕㄢ"],["，",""],["也","ㄧㄝˇ"],["有","ㄧㄡˇ"],["河","ㄏㄜˊ"],["流","ㄌㄧㄡˊ"],["。",""]]]},{"no":6,"t":"小金魚","book":"一上","chars":[["金","ㄐㄧㄣ","金",1],["說","ㄕㄨㄛ","說",1],["句","ㄐㄩˋ","句",1],["話","ㄏㄨㄚˋ","話",1],["兩","ㄌㄧㄤˇ","兩",1],["都","ㄉㄡ","都是",0],["悄","ㄑㄧㄠˇ",null,0],["尾","ㄨㄟˇ","尾",1],["巴","ㄅㄚ","巴",1],["滿","ㄇㄢˇ","滿",1],["紅","ㄏㄨㄥˊ","紅",1]],"words":[["小金魚",""],["尾巴",""],["說話",""],["紅色",""]],"story":[[["小","ㄒㄧㄠˇ"],["金","ㄐㄧㄣ"],["魚","ㄩˊ"],["在","ㄗㄞˋ"],["魚","ㄩˊ"],["缸","ㄍㄤ"],["裡","ㄌㄧˇ"],["，",""]],[["吐","ㄊㄨˇ"],["出","ㄔㄨ"],["一","ㄧ"],["串","ㄔㄨㄢˋ"],["小","ㄒㄧㄠˇ"],["泡","ㄆㄠˋ"],["泡","ㄆㄠˋ"],["，",""]],[["搖","ㄧㄠˊ"],["一","ㄧ"],["搖","ㄧㄠˊ"],["紅","ㄏㄨㄥˊ"],["紅","ㄏㄨㄥˊ"],["的","˙ㄉㄜ"],["尾","ㄨㄟˇ"],["巴","˙ㄅㄚ"],["，",""]],[["好","ㄏㄠˇ"],["像","ㄒㄧㄤˋ"],["在","ㄗㄞˋ"],["說","ㄕㄨㄛ"],["悄","ㄑㄧㄠˇ"],["悄","ㄑㄧㄠˇ"],["話","ㄏㄨㄚˋ"],["。",""]]]},{"no":7,"t":"紅紅的春","book":"一上","chars":[["春","ㄔㄨㄣ","春",1],["貼","ㄊㄧㄝ","貼",1],["請","ㄑㄧㄥˇ","請",1],["天","ㄊㄧㄢ","天",1],["家","ㄐㄧㄚ","家",1],["把","ㄅㄚˇ","把",1],["不","ㄅㄨˋ","不",1],["房","ㄈㄤˊ","房",1],["福","ㄈㄨˊ","福",1],["呢","","你呢",0],["了","","好了",0]],"words":[["春天",""],["貼春聯",""],["回家",""],["幸福",""]],"story":[[["媽","ㄇㄚ"],["媽","˙ㄇㄚ"],["把","ㄅㄚˇ"],["紅","ㄏㄨㄥˊ"],["紅","ㄏㄨㄥˊ"],["的","˙ㄉㄜ"],["春","ㄔㄨㄣ"],["字","ㄗˋ"],["，",""]],[["貼","ㄊㄧㄝ"],["在","ㄗㄞˋ"],["大","ㄉㄚˋ"],["門","ㄇㄣˊ"],["上","ㄕㄤˋ"],["，",""]],[["請","ㄑㄧㄥˇ"],["春","ㄔㄨㄣ"],["天","ㄊㄧㄢ"],["來","ㄌㄞˊ"],["我","ㄨㄛˇ"],["們","˙ㄇㄣ"],["家","ㄐㄧㄚ"],["，",""]],[["家","ㄐㄧㄚ"],["裡","ㄌㄧˇ"],["滿","ㄇㄢˇ"],["滿","ㄇㄢˇ"],["都","ㄉㄡ"],["是","ㄕˋ"],["福","ㄈㄨˊ"],["。",""]]]}]};
+/* characters whose stroke order (hanzi-writer-data 2.0.1) was checked one stroke at a time against the grade-1 textbook */
+const YW_STROKE = new Set("小上走左右向魚也加開招車子地朵在笑泡玩大起好多的你抱爸到青叫下和要他朋友外住個們有沒是什金說句話兩尾巴滿紅春貼呢了請天家把不福");
+const YW_TONES = 'ˊˇˋ˙';
+const ywCan = () => { try { return 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined'; } catch (e) { return false; } };
+function ywSay(text, o = {}) {
+  if (!text || !ywCan()) { if (o.onend) setTimeout(o.onend, 400); return; }
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-TW'; if (zhVoice) u.voice = zhVoice; u.rate = o.rate || .8;
+    if (o.onend) u.onend = o.onend; if (o.onb) u.onboundary = o.onb;
+    speechSynthesis.speak(u);
+  } catch (e) { if (o.onend) setTimeout(o.onend, 400); }
+}
+const ywSplit = z => ({ sy: [...z].filter(c => !YW_TONES.includes(c)), tone: [...z].find(c => YW_TONES.includes(c)) || '' });
+const toneName = t => ({ '': '一聲', 'ˊ': '二聲', 'ˇ': '三聲', 'ˋ': '四聲', '˙': '輕聲' })[t];
+const zyHTML = z => `<span class="zy">${esc(z)}</span>`;
+/* textbook-style 注音: symbols stacked to the right of the character, tone mark beside them (輕聲 dot on top) */
+const ywRuby = (c, z) => {
+  if (!z) return `<span class="bz"><span class="bc">${esc(c)}</span></span>`;
+  const { sy, tone } = ywSplit(z);
+  return `<span class="bz"><span class="bc">${esc(c)}</span><span class="bp">${tone === '˙' ? '<i class="bn">˙</i>' : ''}${sy.map(s => `<i>${esc(s)}</i>`).join('')}${tone && tone !== '˙' ? `<i class="bt">${esc(tone)}</i>` : ''}</span></span>`;
+};
+/* syllables that can be spelled and spoken as a single character */
+const ywSyl = L => L.syl ? L.syl : (L.chars || []).filter(x => x[1] && x[2] === x[0]).map(x => [x[1], x[0]]);
+
+function openYW(isl) {
+  const lessons = YW[isl.id]; if (!lessons) return;
+  const isShou = !!lessons[0].syl, S = { tab: 'read', li: 0, tok: 0 };
+  const tabs = [['read', '🔊', '唸給我聽'], ['spell', '🔤', '拼讀動畫'], ['story', '📖', '有聲小故事']]
+    .concat(lessons.some(L => (L.chars || []).some(x => YW_STROKE.has(x[0]))) ? [['stroke', '✍️', '筆順']] : []).concat([['listen', '👂', '聽力遊戲']]);
+  const body = openPlay('yw', islHead(isl), tr('語文教室', 'Language room'), { wide: true, onClose: () => { S.tok++; stopSpeak(); } });
+  body.innerHTML = `<div class="yw">${ywCan() ? '' : `<p class="yw-warn">${tr('這台裝置的瀏覽器不支援朗讀，聲音的功能會沒有聲音。', 'Speech is not supported on this browser.')}</p>`}
+    <div class="yw-tabs">${tabs.map(([k, ic, n]) => `<button class="btn" data-ywt="${k}" aria-pressed="${k === S.tab}"><span>${ic}</span>${n}</button>`).join('')}</div>
+    <div class="yw-les"></div><div class="yw-pane"></div></div>`;
+  const les = body.querySelector('.yw-les'), pane = body.querySelector('.yw-pane');
+  const drawLes = () => {
+    les.hidden = S.tab === 'listen';
+    les.innerHTML = lessons.map((L, i) => `<button class="chip ${i === S.li ? 'on' : ''}" data-ywl="${i}">${L.book === '首冊' ? '首冊' : ''}第${'一二三四五六七八九'[L.no - 1]}課 ${esc(L.t)}</button>`).join('');
+  };
+  const draw = () => { S.tok++; stopSpeak(); drawLes(); pane.innerHTML = ''; ({ read: ywRead, spell: ywSpell, story: ywStory, stroke: ywStroke, listen: ywListen })[S.tab](pane, lessons[S.li], S, isl, lessons); };
+  body.querySelector('.yw-tabs').addEventListener('click', e => { const b = e.target.closest('[data-ywt]'); if (!b) return; S.tab = b.dataset.ywt; body.querySelectorAll('[data-ywt]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); draw(); });
+  les.addEventListener('click', e => { const b = e.target.closest('[data-ywl]'); if (!b) return; S.li = +b.dataset.ywl; draw(); });
+  draw();
+}
+
+/* 1. read aloud */
+function ywRead(pane, L) {
+  let h = '';
+  if (L.syms) {
+    h += `<div class="eyebrow">${tr('這一課的注音符號', 'Symbols')}</div><div class="yw-grid">${L.syms.map(([s, c, z]) => `<button class="yw-tile ${c ? '' : 'mute'}" ${c ? `data-say="${esc(c)}"` : 'disabled'}><b class="zy">${esc(s)}</b><small>${c ? `${esc(c)} ${esc(z)}` : '請聽老師念'}</small></button>`).join('')}</div>`;
+    h += `<div class="eyebrow">${tr('會拼的音', 'Syllables')}</div><div class="yw-grid">${L.syl.map(([z, c]) => `<button class="yw-tile" data-say="${esc(c)}"><b>${ywRuby(c, z)}</b><small>${toneName(ywSplit(z).tone)}</small></button>`).join('')}</div>`;
+    h += `<div class="eyebrow">${tr('語詞', 'Words')}</div><div class="yw-grid wide">${L.words.map(([w, z]) => `<button class="yw-tile" data-say="${esc(w)}"><b>${[...w].map((c, k) => ywRuby(c, z.split(' ')[k])).join('')}</b></button>`).join('')}</div>`;
+    h += `<p class="hint">${tr('點一下就會念。注音符號會念出一個例字，例如 ㄅ 念「爸」。', 'Tap to hear.')}</p>`;
+  } else {
+    h += `<div class="eyebrow">${tr('這一課的生字', 'Characters')}</div><div class="yw-grid">${L.chars.map(([c, z, say]) => `<button class="yw-tile ${say ? '' : 'mute'}" ${say ? `data-say="${esc(say)}"` : 'disabled'}><b>${ywRuby(c, z)}</b><small>${say ? (say === c ? '🔊' : `🔊 ${esc(say)}`) : '請聽老師念'}</small></button>`).join('')}</div>`;
+    h += `<div class="eyebrow">${tr('語詞', 'Words')}</div><div class="yw-grid wide">${L.words.map(([w]) => `<button class="yw-tile" data-say="${esc(w)}"><b>${esc(w)}</b></button>`).join('')}</div>`;
+    h += `<p class="hint">${tr('有些字一個人念不準，會放在語詞裡念（例如「都」念「都是」）。「和、那、悄」電腦常常念錯，請聽老師或爸媽念。', 'Some characters are read inside a word.')}</p>`;
+  }
+  pane.innerHTML = h;
+  pane.addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (!b) return; pane.querySelectorAll('.yw-tile.on').forEach(x => x.classList.remove('on')); b.classList.add('on'); ywSay(b.dataset.say, { onend: () => b.classList.remove('on') }); });
+}
+
+/* 2. spelling animation: the symbols fly together, the tone mark lands, then the character appears and is read aloud */
+function ywSpell(pane, L, S) {
+  const list = ywSyl(L); let k = 0;
+  pane.innerHTML = `<div class="yw-spell"><div class="yw-stage" aria-live="polite"></div>
+    <div class="qrow center"><button class="btn" id="ywPrev">‹ ${tr('上一個', 'Prev')}</button><button class="btn primary" id="ywPlay">▶ ${tr('再拼一次', 'Again')}</button><button class="btn" id="ywNext">${tr('下一個', 'Next')} ›</button></div>
+    <div class="yw-grid">${list.map(([z, c], i) => `<button class="yw-tile sm" data-spi="${i}"><b>${ywRuby(c, z)}</b></button>`).join('')}</div></div>`;
+  const stage = pane.querySelector('.yw-stage');
+  const run = () => {
+    const tok = ++S.tok; stopSpeak();
+    const [z, c] = list[k], { sy, tone } = ywSplit(z);
+    pane.querySelectorAll('[data-spi]').forEach(b => b.classList.toggle('on', +b.dataset.spi === k));
+    stage.innerHTML = `<div class="yw-row">${sy.map((s, i) => `<span class="yw-sym" style="--i:${i};--n:${sy.length}">${esc(s)}</span>`).join('')}<span class="yw-tone">${tone ? esc(tone) : ''}</span></div><div class="yw-tname"></div><div class="yw-char">${esc(c)}</div>`;
+    const syms = [...stage.querySelectorAll('.yw-sym')], tn = stage.querySelector('.yw-tone'), name = stage.querySelector('.yw-tname'), ch = stage.querySelector('.yw-char');
+    const at = (ms, f) => setTimeout(() => { if (tok === S.tok) f(); }, ms);
+    syms.forEach((el, i) => at(250 + i * 650, () => el.classList.add('in')));
+    const t1 = 250 + syms.length * 650;
+    at(t1, () => stage.querySelector('.yw-row').classList.add('join'));
+    at(t1 + 600, () => { tn.classList.add('in'); name.textContent = toneName(tone); name.classList.add('in'); });
+    at(t1 + 1300, () => { ch.classList.add('in'); ywSay(c); });
+  };
+  pane.querySelector('#ywPlay').addEventListener('click', run);
+  pane.querySelector('#ywPrev').addEventListener('click', () => { k = (k - 1 + list.length) % list.length; run(); });
+  pane.querySelector('#ywNext').addEventListener('click', () => { k = (k + 1) % list.length; run(); });
+  pane.querySelector('.yw-grid').addEventListener('click', e => { const b = e.target.closest('[data-spi]'); if (!b) return; k = +b.dataset.spi; run(); });
+  if (list.length) run();
+}
+
+/* 3. talking story: each line is read aloud; the line (and, where the browser reports word boundaries, the character) lights up */
+function ywStory(pane, L, S) {
+  pane.innerHTML = `<div class="yw-story">${L.story.map((line, i) => `<p class="yw-line" data-li="${i}">${line.map(([c, z], j) => `<span class="yw-c" data-ci="${j}">${ywRuby(c, z)}</span>`).join('')}</p>`).join('')}</div>
+    <div class="qrow center"><button class="btn primary" id="ywStory">▶ ${tr('從頭念', 'Read from the start')}</button><button class="btn" id="ywStop">■ ${tr('停止', 'Stop')}</button></div>
+    <p class="hint">${tr('故事是配合這一課自己編的小故事，不是課本原文。點任何一行，就從那一行開始念。', 'A short original story for this lesson.')}</p>`;
+  const lines = [...pane.querySelectorAll('.yw-line')];
+  const clear = () => pane.querySelectorAll('.on,.cur').forEach(x => x.classList.remove('on', 'cur'));
+  const play = i => {
+    const tok = ++S.tok; clear(); if (i >= L.story.length) return;
+    const line = L.story[i], el = lines[i], text = line.map(x => x[0]).join(''); el.classList.add('on');
+    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    ywSay(text, {
+      rate: .75,
+      onb: e => { if (tok !== S.tok) return; el.querySelectorAll('.cur').forEach(x => x.classList.remove('cur')); const sp = el.querySelector(`[data-ci="${e.charIndex}"]`); if (sp) sp.classList.add('cur'); },
+      onend: () => { if (tok !== S.tok) return; setTimeout(() => { if (tok === S.tok) play(i + 1); }, 350); }
+    });
+  };
+  pane.querySelector('#ywStory').addEventListener('click', () => play(0));
+  pane.querySelector('#ywStop').addEventListener('click', () => { S.tok++; stopSpeak(); clear(); });
+  lines.forEach((el, i) => el.addEventListener('click', () => play(i)));
+}
+
+/* 4. stroke order (only characters verified against the textbook) */
+let HW_P = null;
+const loadHW = () => HW_P || (HW_P = new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.2/dist/hanzi-writer.min.js'; s.onload = () => res(window.HanziWriter); s.onerror = () => { HW_P = null; rej(); }; document.head.appendChild(s); }));
+function ywStroke(pane, L, S) {
+  const list = (L.chars || []).filter(x => YW_STROKE.has(x[0]));
+  if (!list.length) { pane.innerHTML = `<p class="hint">${tr('這一課的生字筆順還沒有核對完成，先不開放。', 'Not available for this lesson yet.')}</p>`; return; }
+  let k = 0, W = null;
+  pane.innerHTML = `<div class="yw-stroke"><div class="yw-hw" id="ywHw"></div><div class="yw-sinfo"></div>
+    <div class="qrow center"><button class="btn primary" id="ywAni">▶ ${tr('看筆順', 'Watch')}</button><button class="btn" id="ywQuiz">✍️ ${tr('換我寫', 'My turn')}</button><button class="btn" id="ywSnd">🔊</button></div>
+    <div class="yw-grid">${list.map(([c, z], i) => `<button class="yw-tile sm" data-sti="${i}"><b>${ywRuby(c, z)}</b></button>`).join('')}</div>
+    <p class="hint">${tr('筆順和課本逐筆核對過，只放核對一致的字。「換我寫」用手指照順序描，寫錯會提示。', 'Stroke orders checked against the textbook.')}</p></div>`;
+  const box = pane.querySelector('#ywHw'), info = pane.querySelector('.yw-sinfo');
+  const sel = () => {
+    const [c, z, say] = list[k]; pane.querySelectorAll('[data-sti]').forEach(b => b.classList.toggle('on', +b.dataset.sti === k));
+    box.innerHTML = `<span class="yw-load">${tr('載入中…', 'Loading…')}</span>`; info.textContent = '';
+    loadHW().then(HW => {
+      box.innerHTML = '';
+      const size = Math.min(240, box.clientWidth || 240);
+      W = HW.create(box, c, { width: size, height: size, padding: 8, showOutline: true, strokeColor: '#2b2b33', radicalColor: '#c25b6e', outlineColor: '#e6ddd0', drawingColor: '#3e8ed0', strokeAnimationSpeed: .8, delayBetweenStrokes: 350,
+        charDataLoader: (ch, ok, bad) => fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encodeURIComponent(ch)}.json`).then(r => r.json()).then(d => { info.textContent = `${c} ${z}　共 ${d.strokes.length} 畫`; ok(d); }).catch(bad) });
+      W.animateCharacter();
+    }).catch(() => { box.innerHTML = `<span class="yw-load">${tr('筆順資料要連上網路才能載入。', 'Needs a network connection.')}</span>`; });
+  };
+  pane.querySelector('#ywAni').addEventListener('click', () => { if (W) W.animateCharacter(); });
+  pane.querySelector('#ywQuiz').addEventListener('click', () => { if (!W) return; W.quiz({ onComplete: () => { toast(tr('寫得好！', 'Nice writing!')); confetti(box); } }); });
+  pane.querySelector('#ywSnd').addEventListener('click', () => { const x = list[k]; if (x[2]) ywSay(x[2]); });
+  pane.querySelector('.yw-grid').addEventListener('click', e => { const b = e.target.closest('[data-sti]'); if (!b) return; k = +b.dataset.sti; sel(); });
+  sel();
+}
+
+/* 5. listening game: hear a sound, tap the matching 注音 (首冊) or character (一上) */
+function ywListen(pane, L, S, isl, lessons) {
+  const shou = !!lessons[0].syl;
+  const pool = shou ? lessons.flatMap(x => x.syl.map(([z, c]) => ({ z, c }))) : lessons.flatMap(x => x.chars.filter(y => y[3]).map(([c, z]) => ({ z, c })));
+  const uniq = []; pool.forEach(p => { if (!uniq.some(u => u.c === p.c || u.z === p.z)) uniq.push(p); });
+  const N = Math.min(8, uniq.length), qs = shuffle(uniq).slice(0, N);
+  const G = { i: 0, ok: 0, lock: false };
+  const optsFor = q => {
+    const o = [{ t: shou ? q.z : q.c, ok: true }];
+    if (shou) { const { tone } = ywSplit(q.z), base = [...q.z].filter(c => !YW_TONES.includes(c)).join(''); const alt = ['', 'ˊ', 'ˇ', 'ˋ'].filter(t => t !== tone).map(t => base + t); o.push({ t: alt[Math.random() * alt.length | 0], ok: false }); }
+    shuffle(uniq.filter(u => u.c !== q.c && u.z !== q.z)).forEach(u => { const t = shou ? u.z : u.c; if (o.length < 3 && !o.some(x => x.t === t)) o.push({ t, ok: false }); });
+    return shuffle(o);
+  };
+  const render = () => {
+    if (G.i >= qs.length) {
+      const st = G.ok >= qs.length ? 3 : G.ok >= qs.length - 2 ? 2 : G.ok >= Math.ceil(qs.length / 2) ? 1 : 0;
+      pane.innerHTML = `<div class="yw-done"><b>${'★'.repeat(st)}${'☆'.repeat(3 - st)}</b><p>${tr(`答對 ${G.ok} / ${qs.length} 題`, `${G.ok} / ${qs.length}`)}</p><div class="qrow center"><button class="btn primary" id="ywAgain">${tr('再玩一次', 'Play again')}</button></div></div>`;
+      pane.querySelector('#ywAgain').addEventListener('click', () => { pane.innerHTML = ''; ywListen(pane, L, S, isl, lessons); });
+      if (st > 0) { confetti(pane.firstElementChild); try { if (ADV_READY && ME) advEvent('act', { kind: 'listen', isl: isl.id }); } catch (e) { } }
+      return;
+    }
+    const q = qs[G.i], opts = optsFor(q); G.lock = false;
+    pane.innerHTML = `<div class="yw-listen"><div class="eyebrow">${tr(`第 ${G.i + 1} / ${qs.length} 題`, `Q ${G.i + 1} / ${qs.length}`)}</div>
+      <button class="yw-ear" id="ywEar">👂<span>${tr('再聽一次', 'Listen again')}</span></button>
+      <p class="yw-ask">${shou ? tr('聽到的是哪一個注音？', 'Which 注音 did you hear?') : tr('聽到的是哪一個字？', 'Which character did you hear?')}</p>
+      <div class="yw-opts">${opts.map((o, k) => `<button class="yw-opt ${shou ? 'zy' : ''}" data-o="${k}">${esc(o.t)}</button>`).join('')}</div><p class="yw-fb" aria-live="polite"></p></div>`;
+    const say = () => ywSay(q.c, { rate: .7 });
+    pane.querySelector('#ywEar').addEventListener('click', say); setTimeout(say, 250);
+    pane.querySelector('.yw-opts').addEventListener('click', e => {
+      const b = e.target.closest('[data-o]'); if (!b || G.lock) return; G.lock = true;
+      const o = opts[+b.dataset.o]; pane.querySelectorAll('[data-o]').forEach((x, k) => x.classList.add(opts[k].ok ? 'ok' : k === +b.dataset.o ? 'no' : 'dim'));
+      if (o.ok) G.ok++;
+      pane.querySelector('.yw-fb').innerHTML = o.ok ? tr('答對了！', 'Correct!') : tr(`是「${esc(q.c)}」，${zyHTML(q.z)}`, `It was ${esc(q.c)}`);
+      setTimeout(() => { G.i++; render(); }, o.ok ? 900 : 1900);
+    });
+  };
+  render();
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-act="yw"]'); if (b) openYW(ISL_BY.get(b.dataset.isl)); }, true);
+window.__yw = { YW, YW_STROKE, openYW };
+/* ---------- 16o. little 3D lesson scenes on the grade-1 islands (tap ▶ to make them act out the lesson) ---------- */
+const YWS = [];
+{
+  const mm = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .8, flatShading: true, ...o });
+  const box = (w, h, d, c) => new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mm(c));
+  const ball = (r, c, o) => new THREE.Mesh(new THREE.SphereGeometry(r, 12, 9), mm(c, o));
+  const cyl = (a, b, h, c, n = 10) => new THREE.Mesh(new THREE.CylinderGeometry(a, b, h, n), mm(c));
+  const sh = g => { g.traverse(o => { if (o.isMesh) o.castShadow = true; }); return g; };
+  const charTex = (ch, bg, fg) => { const cv = document.createElement('canvas'); cv.width = cv.height = 128; const x = cv.getContext('2d'); x.fillStyle = bg; x.fillRect(0, 0, 128, 128); x.fillStyle = fg; x.font = 'bold 84px "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(ch, 64, 70); const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; return t; };
+  const pond = (r) => { const g = new THREE.Group(); const rim = cyl(r + .08, r + .1, .06, '#cdb98f', 16); g.add(rim); const w = cyl(r, r, .065, '#6fb6d8', 16); w.material.transparent = true; w.material.opacity = .85; w.position.y = .01; g.add(w); return g; };
+  const B = {
+    /* 首冊 壹：rocking horse, a hopping duckling, a crescent moon */
+    'z1-1': () => {
+      const g = new THREE.Group(), horse = new THREE.Group(); g.add(horse);
+      const rock = new THREE.Mesh(new THREE.TorusGeometry(.42, .035, 5, 18, Math.PI * .7), mm('#8a5a34')); rock.rotation.z = Math.PI + Math.PI * .15; rock.position.y = .42; horse.add(rock);
+      const rock2 = rock.clone(); rock2.position.z = .16; horse.add(rock2); rock.position.z = -.16;
+      const bodyM = box(.5, .2, .2, '#e0913a'); bodyM.position.y = .32; horse.add(bodyM);
+      const head = box(.16, .26, .16, '#e0913a'); head.position.set(.27, .48, 0); head.rotation.z = -.3; horse.add(head);
+      const mane = box(.06, .22, .06, '#7a3b1e'); mane.position.set(.2, .5, 0); horse.add(mane);
+      for (const [x, z] of [[-.18, -.07], [-.18, .07], [.18, -.07], [.18, .07]]) { const l = box(.05, .16, .05, '#c97b2f'); l.position.set(x, .16, z); horse.add(l); }
+      const duck = new THREE.Group(); duck.position.set(-.55, 0, .25); g.add(duck);
+      const db = ball(.12, '#ffd84a'); db.scale.set(1.2, .9, 1); db.position.y = .12; duck.add(db);
+      const dh = ball(.08, '#ffd84a'); dh.position.set(.11, .25, 0); duck.add(dh);
+      const bk = box(.07, .03, .05, '#f08a2a'); bk.position.set(.2, .24, 0); duck.add(bk);
+      const moon = new THREE.Mesh(new THREE.TorusGeometry(.18, .07, 6, 16, Math.PI * 1.15), mm('#ffe680', { emissive: '#ffd84a', emissiveIntensity: .6 })); moon.position.set(-.1, 1.25, -.2); g.add(moon);
+      return { g, tick: (t, p) => { horse.rotation.z = Math.sin(t * (2 + p * 3)) * (.12 + p * .12); duck.position.y = Math.abs(Math.sin(t * (3 + p * 4))) * (.06 + p * .18); duck.rotation.y = Math.sin(t * .8) * .6; moon.rotation.z = Math.sin(t * .7) * .2; moon.position.y = 1.25 + Math.sin(t * 1.1) * .05; } };
+    },
+    /* 首冊 貳：a paper plane looping overhead and a rock–paper–scissors hand */
+    'z1-2': () => {
+      const g = new THREE.Group(), plane = new THREE.Group(); g.add(plane);
+      const wing = new THREE.Mesh(new THREE.BufferGeometry().setFromPoints([new V3(.3, 0, 0), new V3(-.2, 0, .2), new V3(-.12, .02, 0), new V3(.3, 0, 0), new V3(-.12, .02, 0), new V3(-.2, 0, -.2), new V3(.3, 0, 0), new V3(-.12, .02, 0), new V3(-.2, -.1, 0)]), mm('#ffffff', { side: THREE.DoubleSide }));
+      wing.geometry.computeVertexNormals(); plane.add(wing);
+      const hand = new THREE.Group(); hand.position.set(.1, 0, .1); g.add(hand);
+      const palm = box(.26, .26, .1, '#f2c49b'); palm.position.y = .35; hand.add(palm);
+      const wrist = box(.18, .2, .09, '#3e8ed0'); wrist.position.y = .12; hand.add(wrist);
+      const fingers = [0, 1, 2, 3].map(i => { const f = box(.05, .2, .06, '#f2c49b'); f.position.set(-.09 + i * .06, .55, 0); hand.add(f); return f; });
+      const thumb = box(.05, .14, .06, '#f2c49b'); thumb.position.set(.16, .38, 0); thumb.rotation.z = -.7; hand.add(thumb);
+      let shape = 0, last = 0;
+      return { g, tick: (t, p) => {
+        const a = t * (.8 + p * 1.6), r = .75; plane.position.set(Math.cos(a) * r, 1.05 + Math.sin(a * 2) * .12, Math.sin(a) * r); plane.rotation.y = -a - Math.PI / 2; plane.rotation.z = Math.sin(a * 2) * .3;
+        if (p > 0 && t - last > .7) { last = t; shape = (shape + 1) % 3; }
+        fingers.forEach((f, i) => { const up = shape === 2 || (shape === 1 && (i === 0 || i === 1)); f.scale.y = up ? 1 : .25; f.position.y = up ? .55 : .47; });
+        hand.rotation.y = Math.sin(t * .6) * .4;
+      } };
+    },
+    /* 首冊 參：a drum with music notes (the band), tadpoles in a pond and a hopping frog */
+    'z1-3': () => {
+      const g = new THREE.Group();
+      const drum = cyl(.2, .2, .22, '#e0533f', 14); drum.position.set(.35, .11, -.15); g.add(drum);
+      const skin = cyl(.2, .2, .02, '#fff6e0', 14); skin.position.set(.35, .23, -.15); g.add(skin);
+      const notes = [0, 1, 2].map(i => { const n = new THREE.Group(); const h = ball(.05, '#2b2b33'); h.scale.set(1.2, .8, .8); n.add(h); const st = box(.015, .16, .015, '#2b2b33'); st.position.set(.05, .08, 0); n.add(st); g.add(n); return n; });
+      const pd = pond(.3); pd.position.set(-.3, .02, .15); g.add(pd);
+      const tads = [0, 1, 2].map(i => { const t = new THREE.Group(); const hd = ball(.04, '#2b2b33'); t.add(hd); const tl = box(.08, .01, .02, '#2b2b33'); tl.position.x = -.06; t.add(tl); pd.add(t); return t; });
+      const frog = new THREE.Group(); frog.position.set(-.3, .05, -.3); g.add(frog);
+      const fb = ball(.1, '#5fae4a'); fb.scale.set(1.2, .8, 1); fb.position.y = .08; frog.add(fb);
+      for (const s of [-1, 1]) { const e = ball(.035, '#ffffff'); e.position.set(.06, .17, s * .05); frog.add(e); const pu = ball(.018, '#2b2b33'); pu.position.set(.09, .18, s * .05); frog.add(pu); }
+      return { g, tick: (t, p) => {
+        notes.forEach((n, i) => { const k = (t * (.5 + p) + i / 3) % 1; n.position.set(.35 + Math.sin(k * 6 + i) * .12, .3 + k * .9, -.15); n.scale.setScalar(k < .1 ? k * 10 : k > .85 ? (1 - k) * 6.6 : 1); });
+        skin.position.y = .23 + (p ? Math.abs(Math.sin(t * 9)) * .03 : 0);
+        tads.forEach((tp, i) => { const a = t * (1.2 + p * 2) + i * 2.1; tp.position.set(Math.cos(a) * .18, .05, Math.sin(a) * .18); tp.rotation.y = -a - Math.PI / 2; });
+        frog.position.y = .05 + Math.abs(Math.sin(t * (1.5 + p * 3))) * (.05 + p * .25);
+      } };
+    },
+    /* 一上 1–4：a paper boat on a pond and bubbles drifting up */
+    'z1-4': () => {
+      const g = new THREE.Group(), pd = pond(.42); g.add(pd);
+      const boat = new THREE.Group(); boat.position.y = .07; pd.add(boat);
+      const hull = new THREE.Mesh(new THREE.CylinderGeometry(.16, .06, .1, 4), mm('#ffffff')); hull.scale.set(1.8, 1, .7); hull.rotation.y = Math.PI / 4; boat.add(hull);
+      const sail = new THREE.Mesh(new THREE.ConeGeometry(.1, .2, 4), mm('#f3f3f3')); sail.position.y = .14; boat.add(sail);
+      const bubbles = [...Array(7)].map((_, i) => { const b = ball(.06 + (i % 3) * .025, '#bfe9ff', { transparent: true, opacity: .45, roughness: .1, metalness: .2 }); g.add(b); return b; });
+      return { g, tick: (t, p) => {
+        const a = t * (.4 + p * .8); boat.position.set(Math.cos(a) * .22, .07 + Math.sin(t * 2.4) * .02, Math.sin(a) * .22); boat.rotation.y = -a; boat.rotation.z = Math.sin(t * 2.4) * .12;
+        bubbles.forEach((b, i) => { const k = (t * (.18 + p * .35) + i / bubbles.length) % 1; b.position.set(.35 + Math.sin(k * 7 + i) * .2, .15 + k * 1.4, -.25 + Math.cos(k * 5 + i) * .15); b.material.opacity = .5 * (1 - k) + .05; });
+      } };
+    },
+    /* 一上 5–7：a hovering UFO with a little alien, a goldfish bowl and a red 春 sign */
+    'z1-5': () => {
+      const g = new THREE.Group(), ufo = new THREE.Group(); g.add(ufo);
+      const disc = cyl(.32, .36, .07, '#b8c4d4', 16); ufo.add(disc);
+      const dome = ball(.15, '#9fe3c9', { transparent: true, opacity: .75 }); dome.scale.y = .8; dome.position.y = .07; ufo.add(dome);
+      const al = ball(.06, '#7ed957'); al.position.y = .1; ufo.add(al);
+      const lights = [0, 1, 2, 3, 4, 5].map(i => { const l = ball(.03, '#ffd84a', { emissive: '#ffd84a', emissiveIntensity: 1 }); l.position.set(Math.cos(i / 6 * 6.28) * .33, -.01, Math.sin(i / 6 * 6.28) * .33); ufo.add(l); return l; });
+      const beam = new THREE.Mesh(new THREE.ConeGeometry(.28, .9, 16, 1, true), new THREE.MeshBasicMaterial({ color: '#fff6a8', transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false })); beam.position.y = -.45; ufo.add(beam);
+      const bowl = ball(.2, '#cfeeff', { transparent: true, opacity: .45, roughness: .05 }); bowl.position.set(.45, .2, .2); g.add(bowl);
+      const fish = new THREE.Group(); bowl.add(fish); const fbd = ball(.05, '#f08a2a'); fbd.scale.set(1.5, 1, .7); fish.add(fbd); const ft = box(.04, .06, .01, '#e0533f'); ft.position.x = -.08; fish.add(ft);
+      const sign = new THREE.Mesh(new THREE.PlaneGeometry(.34, .34), new THREE.MeshStandardMaterial({ map: charTex('春', '#d7263d', '#ffd84a'), side: THREE.DoubleSide })); sign.rotation.z = Math.PI / 4; sign.position.set(-.45, .45, -.1); g.add(sign);
+      const post = box(.03, .3, .03, '#8a5a34'); post.position.set(-.45, .15, -.1); g.add(post);
+      return { g, tick: (t, p) => {
+        ufo.position.set(Math.sin(t * .5) * .15, 1.05 + Math.sin(t * 1.3) * .08, Math.cos(t * .4) * .1); ufo.rotation.y = t * (.6 + p * 3);
+        beam.material.opacity = p ? .25 + Math.sin(t * 8) * .08 : 0; lights.forEach((l, i) => l.material.emissiveIntensity = .4 + (Math.sin(t * 5 + i) > 0 ? .9 : 0));
+        const a = t * (1 + p * 2); fish.position.set(Math.cos(a) * .09, Math.sin(a * 2) * .03, Math.sin(a) * .09); fish.rotation.y = -a - Math.PI / 2;
+        sign.rotation.y = Math.sin(t * (.6 + p * 2)) * (.25 + p * .4);
+      } };
+    },
+  };
+  Object.entries(B).forEach(([id, mk]) => {
+    const isl = ISL_BY.get(id); if (!isl) return;
+    const { g, tick } = mk(); sh(g);
+    const a = -.55, rr = 1.2; g.position.set(isl.x + Math.cos(a) * rr, RING_Y + isl.ly, isl.z + Math.sin(a) * rr); g.scale.setScalar(.95);
+    scene.add(g);
+    const btn = document.createElement('button'); btn.className = 'yw-scene-btn'; btn.type = 'button'; btn.textContent = '▶';
+    btn.setAttribute('aria-label', tr('看這座島的課文小劇場', 'Play the lesson scene'));
+    const o = new CSS2DObject(btn); o.position.set(0, 1.55, 0); g.add(o);
+    const S = { isl, g, tick, play: 0 };
+    btn.addEventListener('pointerdown', e => e.stopPropagation());
+    btn.addEventListener('click', e => {
+      e.stopPropagation(); S.play = 9;
+      const L = (YW[id] || []), line = L.map(x => `${x.book === '首冊' ? '首冊' : ''}第${'一二三四五六七八九'[x.no - 1]}課，${x.t}`).join('。');
+      const note = ISL_BY.get(id).items.map(it => (it.notes || '').split('\n')).flat().filter(x => x && !x.startsWith('【'))[0] || '';
+      ywSay(`${T(isl.label)}。${line}。${note}`, { rate: .85 });
+      toast(tr(`🎬 ${T(isl.label)}：${L.map(x => x.t).join('、')}`, 'Lesson scene'));
+    });
+    YWS.push(S);
+  });
+}
+function ywTick(dt, t) { YWS.forEach(S => { if (S.play > 0) S.play = Math.max(0, S.play - dt); S.tick(t, S.play > 0 ? 1 : 0); }); }
+window.__yws = YWS;
+/* YW-JS-END */
 /* =====================================================================
    17. start
    ===================================================================== */
