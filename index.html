@@ -24214,9 +24214,9 @@ function dayShift(n) { const d = new Date(); d.setDate(d.getDate() + n); return 
 const mkSave = () => store.set(MKKEY, JSON.stringify(MK));
 /* the 0050-style fund tracks the average move of all companies */
 function mkEtf(init) {
-  const r = MK_STOCKS.reduce((a, S) => { const x = MK.s[S.c]; return a + x.p / x.hist[0].o; }, 0) / MK_STOCKS.length;
+  const r = MK_STOCKS.reduce((a, S) => a + MK.s[S.c].p / S.p0, 0) / MK_STOCKS.length;
   const p = mkRound(50 * r);
-  if (init || !MK.s['0050']) { const hist = MK.s['1101'].hist.map((h, k) => { const rr = MK_STOCKS.reduce((a, S) => a + MK.s[S.c].hist[k].c / MK.s[S.c].hist[0].o, 0) / MK_STOCKS.length, c = mkRound(50 * rr); return { d: h.d, o: c, h: c, l: c, c }; }); hist.forEach((h, k) => { h.o = k ? hist[k - 1].c : h.c; h.h = Math.max(h.o, h.c); h.l = Math.min(h.o, h.c); }); MK.s['0050'] = { p, prev: hist[hist.length - 1].c, o: p, h: p, l: p, hist, ticks: [p], vol: 0 }; }
+  if (init || !MK.s['0050']) { const hist = MK.s['1101'].hist.map((h, k) => { const rr = MK_STOCKS.reduce((a, S) => a + MK.s[S.c].hist[k].c / S.p0, 0) / MK_STOCKS.length, c = mkRound(50 * rr); return { d: h.d, o: c, h: c, l: c, c }; }); hist.forEach((h, k) => { h.o = k ? hist[k - 1].c : h.c; h.h = Math.max(h.o, h.c); h.l = Math.min(h.o, h.c); }); MK.s['0050'] = { p, prev: hist[hist.length - 1].c, o: p, h: p, l: p, hist, ticks: [p], vol: 0 }; }
   const x = MK.s['0050']; x.p = p; x.h = Math.max(x.h, p); x.l = Math.min(x.l, p); x.ticks.push(p); if (x.ticks.length > 300) x.ticks.shift();
 }
 /* new trading day(s): close yesterday's candle, simulate any days the page was closed (up to 20), open today */
@@ -24248,12 +24248,12 @@ function mkMove(S, x, r) {
 }
 /* every company news is tied to one of its islands' lessons and carries a review question from that lesson */
 const MK_GOOD_T = ['舉辦「{L}」主題展覽，參觀的人變多了', '推出「{L}」學習營，報名一下就額滿', '和學校合作上「{L}」這一課，訂單大增', '「{L}」小百科大受歡迎，賣到缺貨'];
-function mkNews(S, good, why, islId) {
-  S = S || MK_STOCKS[Math.random() * MK_STOCKS.length | 0]; if (good === undefined) good = Math.random() < .55;
+function mkNews(S, good, why, islId, mag) {
+  S = S || MK_STOCKS[Math.random() * MK_STOCKS.length | 0]; if (good === undefined) good = Math.random() < .5;
   const pool = islId ? [islId] : S.isl.filter(i => ISL_BY.get(i) && (LD.quiz[i] || []).length), iid = pool.length ? pool[Math.random() * pool.length | 0] : null, isl = iid && ISL_BY.get(iid);
   const L = isl ? T(isl.label) : '';
   const txt = why || (good ? (isl && Math.random() < .6 ? MK_GOOD_T[Math.random() * MK_GOOD_T.length | 0].replace('{L}', L) : S.good[Math.random() * 2 | 0]) : S.bad[Math.random() * 2 | 0]);
-  const x = MK.s[S.c], r = (good ? 1 : -1) * (.015 + Math.random() * .035) * (S.c === '1101' ? .4 : 1);
+  const x = MK.s[S.c], r = (good ? 1 : -1) * (mag || (.015 + Math.random() * .035)) * (S.c === '1101' ? .4 : 1);
   mkMove(S, x, r);
   const n = { id: Date.now().toString(36) + (Math.random() * 1e4 | 0), t: Date.now(), c: S.c, g: good, txt };
   if (isl) { const bank = LD.quiz[iid], qi = Math.random() * bank.length | 0; n.iid = iid; n.qi = qi; n.ord = shuffle([0, 1, 2, 3].slice(0, bank[qi].o.length)); }
@@ -24263,7 +24263,7 @@ function mkNews(S, good, why, islId) {
 /* learning moves the market a little: passing a lesson is good news for that island's company */
 function mkLearn(islId) {
   if (!MK) return; const S = MK_STOCKS.find(s => s.isl.includes(islId)); if (!S || Math.random() < .4) return;
-  const isl = ISL_BY.get(islId); mkNews(S, true, `${ME ? ME.name : '小朋友'}在「${T(isl.label)}」認真學習，大家對${S.n}更有興趣了`, islId); mkEtf(); mkSave();
+  const isl = ISL_BY.get(islId); mkNews(S, true, `${ME ? ME.name : '小朋友'}在「${T(isl.label)}」認真學習，大家對${S.n}更有興趣了`, islId, .01 + Math.random() * .015); mkEtf(); mkSave();
 }
 /* 葉子銀行 pays a dividend every 7 days to whoever holds it */
 function mkDividends() {
@@ -24429,11 +24429,12 @@ function mkLearnTab(pane) {
     <h4>🔴🟢 看懂顏色</h4><p>台灣的習慣是 <b class="mk-up">紅色代表漲</b>、<b class="mk-dn">綠色代表跌</b>。K 線一根代表一天：紅色是收盤比開盤高，綠色是收盤比開盤低。上下的細線是那天最高和最低的價錢。</p>
     <h4>⛔ 漲跌停</h4><p>每天最多只能比昨天收盤漲或跌 <b>10%</b>，到了就是「漲停」或「跌停」。</p>
     <h4>🏦 存股和分散</h4><p>葉子銀行每 7 天發一次股利，適合放著慢慢領。群島50 一次買進所有公司，漲跌比較平均。不要把葉子幣全部押在同一家公司！</p>
-    <h4>📚 學習也會影響市場</h4><p>每家公司都對應幾座島的課程。公司新聞會連到其中一課，附一題複習題，答對可以拿 2 枚葉子幣。你在某座島闖關過關，有時候也會帶來那家公司的好消息。</p>
+    <h4>📚 學習也會影響市場</h4><p>每家公司都對應幾座島的課程。公司新聞會連到其中一課，附一題複習題，答對可以拿 2 枚葉子幣。你在某座島闖關「拿到更多星星」時，有時候也會帶來那家公司的好消息（重玩同樣星數不算）。</p>
+    <h4>⚖️ 會不會穩賺？</h4><p>不會。好消息和壞消息出現的機會一樣多，股價大多是隨機上下跳；加上手續費和交易稅，一直買賣反而容易賠錢。想多賺葉子幣，最穩的方法還是認真闖關學習！</p>
     <p class="hint">這是練習用的模擬市場：公司、新聞和股價都是虛構的，股價用隨機變化加上新聞事件產生。只有開著網站的時候才會跳動，關掉網站的那幾天會自動補算。葉子幣只能在遊戲裡使用。</p></div>`;
 }
 /* hooks: learning news, market clock, toolbar button */
-{ const _ae = advEvent; advEvent = function (type, d = {}) { const r = _ae.apply(this, arguments); try { if (type === 'quiz' && d.stars > 0) mkLearn(d.isl); } catch (e) { } return r; }; }
+{ const _ae = advEvent; advEvent = function (type, d = {}) { const r = _ae.apply(this, arguments); try { if (type === 'quiz' && d.stars > (d.before || 0)) mkLearn(d.isl); } catch (e) { } return r; }; }
 try { mkLoad(); } catch (e) { console.warn(e); }
 setInterval(() => { try { if (!document.hidden) mkTick(); } catch (e) { console.warn(e); } }, MK_TICK_MS);
 {
