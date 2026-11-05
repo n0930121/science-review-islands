@@ -16292,6 +16292,16 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 @keyframes ywRing{0%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.5)}}
 .act.yw-act{background:linear-gradient(160deg,#fff1f6,#ffe0ec)}
 /* YW-CSS-END */
+/* MOUNT-CSS-BEGIN */
+.mt-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:12px}.mt-top .hint{flex-basis:100%;margin:0}
+.mt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.mt-card{display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:18px;background:#fff;box-shadow:0 2px 10px #4a2a1416;border-top:4px solid var(--rc)}
+.mt-card.on{box-shadow:0 0 0 3px var(--rc),0 4px 14px #4a2a1426}
+.mt-pv{height:120px;border-radius:14px;background:#f6efe4 center/contain no-repeat;display:flex;align-items:center;justify-content:center;font-size:40px}
+.mt-card em{font-style:normal;font-size:11px;font-weight:800;color:var(--rc)}.mt-card b{font-size:17px}.mt-card p{font-size:12.5px;color:#6b5a4a;margin:0;flex:1}
+.mt-spd{font-size:12px;color:#c0763a;letter-spacing:1px}.mt-spd i{font-style:normal;color:#8a7a6a;margin-left:4px;letter-spacing:0}
+#btnMount svg{fill:currentColor;stroke:none}
+/* MOUNT-CSS-END */
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
 
@@ -21107,7 +21117,7 @@ function idleEnd() {
   if (AVA) { const B = AVA.root.userData.body, Q = AVA.root.userData.parts; B.rotation.set(0, 0, 0); if (Q.armL) { Q.armL.rotation.z = -.12; Q.armR.rotation.z = .12; } }
 }
 function idleTick(dt, t, R0, P0) {
-  const busy = AVA.path || FS || NET || WKEYS.size || !PL.el.hidden;
+  const busy = AVA.path || FS || NET || WKEYS.size || !PL.el.hidden || AVA.root.userData.mount;
   if (busy) { if (IDLE.cur) idleEnd(); return; }
   if (!IDLE.cur) { if (IDLE.gap > 0) { IDLE.gap -= dt; return; } if (Date.now() - IDLE.last > 20000) idleStart(); return; }
   const c = IDLE.cur, B = R0.userData.body; c.t += dt;
@@ -21157,6 +21167,7 @@ function buildChibi(look, eq = {}, forPreview = false) {
   if (eq.back === 'b_cape') part(body, W_GEO.box, '#c8363d', 0, .1 + y, -.055, .13, .22, .01, .15);
   if (eq.back === 'b_wings') for (const s of [-1, 1]) { part(body, W_GEO.head, '#f4a9c0', s * .1, .25 + y, -.07, 1.05, .78, .1, 0, s * .35, s * .55, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#fbd3df', s * .085, .15 + y, -.065, .72, .55, .1, 0, s * .35, -s * .45, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#ffffff', s * .11, .26 + y, -.075, .4, .3, .11, 0, s * .35, s * .55, { transparent: true, opacity: .55 }); }
   root.userData.parts = parts; root.userData.body = body;
+  if (eq.mount && (forPreview || AV.ride !== false)) { const m = buildMount(eq.mount); if (m) { root.add(m); root.userData.mount = m; body.position.y = m.userData.mount.seat; riderPose(parts, m.userData.mount); } }
   buildCos(root, body, parts, eq, y); cosOwnMats(root);
   return root;
 }
@@ -21272,7 +21283,7 @@ function advGoto(islId, fromSelect, point) {
   if (!pts) { const a = here, b2 = goal; pts = []; for (let i = 0; i <= 24; i++) { const t = i / 24, sea = wasBoat ? Math.min(1, (1 - t) * 4) : Math.sin(Math.PI * t) ** .3; pts.push(new V3(lerp(a.x, b2.x, t), wasBoat && t < .75 ? WATER_Y + .06 : lerp(RING_Y, WATER_Y + .06, wasBoat ? sea : Math.sin(Math.PI * t) ** .3), lerp(a.z, b2.z, t))); } boat = true; }
   const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
   const len = cum[cum.length - 1];
-  AVA.path = { pts, cum, len, isl, boat, balloon, speed: boat || balloon ? Math.max(1.3, len / 8) : Math.max(1.05, len / 7) }; AVA.s = 0; AVA.boat.visible = boat; AVA.balloon.visible = balloon;
+  AVA.path = { pts, cum, len, isl, boat, balloon, speed: (boat || balloon ? Math.max(1.3, len / 8) : Math.max(1.05, len / 7)) * mountSpd() }; AVA.s = 0; AVA.boat.visible = boat; AVA.balloon.visible = balloon;
   if (balloon) avSay(isl.layer === 'sky' ? tr('搭熱氣球，飛上天空島！', 'Up to the sky island!') : isl.layer === 'land' ? tr('搭熱氣球，飛到陸地上的島！', 'Off to the land!') : tr('搭熱氣球回到海面！', 'Down to the sea!'), 2.5);
   if (AV.fast) { AVA.s = len; avSay(tr('咻～傳送！（冒險手冊 → 角色 可以關掉傳送）', 'Teleported! (turn off in Adventure book → Me)'), 3); }
   AVA.follow = len > 2.5 && !AV.fast; AVA.followZ = false;
@@ -21336,7 +21347,7 @@ var advTick = function (dt, now) {
     flight = null; zoomGoal = null;
     camera.getWorldDirection(_fw); _fw.y = 0; _fw.normalize(); _rt.set(-_fw.z, 0, _fw.x);
     _mv.copy(_fw).multiplyScalar(kz).addScaledVector(_rt, kx).normalize();
-    const sp = Math.min(.12, (typeof FP !== 'undefined' && FP.on ? 2.4 : 1.5) * dt);
+    const sp = Math.min(.2, (typeof FP !== 'undefined' && FP.on ? 2.4 : 1.5) * dt * mountSpd());
     if (!walkStep(_mv.x * sp, _mv.z * sp)) { if (!walkStep(_mv.x * sp, 0)) walkStep(0, _mv.z * sp); }
     AVA.yaw = Math.atan2(_mv.x, _mv.z); moving = true; AVA.walked = true;
     const ni = islAt(R0.position.x, R0.position.z, WALK_AP);
@@ -21366,6 +21377,14 @@ var advTick = function (dt, now) {
   else if (ME.char !== 'cyclist') { const sw = moving ? Math.sin(ph) * .6 : 0; P0.legL.rotation.x = sw; P0.legR.rotation.x = -sw; P0.armL.rotation.x = -sw * .8; P0.armR.rotation.x = sw * .8; }
   else if (moving) { P0.legL.rotation.x = -1.1 + Math.sin(ph * .7) * .45; P0.legR.rotation.x = -1.1 - Math.sin(ph * .7) * .45; }
   if (!rowing) R0.userData.body.position.y = moving ? Math.abs(Math.sin(ph)) * .012 : Math.sin(t * 2) * .004;
+  const MNT = R0.userData.mount;
+  if (MNT) {
+    const pa = AVA.path, water = !!(pa && (pa.boat || pa.balloon)), mid = MNT.userData.mount.id;
+    const keep = !water || (pa.boat && mid === 'm_turtle') || (pa.balloon && mid === 'm_dragon');
+    MNT.visible = keep;
+    if (keep) { if (water) { AVA.boat.visible = false; AVA.balloon.visible = false; } const bob = mountAnim(MNT, t, moving); riderPose(P0, MNT.userData.mount); R0.userData.body.position.y = MNT.userData.mount.seat + bob; R0.rotation.z = R0.rotation.x = 0; }
+  }
+  mountTick(dt, t, moving);
   if (AVA.pet) {
     const back = new V3(-Math.sin(AVA.yaw) * .1 - Math.cos(AVA.yaw) * .34, 0, -Math.cos(AVA.yaw) * .1 + Math.sin(AVA.yaw) * .34).add(R0.position);
     AVA.pet.position.lerp(back, Math.min(1, dt * 4)); const fly = AVA.pet.userData.fly || 0;
@@ -21666,11 +21685,11 @@ function tabShop(pane, slot = SHOPSLOT) {
   const card = s => {
     const own = !!AV.owned[s.id], on = AV.eq[s.slot] === s.id, R = RAR[s.r] || RAR.c, locked = lv < R.lv, poor = AV.coins < s.p;
     const act = own ? `<button class="btn" data-eq="${s.id}">${on ? tr('卸下', 'Remove') : tr('穿上', 'Wear')}</button>`
-      : s.earn ? `<button class="btn" disabled>${s.how === 'game' ? '🎮' : '🎣'} ${esc(s.earn)}</button>`
+      : s.earn ? `<button class="btn" disabled>${HOW_IC[s.how] || '🎣'} ${esc(s.earn)}</button>`
       : locked ? `<button class="btn" disabled>${tr(`Lv.${R.lv} 解鎖`, `Unlocks at Lv.${R.lv}`)}</button>`
       : `<button class="btn primary" data-buy="${s.id}" ${poor ? 'disabled' : ''}>${poor ? tr(`還差 ${s.p - AV.coins}`, `Need ${s.p - AV.coins}`) : tr('購買', 'Buy')}</button>`;
     return `<div class="shop-item r-${s.r} ${on ? 'on' : ''} ${SHOPTRY === s.id ? 'trying' : ''}" style="--rc:${R.col}">
-      <div class="si-top"><em>${esc(T(R.n))}</em>${own ? `<small>${on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')}</small>` : s.earn ? `<small>${s.how === 'game' ? tr('遊戲限定', 'Games only') : tr('釣魚限定', 'Fishing only')}</small>` : `<small class="price">${ICON3.leaf}${s.p}</small>`}</div>
+      <div class="si-top"><em>${esc(T(R.n))}</em>${own ? `<small>${on ? tr('使用中', 'Equipped') : tr('已擁有', 'Owned')}</small>` : s.earn ? `<small>${T(HOW_N[s.how] || HOW_N.fish)}</small>` : `<small class="price">${ICON3.leaf}${s.p}</small>`}</div>
       <b>${esc(s.n)}</b>${s.d ? `<p>${esc(s.d)}</p>` : ''}
       <div class="si-btns">${s.slot !== 'title' && s.slot !== 'aura' ? `<button class="btn ghost" data-try="${s.id}">${SHOPTRY === s.id ? tr('取消試穿', 'Stop') : tr('試穿', 'Try')}</button>` : ''}${act}</div></div>`;
   };
@@ -21692,7 +21711,7 @@ function tabShop(pane, slot = SHOPSLOT) {
     buildAvatar(); updateMeBar(); checkAch(); tabShop(pane);
   }));
   pane.querySelectorAll('[data-eq]').forEach(b => b.addEventListener('click', () => {
-    const s = SHOP_BY.get(b.dataset.eq); AV.eq[s.slot] = AV.eq[s.slot] === s.id ? null : s.id; saveP(); buildAvatar(); tabShop(pane);
+    const s = SHOP_BY.get(b.dataset.eq); AV.eq[s.slot] = AV.eq[s.slot] === s.id ? null : s.id; if (s.slot === 'mount') AV.ride = true; saveP(); buildAvatar(); tabShop(pane);
   }));
 }
 function tabAch(pane) {
@@ -22928,7 +22947,7 @@ const _fl = new V3();
 function fpTick(dt) {
   if (!FP.on) return false;
   if (AVA) {
-    const p = AVA.root.position; camera.position.set(p.x, p.y + .52, p.z);
+    const p = AVA.root.position, mm = AVA.root.userData.mount, mh = mm && mm.visible ? (mm.userData.mount.seat + (mm.userData.mount.fly || 0)) * 1.9 : 0; camera.position.set(p.x, p.y + .52 + mh, p.z);
     if (AVA.path) { const pa = AVA.path; if (pa.boat || pa.balloon) camera.position.y += pa.balloon ? .3 : .05; }
   } else {
     let f = 0, s = 0, u = 0; if (CKEYS.has('w')) f++; if (CKEYS.has('s')) f--; if (CKEYS.has('d')) s++; if (CKEYS.has('a')) s--; if (CKEYS.has('up')) u++; if (CKEYS.has('down')) u--;
@@ -23926,6 +23945,189 @@ const YWS = [];
 function ywTick(dt, t) { YWS.forEach(S => { if (S.play > 0) S.play = Math.max(0, S.play - dt); S.tick(t, S.play > 0 ? 1 : 0); }); }
 window.__yws = YWS;
 /* YW-JS-END */
+/* MOUNT-JS-BEGIN */
+/* ---------- 16p. mounts: ride a turtle, horse, tiger, elephant, dinosaur, unicorn or little dragon ---------- */
+/* spd: walking speed multiplier; seat: how high the rider sits (character units); fly: hovering height */
+const MOUNTS = [
+  { id: 'm_turtle', n: '大海龜', p: 120, r: 'c', spd: .95, seat: .12, d: '慢慢走但很穩。坐船的路線會直接游過去，不用划船！' },
+  { id: 'm_horse', n: '小馬', p: 220, r: 'r', spd: 1.35, seat: .19, d: '跑得快，咚咚咚走遍群島。' },
+  { id: 'm_tiger', n: '老虎', p: 320, r: 'e', spd: 1.5, seat: .15, d: '威風的大老虎，跑起來尾巴甩呀甩。' },
+  { id: 'm_elephant', n: '大象', p: 380, r: 'e', spd: 1.15, seat: .25, d: '坐得最高、看得最遠；停下來時會用鼻子噴水。' },
+  { id: 'm_dino', n: '暴龍', p: 520, r: 'l', spd: 1.6, seat: .2, d: '大腳一踩咚咚響，偶爾還會吼一聲！' },
+  { id: 'm_unicorn', n: '獨角獸', p: 0, r: 'l', spd: 1.7, seat: .19, earn: '打敗 3 位島主', how: 'boss', d: '走過的地方會留下亮晶晶的星光。' },
+  { id: 'm_dragon', n: '小飛龍', p: 0, r: 'l', spd: 1.8, seat: .16, fly: .16, earn: '累積 30 顆星', how: 'star', d: '浮在空中飛行；坐熱氣球的路線會直接飛過去。' },
+];
+const MOUNT_BY = new Map(MOUNTS.map(m => [m.id, m]));
+const HOW_IC = { game: '🎮', fish: '🎣', boss: '👑', star: '⭐' }, HOW_N = { game: ['遊戲限定', 'Games only'], fish: ['釣魚限定', 'Fishing only'], boss: ['島主挑戰解鎖', 'Boss reward'], star: ['集星解鎖', 'Star reward'] };
+SLOT_NAMES.mount = ['座騎', 'Mounts'];
+MOUNTS.forEach(m => { if (!SHOP_BY.has(m.id)) { const s = { id: m.id, slot: 'mount', n: m.n, p: m.p, r: m.r, d: m.d }; if (m.earn) { s.earn = m.earn; s.how = m.how; } AD.shop.push(s); SHOP_BY.set(m.id, s); } });
+
+function buildMount(id) {
+  const M = MOUNT_BY.get(id); if (!M) return null;
+  const g = new THREE.Group(), legs = [], H = W_GEO.head, C = W_GEO.cyl, B = W_GEO.box, K = W_GEO.cone;
+  const leg = (x, z, col, r, h, y) => { const p = new THREE.Group(); p.position.set(x, y, z); g.add(p); part(p, C, col, 0, -h / 2, 0, r, h, r); legs.push(p); return p; };
+  const eyes = (par, y, z, s = 1, sp = .035) => { for (const k of [-1, 1]) { part(par, W_GEO.eye, '#ffffff', k * sp, y, z, 1.3 * s, 1.3 * s, 1 * s); part(par, W_GEO.eye, COL.ink, k * sp, y, z + .008 * s, .7 * s, .7 * s, .6 * s); } };
+  let head = new THREE.Group(), tail = new THREE.Group(), extra = {};
+  g.add(head); g.add(tail);
+  if (id === 'm_turtle') {
+    part(g, W_GEO.dome, '#4f8a45', 0, .03, 0, .36, .22, .44); part(g, W_GEO.dome, '#7fb069', 0, .035, 0, .3, .2, .38);
+    for (const [x, z] of [[0, .05], [-.07, -.06], [.07, -.06]]) part(g, W_GEO.cyl, '#3f7238', x, .135, z, .07, .01, .07);
+    part(g, W_GEO.cyl, '#d9c48a', 0, .025, 0, .38, .02, .44);
+    head.position.set(0, .07, .23); part(head, H, '#9cc27a', 0, 0, .03, .65, .55, .75); eyes(head, .02, .075, .8, .028);
+    for (const [x, z] of [[-.15, .13], [.15, .13], [-.15, -.13], [.15, -.13]]) { const p = new THREE.Group(); p.position.set(x, .03, z); g.add(p); part(p, H, '#9cc27a', 0, 0, 0, .55, .3, .75); legs.push(p); }
+    tail.position.set(0, .03, -.22); part(tail, K, '#9cc27a', 0, 0, -.02, .05, .06, .05, -Math.PI / 2);
+  } else if (id === 'm_horse' || id === 'm_unicorn') {
+    const uni = id === 'm_unicorn', col = uni ? '#fbf7ff' : '#b0703c', dark = uni ? '#e8dcf5' : '#7a4a26';
+    part(g, H, col, 0, .2, 0, 1.25, 1.05, 2.3);
+    for (const [x, z] of [[-.05, .1], [.05, .1], [-.05, -.1], [.05, -.1]]) leg(x, z, dark, .045, .16, .17);
+    part(g, C, col, 0, .29, .13, .075, .2, .075, .45);
+    head.position.set(0, .36, .17); part(head, H, col, 0, .02, .04, .62, .58, 1.05); part(head, H, dark, 0, -.005, .1, .4, .35, .3); eyes(head, .045, .065, .9, .036);
+    for (const k of [-1, 1]) part(head, K, col, k * .028, .085, -.005, .028, .06, .028);
+    const manes = uni ? ['#ff8fb1', '#ffd36b', '#8fd3ff', '#b49bff'] : ['#3a2414'];
+    for (let i = 0; i < 4; i++) part(g, B, manes[i % manes.length], 0, .38 - i * .04, .12 - i * .03, .022, .05, .035, .45);
+    if (uni) part(head, K, '#f3c34a', 0, .1, .07, .022, .11, .022, .55, 0, 0, { emissive: '#f3c34a', emissiveIntensity: .4 });
+    tail.position.set(0, .23, -.16); for (let i = 0; i < 3; i++) part(tail, B, manes[i % manes.length], 0, -.03 - i * .035, -.02 - i * .01, .03, .05, .03, .3);
+    extra.spark = uni;
+  } else if (id === 'm_tiger') {
+    const o = '#f08a2a';
+    part(g, H, o, 0, .14, 0, 1.3, .95, 2.4);
+    for (let i = -2; i <= 2; i++) part(g, B, COL.ink, 0, .205, i * .045, .13, .012, .012);
+    part(g, H, '#fff2dc', 0, .1, .02, 1, .6, 1.8);
+    for (const [x, z] of [[-.06, .1], [.06, .1], [-.06, -.1], [.06, -.1]]) leg(x, z, o, .045, .1, .1);
+    head.position.set(0, .19, .17); part(head, H, o, 0, 0, .02, 1, .9, .9); part(head, H, '#fff2dc', 0, -.025, .07, .55, .4, .4);
+    part(head, H, '#f28aa0', 0, -.005, .1, .12, .1, .1); eyes(head, .025, .075, .9, .033);
+    for (const k of [-1, 1]) { part(head, H, o, k * .05, .06, 0, .3, .3, .15); part(head, B, COL.ink, k * .035, .045, .045, .03, .008, .008); }
+    tail.position.set(0, .17, -.17); part(tail, C, o, 0, .02, -.06, .03, .14, .03, -1); part(tail, H, COL.ink, 0, .07, -.11, .25, .25, .25);
+  } else if (id === 'm_elephant') {
+    const c = '#9aa3b5';
+    part(g, H, c, 0, .24, 0, 2, 1.65, 2.5);
+    for (const [x, z] of [[-.08, .09], [.08, .09], [-.08, -.09], [.08, -.09]]) leg(x, z, '#8a93a6', .07, .14, .14);
+    part(g, B, '#e0533f', 0, .345, 0, .17, .02, .2); part(g, B, '#f3c34a', 0, .337, 0, .19, .012, .22);
+    head.position.set(0, .29, .17); part(head, H, c, 0, 0, .03, 1.2, 1.1, 1);
+    for (const k of [-1, 1]) part(head, C, '#b8bfcd', k * .1, .01, 0, .16, .01, .2, 0, 0, k * 1.2);
+    eyes(head, .02, .095, 1, .045);
+    const tr1 = new THREE.Group(); tr1.position.set(0, -.04, .1); head.add(tr1); part(tr1, C, c, 0, -.05, 0, .045, .1, .045);
+    const tr2 = new THREE.Group(); tr2.position.set(0, -.1, 0); tr1.add(tr2); part(tr2, C, c, 0, -.035, .01, .035, .07, .035, .4);
+    for (const k of [-1, 1]) part(head, K, '#fffaf0', k * .04, -.05, .1, .02, .06, .02, 2.4);
+    extra.trunk = tr1; extra.trunk2 = tr2;
+    tail.position.set(0, .27, -.2); part(tail, C, c, 0, -.04, 0, .015, .08, .015, .3);
+  } else if (id === 'm_dino') {
+    const c = '#5fae4a', bel = '#d9e8a0';
+    part(g, H, c, 0, .2, 0, 1.4, 1.25, 2.1, -.25); part(g, H, bel, 0, .17, .04, 1, .9, 1.4, -.25);
+    for (const x of [-.07, .07]) { const p = leg(x, -.02, c, .07, .13, .13); part(p, B, '#4a8f3a', 0, -.13, .03, .09, .03, .1); }
+    part(g, C, c, 0, .3, .12, .1, .12, .1, .35);
+    head.position.set(0, .35, .16); part(head, H, c, 0, .02, .05, 1.1, .9, 1.5); part(head, B, '#4a8f3a', 0, -.035, .09, .12, .04, .14);
+    for (let i = 0; i < 4; i++) part(head, K, '#ffffff', -.04 + i * .027, -.012, .15, .012, .025, .012, Math.PI);
+    eyes(head, .055, .07, 1, .045);
+    for (const k of [-1, 1]) part(g, C, c, k * .08, .23, .12, .02, .07, .02, .9);
+    for (let i = 0; i < 5; i++) part(g, K, '#f3c34a', 0, .3 - i * .015, .08 - i * .07, .03, .05, .03);
+    tail.position.set(0, .2, -.13); part(tail, K, c, 0, -.02, -.12, .1, .26, .1, -Math.PI / 2 - .3);
+  } else if (id === 'm_dragon') {
+    const c = '#8e5bc7', bel = '#f3d9ff';
+    part(g, H, c, 0, .15, 0, 1.2, 1, 2); part(g, H, bel, 0, .12, .03, .9, .7, 1.4);
+    for (const [x, z] of [[-.05, .08], [.05, .08], [-.05, -.08], [.05, -.08]]) leg(x, z, c, .035, .07, .08);
+    part(g, C, c, 0, .21, .13, .06, .1, .06, .5);
+    head.position.set(0, .25, .17); part(head, H, c, 0, .02, .04, .85, .75, 1.1); eyes(head, .05, .1, .9, .035);
+    for (const k of [-1, 1]) part(head, K, '#f3c34a', k * .03, .1, .01, .02, .07, .02, -.4);
+    const wings = [-1, 1].map(k => { const w = new THREE.Group(); w.position.set(k * .07, .21, -.01); g.add(w); part(w, B, '#b48ae0', k * .1, 0, 0, .2, .01, .14, 0, 0, 0, { transparent: true, opacity: .9 }); part(w, B, c, k * .02, .005, .06, .04, .02, .02); return w; });
+    extra.wings = wings;
+    tail.position.set(0, .14, -.15); part(tail, K, c, 0, 0, -.1, .07, .2, .07, -Math.PI / 2); part(tail, K, '#f3c34a', 0, 0, -.21, .05, .05, .05, -Math.PI / 2);
+  }
+  g.userData = { mount: M, legs, head, tail, ...extra, ph: Math.random() * 6 };
+  cosOwnMats(g);
+  return g;
+}
+/* animate the mount; returns the rider's extra bob */
+function mountAnim(m, t, moving, dt = .016) {
+  const U = m.userData, M = U.mount, f = moving ? (M.id === 'm_turtle' ? 5 : M.id === 'm_elephant' ? 6 : 10) : 0, ph = t * f + U.ph;
+  U.legs.forEach((l, i) => { const s = (i === 0 || i === 3) ? 1 : -1; if (M.id === 'm_turtle') l.rotation.y = moving ? Math.sin(ph) * .5 * s : 0; else l.rotation.x = moving ? Math.sin(ph) * .55 * s : 0; });
+  if (M.id === 'm_dino') U.legs.forEach((l, i) => l.rotation.x = moving ? Math.sin(ph) * .5 * (i ? 1 : -1) : 0);
+  U.head.rotation.x = moving ? Math.sin(ph * 2) * .06 : Math.sin(t * 1.4 + U.ph) * .05;
+  U.tail.rotation.y = Math.sin(t * (moving ? 7 : 2) + U.ph) * (moving ? .5 : .25);
+  if (U.wings) { const w = Math.sin(t * (moving ? 12 : 5)) * (moving ? .7 : .35); U.wings[0].rotation.z = w; U.wings[1].rotation.z = -w; }
+  if (U.trunk) { U.trunk.rotation.x = Math.sin(t * 1.3 + U.ph) * .25 + (U.spray > 0 ? -1.3 : 0); U.trunk2.rotation.x = Math.sin(t * 1.7) * .3 + (U.spray > 0 ? -.6 : 0); }
+  let bob = moving ? Math.abs(Math.sin(ph)) * (M.id === 'm_elephant' ? .01 : .018) : Math.sin(t * 2 + U.ph) * .004;
+  if (M.fly) { bob += M.fly + Math.sin(t * 2.2 + U.ph) * .02; m.position.y = M.fly + Math.sin(t * 2.2 + U.ph) * .02; }
+  return bob;
+}
+/* the rider's pose on a mount */
+function riderPose(P, M) {
+  if (!P || !P.legL) return;
+  const wide = M.id === 'm_elephant' ? .75 : M.id === 'm_turtle' ? .55 : .5;
+  P.legL.rotation.set(-1.25, 0, -wide); P.legR.rotation.set(-1.25, 0, wide);
+  if (P.armL) { P.armL.rotation.x = -.75; P.armR.rotation.x = -.75; }
+}
+const MOUNT_ON = () => !!(ME && AV.eq.mount && AV.ride !== false && MOUNT_BY.has(AV.eq.mount));
+const mountSpd = () => MOUNT_ON() ? MOUNT_BY.get(AV.eq.mount).spd : 1;
+
+/* unlock rewards: unicorn after beating 3 island bosses, little dragon after collecting 30 stars */
+function mountUnlocks() {
+  if (!ME || !ADV_READY) return;
+  const got = [];
+  if (!AV.owned.m_unicorn && Object.keys(LP.boss || {}).length >= 3) { AV.owned.m_unicorn = today(); got.push('獨角獸'); }
+  if (!AV.owned.m_dragon && totalStars() >= 30) { AV.owned.m_dragon = today(); got.push('小飛龍'); }
+  if (got.length) { saveP(); got.forEach((n, k) => setTimeout(() => toast(tr(`🎉 解鎖座騎「${n}」！到「座騎」騎上去吧`, `New mount: ${n}!`)), 600 + k * 1500)); }
+}
+{ const _ca = checkAch; checkAch = function () { const r = _ca.apply(this, arguments); try { mountUnlocks(); } catch (e) { } return r; }; }
+
+/* the mount picker: a toolbar button (shortcut R) */
+function openMounts() {
+  if (!ME) { toast(tr('先建立角色才能騎座騎喔', 'Create a character first')); return; }
+  const body = openPlay('mount', tr('座騎', 'Mounts'), tr('選一隻座騎騎上去', 'Pick a mount'), { wide: true });
+  const lv = levelInfo().lv;
+  const render = () => {
+    const cur = AV.eq.mount, on = MOUNT_ON();
+    body.innerHTML = `<div class="mt-top"><p class="coins-big">${ICON3.leaf}<b>${AV.coins}</b> ${tr('葉子幣', 'leaves')}</p>
+      ${cur ? `<button class="btn ${on ? '' : 'primary'}" id="mtRide">${on ? tr('🚶 下來走路', 'Get off') : tr(`🐾 騎上「${MOUNT_BY.get(cur).n}」`, 'Ride')}</button>` : ''}
+      <p class="hint">${tr('用葉子幣買座騎，騎上去走得更快。獨角獸和小飛龍不賣，要靠闖關解鎖。快捷鍵 R 可以騎上或下來。', 'Buy mounts with leaves; ride to move faster. Shortcut R.')}</p></div>
+      <div class="mt-grid">${MOUNTS.map(M => { const s = SHOP_BY.get(M.id), own = !!AV.owned[M.id], R = RAR[M.r], lock = !own && !M.earn && lv < R.lv, poor = !own && AV.coins < M.p, using = cur === M.id && on;
+        const btn = own ? (using ? `<button class="btn" data-mrel="${M.id}">${tr('下來', 'Get off')}</button>` : `<button class="btn primary" data-mride="${M.id}">${tr('騎上去', 'Ride')}</button>`)
+          : M.earn ? `<button class="btn" disabled>${HOW_IC[M.how]} ${esc(M.earn)}</button>`
+          : lock ? `<button class="btn" disabled>${tr(`Lv.${R.lv} 解鎖`, `Lv.${R.lv}`)}</button>`
+          : `<button class="btn primary" data-mbuy="${M.id}" ${poor ? 'disabled' : ''}>${poor ? tr(`還差 ${M.p - AV.coins}`, `Need ${M.p - AV.coins}`) : `${ICON3.leaf}${M.p} ${tr('購買', 'Buy')}`}</button>`;
+        return `<div class="mt-card ${using ? 'on' : ''}" style="--rc:${R.col}"><div class="mt-pv" data-pv="${M.id}"></div><em>${esc(T(R.n))}</em><b>${esc(M.n)}</b>
+          <span class="mt-spd">${tr('速度', 'Speed')} ${'▮'.repeat(Math.round(M.spd * 3))}<i>×${M.spd}</i></span><p>${esc(M.d)}</p>${btn}</div>`; }).join('')}</div>`;
+    body.querySelectorAll('[data-pv]').forEach(el => mountThumb(el, el.dataset.pv));
+    const rb = body.querySelector('#mtRide'); if (rb) rb.addEventListener('click', () => { setRide(!MOUNT_ON()); render(); });
+    body.querySelectorAll('[data-mride]').forEach(b => b.addEventListener('click', () => { AV.eq.mount = b.dataset.mride; AV.ride = true; saveP(); buildAvatar(); render(); avSay(tr(`出發囉！騎著${MOUNT_BY.get(b.dataset.mride).n}去冒險`, 'Let\'s ride!'), 3); }));
+    body.querySelectorAll('[data-mrel]').forEach(b => b.addEventListener('click', () => { setRide(false); render(); }));
+    body.querySelectorAll('[data-mbuy]').forEach(b => b.addEventListener('click', () => {
+      const M = MOUNT_BY.get(b.dataset.mbuy); if (AV.owned[M.id] || AV.coins < M.p) return;
+      AV.coins -= M.p; AV.owned[M.id] = today(); AV.eq.mount = M.id; AV.ride = true; saveP(); buildAvatar(); updateMeBar(); checkAch();
+      toast(tr(`買到「${M.n}」了！已經騎上去`, `Got ${M.n}!`)); confetti(body.querySelector('.mt-grid')); render();
+    }));
+  };
+  render();
+}
+function setRide(on) { if (!AV.eq.mount) { openMounts(); return; } AV.ride = !!on; saveP(); buildAvatar(); toast(on ? tr(`🐾 騎上${MOUNT_BY.get(AV.eq.mount).n}`, 'Riding') : tr('🚶 下來走路', 'Walking')); }
+/* small static 3D thumbnails for the picker, rendered once to an image */
+let MT_R = null; const MT_CACHE = {};
+function mountThumb(el, id) {
+  if (MT_CACHE[id]) { el.style.backgroundImage = `url(${MT_CACHE[id]})`; return; }
+  try {
+    if (!MT_R) { const cv = document.createElement('canvas'); MT_R = { r: new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, preserveDrawingBuffer: true }), sc: new THREE.Scene(), cam: new THREE.PerspectiveCamera(30, 1, .05, 20) };
+      MT_R.r.setSize(200, 200, false); MT_R.r.outputColorSpace = THREE.SRGBColorSpace; MT_R.sc.add(new THREE.HemisphereLight(0xffffff, 0x9a8a78, 1.9)); const dl = new THREE.DirectionalLight(0xfff1de, 2.2); dl.position.set(2, 4, 3); MT_R.sc.add(dl); }
+    const m = buildMount(id); m.rotation.y = -1.05; MT_R.sc.add(m);
+    MT_R.cam.position.set(.85, .55, .85); MT_R.cam.lookAt(0, .17, 0); MT_R.r.render(MT_R.sc, MT_R.cam);
+    MT_CACHE[id] = MT_R.r.domElement.toDataURL('image/png'); MT_R.sc.remove(m);
+    el.style.backgroundImage = `url(${MT_CACHE[id]})`;
+  } catch (e) { el.textContent = '🐾'; }
+}
+{
+  const b = document.createElement('button'); b.className = 'btn'; b.id = 'btnMount'; b.type = 'button';
+  b.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="6" cy="9" r="2"/><circle cx="10" cy="5.5" r="2"/><circle cx="14.5" cy="5.5" r="2"/><circle cx="18.5" cy="9" r="2"/><path d="M12 11c-3.5 0-6 3.5-6 6 0 2 1.6 3 3.2 2.6 1-.3 1.8-.8 2.8-.8s1.8.5 2.8.8c1.6.4 3.2-.6 3.2-2.6 0-2.5-2.5-6-6-6z"/></svg><span>${tr('座騎', 'Mounts')}</span>`; b.title = tr('座騎（快捷鍵 R 騎上／下來）', 'Mounts (R)');
+  $('#tools').insertBefore(b, $('#btnFP') || $('#btnMusic') || $('#btnHelp')); b.addEventListener('click', () => openMounts());
+  addEventListener('keydown', e => { if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return; const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.isContentEditable)) return; if (e.key.toLowerCase() === 'r' && ME && PL.el.hidden) { if (AV.eq.mount) setRide(!MOUNT_ON()); else openMounts(); } });
+}
+/* per-frame extras: unicorn sparkles, elephant water spray, dinosaur roar */
+function mountTick(dt, t, moving) {
+  if (!AVA || !MOUNT_ON()) return; const m = AVA.root.userData.mount; if (!m) return; const U = m.userData, R0 = AVA.root;
+  if (U.spark && moving && Math.random() < dt * 14 && AP.list.length < 240) AP.list.push({ p: R0.position.clone().add(new V3((Math.random() - .5) * .3, .05, (Math.random() - .5) * .3)), v: new V3((Math.random() - .5) * .1, .3 + Math.random() * .3, (Math.random() - .5) * .1), c: ['#ffd84a', '#ff8fb1', '#8fd3ff'][Math.random() * 3 | 0], life: 0, max: 1, size: .02, geo: 'oct', mode: 'rise', rot: 0 });
+  if (U.trunk) { U.idle = moving ? 0 : (U.idle || 0) + dt; if (U.idle > 6) { U.idle = -4; U.spray = 1.6; } if (U.spray > 0) { U.spray -= dt; if (Math.random() < dt * 30) { const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw); spray(R0.position.x + hx * .55, R0.position.y + .75, R0.position.z + hz * .55, hx * .6, 1.1, hz * .6, .02); } } }
+  if (U.mount.id === 'm_dino') { U.roar = (U.roar || 8 + Math.random() * 10) - dt; if (U.roar <= 0) { U.roar = 14 + Math.random() * 12; if (!AVA.say) avSay(tr('吼～～！', 'ROAR!'), 1.6); } }
+}
+window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA };
+/* MOUNT-JS-END */
 /* =====================================================================
    17. start
    ===================================================================== */
