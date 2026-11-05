@@ -16302,6 +16302,42 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 .mt-spd{font-size:12px;color:#c0763a;letter-spacing:1px}.mt-spd i{font-style:normal;color:#8a7a6a;margin-left:4px;letter-spacing:0}
 #btnMount svg{fill:currentColor;stroke:none}
 /* MOUNT-CSS-END */
+/* MKT-CSS-BEGIN */
+.mk-up{color:#e0303a}.mk-dn{color:#1f9d55}
+.mk-sum{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:10px}.mk-sum>div{background:#fff;border-radius:14px;padding:8px 10px;box-shadow:0 2px 8px #4a2a1412}
+.mk-sum small{display:block;font-size:11px;color:#8a7a6a}.mk-sum b{font-size:18px;display:inline-flex;align-items:center;gap:3px}.mk-sum svg{width:16px;height:16px}
+.mk-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.mk-split{display:grid;grid-template-columns:minmax(260px,1fr) 1.4fr;gap:12px}
+.mk-list{display:flex;flex-direction:column;gap:4px;max-height:560px;overflow:auto}
+.mk-row{display:grid;grid-template-columns:1fr 70px 96px;align-items:center;gap:6px;border:0;border-radius:12px;background:#fff;padding:6px 8px;cursor:pointer;font:inherit;color:var(--ink);text-align:left;box-shadow:0 1px 4px #4a2a1410}
+.mk-row.on{box-shadow:0 0 0 2px var(--ink)}.mk-row.flash{animation:mkFlash 1.2s}@keyframes mkFlash{0%{background:#fff3b0}100%{background:#fff}}
+.mk-nm{display:grid;grid-template-columns:24px 1fr;column-gap:4px}.mk-nm i{grid-row:span 2;font-style:normal;font-size:20px;align-self:center}.mk-nm b{font-size:14px}.mk-nm small{font-size:11px;color:#8a7a6a}
+.mk-spark{width:70px;height:24px}.mk-px{text-align:right}.mk-px b{display:block;font-size:16px}.mk-px small{font-size:11px}
+.mk-px.lim-up b{background:#e0303a;color:#fff;border-radius:6px;padding:0 4px}.mk-px.lim-dn b{background:#1f9d55;color:#fff;border-radius:6px;padding:0 4px}
+.mk-detail{background:#fff;border-radius:16px;padding:12px;box-shadow:0 2px 10px #4a2a1414;min-width:0}
+.mk-dhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}.mk-dhead b{font-size:18px}.mk-dhead b small{font-size:12px;color:#8a7a6a}
+.mk-big{font-size:26px;font-weight:900}.mk-big small{font-size:13px;margin-left:6px;font-weight:700}.mk-hold{font-size:12.5px;color:#6b5a4a;flex-basis:100%}
+.mk-k{width:100%;height:auto;aspect-ratio:560/220;display:block;margin-top:6px}
+.mk-kl{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px;font-size:11.5px;color:#8a7a6a;margin-bottom:8px}
+.mk-qty{display:flex;flex-wrap:wrap;gap:4px;align-items:center}.mk-qty input{width:70px;text-align:center;font:700 16px/1 var(--mono);padding:8px;border-radius:10px;border:1px solid #e6dccd}
+.mk-qty .btn{min-height:34px;padding:4px 10px}
+.mk-est{font-size:12.5px;color:#6b5a4a;margin:6px 0}
+.mk-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mk-btns .mk-buy{background:#e0303a;color:#fff}.mk-btns .mk-sell{background:#1f9d55;color:#fff}.mk-btns .mk-short{background:#fff;color:#1f9d55;box-shadow:inset 0 0 0 2px #1f9d55}.mk-btns .mk-cover{background:#fff;color:#e0303a;box-shadow:inset 0 0 0 2px #e0303a}
+.mk-btns .btn:disabled{opacity:.45}
+.mk-msg{min-height:20px;font-weight:700;font-size:13px}.mk-msg.err{color:#c0392b}.mk-msg.ok{color:#2b7a3d}
+.mk-tb{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:14px;overflow:hidden}.mk-tb th,.mk-tb td{padding:7px 8px;border-bottom:1px solid #f1e8da;text-align:left}.mk-tb th{background:#faf4ea;font-size:12px;color:#6b5a4a}
+.mk-tb tr[data-go]{cursor:pointer}.mk-tb tr[data-go]:hover{background:#fffbea}
+.mk-tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:800;color:#fff}.mk-tag.up{background:#e0303a}.mk-tag.dn{background:#1f9d55}
+.mk-news{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}.mk-news li{display:flex;gap:10px;background:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 1px 6px #4a2a1410;color:var(--ink)}
+.mk-news li>span{font-size:22px}.mk-news li b{color:var(--ink)}.mk-news li.mk-up{border-left:4px solid #e0303a}.mk-news li.mk-dn{border-left:4px solid #1f9d55}.mk-news small{display:block;color:#9a8a7a;font-size:11px}
+.mk-nq{margin-top:8px;background:#f8f3ea;border-radius:12px;padding:8px 10px}.mk-nq p{margin:4px 0;font-weight:700}.mk-nqo{display:flex;flex-wrap:wrap;gap:6px}.mk-nqo .btn{min-height:32px;padding:4px 10px;font-size:13px}
+.mk-nqo .btn.ok{background:#bfe8b0;opacity:1}.mk-nqo .btn.no{background:#f7c2b8;opacity:1}.mk-nw{font-size:12.5px;font-weight:400!important;color:#6b5a4a}
+.mk-empty{padding:24px;text-align:center;color:#8a7a6a}
+.mk-learn h4{margin:12px 0 4px}.mk-learn p{margin:0 0 6px;line-height:1.7}
+#btnMkt svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:760px){.mk-sum{grid-template-columns:repeat(3,1fr)}.mk-split{grid-template-columns:1fr}.mk-list{max-height:none}.mk-tb{font-size:12px}}
+/* MKT-CSS-END */
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
 
@@ -24128,6 +24164,286 @@ function mountTick(dt, t, moving) {
 }
 window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA };
 /* MOUNT-JS-END */
+/* MKT-JS-BEGIN */
+/* ---------- 16q. 學習島投資市場: a pretend stock market (Taiwan-style rules) priced in 葉子幣 ---------- */
+/* everything here is fictional; prices move by random walk, news events and the child's own learning */
+const MK_STOCKS = [
+  { c: '1101', n: '葉子銀行', ic: '🏦', p0: 20, vol: .012, drift: .0004, div: .01, isl: [], tag: '金融', d: '很穩定、漲跌小，每 7 天發一次股利（每股約 1%）。適合練習「存股」。',
+    good: ['存錢的人變多，銀行生意變好', '銀行推出兒童存款帳戶，很受歡迎'], bad: ['利率調降，銀行賺的利息變少', '電腦系統更新，暫停服務一天'] },
+  { c: '2301', n: '月亮天文台', ic: '🔭', p0: 36, vol: .03, drift: .0004, isl: ['g4-11', 'g4-12', 'g4-13'], tag: '小四自然',
+    good: ['今晚是滿月，好多人排隊來看月亮', '流星雨要來了，望遠鏡大賣'], bad: ['連續下雨陰天，看不到月亮，遊客變少', '望遠鏡鏡片壞了，要花錢修理'] },
+  { c: '2302', n: '海洋水族館', ic: '🐠', p0: 42, vol: .028, drift: .0003, isl: ['g4-21', 'g4-22'], tag: '小四自然',
+    good: ['海龜寶寶出生了，參觀人數大增', '新開放珊瑚礁展區'], bad: ['水質變差要整修，暫停開放三天', '颱風來，遊客都待在家'] },
+  { c: '2303', n: '綠手指園藝', ic: '🌱', p0: 18, vol: .03, drift: .0003, isl: ['g3-1'], tag: '小三自然',
+    good: ['春天到了，大家買種子種菜', '學校辦種植比賽，盆栽賣光了'], bad: ['寒流來襲，植物凍傷', '連續乾旱，花草長不好'] },
+  { c: '2304', n: '大力士機械', ic: '⚙️', p0: 55, vol: .032, drift: .0004, isl: ['g3-2'], tag: '小三自然',
+    good: ['新的省力槓桿工具大賣', '拿到建造遊樂園的大訂單'], bad: ['鐵的價錢上漲，做機器的成本變高', '機器故障，工廠停工一天'] },
+  { c: '2501', n: '動物保育園', ic: '🦁', p0: 64, vol: .026, drift: .0004, isl: ['g5-11', 'g5-12', 'g5-13'], tag: '小五自然',
+    good: ['保育成功，石虎寶寶誕生', '學校校外教學都選這裡'], bad: ['颱風吹壞了園區的圍欄', '動物生病，部分園區暫停開放'] },
+  { c: '2502', n: '聲光樂器行', ic: '🎻', p0: 47, vol: .03, drift: .0003, isl: ['g5-21', 'g5-22', 'g5-23'], tag: '小五自然',
+    good: ['學校音樂會訂了好多樂器', '新的雷射燈光秀很受歡迎'], bad: ['鄰居抱怨噪音，要加裝隔音牆', '木材缺貨，做不出吉他'] },
+  { c: '3401', n: '群島交通', ic: '🚄', p0: 72, vol: .025, drift: .0004, isl: ['s4-11', 's4-12', 's4-13'], tag: '小四社會',
+    good: ['連假出遊的人多，車票賣光', '新的港口啟用，船運更方便'], bad: ['颱風來襲，飛機和船都停駛', '油價上漲，運輸成本變高'] },
+  { c: '3402', n: '地圖出版社', ic: '🗺️', p0: 24, vol: .03, drift: .0002, isl: ['s4-21', 's4-22'], tag: '小四社會',
+    good: ['推出新的電子地圖，下載的人很多', '學校訂購新版地圖集'], bad: ['大家都用手機導航，紙本地圖賣不好', '紙的價錢上漲'] },
+  { c: '3501', n: '寶島觀光', ic: '🏝️', p0: 38, vol: .03, drift: .0003, isl: ['s5-1', 's5-2'], tag: '小五社會',
+    good: ['外國遊客變多了', '新的國家公園步道開放'], bad: ['連續豪雨，山區道路坍方', '地震後，遊客暫時變少'] },
+  { c: '5101', n: '語文書局', ic: '📚', p0: 28, vol: .022, drift: .0004, isl: ['z1-1', 'z1-2', 'z1-3', 'z1-4', 'z1-5', 'z5-1', 'z5-2', 'z5-3', 'z5-4'], tag: '國語',
+    good: ['開學了，大家買字典和故事書', '新的注音繪本得獎，賣得很好'], bad: ['紙漿漲價，印書成本變高', '倉庫漏水，弄濕了一批書'] },
+];
+const MK_ETF = { c: '0050', n: '群島50', ic: '📊', tag: 'ETF', d: '一次買進市場上所有公司的「一籃子」，漲跌是大家的平均，風險比較分散。' };
+const MK_ALL = [...MK_STOCKS, MK_ETF], MK_BY = new Map(MK_ALL.map(s => [s.c, s]));
+const MK_FEE = .001425, MK_TAX = .003, MK_LIMIT = .1, MK_MARGIN = .9, MK_CALL = 1.3, MK_FORCE = 1.2, MK_SHORT_LV = 3, MK_TICK_MS = 12000;
+const mkDay = () => today();
+const tickSize = p => p < 10 ? .01 : p < 50 ? .05 : p < 100 ? .1 : p < 500 ? .5 : 1;
+const mkRound = p => { const t = tickSize(p); return Math.round(Math.round(p / t) * t * 100) / 100; };
+const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+const MKKEY = 'scienceIslands.market.v1';
+let MK = null;
+function mkLoad() {
+  try { MK = JSON.parse(store.get(MKKEY) || 'null'); } catch (e) { MK = null; }
+  if (!MK || !MK.s) {
+    MK = { day: mkDay(), s: {}, news: [] };
+    MK_STOCKS.forEach(S => { const hist = []; let p = S.p0; for (let k = 30; k >= 1; k--) { const o = p; const c = mkRound(Math.max(1, o * (1 + Math.max(-MK_LIMIT, Math.min(MK_LIMIT, S.drift + S.vol * gauss()))))); hist.push({ d: dayShift(-k), o, h: Math.max(o, c) * (1 + Math.random() * S.vol * .4), l: Math.min(o, c) * (1 - Math.random() * S.vol * .4), c }); p = c; }
+      MK.s[S.c] = { p, prev: p, o: p, h: p, l: p, hist, ticks: [p], vol: 0 }; });
+    mkEtf(true); mkSave();
+  }
+  mkRoll();
+}
+function dayShift(n) { const d = new Date(); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+const mkSave = () => store.set(MKKEY, JSON.stringify(MK));
+/* the 0050-style fund tracks the average move of all companies */
+function mkEtf(init) {
+  const r = MK_STOCKS.reduce((a, S) => { const x = MK.s[S.c]; return a + x.p / x.hist[0].o; }, 0) / MK_STOCKS.length;
+  const p = mkRound(50 * r);
+  if (init || !MK.s['0050']) { const hist = MK.s['1101'].hist.map((h, k) => { const rr = MK_STOCKS.reduce((a, S) => a + MK.s[S.c].hist[k].c / MK.s[S.c].hist[0].o, 0) / MK_STOCKS.length, c = mkRound(50 * rr); return { d: h.d, o: c, h: c, l: c, c }; }); hist.forEach((h, k) => { h.o = k ? hist[k - 1].c : h.c; h.h = Math.max(h.o, h.c); h.l = Math.min(h.o, h.c); }); MK.s['0050'] = { p, prev: hist[hist.length - 1].c, o: p, h: p, l: p, hist, ticks: [p], vol: 0 }; }
+  const x = MK.s['0050']; x.p = p; x.h = Math.max(x.h, p); x.l = Math.min(x.l, p); x.ticks.push(p); if (x.ticks.length > 300) x.ticks.shift();
+}
+/* new trading day(s): close yesterday's candle, simulate any days the page was closed (up to 20), open today */
+function mkRoll() {
+  const td = mkDay(); if (MK.day === td) return;
+  let gap = 0; { const a = new Date(MK.day), b = new Date(td); gap = Math.max(1, Math.min(20, Math.round((b - a) / 864e5))); }
+  for (let k = 0; k < gap; k++) {
+    MK_STOCKS.forEach(S => {
+      const x = MK.s[S.c];
+      if (k > 0) { const o = x.p, c = mkRound(Math.max(1, o * (1 + Math.max(-MK_LIMIT, Math.min(MK_LIMIT, S.drift + S.vol * gauss()))))); x.o = o; x.h = Math.max(o, c); x.l = Math.min(o, c); x.p = c; }
+      x.hist.push({ d: k === 0 ? MK.day : dayShift(k - gap), o: x.o, h: x.h, l: x.l, c: x.p }); if (x.hist.length > 60) x.hist.shift();
+      x.prev = x.p; x.o = x.p; x.h = x.p; x.l = x.p; x.ticks = [x.p]; x.vol = 0;
+    });
+    const e = MK.s['0050']; mkEtf(); e.hist.push({ d: k === 0 ? MK.day : dayShift(k - gap), o: e.o, h: Math.max(e.h, e.p), l: Math.min(e.l, e.p), c: e.p }); if (e.hist.length > 60) e.hist.shift(); e.prev = e.p; e.o = e.p; e.h = e.p; e.l = e.p; e.ticks = [e.p];
+  }
+  MK.day = td; mkSave(); mkDividends();
+}
+/* intraday tick: random walk inside the ±10% price limit, occasional news */
+function mkTick() {
+  if (!MK) return; mkRoll();
+  MK_STOCKS.forEach(S => { const x = MK.s[S.c]; mkMove(S, x, S.drift / 150 + S.vol / Math.sqrt(150) * gauss()); });
+  if (Math.random() < .06) mkNews();
+  mkEtf(); mkSave(); mkCheckShorts(); if (MKUI) MKUI.refresh();
+}
+function mkMove(S, x, r) {
+  const up = mkRound(x.prev * (1 + MK_LIMIT)), dn = mkRound(x.prev * (1 - MK_LIMIT));
+  x.p = Math.max(dn, Math.min(up, mkRound(Math.max(.5, x.p * (1 + r)))));
+  x.h = Math.max(x.h, x.p); x.l = Math.min(x.l, x.p); x.ticks.push(x.p); if (x.ticks.length > 300) x.ticks.shift(); x.vol += 1 + Math.random() * 30 | 0;
+}
+/* every company news is tied to one of its islands' lessons and carries a review question from that lesson */
+const MK_GOOD_T = ['舉辦「{L}」主題展覽，參觀的人變多了', '推出「{L}」學習營，報名一下就額滿', '和學校合作上「{L}」這一課，訂單大增', '「{L}」小百科大受歡迎，賣到缺貨'];
+function mkNews(S, good, why, islId) {
+  S = S || MK_STOCKS[Math.random() * MK_STOCKS.length | 0]; if (good === undefined) good = Math.random() < .55;
+  const pool = islId ? [islId] : S.isl.filter(i => ISL_BY.get(i) && (LD.quiz[i] || []).length), iid = pool.length ? pool[Math.random() * pool.length | 0] : null, isl = iid && ISL_BY.get(iid);
+  const L = isl ? T(isl.label) : '';
+  const txt = why || (good ? (isl && Math.random() < .6 ? MK_GOOD_T[Math.random() * MK_GOOD_T.length | 0].replace('{L}', L) : S.good[Math.random() * 2 | 0]) : S.bad[Math.random() * 2 | 0]);
+  const x = MK.s[S.c], r = (good ? 1 : -1) * (.015 + Math.random() * .035) * (S.c === '1101' ? .4 : 1);
+  mkMove(S, x, r);
+  const n = { id: Date.now().toString(36) + (Math.random() * 1e4 | 0), t: Date.now(), c: S.c, g: good, txt };
+  if (isl) { const bank = LD.quiz[iid], qi = Math.random() * bank.length | 0; n.iid = iid; n.qi = qi; n.ord = shuffle([0, 1, 2, 3].slice(0, bank[qi].o.length)); }
+  MK.news.unshift(n); MK.news = MK.news.slice(0, 30);
+  if (MKUI) { MKUI.flash(S.c); toast(`${good ? '📈' : '📉'} ${S.n}：${txt}`); }
+}
+/* learning moves the market a little: passing a lesson is good news for that island's company */
+function mkLearn(islId) {
+  if (!MK) return; const S = MK_STOCKS.find(s => s.isl.includes(islId)); if (!S || Math.random() < .4) return;
+  const isl = ISL_BY.get(islId); mkNews(S, true, `${ME ? ME.name : '小朋友'}在「${T(isl.label)}」認真學習，大家對${S.n}更有興趣了`, islId); mkEtf(); mkSave();
+}
+/* 葉子銀行 pays a dividend every 7 days to whoever holds it */
+function mkDividends() {
+  if (!ME || !AV.mk) return; const P = AV.mk, q = (P.pos['1101'] || {}).q || 0; const last = P.divDay || P.start || mkDay();
+  const days = Math.round((new Date(mkDay()) - new Date(last)) / 864e5); if (days < 7) return;
+  P.divDay = mkDay(); if (!q) { saveP(); return; }
+  const amt = Math.max(1, Math.floor(q * MK.s['1101'].p * .01)); AV.coins += amt; P.log.unshift({ t: Date.now(), k: 'div', c: '1101', q, p: 0, amt }); saveP(); updateMeBar();
+  setTimeout(() => toast(tr(`🏦 葉子銀行發股利：+${amt} 葉子幣（持有 ${q} 股）`, `Dividend +${amt}`)), 1200);
+}
+const mkPos = () => { if (!AV.mk) AV.mk = { pos: {}, sh: {}, log: [], real: 0, start: mkDay() }; return AV.mk; };
+const mkFee = v => Math.max(1, Math.round(v * MK_FEE));
+const mkTax = v => Math.max(0, Math.round(v * MK_TAX));
+/* trades: buy / sell (long), short sell / cover (short) */
+function mkTrade(kind, code, q) {
+  const P = mkPos(), x = MK.s[code], S = MK_BY.get(code), p = x.p; q = Math.floor(q); if (!(q > 0)) return { err: tr('請輸入股數', 'Enter a quantity') };
+  const v = p * q, fee = mkFee(v);
+  if (kind === 'buy') {
+    const cost = Math.ceil(v) + fee; if (cost > AV.coins) return { err: tr(`葉子幣不夠，需要 ${cost} 枚`, `Need ${cost}`) };
+    AV.coins -= cost; const L = P.pos[code] || { q: 0, cost: 0 }; L.cost += cost; L.q += q; P.pos[code] = L;
+    P.log.unshift({ t: Date.now(), k: 'buy', c: code, q, p, fee, amt: -cost });
+  } else if (kind === 'sell') {
+    const L = P.pos[code]; if (!L || L.q < q) return { err: tr('持股不夠，不能賣這麼多', 'Not enough shares') };
+    const tax = mkTax(v), get = Math.floor(v) - fee - tax, base = L.cost * q / L.q, pl = get - base;
+    AV.coins += get; L.cost -= base; L.q -= q; if (!L.q) delete P.pos[code]; P.real += pl;
+    P.log.unshift({ t: Date.now(), k: 'sell', c: code, q, p, fee, tax, amt: get, pl: Math.round(pl) });
+  } else if (kind === 'short') {
+    if (levelInfo().lv < MK_SHORT_LV) return { err: tr(`放空要 Lv.${MK_SHORT_LV} 才開放`, `Short selling unlocks at Lv.${MK_SHORT_LV}`) };
+    if (code === '1101') return { err: tr('葉子銀行不能放空（模擬平盤以下不能放空的限制）', 'Not allowed for this stock') };
+    const margin = Math.ceil(v * MK_MARGIN), need = margin + fee + mkTax(v); if (need > AV.coins) return { err: tr(`保證金不夠，需要 ${need} 枚`, `Need ${need}`) };
+    AV.coins -= need; const H = P.sh[code] || { q: 0, sold: 0, margin: 0 }; H.q += q; H.sold += v; H.margin += margin; P.sh[code] = H;
+    P.log.unshift({ t: Date.now(), k: 'short', c: code, q, p, fee, tax: mkTax(v), amt: -need });
+  } else if (kind === 'cover') {
+    const H = P.sh[code]; if (!H || H.q < q) return { err: tr('沒有這麼多放空的股數', 'Not enough short shares') };
+    const part = q / H.q, sold = H.sold * part, margin = H.margin * part, back = Math.floor(margin + sold - v) - fee, pl = sold - v - fee;
+    AV.coins += Math.max(0, back); H.q -= q; H.sold -= sold; H.margin -= margin; if (!H.q) delete P.sh[code]; P.real += pl;
+    P.log.unshift({ t: Date.now(), k: 'cover', c: code, q, p, fee, amt: Math.max(0, back), pl: Math.round(pl) });
+  }
+  P.log = P.log.slice(0, 80); saveP(); updateMeBar();
+  if (!P.first) { P.first = 1; saveP(); setTimeout(() => toast(tr('📈 完成第一筆交易！記得：有賺有賠，不要一次全部投進去喔', 'First trade done!')), 500); }
+  return { ok: true };
+}
+/* short positions: 維持率 = (賣出所得 + 保證金) ÷ 現在市值. Below 130% a warning, below 120% the position is closed automatically */
+const shortRatio = (H, p) => (H.sold + H.margin) / (p * H.q);
+function mkCheckShorts() {
+  if (!ME || !AV.mk) return; const P = AV.mk;
+  Object.entries(P.sh).forEach(([c, H]) => { const r = shortRatio(H, MK.s[c].p), S = MK_BY.get(c);
+    if (r < MK_FORCE) { mkTrade('cover', c, H.q); toast(tr(`⚠️ ${S.n} 漲太多，放空的部位被「強制回補」了`, 'Short position force-closed')); }
+    else if (r < MK_CALL && !H.warned) { H.warned = 1; saveP(); toast(tr(`⚠️ ${S.n} 一直漲，放空快撐不住了（維持率 ${Math.round(r * 100)}%）`, 'Margin call')); }
+    else if (r >= MK_CALL && H.warned) { H.warned = 0; saveP(); } });
+}
+function mkSummary() {
+  const P = mkPos(); let mv = 0, cost = 0, sh = 0;
+  Object.entries(P.pos).forEach(([c, L]) => { mv += MK.s[c].p * L.q; cost += L.cost; });
+  Object.entries(P.sh).forEach(([c, H]) => { sh += H.margin + H.sold - MK.s[c].p * H.q; });
+  const shCost = Object.values(P.sh).reduce((a, H) => a + H.margin, 0);
+  return { cash: AV.coins, mv, sh, total: AV.coins + mv + sh, unreal: mv - cost + (sh - shCost), real: P.real };
+}
+
+/* ---------- UI ---------- */
+let MKUI = null, MKSEL = '2301';
+const upC = d => d > 0 ? 'mk-up' : d < 0 ? 'mk-dn' : '';
+const pct = (a, b) => b ? (a - b) / b * 100 : 0;
+const fmtP = p => p.toFixed(p < 10 ? 2 : p < 100 ? 2 : 1);
+const sgn = v => (v > 0 ? '▲' : v < 0 ? '▼' : '') + Math.abs(v).toFixed(2);
+function openMarket(tab = 'quote') {
+  if (!ME) { toast(tr('先建立角色才能進市場喔', 'Create a character first')); return; }
+  mkPos(); mkDividends();
+  const body = openPlay('mkt', tr('學習島投資市場', 'Island Exchange'), tr('用葉子幣練習投資', 'Practice investing with leaves'), { wide: true, onClose: () => { MKUI = null; } });
+  const S = { tab, q: 1 };
+  body.innerHTML = `<div class="mk"><div class="mk-sum"></div>
+    <div class="mk-tabs">${[['quote', '📈 行情'], ['mine', '💼 我的持股'], ['log', '🧾 交易紀錄'], ['news', '📰 新聞'], ['learn', '📘 怎麼玩']].map(([k, n]) => `<button class="btn" data-mkt="${k}" aria-pressed="${k === tab}">${n}</button>`).join('')}</div>
+    <div class="mk-pane"></div></div>`;
+  const pane = body.querySelector('.mk-pane'), sum = body.querySelector('.mk-sum');
+  const drawSum = () => { const m = mkSummary(); sum.innerHTML = `<div><small>${tr('現金', 'Cash')}</small><b>${ICON3.leaf}${AV.coins}</b></div><div><small>${tr('股票市值', 'Stocks')}</small><b>${Math.round(m.mv)}</b></div><div><small>${tr('總資產', 'Total')}</small><b>${Math.round(m.total)}</b></div><div><small>${tr('未實現損益', 'Unrealized')}</small><b class="${upC(m.unreal)}">${m.unreal >= 0 ? '+' : ''}${Math.round(m.unreal)}</b></div><div><small>${tr('已實現損益', 'Realized')}</small><b class="${upC(m.real)}">${m.real >= 0 ? '+' : ''}${Math.round(m.real)}</b></div>`; };
+  const draw = () => { drawSum(); ({ quote: mkQuote, mine: mkMine, log: mkLog, news: mkNewsTab, learn: mkLearnTab })[S.tab](pane, S, draw); };
+  body.querySelector('.mk-tabs').addEventListener('click', e => { const b = e.target.closest('[data-mkt]'); if (!b) return; S.tab = b.dataset.mkt; body.querySelectorAll('[data-mkt]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); draw(); });
+  MKUI = { refresh: () => { drawSum(); if (S.tab === 'quote' && pane.querySelector('.mk-list')) mkQuoteRefresh(pane, S); else if (S.tab === 'mine') mkMine(pane, S, draw); }, flash: c => { const r = pane.querySelector(`[data-mkc="${c}"]`); if (r) { r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash'); } } };
+  draw();
+}
+function spark(ticks, w = 80, h = 24) {
+  const t = ticks.slice(-60), lo = Math.min(...t), hi = Math.max(...t), r = hi - lo || 1;
+  return `<svg class="mk-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${t.map((v, i) => `${(i / Math.max(1, t.length - 1) * w).toFixed(1)},${(h - (v - lo) / r * (h - 2) - 1).toFixed(1)}`).join(' ')}" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+}
+function mkQuote(pane, S, redraw) {
+  pane.innerHTML = `<div class="mk-split"><div class="mk-list" role="list">${MK_ALL.map(s => `<button class="mk-row" data-mkc="${s.c}" role="listitem"></button>`).join('')}</div><div class="mk-detail"></div></div>`;
+  pane.querySelector('.mk-list').addEventListener('click', e => { const b = e.target.closest('[data-mkc]'); if (!b) return; MKSEL = b.dataset.mkc; mkQuoteRefresh(pane, S, true); if (innerWidth <= 760) pane.querySelector('.mk-detail').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  mkQuoteRefresh(pane, S, true, redraw);
+}
+function mkQuoteRefresh(pane, S, full, redraw) {
+  pane.querySelectorAll('[data-mkc]').forEach(b => { const s = MK_BY.get(b.dataset.mkc), x = MK.s[s.c], d = x.p - x.prev, lim = x.p >= mkRound(x.prev * 1.1) ? 'lim-up' : x.p <= mkRound(x.prev * .9) ? 'lim-dn' : '';
+    b.className = `mk-row ${s.c === MKSEL ? 'on' : ''} ${b.classList.contains('flash') ? 'flash' : ''}`;
+    b.innerHTML = `<span class="mk-nm"><i>${s.ic}</i><b>${esc(s.n)}</b><small>${s.c} · ${esc(s.tag)}</small></span><span class="mk-sp ${upC(d)}">${spark(x.ticks)}</span><span class="mk-px ${upC(d)} ${lim}"><b>${fmtP(x.p)}</b><small>${sgn(d)}（${pct(x.p, x.prev).toFixed(2)}%）</small></span>`; });
+  const det = pane.querySelector('.mk-detail'); if (!det) return;
+  const s = MK_BY.get(MKSEL), x = MK.s[s.c], P = mkPos(), L = P.pos[s.c], H = P.sh[s.c], d = x.p - x.prev;
+  if (full || !det.querySelector('.mk-dhead')) {
+    det.innerHTML = `<div class="mk-dhead"></div><canvas class="mk-k" width="560" height="220"></canvas><div class="mk-kl"><span>${tr('近 30 天 K 線（紅漲綠跌）', '30-day candles (red up, green down)')}</span><span class="mk-ohlc"></span></div>
+      <div class="mk-trade"><div class="mk-qty"><button class="btn" data-dq="-10">-10</button><button class="btn" data-dq="-1">-1</button><input id="mkQ" inputmode="numeric" value="${S.q}"><button class="btn" data-dq="1">+1</button><button class="btn" data-dq="10">+10</button><button class="btn ghost" data-dq="max">${tr('最多', 'Max')}</button></div>
+        <p class="mk-est"></p>
+        <div class="mk-btns"><button class="btn mk-buy" data-tk="buy">${tr('買進（做多）', 'Buy')}</button><button class="btn mk-sell" data-tk="sell">${tr('賣出', 'Sell')}</button><button class="btn mk-short" data-tk="short">${tr('融券賣出（放空）', 'Short')}</button><button class="btn mk-cover" data-tk="cover">${tr('買回（回補）', 'Cover')}</button></div>
+        <p class="mk-msg" aria-live="polite"></p></div><p class="hint mk-desc"></p>`;
+    const qi = det.querySelector('#mkQ'), msg = det.querySelector('.mk-msg');
+    qi.addEventListener('input', () => { S.q = Math.max(0, parseInt(qi.value) || 0); mkEst(det, S); });
+    det.querySelectorAll('[data-dq]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.dq, xx = MK.s[MKSEL]; S.q = v === 'max' ? Math.max(1, Math.floor((AV.coins - 1) / (xx.p * (1 + MK_FEE)))) : Math.max(1, S.q + +v); qi.value = S.q; mkEst(det, S); }));
+    det.querySelectorAll('[data-tk]').forEach(b => b.addEventListener('click', () => {
+      const k = b.dataset.tk, r = mkTrade(k, MKSEL, S.q), nm = MK_BY.get(MKSEL).n;
+      if (r.err) { msg.className = 'mk-msg err'; msg.textContent = r.err; return; }
+      msg.className = 'mk-msg ok'; msg.textContent = { buy: tr(`買進 ${nm} ${S.q} 股`, 'Bought'), sell: tr(`賣出 ${nm} ${S.q} 股`, 'Sold'), short: tr(`放空 ${nm} ${S.q} 股，等它跌再買回來`, 'Shorted'), cover: tr(`買回 ${nm} ${S.q} 股，放空結束`, 'Covered') }[k];
+      if (MKUI) MKUI.refresh(); mkQuoteRefresh(pane, S, false);
+    }));
+  }
+  det.querySelector('.mk-dhead').innerHTML = `<b>${s.ic} ${esc(s.n)} <small>${s.c}</small></b><span class="mk-big ${upC(d)}">${fmtP(x.p)}<small>${sgn(d)}（${pct(x.p, x.prev).toFixed(2)}%）</small></span>
+    <span class="mk-hold">${L ? tr(`持有 ${L.q} 股，平均成本 ${(L.cost / L.q).toFixed(2)}`, `Hold ${L.q}`) : ''}${H ? tr(`　放空 ${H.q} 股，維持率 ${Math.round(shortRatio(H, x.p) * 100)}%`, `Short ${H.q}`) : ''}</span>`;
+  det.querySelector('.mk-ohlc').textContent = tr(`開 ${fmtP(x.o)}　高 ${fmtP(x.h)}　低 ${fmtP(x.l)}　漲停 ${fmtP(mkRound(x.prev * 1.1))}　跌停 ${fmtP(mkRound(x.prev * .9))}`, '');
+  det.querySelector('.mk-desc').textContent = s.d || tr(`和「${s.tag}」的島有關：在這些島過關，有時會帶來好消息。`, '');
+  mkK(det.querySelector('.mk-k'), x); mkEst(det, S);
+}
+function mkEst(det, S) {
+  const x = MK.s[MKSEL], v = x.p * S.q, fee = mkFee(v), tax = mkTax(v), lv = levelInfo().lv;
+  det.querySelector('.mk-est').innerHTML = tr(`買進約要 <b>${Math.ceil(v) + fee}</b> 枚（含手續費 ${fee}）　賣出約拿回 <b>${Math.floor(v) - fee - tax}</b> 枚（扣手續費 ${fee}、交易稅 ${tax}）　放空要押保證金 <b>${Math.ceil(v * MK_MARGIN)}</b> 枚`, '');
+  const sb = det.querySelector('.mk-short'); if (sb) { sb.disabled = lv < MK_SHORT_LV || MKSEL === '1101'; sb.title = lv < MK_SHORT_LV ? tr(`Lv.${MK_SHORT_LV} 開放放空`, '') : ''; }
+}
+/* candlestick chart: red = closed higher than it opened, green = lower (Taiwan convention) */
+function mkK(cv, x) {
+  const ctx = cv.getContext('2d'), W = cv.width, Hh = cv.height, bars = x.hist.slice(-29).concat([{ d: '今天', o: x.o, h: x.h, l: x.l, c: x.p }]);
+  const lo = Math.min(...bars.map(b => b.l)), hi = Math.max(...bars.map(b => b.h)), r = hi - lo || 1, pad = 14, bw = (W - pad * 2) / bars.length, y = v => Hh - pad - (v - lo) / r * (Hh - pad * 2);
+  ctx.clearRect(0, 0, W, Hh); ctx.strokeStyle = '#efe5d6'; ctx.lineWidth = 1; for (let k = 0; k <= 4; k++) { const yy = pad + k * (Hh - pad * 2) / 4; ctx.beginPath(); ctx.moveTo(pad, yy); ctx.lineTo(W - pad, yy); ctx.stroke(); }
+  ctx.fillStyle = '#9a8a7a'; ctx.font = '11px sans-serif'; ctx.fillText(fmtP(hi), 2, pad - 3); ctx.fillText(fmtP(lo), 2, Hh - 2);
+  bars.forEach((b, i) => { const up = b.c >= b.o, col = up ? '#e0303a' : '#1f9d55', cx = pad + i * bw + bw / 2; ctx.strokeStyle = col; ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(cx, y(b.h)); ctx.lineTo(cx, y(b.l)); ctx.stroke(); const t = y(Math.max(b.o, b.c)), bt = Math.max(1.5, Math.abs(y(b.o) - y(b.c))); ctx.fillRect(cx - bw * .32, t, bw * .64, bt); });
+}
+function mkMine(pane, S, redraw) {
+  const P = mkPos(), longs = Object.entries(P.pos), shorts = Object.entries(P.sh);
+  pane.innerHTML = (longs.length || shorts.length) ? `<table class="mk-tb"><thead><tr><th>${tr('股票', 'Stock')}</th><th>${tr('方向', 'Side')}</th><th>${tr('股數', 'Qty')}</th><th>${tr('成本／價', 'Cost / price')}</th><th>${tr('現價', 'Now')}</th><th>${tr('損益', 'P/L')}</th></tr></thead><tbody>
+    ${longs.map(([c, L]) => { const s = MK_BY.get(c), p = MK.s[c].p, pl = p * L.q - L.cost; return `<tr data-go="${c}"><td>${s.ic} ${esc(s.n)}</td><td><span class="mk-tag up">${tr('做多', 'Long')}</span></td><td>${L.q}</td><td>${(L.cost / L.q).toFixed(2)}</td><td>${fmtP(p)}</td><td class="${upC(pl)}">${pl >= 0 ? '+' : ''}${Math.round(pl)}（${pct(p * L.q, L.cost).toFixed(1)}%）</td></tr>`; }).join('')}
+    ${shorts.map(([c, H]) => { const s = MK_BY.get(c), p = MK.s[c].p, pl = H.sold - p * H.q; return `<tr data-go="${c}"><td>${s.ic} ${esc(s.n)}</td><td><span class="mk-tag dn">${tr('放空', 'Short')}</span></td><td>${H.q}</td><td>${(H.sold / H.q).toFixed(2)}</td><td>${fmtP(p)}</td><td class="${upC(pl)}">${pl >= 0 ? '+' : ''}${Math.round(pl)}<br><small>${tr('維持率', 'Ratio')} ${Math.round(shortRatio(H, p) * 100)}%</small></td></tr>`; }).join('')}
+    </tbody></table><p class="hint">${tr('點一列可以去交易那檔股票。', 'Tap a row to trade it.')}</p>` : `<p class="mk-empty">${tr('還沒有持股。到「行情」挑一家喜歡的公司，先買 1 股試試看吧！', 'No positions yet.')}</p>`;
+  pane.querySelectorAll('[data-go]').forEach(r => r.addEventListener('click', () => { MKSEL = r.dataset.go; S.tab = 'quote'; document.querySelectorAll('[data-mkt]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.mkt === 'quote'))); redraw(); }));
+}
+function mkLog(pane) {
+  const P = mkPos(), K = { buy: ['買進', 'up'], sell: ['賣出', 'dn'], short: ['放空', 'dn'], cover: ['回補', 'up'], div: ['股利', 'up'] };
+  pane.innerHTML = P.log.length ? `<table class="mk-tb"><thead><tr><th>${tr('時間', 'Time')}</th><th>${tr('動作', 'Action')}</th><th>${tr('股票', 'Stock')}</th><th>${tr('股數', 'Qty')}</th><th>${tr('價格', 'Price')}</th><th>${tr('葉子幣', 'Leaves')}</th><th>${tr('損益', 'P/L')}</th></tr></thead><tbody>${P.log.map(l => { const d = new Date(l.t); return `<tr><td>${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}</td><td><span class="mk-tag ${K[l.k][1]}">${K[l.k][0]}</span></td><td>${esc(MK_BY.get(l.c).n)}</td><td>${l.q}</td><td>${l.p ? fmtP(l.p) : '—'}</td><td class="${upC(l.amt)}">${l.amt > 0 ? '+' : ''}${l.amt}</td><td class="${upC(l.pl || 0)}">${l.pl !== undefined ? (l.pl >= 0 ? '+' : '') + l.pl : ''}</td></tr>`; }).join('')}</tbody></table>` : `<p class="mk-empty">${tr('還沒有交易紀錄。', 'No trades yet.')}</p>`;
+}
+function mkNewsTab(pane) {
+  const P = mkPos(); P.nq = P.nq || {};
+  const quiz = n => { if (!n.iid || !LD.quiz[n.iid] || !LD.quiz[n.iid][n.qi]) return ''; const q = LD.quiz[n.iid][n.qi], isl = ISL_BY.get(n.iid), done = P.nq[n.id];
+    return `<div class="mk-nq" data-nid="${n.id}"><small>📘 ${tr('課程連結', 'Lesson')}：${esc(codeOf(isl))} ${esc(T(isl.label))}</small><p>${esc(q.q)}</p>
+      <div class="mk-nqo">${n.ord.map(k => `<button class="btn ${done ? (k === 0 ? 'ok' : done === 'x' + k ? 'no' : '') : ''}" data-nk="${k}" ${done ? 'disabled' : ''}>${esc(q.o[k])}</button>`).join('')}</div>
+      ${done ? `<p class="mk-nw">${done === 'ok' ? tr('答對了！+2 葉子幣　', 'Correct! +2　') : ''}${esc(q.w || '')}</p>` : `<p class="mk-nw hint">${tr('答對可拿 2 枚葉子幣（每則新聞一次）', 'Answer right for +2 leaves')}</p>`}</div>`; };
+  pane.innerHTML = MK.news.length ? `<ul class="mk-news">${MK.news.map(n => { const s = MK_BY.get(n.c), d = new Date(n.t); return `<li class="${n.g ? 'mk-up' : 'mk-dn'}"><span>${n.g ? '📈' : '📉'}</span><div><b>${s.ic} ${esc(s.n)}</b>　${esc(n.txt)}<small>${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}</small>${quiz(n)}</div></li>`; }).join('')}</ul>
+    <p class="hint">${tr('新聞會讓股價跳一下，每則公司新聞都連到一課，順便答一題複習。想一想：這個消息對公司是好還是壞？', 'News moves prices; each links to a lesson.')}</p>` : `<p class="mk-empty">${tr('目前還沒有新聞，等一下再來看看。', 'No news yet.')}</p>`;
+  pane.querySelectorAll('.mk-nq').forEach(box => box.addEventListener('click', e => {
+    const b = e.target.closest('[data-nk]'); if (!b) return; const id = box.dataset.nid, n = MK.news.find(x => x.id === id); if (!n || P.nq[id]) return;
+    const k = +b.dataset.nk, ok = k === 0; P.nq[id] = ok ? 'ok' : 'x' + k; const keys = Object.keys(P.nq); if (keys.length > 60) delete P.nq[keys[0]];
+    if (ok) { AV.coins += 2; updateMeBar(); } try { noteAnswer(`${n.iid}#${n.qi}`, ok, false); } catch (er) { }
+    saveP(); mkNewsTab(pane);
+  }));
+}
+function mkLearnTab(pane) {
+  pane.innerHTML = `<div class="mk-learn">
+    <h4>📈 做多：先買後賣</h4><p>覺得公司會越來越好，就先「買進」股票。等股價漲了再「賣出」，中間的差價就是賺到的。股價跌了才賣，就會賠錢。</p>
+    <h4>📉 放空：先賣後買（Lv.${MK_SHORT_LV} 開放）</h4><p>覺得股價會跌，可以先「借」股票來賣（融券賣出），等跌了再「買回」還回去，賺中間的差價。但如果股價一直漲，就會越賠越多，所以要先押 <b>9 成的保證金</b>。</p>
+    <p>「維持率」低於 <b>130%</b> 會提醒你；低於 <b>120%</b> 會被「強制回補」，自動幫你買回來結束。</p>
+    <h4>🧾 交易成本</h4><p>每次買賣都要付 <b>手續費 0.1425%</b>（最少 1 枚）。賣出（含放空賣出）還要付 <b>交易稅 0.3%</b>。所以一直買進賣出，錢會被手續費吃掉。</p>
+    <h4>🔴🟢 看懂顏色</h4><p>台灣的習慣是 <b class="mk-up">紅色代表漲</b>、<b class="mk-dn">綠色代表跌</b>。K 線一根代表一天：紅色是收盤比開盤高，綠色是收盤比開盤低。上下的細線是那天最高和最低的價錢。</p>
+    <h4>⛔ 漲跌停</h4><p>每天最多只能比昨天收盤漲或跌 <b>10%</b>，到了就是「漲停」或「跌停」。</p>
+    <h4>🏦 存股和分散</h4><p>葉子銀行每 7 天發一次股利，適合放著慢慢領。群島50 一次買進所有公司，漲跌比較平均。不要把葉子幣全部押在同一家公司！</p>
+    <h4>📚 學習也會影響市場</h4><p>每家公司都對應幾座島的課程。公司新聞會連到其中一課，附一題複習題，答對可以拿 2 枚葉子幣。你在某座島闖關過關，有時候也會帶來那家公司的好消息。</p>
+    <p class="hint">這是練習用的模擬市場：公司、新聞和股價都是虛構的，股價用隨機變化加上新聞事件產生。只有開著網站的時候才會跳動，關掉網站的那幾天會自動補算。葉子幣只能在遊戲裡使用。</p></div>`;
+}
+/* hooks: learning news, market clock, toolbar button */
+{ const _ae = advEvent; advEvent = function (type, d = {}) { const r = _ae.apply(this, arguments); try { if (type === 'quiz' && d.stars > 0) mkLearn(d.isl); } catch (e) { } return r; }; }
+try { mkLoad(); } catch (e) { console.warn(e); }
+setInterval(() => { try { if (!document.hidden) mkTick(); } catch (e) { console.warn(e); } }, MK_TICK_MS);
+{
+  const b = document.createElement('button'); b.className = 'btn'; b.id = 'btnMkt'; b.type = 'button';
+  b.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 16l4-5 4 3 6-8"/><path d="M15 6h4v4"/></svg><span>${tr('投資市場', 'Market')}</span>`;
+  b.title = tr('學習島投資市場', 'Island Exchange');
+  $('#tools').insertBefore(b, $('#btnMount') || $('#btnFP') || $('#btnMusic')); b.addEventListener('click', () => openMarket());
+}
+window.__mkt = { MK: () => MK, mkTick, mkTrade, openMarket, mkNews, mkSummary };
+/* MKT-JS-END */
 /* =====================================================================
    17. start
    ===================================================================== */
