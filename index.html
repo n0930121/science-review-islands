@@ -24293,12 +24293,12 @@ function mkTrade(kind, code, q) {
     if (levelInfo().lv < MK_SHORT_LV) return { err: tr(`放空要 Lv.${MK_SHORT_LV} 才開放`, `Short selling unlocks at Lv.${MK_SHORT_LV}`) };
     if (code === '1101') return { err: tr('葉子銀行不能放空（模擬平盤以下不能放空的限制）', 'Not allowed for this stock') };
     const margin = Math.ceil(v * MK_MARGIN), need = margin + fee + mkTax(v); if (need > AV.coins) return { err: tr(`保證金不夠，需要 ${need} 枚`, `Need ${need}`) };
-    AV.coins -= need; const H = P.sh[code] || { q: 0, sold: 0, margin: 0 }; H.q += q; H.sold += v; H.margin += margin; P.sh[code] = H;
+    AV.coins -= need; const H = P.sh[code] || { q: 0, sold: 0, margin: 0, cost: 0 }; H.q += q; H.sold += v; H.margin += margin; H.cost = (H.cost || 0) + fee + mkTax(v); P.sh[code] = H;
     P.log.unshift({ t: Date.now(), k: 'short', c: code, q, p, fee, tax: mkTax(v), amt: -need });
   } else if (kind === 'cover') {
     const H = P.sh[code]; if (!H || H.q < q) return { err: tr('沒有這麼多放空的股數', 'Not enough short shares') };
-    const part = q / H.q, sold = H.sold * part, margin = H.margin * part, back = Math.floor(margin + sold - v) - fee, pl = sold - v - fee;
-    AV.coins += Math.max(0, back); H.q -= q; H.sold -= sold; H.margin -= margin; if (!H.q) delete P.sh[code]; P.real += pl;
+    const part = q / H.q, sold = H.sold * part, margin = H.margin * part, oc = (H.cost || 0) * part, back = Math.floor(margin + sold - v) - fee, pl = Math.max(-(margin + oc), sold - v - fee - oc);
+    AV.coins += Math.max(0, back); H.q -= q; H.sold -= sold; H.margin -= margin; H.cost = (H.cost || 0) - oc; if (!H.q) delete P.sh[code]; P.real += pl;
     P.log.unshift({ t: Date.now(), k: 'cover', c: code, q, p, fee, amt: Math.max(0, back), pl: Math.round(pl) });
   }
   P.log = P.log.slice(0, 80); saveP(); updateMeBar();
