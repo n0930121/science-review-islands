@@ -16340,6 +16340,23 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 .mk-st{border-radius:12px;padding:8px 12px;margin-bottom:8px;font-weight:700;font-size:13.5px}.mk-st.on{background:#e6f6ec;color:#1f7a43}.mk-st.off{background:#eef1f4;color:#4a5568}
 .mk-hrs{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}.mk-hrs input[type=time]{font:600 14px/1 var(--mono);padding:6px 8px;border-radius:8px;border:1px solid #e6dccd}.mk-hrs .hint{flex-basis:100%;margin:0}
 /* MKT-CSS-END */
+/* CLOUD-CSS-BEGIN */
+#cloudGate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(120% 90% at 50% 10%,#cfeefa,#8fd0ea 55%,#4e9fc4);font-family:var(--font,system-ui,sans-serif)}
+#cloudGate .cg-card{width:min(380px,100%);background:#fffaf2;border-radius:24px;padding:26px 24px;box-shadow:0 20px 60px #0b3a5240;text-align:center;color:#2b2b33}
+#cloudGate .cg-logo{font-size:46px}#cloudGate h1{margin:4px 0 6px;font-size:24px}#cloudGate .cg-sub{color:#6b5a4a;margin:0 0 14px;line-height:1.6}
+#cloudGate form{display:flex;flex-direction:column;gap:10px;text-align:left}#cloudGate label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:14px}
+#cloudGate input{font:600 17px/1.2 inherit;padding:12px 14px;border-radius:14px;border:2px solid #e6dccd;background:#fff}#cloudGate input:focus{outline:none;border-color:#3e8ed0}
+#cloudGate .cg-btn{margin-top:6px;font:800 17px/1 inherit;padding:14px;border:0;border-radius:14px;background:#e0703a;color:#fff;cursor:pointer}
+#cloudGate .cg-err{color:#c0392b;font-weight:700;min-height:20px;margin:4px 0 0}#cloudGate .cg-hint{font-size:12.5px;color:#8a7a6a;margin:12px 0 0}
+#cloudGate .cg-list{display:flex;flex-direction:column;gap:8px}#cloudGate .cg-pick{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 14px;border-radius:14px;border:2px solid #e6dccd;background:#fff;cursor:pointer;font:inherit;text-align:left}
+#cloudGate .cg-pick:hover{border-color:#3e8ed0}#cloudGate .cg-pick b{font-size:16px}#cloudGate .cg-pick small{color:#7a6a5a}#cloudGate .cg-pick.new{border-style:dashed}
+#worldChip{position:fixed;left:16px;bottom:calc(150px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:7px 12px;background:var(--paper,#fffaf2);box-shadow:0 4px 14px #4a2a1420;font:800 13px/1 var(--font);color:var(--ink,#2b2b33);cursor:pointer}
+#worldChip i{width:9px;height:9px;border-radius:50%;background:#2fbf5f;box-shadow:0 0 0 3px #2fbf5f33}
+.wl{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-direction:column;gap:6px}.wl li{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border-radius:14px;padding:8px 12px;box-shadow:0 1px 6px #4a2a1410}
+.wl li.me{background:#fff6dc}.wl-n{display:flex;flex-direction:column}.wl-n small{color:#8a7a6a;font-size:12px}.wl-emo{display:flex;flex-wrap:wrap;gap:6px}.wl-emo .btn{font-size:20px;min-width:48px}
+.me-tag.world b{color:#1f6fb0}
+@media (max-width:800px){#worldChip{bottom:auto;top:calc(70px + env(safe-area-inset-top,0px));left:auto;right:12px}}
+/* CLOUD-CSS-END */
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
 
@@ -16660,10 +16677,131 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
+<!-- CLOUD-BOOT-BEGIN -->
+<script type="module">
+/* =====================================================================
+   Cloud boot: login with a parent-made account, cloud save, moving an old device save into the account.
+   Runs before the game module; the game waits on window.CLOUD_BOOT.
+   Turn on for testing with ?cloud=1 (remembered on this device), turn off with ?cloud=0.
+   ===================================================================== */
+const CLOUD_DEFAULT = false;
+const CL_CFG = {
+  apiKey: 'AIzaSyBJxHPheT9tieukCk2aXz84DxoqY_JRg3A',
+  authDomain: 'science-review-islands.firebaseapp.com',
+  databaseURL: 'https://science-review-islands-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'science-review-islands',
+  storageBucket: 'science-review-islands.firebasestorage.app',
+  messagingSenderId: '371060961678',
+  appId: '1:371060961678:web:22c8f49e3e2c86a49474df'
+};
+const CL_VER = '10.12.2', CL_DOMAIN = 'science-review-islands.firebaseapp.com';
+const LS = { get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } }, del: k => { try { localStorage.removeItem(k); } catch (e) { } } };
+const qs = new URLSearchParams(location.search);
+if (qs.get('cloud') === '1') LS.set('scienceIslands.cloud', '1');
+if (qs.get('cloud') === '0') LS.del('scienceIslands.cloud');
+const CLOUD_ON = CLOUD_DEFAULT || LS.get('scienceIslands.cloud') === '1';
+const PROF_K = 'scienceIslands.profiles.v1', PROG_K = id => 'scienceIslands.progress.v1.' + id, BAK_K = 'scienceIslands.profiles.localbak.v1';
+const esc2 = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+function gate(html) {
+  let g = document.getElementById('cloudGate');
+  if (!g) { g = document.createElement('div'); g.id = 'cloudGate'; document.body.appendChild(g); }
+  g.innerHTML = `<div class="cg-card"><div class="cg-logo">🏝️</div><h1>小學知識群島</h1>${html}</div>`; return g;
+}
+const starsOf = lp => Object.values((lp && lp.q) || {}).reduce((a, v) => a + (+v || 0), 0);
+function localProfiles() {
+  /* the device's own characters, from the backup made at first login (or the live list if no backup yet) */
+  let P = null; try { P = JSON.parse(LS.get(BAK_K) || LS.get(PROF_K) || 'null'); } catch (e) { }
+  return ((P && P.list) || []).filter(p => !String(p.id).startsWith('c_')).map(p => { let lp = null; try { lp = JSON.parse(LS.get(PROG_K(p.id)) || 'null'); } catch (e) { } return { p, lp }; }).filter(x => x.lp);
+}
+function useSave(save) {
+  /* keep the device's own characters safe once, then make the cloud character the only active one */
+  if (!LS.get(BAK_K)) LS.set(BAK_K, LS.get(PROF_K) || JSON.stringify({ active: null, list: [] }));
+  if (save && save.prof) { LS.set(PROG_K(save.prof.id), JSON.stringify(save.lp || {})); LS.set(PROF_K, JSON.stringify({ active: save.prof.id, list: [save.prof] })); }
+  else LS.set(PROF_K, JSON.stringify({ active: null, list: [] }));
+}
+function readActive() {
+  let P = null; try { P = JSON.parse(LS.get(PROF_K) || 'null'); } catch (e) { }
+  const prof = P && P.list && P.list.find(p => p.id === P.active); if (!prof) return null;
+  const raw = LS.get(PROG_K(prof.id)) || '{}'; return { prof, raw };
+}
+
+async function boot() {
+  document.documentElement.classList.add('cloud');
+  gate(`<p class="cg-sub">連線中…</p>`);
+  let A, U, D;
+  try { [A, U, D] = await Promise.all(['app', 'auth', 'database'].map(m => import(`https://www.gstatic.com/firebasejs/${CL_VER}/firebase-${m}.js`))); }
+  catch (e) { gate(`<p class="cg-err">連不上網路，請確認網路後重新整理。</p><button class="cg-btn" onclick="location.reload()">重新整理</button>`); await new Promise(() => { }); }
+  const app = A.initializeApp(CL_CFG), auth = U.initializeAuth(app, { persistence: U.browserLocalPersistence }), db = D.getDatabase(app);
+  let user = await new Promise(res => { const off = U.onAuthStateChanged(auth, u => { off(); res(u); }); });
+  if (!user || user.isAnonymous) user = await loginForm(U, auth);
+  const uid = user.uid, uref = p => D.ref(db, `users/${uid}${p ? '/' + p : ''}`);
+  gate(`<p class="cg-sub">讀取雲端存檔…</p>`);
+  let save = null, allowed = true;
+  try { const s = await D.get(uref('save')); save = s.exists() ? s.val() : null; }
+  catch (e) { allowed = false; }
+  if (!allowed) { gate(`<p class="cg-err">這個帳號還沒有開通，請爸爸媽媽到 Firebase 後台把它加進允許名單。</p><button class="cg-btn" id="cgOut">換一個帳號</button>`); document.getElementById('cgOut').onclick = async () => { await U.signOut(auth); location.reload(); }; await new Promise(() => { }); }
+  if (!save) { const a = readActive(); if (a && a.prof.id === 'c_' + uid) { try { save = { prof: a.prof, lp: JSON.parse(a.raw) }; } catch (e) { } } }
+  if (!save) {
+    const pick = await chooseMove(localProfiles());
+    if (pick) { save = { prof: { ...pick.p, id: 'c_' + uid }, lp: pick.lp, from: pick.p.id }; await D.set(uref('save'), { ...save, t: D.serverTimestamp(), v: 1 }); }
+  }
+  useSave(save);
+  const fresh = !!save;
+  /* periodic upload of the active character (and a small summary for the parent's sheet) */
+  let last = save ? JSON.stringify(save.lp || {}) : '', busy = false;
+  const push = async (why) => {
+    const a = readActive(); if (!a || busy) return; a.prof = { ...a.prof, id: 'c_' + uid };
+    if (a.raw === last && why !== 'force') return;
+    busy = true;
+    try { const lp = JSON.parse(a.raw); const adv = lp.adv || {};
+      await D.update(uref(''), { save: { prof: a.prof, lp, t: D.serverTimestamp(), v: 1 }, sum: { name: a.prof.name, grade: a.prof.grade || '', stars: starsOf(lp), coins: adv.coins || 0, xp: adv.xp || 0, t: D.serverTimestamp() } });
+      last = a.raw; window.dispatchEvent(new CustomEvent('cloud-saved')); }
+    catch (e) { console.warn('cloud save failed', e); }
+    busy = false;
+  };
+  setInterval(() => push(), 8000); if (fresh) setTimeout(() => push('force'), 1500);
+  addEventListener('pagehide', () => push());
+  document.addEventListener('visibilitychange', () => { if (document.hidden) push(); });
+  window.CLOUD = { A, U, D, app, auth, db, uid, email: user.email, user: (user.email || '').split('@')[0], push,
+    async logout() { await push('force'); await U.signOut(auth); const bak = LS.get(BAK_K); if (bak) { LS.set(PROF_K, bak); LS.del(BAK_K); } location.reload(); } };
+  document.getElementById('cloudGate').remove();
+}
+function loginForm(U, auth) {
+  return new Promise(res => {
+    const g = gate(`<p class="cg-sub">請輸入爸爸媽媽給你的帳號和密碼</p>
+      <form id="cgForm" autocomplete="on"><label>帳號<input id="cgUser" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" required></label>
+      <label>密碼<input id="cgPw" name="password" type="password" autocomplete="current-password" required></label>
+      <button class="cg-btn" type="submit">登入</button><p class="cg-err" id="cgErr" aria-live="polite"></p></form>
+      <p class="cg-hint">帳號由家長建立。忘記密碼請找爸爸媽媽。</p>`);
+    const f = g.querySelector('#cgForm'), err = g.querySelector('#cgErr');
+    f.addEventListener('submit', async e => {
+      e.preventDefault(); err.textContent = '登入中…';
+      let name = g.querySelector('#cgUser').value.trim().toLowerCase(); const pw = g.querySelector('#cgPw').value;
+      const email = name.includes('@') ? name : `${name}@${CL_DOMAIN}`;
+      try { const c = await U.signInWithEmailAndPassword(auth, email, pw); res(c.user); }
+      catch (x) { const c = x && x.code || ''; err.textContent = /invalid-credential|wrong-password|user-not-found|invalid-email/.test(c) ? '帳號或密碼不對，再試一次' : /too-many-requests/.test(c) ? '試太多次了，請等幾分鐘再試' : /network/.test(c) ? '連不上網路' : '登入失敗（' + c + '）'; }
+    });
+  });
+}
+function chooseMove(list) {
+  return new Promise(res => {
+    if (!list.length) { res(null); return; }
+    const g = gate(`<p class="cg-sub">歡迎！這台裝置上有原本的角色。<br>要把哪一個角色的進度搬進你的帳號？</p>
+      <div class="cg-list">${list.map((x, i) => `<button class="cg-pick" data-i="${i}"><b>${esc2(x.p.name)}</b><small>⭐ ${starsOf(x.lp)} 顆星　🍃 ${(x.lp.adv && x.lp.adv.coins) || 0} 葉子幣</small></button>`).join('')}
+      <button class="cg-pick new" data-i="-1"><b>不搬，開一個新角色</b><small>原本的角色會留在這台裝置</small></button></div>
+      <p class="cg-hint">搬的是複製一份到雲端，這台裝置上原本的進度不會被刪掉。</p>`);
+    g.querySelectorAll('.cg-pick').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.i; res(i >= 0 ? list[i] : null); }));
+  });
+}
+if (CLOUD_ON) window.CLOUD_BOOT = boot().catch(e => { console.error(e); gate(`<p class="cg-err">登入時發生錯誤：${esc2(e && e.message || e)}</p><button class="cg-btn" onclick="location.reload()">重新整理</button>`); return new Promise(() => { }); });
+</script>
+<!-- CLOUD-BOOT-END -->
 <script type="module">
 /* =====================================================================
    小學知識群島 — based on the 政策島 template. Three.js 0.160.0, DATA driven.
    ===================================================================== */
+if (window.CLOUD_BOOT) await window.CLOUD_BOOT;
 const D = window.DATA;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -19662,6 +19800,7 @@ function frame(now) {
   updateZoom(dt);
   if (advTick) advTick(dt, now);
   netTick(dt, now);
+  try { worldTick(dt, now); } catch (e) { }
   try { camKeyTick(dt); } catch (e) {}
   if (!(typeof FP !== 'undefined' && fpTick(dt))) { if (controls.update()) dirty = true; }
   if (!dirty) return;
@@ -21664,8 +21803,8 @@ function openStart(mode) {
       const name = $('#stName').value.trim();
       if (!name) { const e = $('#stErr'); e.hidden = false; e.textContent = tr('幫角色取個名字吧！', 'Give your character a name!'); return; }
       if (edit) { const p = PROFS.list.find(x => x.id === edit.id); Object.assign(p, { name, char: L.char, shirt: L.shirt, hair: L.hair, grade: L.grade }); saveProfs(); location.reload(); return; }
-      const id = 'p' + Date.now().toString(36);
-      if (!PROFS.list.length) { const old = store.get('scienceIslands.progress.v1'); if (old) store.set('scienceIslands.progress.v1.' + id, old); }
+      const id = window.CLOUD ? 'c_' + window.CLOUD.uid : 'p' + Date.now().toString(36);
+      if (!window.CLOUD && !PROFS.list.length) { const old = store.get('scienceIslands.progress.v1'); if (old) store.set('scienceIslands.progress.v1.' + id, old); }
       PROFS.list.push({ id, name, char: L.char, shirt: L.shirt, hair: L.hair, grade: L.grade, created: today() }); PROFS.active = id; saveProfs();
       location.reload();
     });
@@ -21821,6 +21960,7 @@ const FB_VER = '10.12.2', NQ = 7, QSEC = 12;
 let FB = null, NET = null;
 async function fbInit() {
   if (FB) return FB;
+  if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   const base = `https://www.gstatic.com/firebasejs/${FB_VER}/`;
   const [A, U, D] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-database.js')]);
   const app = A.initializeApp(FB_CFG);
@@ -24483,6 +24623,107 @@ setInterval(() => { try { if (!document.hidden) mkTick(); } catch (e) { console.
 }
 window.__mkt = { MK: () => MK, mkTick, mkTrade, openMarket, mkNews, mkSummary, mkOpen, setHours: h => store.set(MKHKEY, JSON.stringify(h)) };
 /* MKT-JS-END */
+/* WORLD-JS-BEGIN */
+/* ---------- 16r. shared world: everyone who is logged in sees each other ---------- */
+const WORLD = { others: new Map(), sentPos: '', sentLook: '', syncT: 0, beatT: 0, off: 0, list: null, chip: null };
+const WEMO = ['👋', '👍', '😄', '🎉', '💪', '❤️'];
+function worldStart() {
+  const C = window.CLOUD, D = C.D; if (!C || !AVA || !ME) return;
+  WORLD.me = D.ref(C.db, 'world/p/' + C.uid);
+  D.onValue(D.ref(C.db, '.info/serverTimeOffset'), s => { WORLD.off = s.val() || 0; });
+  D.onValue(D.ref(C.db, '.info/connected'), s => { if (s.val() === true) { D.onDisconnect(WORLD.me).remove(); worldSend(true); } });
+  D.onValue(D.ref(C.db, 'world/p'), snap => {
+    const v = snap.val() || {}, now = Date.now() + WORLD.off, seen = new Set();
+    Object.entries(v).forEach(([uid, o]) => { if (uid === C.uid || !o || typeof o.x !== 'number' || now - (o.t || 0) > 150000) return; seen.add(uid); worldUpsert(uid, o); });
+    [...WORLD.others.keys()].forEach(uid => { if (!seen.has(uid)) worldDrop(uid); });
+    worldChip();
+  }, () => {});
+  const chip = document.createElement('button'); chip.id = 'worldChip'; chip.type = 'button'; chip.addEventListener('click', worldPanel); document.body.appendChild(chip); WORLD.chip = chip; worldChip();
+}
+function worldPayload() {
+  const look = { char: ME.char, shirt: ME.shirt, hair: ME.hair, skin: ME.skin }, eq = JSON.parse(JSON.stringify({ ...AV.eq, mount: (typeof MOUNT_ON === 'function' && MOUNT_ON()) ? AV.eq.mount : null }));
+  const isl = islAt(AVA.root.position.x, AVA.root.position.z);
+  return { name: ME.name, look, eq, lv: levelInfo().lv, isl: isl ? isl.id : '' };
+}
+function worldSend(force) {
+  const C = window.CLOUD; if (!C || !WORLD.me || !AVA) return;
+  const P = AVA.root.position, pos = [P.x.toFixed(2), P.z.toFixed(2), AVA.yaw.toFixed(1)].join(',');
+  const pl = worldPayload(), lk = JSON.stringify(pl);
+  const up = {};
+  if (force || lk !== WORLD.sentLook) Object.assign(up, pl);
+  if (force || pos !== WORLD.sentPos) Object.assign(up, { x: +P.x.toFixed(2), z: +P.z.toFixed(2), yaw: +AVA.yaw.toFixed(2) });
+  if (!Object.keys(up).length) return;
+  up.t = C.D.serverTimestamp(); WORLD.sentLook = lk; WORLD.sentPos = pos;
+  C.D.update(WORLD.me, up).catch(() => {});
+}
+function worldEmote(e) { const C = window.CLOUD; if (!C || !WORLD.me) return; C.D.update(WORLD.me, { emo: e, emoT: Date.now() + WORLD.off, t: C.D.serverTimestamp() }).catch(() => {}); avSay(e, 2.5); }
+function worldUpsert(uid, o) {
+  let R = WORLD.others.get(uid); const sig = JSON.stringify([o.look, o.eq, o.name]);
+  if (!R || R.sig !== sig) {
+    const keep = R; if (R) worldDrop(uid, true);
+    const root = buildChibi(o.look || {}, o.eq || {}, true); root.scale.setScalar(1.9);
+    root.position.set(keep ? keep.root.position.x : o.x, RING_Y + ((islAt(o.x, o.z) || {}).ly || 0), keep ? keep.root.position.z : o.z); scene.add(root);
+    const tagEl = document.createElement('div'); tagEl.className = 'me-tag opp world'; const tag = new CSS2DObject(tagEl); tag.position.set(0, .53 + (root.userData.mount ? root.userData.mount.userData.mount.seat + (root.userData.mount.userData.mount.fly || 0) : 0), 0); root.add(tag);
+    let pet = null; if (o.eq && o.eq.pet) { pet = buildPet(o.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(root.position); scene.add(pet); }
+    R = { uid, sig, root, tagEl, pet, say: 0, sayText: '', emoT: o.emoT || 0 }; WORLD.others.set(uid, R);
+  }
+  Object.assign(R, { name: o.name || '?', lv: o.lv || 1, tx: o.x, tz: o.z, yaw: o.yaw || 0, isl: o.isl || '' });
+  if (o.emoT && o.emoT !== R.emoT) { R.emoT = o.emoT; if (Date.now() + WORLD.off - o.emoT < 8000) { R.say = 2.5; R.sayText = o.emo; } }
+  worldTag(R);
+}
+function worldTag(R) { R.tagEl.innerHTML = `<b>${esc(R.name)}</b><span>Lv.${R.lv}</span>${R.say > 0 ? `<em>${esc(R.sayText)}</em>` : ''}`; }
+function worldDrop(uid, silent) { const R = WORLD.others.get(uid); if (!R) return; scene.remove(R.root); if (R.pet) scene.remove(R.pet); R.tagEl.remove(); WORLD.others.delete(uid); if (!silent) worldChip(); }
+function worldTick(dt, now) {
+  if (!window.CLOUD) return;
+  if (!WORLD.me) { if (AVA && ME) worldStart(); return; }
+  WORLD.syncT -= dt; if (WORLD.syncT <= 0) { WORLD.syncT = .2; worldSend(); }
+  WORLD.beatT -= dt; if (WORLD.beatT <= 0) { WORLD.beatT = 45; worldSend(true); }
+  const t = now / 1000;
+  WORLD.others.forEach(r => {
+    const hide = !!(NET && NET.remote && NET.remote.id === r.uid); r.root.visible = !hide; if (r.pet) r.pet.visible = !hide; r.tagEl.style.display = hide ? 'none' : '';
+    const P = r.root.position, dx = r.tx - P.x, dz = r.tz - P.z, d = Math.hypot(dx, dz), parts = r.root.userData.parts, M = r.root.userData.mount;
+    let moving = false;
+    if (d > 6) P.set(r.tx, P.y, r.tz); else if (d > .01) { const st = Math.min(d, Math.max(1.6, d * 4) * dt); P.x += dx / d * st; P.z += dz / d * st; moving = d > .03; }
+    const g2 = islAt(P.x, P.z), b2 = bridgeAt(P.x, P.z); P.y = g2 ? RING_Y + g2.ly : (b2 ? TOP + b2.b.ly + .05 : P.y);
+    const yaw = moving ? Math.atan2(dx, dz) : r.yaw;
+    r.root.rotation.y += ((yaw - r.root.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 10);
+    if (M) { const bob = mountAnim(M, t, moving); riderPose(parts, M.userData.mount); r.root.userData.body.position.y = M.userData.mount.seat + bob; }
+    else { const sw = moving ? Math.sin(t * 9) * .6 : 0; if (parts.legL) { parts.legL.rotation.x = sw; parts.legR.rotation.x = -sw; parts.armL.rotation.x = -sw * .8; parts.armR.rotation.x = sw * .8; } r.root.userData.body.position.y = moving ? Math.abs(Math.sin(t * 9)) * .012 : Math.sin(t * 2) * .004; }
+    if (r.say > 0) { r.say -= dt; if (r.say <= 0) worldTag(r); }
+    cosAnim(r.root, t);
+    if (r.pet) { cosAnim(r.pet, t); const fly = r.pet.userData.fly || 0; r.pet.position.lerp(new V3(P.x - Math.cos(r.root.rotation.y) * .34, P.y, P.z + Math.sin(r.root.rotation.y) * .34), Math.min(1, dt * 4)); r.pet.position.y = P.y + (fly ? fly + Math.sin(t * 3) * .04 : 0); r.pet.rotation.y = r.root.rotation.y; }
+  });
+}
+function worldChip() {
+  const c = WORLD.chip; if (!c) return; const n = WORLD.others.size;
+  c.innerHTML = `<i></i>${tr(`在線 ${n + 1} 人`, `${n + 1} online`)}`; c.title = tr('看看誰在線上', 'Who is online');
+  if (WORLD.list && !PL.el.hidden && PL.kind === 'world') worldPanel(true);
+}
+function worldPanel(re) {
+  const body = re === true ? PL.body : openPlay('world', tr('群島上的朋友', 'Friends online'), tr('現在在線上的人', 'Online now'));
+  WORLD.list = body;
+  const rows = [...WORLD.others.values()].map(r => { const isl = r.isl && ISL_BY.get(r.isl); return `<li><span class="wl-n"><b>${esc(r.name)}</b><small>Lv.${r.lv}${isl ? '　📍 ' + esc(codeOf(isl)) + ' ' + esc(T(isl.label)) : ''}</small></span><button class="btn" data-wgo="${r.uid}">${tr('看看他', 'Look')}</button></li>`; }).join('');
+  body.innerHTML = `<ul class="wl">${`<li class="me"><span class="wl-n"><b>${esc(ME.name)}（${tr('我', 'me')}）</b><small>${tr('帳號', 'Account')}：${esc(window.CLOUD.user)}</small></span></li>`}${rows}</ul>
+    ${WORLD.others.size ? '' : `<p class="hint">${tr('現在只有你在線上。家人或同學登入後，就會出現在島上。', 'Only you are online right now.')}</p>`}
+    <div class="eyebrow">${tr('打招呼', 'Say hi')}</div><div class="wl-emo">${WEMO.map(e => `<button class="btn" data-wemo="${e}">${e}</button>`).join('')}</div>`;
+  body.querySelectorAll('[data-wemo]').forEach(b => b.addEventListener('click', () => worldEmote(b.dataset.wemo)));
+  body.querySelectorAll('[data-wgo]').forEach(b => b.addEventListener('click', () => { const r = WORLD.others.get(b.dataset.wgo); if (!r) return; closePlay(); const P = r.root.position; flyTo({ pos: new V3(P.x + 3, P.y + 3.4, P.z + 4.2), target: new V3(P.x, P.y + .4, P.z) }); }));
+}
+/* account section in the character book: who is logged in, log out; switching / deleting / importing characters is off in cloud mode */
+if (window.CLOUD) {
+  const _tm = tabMe; tabMe = function (pane) {
+    _tm.apply(this, arguments);
+    ['#meSwitch', '#meImport'].forEach(s => { const b = pane.querySelector(s); if (b) b.remove(); });
+    const del = pane.querySelector('#meDel'); if (del) del.closest('section').remove();
+    const sec = document.createElement('section'); sec.className = 'qsec';
+    sec.innerHTML = `<div class="eyebrow">${tr('雲端帳號', 'Account')}</div><p class="hint">${tr(`已登入：${esc(window.CLOUD.user)}。進度會自動存到雲端，換裝置登入也能接著玩。`, 'Progress is saved to the cloud.')}</p><p class="hint" id="clSaved"></p><button class="btn" id="clOut">${tr('登出', 'Log out')}</button>`;
+    pane.appendChild(sec);
+    sec.querySelector('#clOut').addEventListener('click', async e => { e.target.disabled = true; e.target.textContent = tr('存檔並登出中…', 'Saving…'); await window.CLOUD.logout(); });
+  };
+  addEventListener('cloud-saved', () => { const el = document.getElementById('clSaved'); if (el) { const d = new Date(); el.textContent = tr(`最近一次雲端存檔：${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`, ''); } });
+}
+window.__world = WORLD;
+/* WORLD-JS-END */
 /* =====================================================================
    17. start
    ===================================================================== */
