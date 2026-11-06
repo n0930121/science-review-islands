@@ -18801,7 +18801,7 @@ function pickAt(cx, cy) {
     }
   }
   /* nothing hit: on the sea turtle, tapping open water swims there */
-  if (!HUNT && (swimOK() || isFlying())) { const w = raycaster.intersectObject(water, false)[0]; if (w && (isFlying() || terrainH(w.point.x, w.point.z) < WATER_Y - .08)) { if (isFlying()) flyTo(w.point, null); else swimTo(w.point); } }
+  if (!HUNT && (swimOK() || isFlying())) { const w = raycaster.intersectObject(water, false)[0]; if (w && (isFlying() || terrainH(w.point.x, w.point.z) < WATER_Y - .08)) { if (isFlying()) dragonTo(w.point, null); else swimTo(w.point); } }
 }
 function swimTo(p) {
   if (!AVA) return; if (AVA.path) { AVA.path = null; AVA.boat.visible = false; AVA.balloon.visible = false; }
@@ -21492,7 +21492,7 @@ function advGoto(islId, fromSelect, point) {
   if (AVA.path) { AVA.path = null; AVA.boat.visible = false; AVA.balloon.visible = false; }
   const here = R0.position.clone(), hereIsl = islAt(here.x, here.z);
   const goal = point ? new V3(point.x, RING_Y + isl.ly, point.z) : nodePos(homeNode(isl));
-  if (isFlying()) { flyTo(goal, isl); return; }
+  if (isFlying()) { dragonTo(goal, isl); return; }
   if (here.distanceTo(goal) < .06) { if (!point) avSay(tr('我已經在這座島上囉！', "I'm already here!"), 2); return; }
   let pts = null, boat = false;
   if (hereIsl === isl) pts = [here, goal];
@@ -21520,7 +21520,7 @@ function advGoto(islId, fromSelect, point) {
 function groundClick(id, p) {
   const isl = ISL_BY.get(id);
   if (!(ADV_READY && AVA && ME && isl && p)) return selectIsland(id);
-  if (isFlying()) { if (!unlocked(isl)) lockedSay(isl); flyTo(p, unlocked(isl) ? isl : null); return; }
+  if (isFlying()) { if (!unlocked(isl)) lockedSay(isl); dragonTo(p, unlocked(isl) ? isl : null); return; }
   if (swimOK() && atSea() && unlocked(isl)) { swimTo(p); return; }
   if (!unlocked(isl)) return selectIsland(id);
   if (selIslandId() !== id) select({ type: 'island', id }, framing(new V3(isl.x, TOP + isl.ly, isl.z), ISL_OFF));
@@ -24391,7 +24391,7 @@ function surfBelow(x, z, y) {
   const br = bridgeAt(x, z); if (br) { const h = TOP + br.b.ly + .03 + Math.sin(Math.PI * br.t) * br.b.h; if (h <= y + .02 && (!best || h > best.y)) best = { y: h, bridge: true, ok: true }; }
   return best || { y: Math.max(WATER_Y, terrainH(x, z)) + .35, sea: true, ok: false };
 }
-function flyTo(p, isl) {
+function dragonTo(p, isl) {
   swimTo(p); const T = AVA.swimT; if (!T) return;
   T.land = isl && unlocked(isl) ? isl : null;
   if (isl) { const h = RING_Y + isl.ly; T.minY = h + .4; if (AVA.flyY < h + .4) AVA.autoY = h + .7; AVA.mark.position.y = h + .005; }
@@ -24445,7 +24445,7 @@ function mountTick(dt, t, moving) {
   if (U.trunk) { U.idle = moving ? 0 : (U.idle || 0) + dt; if (U.idle > 6) { U.idle = -4; U.spray = 1.6; } if (U.spray > 0) { U.spray -= dt; if (Math.random() < dt * 30) { const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw); spray(R0.position.x + hx * .55 * AV_K, R0.position.y + .75 * AV_K, R0.position.z + hz * .55 * AV_K, hx * .6, 1.1, hz * .6, .02); } } }
   if (U.mount.id === 'm_dino') { U.roar = (U.roar || 8 + Math.random() * 10) - dt; if (U.roar <= 0) { U.roar = 14 + Math.random() * 12; if (!AVA.say) avSay(tr('吼～～！', 'ROAR!'), 1.6); } }
 }
-window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA, malt: MALT, flyTick, surfBelow, flyTo, isFlying, isl: () => ISL.map(i => ({ id: i.id, layer: i.layer, ok: unlocked(i), x: i.x, z: i.z, y: RING_Y + i.ly })), islBy: id => ISL_BY.get(id) };
+window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA, malt: MALT, flyTick, surfBelow, dragonTo, isFlying, isl: () => ISL.map(i => ({ id: i.id, layer: i.layer, ok: unlocked(i), x: i.x, z: i.z, y: RING_Y + i.ly })), islBy: id => ISL_BY.get(id) };
 /* a character saved while riding is built during boot before this module exists: put the mount back now */
 try { if (ME && AV.eq && AV.eq.mount && AV.ride !== false && AVA && !AVA.root.userData.mount) buildAvatar(); } catch (e) { console.warn('mount rebuild', e); }
 /* MOUNT-JS-END */
@@ -24909,7 +24909,7 @@ function worldStart() {
     Object.entries(v).forEach(([uid, o]) => { if (uid === C.uid || !o || typeof o.x !== 'number' || now - (o.t || 0) > 150000) return; seen.add(uid); worldUpsert(uid, o); });
     [...WORLD.others.keys()].forEach(uid => { if (!seen.has(uid)) worldDrop(uid); });
     worldChip();
-  }, () => {});
+  }, e => { WORLD.err = tr('讀不到其他人的位置', 'cannot read others') + '（' + (e && (e.code || e.message) || e) + '）'; worldChip(); });
   const chip = document.createElement('button'); chip.id = 'worldChip'; chip.type = 'button'; chip.addEventListener('click', worldPanel); document.body.appendChild(chip); WORLD.chip = chip; worldChip();
 }
 function worldPayload() {
@@ -24926,7 +24926,7 @@ function worldSend(force) {
   if (force || pos !== WORLD.sentPos) Object.assign(up, { x: +P.x.toFixed(2), z: +P.z.toFixed(2), yaw: +AVA.yaw.toFixed(2), fy: AVA.flyY != null ? +AVA.flyY.toFixed(2) : 0 });
   if (!Object.keys(up).length) return;
   up.t = C.D.serverTimestamp(); WORLD.sentLook = lk; WORLD.sentPos = pos;
-  C.D.update(WORLD.me, up).catch(() => {});
+  C.D.update(WORLD.me, up).then(() => { if (WORLD.err && WORLD.err.startsWith(tr('送不出', 'cannot send'))) { WORLD.err = ''; worldChip(); } }).catch(e => { WORLD.err = tr('送不出自己的位置', 'cannot send my position') + '（' + (e && (e.code || e.message) || e) + '）'; worldChip(); });
 }
 function worldEmote(e) { const C = window.CLOUD; if (!C || !WORLD.me) return; C.D.update(WORLD.me, { emo: e, emoT: Date.now() + WORLD.off, t: C.D.serverTimestamp() }).catch(() => {}); avSay(e, 2.5); }
 function worldUpsert(uid, o) {
@@ -24969,7 +24969,7 @@ function worldTick(dt, now) {
 }
 function worldChip() {
   const c = WORLD.chip; if (!c) return; const n = WORLD.others.size;
-  c.innerHTML = `<i></i>${tr(`在線 ${n + 1} 人`, `${n + 1} online`)}`; c.title = tr('看看誰在線上', 'Who is online');
+  c.innerHTML = `<i></i>${tr(`在線 ${n + 1} 人`, `${n + 1} online`)}${WORLD.err ? ' ⚠️' : ''}`; c.title = WORLD.err ? tr('連線同步有問題：', 'Sync problem: ') + WORLD.err : tr('看看誰在線上', 'Who is online');
   if (WORLD.list && !PL.el.hidden && PL.kind === 'world') worldPanel(true);
 }
 function worldPanel(re) {
@@ -24977,6 +24977,7 @@ function worldPanel(re) {
   WORLD.list = body;
   const rows = [...WORLD.others.values()].map(r => { const isl = r.isl && ISL_BY.get(r.isl); return `<li><span class="wl-n"><b>${esc(r.name)}</b><small>Lv.${r.lv}${r.stk ? '　' + esc(r.stk) : ''}${isl ? '　📍 ' + esc(codeOf(isl)) + ' ' + esc(T(isl.label)) : ''}</small></span><button class="btn" data-wgo="${r.uid}">${tr('看看他', 'Look')}</button></li>`; }).join('');
   body.innerHTML = `<ul class="wl">${`<li class="me"><span class="wl-n"><b>${esc(ME.name)}（${tr('我', 'me')}）</b><small>${tr('帳號', 'Account')}：${esc(window.CLOUD.user)}</small></span></li>`}${rows}</ul>
+    ${WORLD.err ? `<p class="hint" style="color:#b3261e">⚠️ ${tr('給家長看：連線同步有問題，', 'For parents: sync problem, ')}${esc(WORLD.err)}</p>` : ''}
     ${WORLD.others.size ? '' : `<p class="hint">${tr('現在只有你在線上。家人或同學登入後，就會出現在島上。', 'Only you are online right now.')}</p>`}
     <div class="eyebrow">${tr('打招呼', 'Say hi')}</div><div class="wl-emo">${WEMO.map(e => `<button class="btn" data-wemo="${e}">${e}</button>`).join('')}</div>`;
   body.querySelectorAll('[data-wemo]').forEach(b => b.addEventListener('click', () => worldEmote(b.dataset.wemo)));
