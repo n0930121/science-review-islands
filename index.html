@@ -16808,6 +16808,8 @@ if (CLOUD_ON) window.CLOUD_BOOT = boot().catch(e => { console.error(e); gate(`<p
    ===================================================================== */
 if (window.CLOUD_BOOT) await window.CLOUD_BOOT;
 const D = window.DATA;
+/* player avatars: same size as the islanders (they are 1.45); AV_K rescales things tuned for the old 1.9 */
+const AV_SC = 1.45, AV_K = AV_SC / 1.9;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const ldErr = $('.ld-err');
@@ -21374,13 +21376,13 @@ function startIsland() { const L = meGradeIsl(); return L.find(i => i.subj === '
 function buildAvatar() {
   if (!ME) return;
   if (AVA) { scene.remove(AVA.root); if (AVA.pet) scene.remove(AVA.pet); if (AVA.tagEl) AVA.tagEl.remove(); }
-  const root = buildChibi(ME, AV.eq); root.scale.setScalar(1.9);
+  const root = buildChibi(ME, AV.eq); root.scale.setScalar(AV_SC);
   let node = AV.at; if (!(node >= 0 && node < NODES.length)) node = homeNode(startIsland());
   const p = nodePos(node); root.position.copy(p);
   scene.add(root);
   const tagEl = document.createElement('div'); tagEl.className = 'me-tag';
-  const tag = new CSS2DObject(tagEl); tag.position.set(0, .53, 0); root.add(tag);
-  let pet = null; if (AV.eq.pet) { pet = buildPet(AV.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(p).add(new V3(-.3, 0, .2)); scene.add(pet); }
+  const tag = new CSS2DObject(tagEl); tag.position.set(0, .53 + (root.userData.mount ? root.userData.mount.userData.mount.seat + (root.userData.mount.userData.mount.fly || 0) + .04 : 0), 0); root.add(tag);
+  let pet = null; if (AV.eq.pet) { pet = buildPet(AV.eq.pet); pet.scale.setScalar((pet.userData.fly ? 2.5 : 1.6) * AV_K); pet.position.copy(p).add(new V3(-.3, 0, .2)); scene.add(pet); }
   const boat = new THREE.Group();
   part(boat, W_GEO.box, '#ffffff', 0, -.035, -.02, .3, .09, .56); part(boat, W_GEO.box, COL.coral, 0, -.005, -.02, .305, .022, .565);
   part(boat, W_GEO.box, COL.wood, 0, .012, -.02, .24, .015, .48); part(boat, W_GEO.cone, '#ffffff', 0, -.035, .3, .15, .14, .045, Math.PI / 2);
@@ -22234,9 +22236,9 @@ function netRemote(opp) {
   const sig = JSON.stringify([opp.look, opp.eq, opp.name]);
   if (!R || R.sig !== sig || R.id !== opp.id) {
     if (R) { scene.remove(R.root); if (R.pet) scene.remove(R.pet); R.tagEl.remove(); }
-    const root = buildChibi(opp.look || {}, opp.eq || {}); root.scale.setScalar(1.9); root.position.set(opp.x, RING_Y + ((islAt(opp.x, opp.z) || {}).ly || 0), opp.z); scene.add(root);
+    const root = buildChibi(opp.look || {}, opp.eq || {}); root.scale.setScalar(AV_SC); root.position.set(opp.x, RING_Y + ((islAt(opp.x, opp.z) || {}).ly || 0), opp.z); scene.add(root);
     const tagEl = document.createElement('div'); tagEl.className = 'me-tag opp'; const tag = new CSS2DObject(tagEl); tag.position.set(0, .53, 0); root.add(tag);
-    let pet = null; if (opp.eq && opp.eq.pet) { pet = buildPet(opp.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(root.position); scene.add(pet); }
+    let pet = null; if (opp.eq && opp.eq.pet) { pet = buildPet(opp.eq.pet); pet.scale.setScalar((pet.userData.fly ? 2.5 : 1.6) * AV_K); pet.position.copy(root.position); scene.add(pet); }
     NET.remote = { id: opp.id, sig, root, tagEl, pet, name: opp.name, lv: opp.lv || 1, say: 0, sayText: '', hop: 0, tx: opp.x, tz: opp.z, yaw: opp.yaw || 0 };
     remoteTag();
   }
@@ -23131,7 +23133,7 @@ const _fl = new V3();
 function fpTick(dt) {
   if (!FP.on) return false;
   if (AVA) {
-    const p = AVA.root.position, mm = AVA.root.userData.mount, mh = mm && mm.visible ? (mm.userData.mount.seat + (mm.userData.mount.fly || 0)) * 1.9 : 0; camera.position.set(p.x, p.y + .52 + mh, p.z);
+    const p = AVA.root.position, mm = AVA.root.userData.mount, mh = mm && mm.visible ? (mm.userData.mount.seat + (mm.userData.mount.fly || 0)) * AV_SC : 0; camera.position.set(p.x, p.y + .52 * AV_K + mh, p.z);
     if (AVA.path) { const pa = AVA.path; if (pa.boat || pa.balloon) camera.position.y += pa.balloon ? .3 : .05; }
   } else {
     let f = 0, s = 0, u = 0; if (CKEYS.has('w')) f++; if (CKEYS.has('s')) f--; if (CKEYS.has('d')) s++; if (CKEYS.has('a')) s--; if (CKEYS.has('up')) u++; if (CKEYS.has('down')) u--;
@@ -24307,7 +24309,7 @@ function mountThumb(el, id) {
 function mountTick(dt, t, moving) {
   if (!AVA || !MOUNT_ON()) return; const m = AVA.root.userData.mount; if (!m) return; const U = m.userData, R0 = AVA.root;
   if (U.spark && moving && Math.random() < dt * 14 && AP.list.length < 240) AP.list.push({ p: R0.position.clone().add(new V3((Math.random() - .5) * .3, .05, (Math.random() - .5) * .3)), v: new V3((Math.random() - .5) * .1, .3 + Math.random() * .3, (Math.random() - .5) * .1), c: ['#ffd84a', '#ff8fb1', '#8fd3ff'][Math.random() * 3 | 0], life: 0, max: 1, size: .02, geo: 'oct', mode: 'rise', rot: 0 });
-  if (U.trunk) { U.idle = moving ? 0 : (U.idle || 0) + dt; if (U.idle > 6) { U.idle = -4; U.spray = 1.6; } if (U.spray > 0) { U.spray -= dt; if (Math.random() < dt * 30) { const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw); spray(R0.position.x + hx * .55, R0.position.y + .75, R0.position.z + hz * .55, hx * .6, 1.1, hz * .6, .02); } } }
+  if (U.trunk) { U.idle = moving ? 0 : (U.idle || 0) + dt; if (U.idle > 6) { U.idle = -4; U.spray = 1.6; } if (U.spray > 0) { U.spray -= dt; if (Math.random() < dt * 30) { const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw); spray(R0.position.x + hx * .55 * AV_K, R0.position.y + .75 * AV_K, R0.position.z + hz * .55 * AV_K, hx * .6, 1.1, hz * .6, .02); } } }
   if (U.mount.id === 'm_dino') { U.roar = (U.roar || 8 + Math.random() * 10) - dt; if (U.roar <= 0) { U.roar = 14 + Math.random() * 12; if (!AVA.say) avSay(tr('吼～～！', 'ROAR!'), 1.6); } }
 }
 window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA };
@@ -24667,10 +24669,10 @@ function worldUpsert(uid, o) {
   let R = WORLD.others.get(uid); const sig = JSON.stringify([o.look, o.eq, o.name]);
   if (!R || R.sig !== sig) {
     const keep = R; if (R) worldDrop(uid, true);
-    const root = buildChibi(o.look || {}, o.eq || {}, true); root.scale.setScalar(1.9);
+    const root = buildChibi(o.look || {}, o.eq || {}, true); root.scale.setScalar(AV_SC);
     root.position.set(keep ? keep.root.position.x : o.x, RING_Y + ((islAt(o.x, o.z) || {}).ly || 0), keep ? keep.root.position.z : o.z); scene.add(root);
     const tagEl = document.createElement('div'); tagEl.className = 'me-tag opp world'; const tag = new CSS2DObject(tagEl); tag.position.set(0, .53 + (root.userData.mount ? root.userData.mount.userData.mount.seat + (root.userData.mount.userData.mount.fly || 0) : 0), 0); root.add(tag);
-    let pet = null; if (o.eq && o.eq.pet) { pet = buildPet(o.eq.pet); pet.scale.setScalar(pet.userData.fly ? 2.5 : 1.6); pet.position.copy(root.position); scene.add(pet); }
+    let pet = null; if (o.eq && o.eq.pet) { pet = buildPet(o.eq.pet); pet.scale.setScalar((pet.userData.fly ? 2.5 : 1.6) * AV_K); pet.position.copy(root.position); scene.add(pet); }
     R = { uid, sig, root, tagEl, pet, say: 0, sayText: '', emoT: o.emoT || 0 }; WORLD.others.set(uid, R);
   }
   Object.assign(R, { name: o.name || '?', lv: o.lv || 1, tx: o.x, tz: o.z, yaw: o.yaw || 0, isl: o.isl || '' });
