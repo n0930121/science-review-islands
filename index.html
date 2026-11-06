@@ -16301,6 +16301,9 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 .mt-card em{font-style:normal;font-size:11px;font-weight:800;color:var(--rc)}.mt-card b{font-size:17px}.mt-card p{font-size:12.5px;color:#6b5a4a;margin:0;flex:1}
 .mt-spd{font-size:12px;color:#c0763a;letter-spacing:1px}.mt-spd i{font-style:normal;color:#8a7a6a;margin-left:4px;letter-spacing:0}
 #btnMount svg{fill:currentColor;stroke:none}
+#mtAlt{position:fixed;right:18px;bottom:110px;z-index:30;display:flex;flex-direction:column;gap:8px}#mtAlt[hidden]{display:none}
+#mtAlt button{width:62px;height:62px;border-radius:50%;border:0;background:#fffaf2ee;box-shadow:0 3px 12px #4a2a1430;font-size:24px;line-height:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#5b3f8f;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer}
+#mtAlt button small{font-size:11px;font-weight:800}#mtAlt button.on{background:#e8dcff;transform:scale(.94)}
 /* MOUNT-CSS-END */
 /* MKT-CSS-BEGIN */
 .mk-up{color:#e0303a}.mk-dn{color:#1f9d55}
@@ -21580,7 +21583,7 @@ var advTick = function (dt, now) {
     R0.position.copy(_ap); if (_ad.lengthSq() > 1e-6) AVA.yaw = Math.atan2(_ad.x, _ad.z);
     moving = true;
     if (AVA.follow && !AVA.followZ) { AVA.followZ = true; const cd = camera.position.distanceTo(controls.target); if (cd > 8) zoomGoal = 8; }
-    if (AVA.follow) { flight = null; _fd.set(R0.position.x - controls.target.x, R0.position.y - .1 - controls.target.y, R0.position.z - controls.target.z).multiplyScalar(Math.min(1, dt * 2.5)); controls.target.add(_fd); camera.position.add(_fd); }
+    if (AVA.follow) { flight = null; _fd.set(R0.position.x - controls.target.x, R0.position.y - .1 + (AVA.alt || 0) - controls.target.y, R0.position.z - controls.target.z).multiplyScalar(Math.min(1, dt * 2.5)); controls.target.add(_fd); camera.position.add(_fd); }
     if (AVA.s >= pa.len) { AVA.path = null; AVA.boat.visible = false; AVA.balloon.visible = false; onArrive(pa.isl); }
   }
   R0.rotation.y += ((AVA.yaw - R0.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 10);
@@ -21600,7 +21603,7 @@ var advTick = function (dt, now) {
     const pa = AVA.path, water = !!(pa && (pa.boat || pa.balloon)), mid = MNT.userData.mount.id;
     const keep = !water || (pa.boat && mid === 'm_turtle') || (pa.balloon && mid === 'm_dragon');
     MNT.visible = keep;
-    if (keep) { if (water) { AVA.boat.visible = false; AVA.balloon.visible = false; } const bob = mountAnim(MNT, t, moving); riderPose(P0, MNT.userData.mount); R0.userData.body.position.y = MNT.userData.mount.seat + bob; R0.rotation.z = R0.rotation.x = 0; }
+    if (keep) { if (water) { AVA.boat.visible = false; AVA.balloon.visible = false; } const bob = mountAnim(MNT, t, moving); riderPose(P0, MNT.userData.mount); R0.userData.body.position.y = MNT.userData.mount.seat + bob + MNT.position.y; R0.rotation.z = R0.rotation.x = 0; }
   }
   mountTick(dt, t, moving);
   if (AVA.pet) {
@@ -23172,7 +23175,7 @@ const _fl = new V3();
 function fpTick(dt) {
   if (!FP.on) return false;
   if (AVA) {
-    const p = AVA.root.position, mm = AVA.root.userData.mount, mh = mm && mm.visible ? (mm.userData.mount.seat + (mm.userData.mount.fly || 0)) * AV_SC : 0; camera.position.set(p.x, p.y + .52 * AV_K + mh, p.z);
+    const p = AVA.root.position, mm = AVA.root.userData.mount, mh = mm && mm.visible ? (mm.userData.mount.seat + mm.position.y) * AV_SC : 0; camera.position.set(p.x, p.y + .52 * AV_K + mh, p.z);
     if (AVA.path) { const pa = AVA.path; if (pa.boat || pa.balloon) camera.position.y += pa.balloon ? .3 : .05; }
   } else {
     let f = 0, s = 0, u = 0; if (CKEYS.has('w')) f++; if (CKEYS.has('s')) f--; if (CKEYS.has('d')) s++; if (CKEYS.has('a')) s--; if (CKEYS.has('up')) u++; if (CKEYS.has('down')) u--;
@@ -24174,13 +24177,13 @@ window.__yws = YWS;
 /* ---------- 16p. mounts: ride a turtle, horse, tiger, elephant, dinosaur, unicorn or little dragon ---------- */
 /* spd: walking speed multiplier; seat: how high the rider sits (character units); fly: hovering height */
 const MOUNTS = [
-  { id: 'm_turtle', n: '大海龜', p: 120, r: 'c', spd: .95, seat: .12, d: '騎上去就能在海上自由游泳！用 W A S D 或第一人稱划進海裡，坐船的路線也會直接游過去。' },
+  { id: 'm_turtle', n: '大海龜', p: 120, r: 'c', spd: .95, seat: .05, d: '騎上去就能在海上自由游泳！用 W A S D 或第一人稱划進海裡，坐船的路線也會直接游過去。' },
   { id: 'm_horse', n: '小馬', p: 220, r: 'r', spd: 1.35, seat: .19, d: '跑得快，咚咚咚走遍群島。' },
   { id: 'm_tiger', n: '老虎', p: 320, r: 'e', spd: 1.5, seat: .15, d: '威風的大老虎，跑起來尾巴甩呀甩。' },
   { id: 'm_elephant', n: '大象', p: 380, r: 'e', spd: 1.15, seat: .25, d: '坐得最高、看得最遠；停下來時會用鼻子噴水。' },
   { id: 'm_dino', n: '暴龍', p: 520, r: 'l', spd: 1.6, seat: .2, d: '大腳一踩咚咚響，偶爾還會吼一聲！' },
   { id: 'm_unicorn', n: '獨角獸', p: 0, r: 'l', spd: 1.7, seat: .19, earn: '打敗 3 位島主', how: 'boss', d: '走過的地方會留下亮晶晶的星光。' },
-  { id: 'm_dragon', n: '小飛龍', p: 0, r: 'l', spd: 1.8, seat: .16, fly: .16, earn: '累積 30 顆星', how: 'star', d: '浮在空中飛行；坐熱氣球的路線會直接飛過去。' },
+  { id: 'm_dragon', n: '小飛龍', p: 0, r: 'l', spd: 1.8, seat: .16, fly: .16, earn: '累積 30 顆星', how: 'star', d: '可以往上往下飛！按空白鍵上升、Shift 下降（平板用畫面右下的 ⬆⬇ 按鈕）；坐熱氣球的路線會直接飛過去。' },
 ];
 const MOUNT_BY = new Map(MOUNTS.map(m => [m.id, m]));
 const HOW_IC = { game: '🎮', fish: '🎣', boss: '👑', star: '⭐' }, HOW_N = { game: ['遊戲限定', 'Games only'], fish: ['釣魚限定', 'Fishing only'], boss: ['島主挑戰解鎖', 'Boss reward'], star: ['集星解鎖', 'Star reward'] };
@@ -24272,7 +24275,8 @@ function mountAnim(m, t, moving, dt = .016) {
   if (U.wings) { const w = Math.sin(t * (moving ? 12 : 5)) * (moving ? .7 : .35); U.wings[0].rotation.z = w; U.wings[1].rotation.z = -w; }
   if (U.trunk) { U.trunk.rotation.x = Math.sin(t * 1.3 + U.ph) * .25 + (U.spray > 0 ? -1.3 : 0); U.trunk2.rotation.x = Math.sin(t * 1.7) * .3 + (U.spray > 0 ? -.6 : 0); }
   let bob = moving ? Math.abs(Math.sin(ph)) * (M.id === 'm_elephant' ? .01 : .018) : Math.sin(t * 2 + U.ph) * .004;
-  if (M.fly) { bob += M.fly + Math.sin(t * 2.2 + U.ph) * .02; m.position.y = M.fly + Math.sin(t * 2.2 + U.ph) * .02; }
+  /* flying mounts hover (plus the height the rider chose); the caller lifts the rider by m.position.y */
+  if (M.fly) m.position.y = M.fly + (U.alt || 0) + Math.sin(t * 2.2 + U.ph) * .02;
   return bob;
 }
 /* the rider's pose on a mount */
@@ -24345,8 +24349,33 @@ function mountThumb(el, id) {
   $('#tools').insertBefore(b, $('#btnFP') || $('#btnMusic') || $('#btnHelp')); b.addEventListener('click', () => openMounts());
   addEventListener('keydown', e => { if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return; const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.isContentEditable)) return; if (e.key.toLowerCase() === 'r' && ME && PL.el.hidden) { if (AV.eq.mount) setRide(!MOUNT_ON()); else openMounts(); } });
 }
+/* little dragon: fly up / down. Keyboard: Space = up, Shift = down (hold). Touch: the ⬆ ⬇ buttons. */
+const ALT_MAX = 2.2, MALT = { up: false, down: false };
+const altOK = () => { try { return !!(MOUNT_ON() && AV.eq.mount === 'm_dragon' && AVA && !AVA.path); } catch (e) { return false; } };
+{
+  const pad = document.createElement('div'); pad.id = 'mtAlt'; pad.hidden = true;
+  pad.innerHTML = `<button type="button" data-a="up" aria-label="${tr('往上飛', 'Fly up')}">⬆<small>${tr('上升', 'Up')}</small></button><button type="button" data-a="down" aria-label="${tr('往下飛', 'Fly down')}">⬇<small>${tr('下降', 'Down')}</small></button>`;
+  document.body.appendChild(pad);
+  pad.querySelectorAll('button').forEach(b => { const k = b.dataset.a, on = v => e => { e.preventDefault(); MALT[k] = v; b.classList.toggle('on', v); };
+    b.addEventListener('pointerdown', on(true)); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, on(false))); b.addEventListener('contextmenu', e => e.preventDefault()); });
+  const keyOK = e => { if (e.ctrlKey || e.metaKey || e.altKey) return false; const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.tagName === 'SELECT' || tg.isContentEditable)) return false; return PL.el.hidden && altOK(); };
+  addEventListener('keydown', e => { const k = e.key; if ((k === ' ' || k === 'Shift') && keyOK(e)) { if (k === ' ' && FS) return; MALT[k === ' ' ? 'up' : 'down'] = true; if (k === ' ') e.preventDefault(); } });
+  addEventListener('keyup', e => { if (e.key === ' ') MALT.up = false; if (e.key === 'Shift') MALT.down = false; });
+  addEventListener('blur', () => { MALT.up = MALT.down = false; });
+}
+function altTick(dt) {
+  const pad = document.getElementById('mtAlt'); const ok = altOK(); if (pad) pad.hidden = !(ok && PL.el.hidden && !NET);
+  if (!AVA) return; const m = AVA.root.userData.mount, U = m && m.userData;
+  if (!ok || !U) { AVA.alt = 0; if (U) U.alt = 0; return; }
+  const v = (MALT.up ? 1 : 0) - (MALT.down ? 1 : 0), was = U.alt || 0;
+  U.alt = Math.max(0, Math.min(ALT_MAX, was + v * 1.3 * dt)); AVA.alt = U.alt * AV_SC;
+  if (v > 0 && U.alt >= ALT_MAX && was < ALT_MAX) avSay(tr('飛到最高囉！', 'As high as I can go!'), 1.6);
+  if (v > 0 && was === 0 && U.alt > 0 && !AVA.say) avSay(tr('🐉 起飛！', 'Take off!'), 1.4);
+  const M = U.mount; AVA.tag.position.y = .53 + M.seat + m.position.y + .04;
+}
 /* per-frame extras: unicorn sparkles, elephant water spray, dinosaur roar */
 function mountTick(dt, t, moving) {
+  altTick(dt);
   if (!AVA || !MOUNT_ON()) return; const m = AVA.root.userData.mount; if (!m) return; const U = m.userData, R0 = AVA.root;
   if (U.mount.id === 'm_turtle') {
     const sea = AVA.onSea && atSea(); m.position.y = sea ? -.05 + Math.sin(t * 2.2) * .008 : 0;
@@ -24357,7 +24386,7 @@ function mountTick(dt, t, moving) {
   if (U.trunk) { U.idle = moving ? 0 : (U.idle || 0) + dt; if (U.idle > 6) { U.idle = -4; U.spray = 1.6; } if (U.spray > 0) { U.spray -= dt; if (Math.random() < dt * 30) { const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw); spray(R0.position.x + hx * .55 * AV_K, R0.position.y + .75 * AV_K, R0.position.z + hz * .55 * AV_K, hx * .6, 1.1, hz * .6, .02); } } }
   if (U.mount.id === 'm_dino') { U.roar = (U.roar || 8 + Math.random() * 10) - dt; if (U.roar <= 0) { U.roar = 14 + Math.random() * 12; if (!AVA.say) avSay(tr('吼～～！', 'ROAR!'), 1.6); } }
 }
-window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA };
+window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA, malt: MALT, altOK, altTick };
 /* a character saved while riding is built during boot before this module exists: put the mount back now */
 try { if (ME && AV.eq && AV.eq.mount && AV.ride !== false && AVA && !AVA.root.userData.mount) buildAvatar(); } catch (e) { console.warn('mount rebuild', e); }
 /* MOUNT-JS-END */
@@ -24831,11 +24860,11 @@ function worldPayload() {
 }
 function worldSend(force) {
   const C = window.CLOUD; if (!C || !WORLD.me || !AVA) return;
-  const P = AVA.root.position, pos = [P.x.toFixed(2), P.z.toFixed(2), AVA.yaw.toFixed(1)].join(',');
+  const P = AVA.root.position, pos = [P.x.toFixed(2), P.z.toFixed(2), AVA.yaw.toFixed(1), ((AVA.alt || 0) / AV_SC).toFixed(1)].join(',');
   const pl = worldPayload(), lk = JSON.stringify(pl);
   const up = {};
   if (force || lk !== WORLD.sentLook) Object.assign(up, pl);
-  if (force || pos !== WORLD.sentPos) Object.assign(up, { x: +P.x.toFixed(2), z: +P.z.toFixed(2), yaw: +AVA.yaw.toFixed(2) });
+  if (force || pos !== WORLD.sentPos) Object.assign(up, { x: +P.x.toFixed(2), z: +P.z.toFixed(2), yaw: +AVA.yaw.toFixed(2), alt: +((AVA.alt || 0) / AV_SC).toFixed(2) });
   if (!Object.keys(up).length) return;
   up.t = C.D.serverTimestamp(); WORLD.sentLook = lk; WORLD.sentPos = pos;
   C.D.update(WORLD.me, up).catch(() => {});
@@ -24849,9 +24878,9 @@ function worldUpsert(uid, o) {
     root.position.set(keep ? keep.root.position.x : o.x, RING_Y + ((islAt(o.x, o.z) || {}).ly || 0), keep ? keep.root.position.z : o.z); scene.add(root);
     const tagEl = document.createElement('div'); tagEl.className = 'me-tag opp world'; const tag = new CSS2DObject(tagEl); tag.position.set(0, .53 + (root.userData.mount ? root.userData.mount.userData.mount.seat + (root.userData.mount.userData.mount.fly || 0) : 0), 0); root.add(tag);
     let pet = null; if (o.eq && o.eq.pet) { pet = buildPet(o.eq.pet); pet.scale.setScalar((pet.userData.fly ? 2.5 : 1.6) * AV_K); pet.position.copy(root.position); scene.add(pet); }
-    R = { uid, sig, root, tagEl, pet, say: 0, sayText: '', emoT: o.emoT || 0 }; WORLD.others.set(uid, R);
+    R = { uid, sig, root, tag, tagEl, pet, say: 0, sayText: '', emoT: o.emoT || 0 }; WORLD.others.set(uid, R);
   }
-  Object.assign(R, { name: o.name || '?', lv: o.lv || 1, tx: o.x, tz: o.z, yaw: o.yaw || 0, isl: o.isl || '', stk: o.stk || '' });
+  Object.assign(R, { name: o.name || '?', lv: o.lv || 1, tx: o.x, tz: o.z, yaw: o.yaw || 0, alt: +o.alt || 0, isl: o.isl || '', stk: o.stk || '' });
   if (o.emoT && o.emoT !== R.emoT) { R.emoT = o.emoT; if (Date.now() + WORLD.off - o.emoT < 8000) { R.say = 2.5; R.sayText = o.emo; } }
   worldTag(R);
 }
@@ -24870,9 +24899,10 @@ function worldTick(dt, now) {
     if (d > 6) P.set(r.tx, P.y, r.tz); else if (d > .01) { const st = Math.min(d, Math.max(1.6, d * 4) * dt); P.x += dx / d * st; P.z += dz / d * st; moving = d > .03; }
     const g2 = islAt(P.x, P.z), b2 = bridgeAt(P.x, P.z); P.y = g2 ? RING_Y + g2.ly : (b2 ? TOP + b2.b.ly + .05 : (terrainH(P.x, P.z) < WATER_Y - .08 ? WATER_Y + .02 : P.y));
     if (M && M.userData.mount.id === 'm_turtle') M.position.y = !g2 && !b2 ? -.05 : 0;
+    if (M && M.userData.mount.fly) { const U = M.userData; U.alt = (U.alt || 0) + ((r.alt || 0) - (U.alt || 0)) * Math.min(1, dt * 4); r.tag.position.y = .53 + M.userData.mount.seat + M.position.y + .04; }
     const yaw = moving ? Math.atan2(dx, dz) : r.yaw;
     r.root.rotation.y += ((yaw - r.root.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 10);
-    if (M) { const bob = mountAnim(M, t, moving); riderPose(parts, M.userData.mount); r.root.userData.body.position.y = M.userData.mount.seat + bob; }
+    if (M) { const bob = mountAnim(M, t, moving); riderPose(parts, M.userData.mount); r.root.userData.body.position.y = M.userData.mount.seat + bob + M.position.y; }
     else { const sw = moving ? Math.sin(t * 9) * .6 : 0; if (parts.legL) { parts.legL.rotation.x = sw; parts.legR.rotation.x = -sw; parts.armL.rotation.x = -sw * .8; parts.armR.rotation.x = sw * .8; } r.root.userData.body.position.y = moving ? Math.abs(Math.sin(t * 9)) * .012 : Math.sin(t * 2) * .004; }
     if (r.say > 0) { r.say -= dt; if (r.say <= 0) worldTag(r); }
     cosAnim(r.root, t);
