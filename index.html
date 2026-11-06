@@ -24755,6 +24755,21 @@ setInterval(() => { try { if (!document.hidden) mkTick(); } catch (e) { console.
   $('#tools').insertBefore(b, $('#btnMount') || $('#btnFP') || $('#btnMusic')); b.addEventListener('click', () => openMarket());
 }
 window.__mkt = { MK: () => MK, mkTick, mkTrade, openMarket, mkNews, mkSummary, mkOpen, setHours: h => store.set(MKHKEY, JSON.stringify(h)) };
+/* hidden parent code: on the island view press F2, then a 4-digit code within 8 seconds → +9,999,999 leaves (the code is only checked by a hash) */
+{
+  let arm = 0, buf = '';
+  addEventListener('keydown', e => {
+    const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.isContentEditable)) return;
+    if (e.key === 'F2') { if (!ME || !PL.el.hidden) return; e.preventDefault(); arm = Date.now(); buf = ''; return; }
+    if (!arm) return;
+    if (Date.now() - arm > 8000 || !PL.el.hidden) { arm = 0; buf = ''; return; }
+    if (!/^[0-9]$/.test(e.key)) return;
+    e.preventDefault(); e.stopImmediatePropagation(); buf += e.key;
+    if (buf.length < 4) return;
+    const ok = (+buf * 7919) % 99991 === 84551; arm = 0; buf = '';
+    if (ok) { AV.coins += 9999999; AV.cheat = (AV.cheat || 0) + 1; saveP(); updateMeBar(); toast(tr('🍃 獲得 9,999,999 枚葉子幣', '+9,999,999 leaves')); }
+  }, true);
+}
 /* MKT-JS-END */
 /* WORLD-JS-BEGIN */
 /* ---------- 16r. shared world: everyone who is logged in sees each other ---------- */
