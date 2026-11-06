@@ -16682,9 +16682,9 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 /* =====================================================================
    Cloud boot: login with a parent-made account, cloud save, moving an old device save into the account.
    Runs before the game module; the game waits on window.CLOUD_BOOT.
-   Turn on for testing with ?cloud=1 (remembered on this device), turn off with ?cloud=0.
+   Login is required on the main site (CLOUD_DEFAULT).
    ===================================================================== */
-const CLOUD_DEFAULT = false;
+const CLOUD_DEFAULT = true;
 const CL_CFG = {
   apiKey: 'AIzaSyBJxHPheT9tieukCk2aXz84DxoqY_JRg3A',
   authDomain: 'science-review-islands.firebaseapp.com',
@@ -21976,6 +21976,7 @@ async function fbInit() {
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
+  if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   const base = `https://www.gstatic.com/firebasejs/${FB_VER}/`;
   const [A, U, D] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-database.js')]);
   const app = A.initializeApp(FB_CFG);
@@ -24357,7 +24358,7 @@ const mkRound = p => { const t = tickSize(p); return Math.round(Math.round(p / t
 const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
 const MKKEY = 'scienceIslands.market.v1', MKHKEY = 'scienceIslands.marketHours.v1';
 /* trading hours (device clock), set by parents; default every day 18:00–21:00. If end <= start the session runs past midnight */
-const mkHours = () => { let h = null; try { h = JSON.parse(store.get(MKHKEY) || 'null'); } catch (e) { } return { all: !!(h && h.all), s: (h && h.s) || '18:00', e: (h && h.e) || '21:00' }; };
+const mkHours = () => { if (MK_SH.hours && MK && MK.shared) { const H = MK_SH.hours; return { all: !!H.all, s: H.s || '18:00', e: H.e || '21:00', shared: true }; } let h = null; try { h = JSON.parse(store.get(MKHKEY) || 'null'); } catch (e) { } return { all: !!(h && h.all), s: (h && h.s) || '18:00', e: (h && h.e) || '21:00' }; };
 const hm = t => { const [a, b] = t.split(':').map(Number); return a * 60 + (b || 0); };
 function mkOpen() {
   const H = mkHours(); if (H.all) return { open: true, H };
@@ -24366,6 +24367,27 @@ function mkOpen() {
   return { open, H };
 }
 let MK = null;
+/* cloud mode: everyone shares one market, run by the parent's Apps Script and read from Firebase */
+const MK_SH = { live: null, hist: null, news: [], hours: null, day: null, lastNews: null };
+function mkSharedStart() {
+  const C = window.CLOUD, D = C.D, on = (p, f) => D.onValue(D.ref(C.db, 'market/' + p), s => { try { f(s.val()); } catch (e) { console.warn(e); } }, () => {});
+  on('live', v => { MK_SH.live = v; mkSharedApply(); });
+  on('hist', v => { MK_SH.hist = v; mkSharedApply(); });
+  on('news', v => { MK_SH.news = Array.isArray(v) ? v.filter(Boolean) : v ? Object.values(v) : []; mkSharedApply(); });
+  on('hours', v => { MK_SH.hours = v; if (MKUI) MKUI.status(); });
+  on('day', v => { MK_SH.day = v; });
+}
+function mkSharedApply() {
+  if (!MK_SH.live || !MK_SH.hist) return; /* the engine has not run yet: keep this device's own market for now */
+  const arr = v => Array.isArray(v) ? v.filter(Boolean) : v ? Object.values(v) : [];
+  const M = { shared: true, day: MK_SH.day || mkDay(), s: {}, news: MK_SH.news || [] };
+  for (const S of MK_ALL) { const L = MK_SH.live[S.c], H = MK_SH.hist[S.c]; if (!L || !H) return; M.s[S.c] = { ...L, ticks: arr(L.ticks).length ? arr(L.ticks) : [L.p], hist: arr(H), vol: 0 }; }
+  const first = !(MK && MK.shared); MK = M;
+  const top = M.news[0]; if (top && MK_SH.lastNews && top.id !== MK_SH.lastNews && MKUI) { MKUI.flash(top.c); const S = MK_BY.get(top.c); toast(`${top.g ? '📈' : '📉'} ${S ? S.n : ''}：${top.txt}`); }
+  MK_SH.lastNews = top ? top.id : null;
+  try { mkCheckShorts(); if (first) mkDividends(); } catch (e) { }
+  if (MKUI) MKUI.refresh();
+}
 function mkLoad() {
   try { MK = JSON.parse(store.get(MKKEY) || 'null'); } catch (e) { MK = null; }
   if (!MK || !MK.s) {
@@ -24377,7 +24399,7 @@ function mkLoad() {
   mkRoll();
 }
 function dayShift(n) { const d = new Date(); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
-const mkSave = () => store.set(MKKEY, JSON.stringify(MK));
+const mkSave = () => { if (MK && !MK.shared) store.set(MKKEY, JSON.stringify(MK)); };
 /* the 0050-style fund tracks the average move of all companies */
 function mkEtf(init) {
   const r = MK_STOCKS.reduce((a, S) => a + MK.s[S.c].p / S.p0, 0) / MK_STOCKS.length;
@@ -24387,6 +24409,7 @@ function mkEtf(init) {
 }
 /* new trading day(s): close yesterday's candle, simulate any days the page was closed (up to 20), open today */
 function mkRoll() {
+  if (MK.shared) return;
   const td = mkDay(); if (MK.day === td) return;
   let gap = 0; { const a = new Date(MK.day), b = new Date(td); gap = Math.max(1, Math.min(20, Math.round((b - a) / 864e5))); }
   for (let k = 0; k < gap; k++) {
@@ -24403,7 +24426,7 @@ function mkRoll() {
 /* intraday tick: random walk inside the ±10% price limit, occasional news */
 function mkTick() {
   if (!MK) return; mkRoll();
-  const st = mkOpen(); if (MKUI) MKUI.status(); if (!st.open) return;
+  const st = mkOpen(); if (MKUI) MKUI.status(); if (!st.open || MK.shared) return;
   MK_STOCKS.forEach(S => { const x = MK.s[S.c]; mkMove(S, x, S.drift / 150 + S.vol / Math.sqrt(150) * gauss()); });
   if (Math.random() < .06) mkNews();
   mkEtf(); mkSave(); mkCheckShorts(); if (MKUI) MKUI.refresh();
@@ -24429,7 +24452,8 @@ function mkNews(S, good, why, islId, mag) {
 }
 /* learning moves the market a little: passing a lesson is good news for that island's company */
 function mkLearn(islId) {
-  if (!MK) return; const S = MK_STOCKS.find(s => s.isl.includes(islId)); if (!S || Math.random() < .4) return;
+  if (!MK) return;
+  if (MK.shared && window.CLOUD) { const C = window.CLOUD; C.D.set(C.D.ref(C.db, 'market/learn/' + C.uid + '_' + Date.now().toString(36)), { isl: islId, name: ME ? ME.name : '', t: C.D.serverTimestamp() }).catch(() => {}); return; } const S = MK_STOCKS.find(s => s.isl.includes(islId)); if (!S || Math.random() < .4) return;
   const isl = ISL_BY.get(islId); mkNews(S, true, `${ME ? ME.name : '小朋友'}在「${T(isl.label)}」認真學習，大家對${S.n}更有興趣了`, islId, .01 + Math.random() * .015); mkEtf(); mkSave();
 }
 /* 葉子銀行 pays a dividend every 7 days to whoever holds it */
@@ -24508,7 +24532,7 @@ function openMarket(tab = 'quote') {
     <div class="mk-pane"></div></div>`;
   const pane = body.querySelector('.mk-pane'), sum = body.querySelector('.mk-sum'), stEl = body.querySelector('.mk-st');
   const drawSt = () => { const o = mkOpen(), H = o.H; stEl.className = 'mk-st ' + (o.open ? 'on' : 'off');
-    stEl.innerHTML = H.all ? tr('🟢 開盤中（家長設定為全天開放）', 'Open all day') : o.open ? tr(`🟢 開盤中　今天 ${H.s}～${H.e}，${H.e} 收盤`, `Open until ${H.e}`) : tr(`🔴 休市中　開盤時間：每天 ${H.s}～${H.e}。休市時可以看行情、看新聞、答新聞題，但不能買賣，股價也不會動。`, `Closed. Opens ${H.s}`);
+    stEl.innerHTML = (MK && MK.shared ? tr('🌐 大家共用同一個市場　', 'Shared market　') : '') + (H.all ? tr('🟢 開盤中（家長設定為全天開放）', 'Open all day') : o.open ? tr(`🟢 開盤中　今天 ${H.s}～${H.e}，${H.e} 收盤`, `Open until ${H.e}`) : tr(`🔴 休市中　開盤時間：每天 ${H.s}～${H.e}。休市時可以看行情、看新聞、答新聞題，但不能買賣，股價也不會動。`, `Closed. Opens ${H.s}`));
     pane.querySelectorAll('[data-tk]').forEach(b => { if (!o.open) b.disabled = true; else if (b.dataset.tk !== 'short') b.disabled = false; }); return o.open; };
   const drawSum = () => { const m = mkSummary(); sum.innerHTML = `<div><small>${tr('現金', 'Cash')}</small><b>${ICON3.leaf}${AV.coins}</b></div><div><small>${tr('股票市值', 'Stocks')}</small><b>${Math.round(m.mv)}</b></div><div><small>${tr('總資產', 'Total')}</small><b>${Math.round(m.total)}</b></div><div><small>${tr('未實現損益', 'Unrealized')}</small><b class="${upC(m.unreal)}">${m.unreal >= 0 ? '+' : ''}${Math.round(m.unreal)}</b></div><div><small>${tr('已實現損益', 'Realized')}</small><b class="${upC(m.real)}">${m.real >= 0 ? '+' : ''}${Math.round(m.real)}</b></div>`; };
   const draw = () => { drawSum(); ({ quote: mkQuote, mine: mkMine, log: mkLog, news: mkNewsTab, learn: mkLearnTab })[S.tab](pane, S, draw); };
@@ -24615,6 +24639,7 @@ function mkLearnTab(pane) {
 function mkParentBox() {
   const anchor = PL.body.querySelector('.pass-foot.pmsg') || PL.body.querySelector('.pass-foot'); if (!anchor || PL.body.querySelector('#mkHrs')) return;
   const H = mkHours(), box = document.createElement('div'); box.className = 'pass-foot mk-hrs'; box.id = 'mkHrs';
+  if (H.shared) { box.innerHTML = `<b>📈 ${tr('投資市場開盤時間', 'Market hours')}</b><span>${H.all ? tr('全天開放', 'All day') : `${H.s}～${H.e}`}</span><span class="hint">${tr('雲端版大家共用同一個市場，開盤時間請到 Google Sheet 報表的「設定」工作表調整。', 'Set in the Google Sheet (設定).')}</span>`; anchor.after(box); return; }
   box.innerHTML = `<b>📈 ${tr('投資市場開盤時間', 'Market hours')}</b>
     <label>${tr('開盤', 'Open')} <input type="time" id="mkHs" value="${H.s}"></label><label>${tr('收盤', 'Close')} <input type="time" id="mkHe" value="${H.e}"></label>
     <label class="sw"><input type="checkbox" id="mkHa" ${H.all ? 'checked' : ''}> <span>${tr('全天開放', 'Open all day')}</span></label>
@@ -24629,6 +24654,7 @@ function mkParentBox() {
 /* hooks: learning news, market clock, toolbar button */
 { const _ae = advEvent; advEvent = function (type, d = {}) { const r = _ae.apply(this, arguments); try { if (type === 'quiz' && d.stars > (d.before || 0)) mkLearn(d.isl); } catch (e) { } return r; }; }
 try { mkLoad(); } catch (e) { console.warn(e); }
+if (window.CLOUD) try { mkSharedStart(); } catch (e) { console.warn(e); }
 setInterval(() => { try { if (!document.hidden) mkTick(); } catch (e) { console.warn(e); } }, MK_TICK_MS);
 {
   const b = document.createElement('button'); b.className = 'btn'; b.id = 'btnMkt'; b.type = 'button';
