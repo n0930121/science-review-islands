@@ -16737,10 +16737,15 @@ async function boot() {
   if (!user || user.isAnonymous) user = await loginForm(U, auth);
   const uid = user.uid, uref = p => D.ref(db, `users/${uid}${p ? '/' + p : ''}`);
   gate(`<p class="cg-sub">讀取雲端存檔…</p>`);
-  let save = null, allowed = true;
+  let save = null, allowed = true, why = '';
   try { const s = await D.get(uref('save')); save = s.exists() ? s.val() : null; }
-  catch (e) { allowed = false; }
-  if (!allowed) { gate(`<p class="cg-err">這個帳號還沒有開通，請爸爸媽媽到 Firebase 後台把它加進允許名單。</p><button class="cg-btn" id="cgOut">換一個帳號</button>`); document.getElementById('cgOut').onclick = async () => { await U.signOut(auth); location.reload(); }; await new Promise(() => { }); }
+  catch (e) {
+    allowed = false;
+    /* tell the parent which part is missing: the rules, the allow-list entry, or something else */
+    try { const a = await D.get(D.ref(db, 'allow/' + uid)); why = a.exists() ? `允許名單裡有這個帳號，但讀取存檔失敗（${esc2(e.code || e.message || e)}）。` : '允許名單裡找不到這個帳號的 UID。'; }
+    catch (e2) { why = '資料庫規則還沒更新（讀不到允許名單），請確認新規則已經按「發布」。'; }
+  }
+  if (!allowed) { gate(`<p class="cg-err">這個帳號還沒有開通，請爸爸媽媽到 Firebase 後台把它加進允許名單。</p><p class="cg-hint">給家長看的原因：${why}<br>登入的 UID：<code>${esc2(uid)}</code></p><button class="cg-btn" id="cgOut">換一個帳號</button>`); document.getElementById('cgOut').onclick = async () => { await U.signOut(auth); location.reload(); }; await new Promise(() => { }); }
   if (!save) { const a = readActive(); if (a && a.prof.id === 'c_' + uid) { try { save = { prof: a.prof, lp: JSON.parse(a.raw) }; } catch (e) { } } }
   if (!save) {
     const pick = await chooseMove(localProfiles());
@@ -21960,6 +21965,7 @@ const FB_VER = '10.12.2', NQ = 7, QSEC = 12;
 let FB = null, NET = null;
 async function fbInit() {
   if (FB) return FB;
+  if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   const base = `https://www.gstatic.com/firebasejs/${FB_VER}/`;
   const [A, U, D] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-database.js')]);
