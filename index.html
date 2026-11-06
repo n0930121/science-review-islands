@@ -21373,7 +21373,7 @@ function buildChibi(look, eq = {}, forPreview = false) {
   if (eq.back === 'b_cape') part(body, W_GEO.box, '#c8363d', 0, .1 + y, -.055, .13, .22, .01, .15);
   if (eq.back === 'b_wings') for (const s of [-1, 1]) { part(body, W_GEO.head, '#f4a9c0', s * .1, .25 + y, -.07, 1.05, .78, .1, 0, s * .35, s * .55, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#fbd3df', s * .085, .15 + y, -.065, .72, .55, .1, 0, s * .35, -s * .45, { transparent: true, opacity: .9 }); part(body, W_GEO.head, '#ffffff', s * .11, .26 + y, -.075, .4, .3, .11, 0, s * .35, s * .55, { transparent: true, opacity: .55 }); }
   root.userData.parts = parts; root.userData.body = body;
-  if (eq.mount && (forPreview || AV.ride !== false)) { const m = buildMount(eq.mount); if (m) { root.add(m); root.userData.mount = m; body.position.y = m.userData.mount.seat; riderPose(parts, m.userData.mount); } }
+  if (eq.mount && (forPreview || AV.ride !== false)) { let m = null; try { m = buildMount(eq.mount); } catch (e) { /* the mount module is not set up yet during boot; rebuilt right after it loads */ } if (m) { root.add(m); root.userData.mount = m; body.position.y = m.userData.mount.seat; riderPose(parts, m.userData.mount); } }
   buildCos(root, body, parts, eq, y); cosOwnMats(root);
   return root;
 }
@@ -24358,6 +24358,8 @@ function mountTick(dt, t, moving) {
   if (U.mount.id === 'm_dino') { U.roar = (U.roar || 8 + Math.random() * 10) - dt; if (U.roar <= 0) { U.roar = 14 + Math.random() * 12; if (!AVA.say) avSay(tr('吼～～！', 'ROAR!'), 1.6); } }
 }
 window.__mount = { MOUNTS, openMounts, setRide, buildMount, av: () => AV, ava: () => AVA };
+/* a character saved while riding is built during boot before this module exists: put the mount back now */
+try { if (ME && AV.eq && AV.eq.mount && AV.ride !== false && AVA && !AVA.root.userData.mount) buildAvatar(); } catch (e) { console.warn('mount rebuild', e); }
 /* MOUNT-JS-END */
 /* MKT-JS-BEGIN */
 /* ---------- 16q. 學習島投資市場: a pretend stock market (Taiwan-style rules) priced in 葉子幣 ---------- */
