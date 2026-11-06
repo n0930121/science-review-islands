@@ -16361,6 +16361,10 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 .wl li.me{background:#fff6dc}.wl-n{display:flex;flex-direction:column}.wl-n small{color:#8a7a6a;font-size:12px}.wl-emo{display:flex;flex-wrap:wrap;gap:6px}.wl-emo .btn{font-size:20px;min-width:48px}
 .me-tag.world b{color:#1f6fb0}
 @media (max-width:800px){#worldChip{bottom:auto;top:calc(70px + env(safe-area-inset-top,0px));left:auto;right:12px}}
+.gf .coins-big small{font-size:12px;color:#8a7a6a;font-weight:400}.gf-amt{display:flex;gap:8px;margin-bottom:10px}.gf-amt .btn{min-width:64px;font-size:18px}
+.gf-quick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.gf input{width:100%;font:600 15px/1.2 var(--font);padding:10px 12px;border-radius:12px;border:1px solid #e6dccd;margin-bottom:10px}
+.gf-done{text-align:center}.gf-done b{font-size:48px}.wl.off li{opacity:.8}.gf-log{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:13px}.gf-log li{background:#fff;border-radius:10px;padding:6px 10px}.gf-log li.in{background:#fff6dc}.gf-log small{color:#8a7a6a;margin-left:6px}
+.wl li .btn+.btn{margin-left:6px}
 /* CLOUD-CSS-END */
 .subj-tag{pointer-events:none;color:#fff;border-radius:16px;padding:9px 18px;font:900 18px/1 var(--font);white-space:nowrap;letter-spacing:2px;box-shadow:0 6px 18px #0003;border:3px solid #fff;transition:opacity .3s}.subj-sci{background:#5c9a4e}.subj-soc{background:#c0763a}.subj-chi{background:#7b6cc9}
 .grade-tag{pointer-events:none;background:var(--ink);color:var(--cream);border-radius:999px;padding:7px 13px;font:800 13px/1 var(--font);white-space:nowrap;box-shadow:0 4px 12px #4a2a1430;transition:opacity .3s}
@@ -21983,6 +21987,7 @@ async function fbInit() {
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
+  if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   const base = `https://www.gstatic.com/firebasejs/${FB_VER}/`;
   const [A, U, D] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-database.js')]);
   const app = A.initializeApp(FB_CFG);
@@ -24851,6 +24856,90 @@ if (window.CLOUD) {
   addEventListener('cloud-saved', () => { const el = document.getElementById('clSaved'); if (el) { const d = new Date(); el.textContent = tr(`最近一次雲端存檔：${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`, ''); } });
 }
 window.__world = WORLD;
+/* ---------- 16s. gifts: players send each other leaves (cloud only) ---------- */
+const GIFT = { dir: {}, started: false, MAX_ONE: 50, MAX_DAY: 100, QUICK: ['加油！', '謝謝你！', '一起去闖關吧', '生日快樂', '你好厲害'] };
+function giftStart() {
+  const C = window.CLOUD; if (!C || GIFT.started || !ME) return; GIFT.started = true; const D = C.D;
+  /* public directory so friends can be found even when they are offline */
+  const pubDir = () => D.set(D.ref(C.db, 'dir/' + C.uid), { name: ME.name, lv: levelInfo().lv, shirt: ME.shirt, t: D.serverTimestamp() }).catch(() => {});
+  pubDir(); setInterval(pubDir, 10 * 60e3);
+  D.onValue(D.ref(C.db, 'dir'), s => { GIFT.dir = s.val() || {}; if (!PL.el.hidden && PL.kind === 'world') worldPanel(true); }, () => {});
+  /* inbox: claim each gift once (delete it, then add the leaves) */
+  D.onValue(D.ref(C.db, 'gifts/' + C.uid), s => {
+    const v = s.val() || {};
+    Object.entries(v).forEach(([id, g]) => { if (!g || GIFT['seen_' + id]) return; GIFT['seen_' + id] = 1;
+      D.remove(D.ref(C.db, `gifts/${C.uid}/${id}`)).then(() => {
+        const amt = Math.max(0, Math.min(GIFT.MAX_ONE, Math.floor(+g.amt || 0))); if (!amt) return;
+        AV.coins += amt; const L = (AV.gifts = AV.gifts || []); L.unshift({ t: Date.now(), k: 'in', who: g.fromName || '?', amt, msg: g.msg || '' }); AV.gifts = L.slice(0, 40); saveP(); updateMeBar();
+        giftPop(g, amt);
+      }).catch(() => { delete GIFT['seen_' + id]; });
+    });
+  }, () => {});
+}
+function giftPop(g, amt) {
+  try { if (typeof sfx === 'function') sfx('coin'); } catch (e) { }
+  toast(tr(`🎁 ${g.fromName || '朋友'}送你 ${amt} 枚葉子幣${g.msg ? '：「' + g.msg + '」' : ''}`, `Gift: ${amt} leaves`));
+  try { avSay(tr(`收到 ${amt} 枚葉子幣！`, `+${amt} leaves!`), 3); } catch (e) { }
+}
+const giftSentToday = () => (AV.gifts || []).filter(x => x.k === 'out' && x.day === today()).reduce((a, x) => a + x.amt, 0);
+async function giftSend(toUid, toName, amt, msg) {
+  const C = window.CLOUD, D = C.D; amt = Math.floor(amt);
+  if (!(amt >= 1)) return tr('請選擇要送幾枚', 'Pick an amount');
+  if (amt > GIFT.MAX_ONE) return tr(`一次最多送 ${GIFT.MAX_ONE} 枚`, `Up to ${GIFT.MAX_ONE} at a time`);
+  if (giftSentToday() + amt > GIFT.MAX_DAY) return tr(`每天最多送出 ${GIFT.MAX_DAY} 枚，今天還能送 ${Math.max(0, GIFT.MAX_DAY - giftSentToday())} 枚`, 'Daily limit reached');
+  if (amt > AV.coins) return tr('葉子幣不夠', 'Not enough leaves');
+  AV.coins -= amt; saveP(); updateMeBar();
+  const id = C.uid + '_' + Date.now().toString(36), g = { from: C.uid, fromName: ME.name, amt, msg: String(msg || '').slice(0, 30), t: D.serverTimestamp() };
+  try {
+    await D.set(D.ref(C.db, `gifts/${toUid}/${id}`), g);
+    D.set(D.ref(C.db, 'giftlog/' + id), { ...g, to: toUid, toName }).catch(() => {});
+  } catch (e) { AV.coins += amt; saveP(); updateMeBar(); return tr('送出失敗，葉子幣已經退回，請稍後再試', 'Failed, refunded'); }
+  const L = (AV.gifts = AV.gifts || []); L.unshift({ t: Date.now(), day: today(), k: 'out', who: toName, amt, msg: g.msg }); AV.gifts = L.slice(0, 40); saveP();
+  return null;
+}
+function giftDialog(toUid) {
+  const d = GIFT.dir[toUid] || {}, name = d.name || (WORLD.others.get(toUid) || {}).name || '?';
+  const body = openPlay('gift', tr('送葉子幣', 'Send leaves'), tr(`送給 ${name}`, `To ${name}`));
+  let amt = 10;
+  const draw = (msg) => {
+    const left = Math.max(0, GIFT.MAX_DAY - giftSentToday());
+    body.innerHTML = `<div class="gf"><p class="coins-big">${ICON3.leaf}<b>${AV.coins}</b> ${tr('葉子幣', 'leaves')}<small>　${tr(`今天還能送 ${left} 枚（每天最多 ${GIFT.MAX_DAY} 枚，一次最多 ${GIFT.MAX_ONE} 枚）`, '')}</small></p>
+      <div class="eyebrow">${tr('送幾枚', 'Amount')}</div><div class="gf-amt">${[5, 10, 20, 50].map(n => `<button class="btn ${n === amt ? 'primary' : ''}" data-ga="${n}" ${n > Math.min(left, AV.coins) ? 'disabled' : ''}>${n}</button>`).join('')}</div>
+      <div class="eyebrow">${tr('附一句話（可以不填）', 'Message (optional)')}</div>
+      <div class="gf-quick">${GIFT.QUICK.map(q => `<button class="chip" data-gq="${esc(q)}">${esc(q)}</button>`).join('')}</div>
+      <input id="gfMsg" maxlength="30" placeholder="${tr('最多 30 個字', 'Up to 30 characters')}">
+      <div class="qrow"><button class="btn primary" id="gfGo">🎁 ${tr(`送出 ${amt} 枚`, `Send ${amt}`)}</button></div><p class="qfb ${msg ? 'bad' : ''}" id="gfErr" ${msg ? '' : 'hidden'}>${esc(msg || '')}</p>
+      <p class="hint">${tr('送出後就拿不回來喔。爸爸媽媽可以在報表看到送禮紀錄。', 'Gifts cannot be taken back. Parents can see gift history.')}</p></div>`;
+    body.querySelectorAll('[data-ga]').forEach(b => b.addEventListener('click', () => { amt = +b.dataset.ga; const m = body.querySelector('#gfMsg').value; draw(); body.querySelector('#gfMsg').value = m; }));
+    body.querySelectorAll('[data-gq]').forEach(b => b.addEventListener('click', () => { body.querySelector('#gfMsg').value = b.dataset.gq; }));
+    body.querySelector('#gfGo').addEventListener('click', async e => {
+      e.target.disabled = true; const m = body.querySelector('#gfMsg').value.trim(); const err = await giftSend(toUid, name, amt, m);
+      if (err) { draw(err); body.querySelector('#gfMsg').value = m; return; }
+      body.innerHTML = `<div class="gf-done"><b>🎁</b><p>${tr(`已經送 ${amt} 枚葉子幣給 ${esc(name)}！`, 'Sent!')}</p><div class="qrow center"><button class="btn" id="gfBack">${tr('回到朋友名單', 'Back')}</button></div></div>`;
+      try { confetti(body.firstElementChild); } catch (er) { }
+      body.querySelector('#gfBack').addEventListener('click', () => worldPanel());
+    });
+  };
+  draw();
+}
+/* the friends list now shows everyone in the directory (online first), with a gift button */
+{
+  const _wp = worldPanel; worldPanel = function (re) {
+    _wp.apply(this, arguments); if (!window.CLOUD) return;
+    const body = PL.body, C = window.CLOUD, online = new Set(WORLD.others.keys());
+    const off = Object.entries(GIFT.dir).filter(([uid]) => uid !== C.uid && !online.has(uid)).sort((a, b) => (b[1].t || 0) - (a[1].t || 0));
+    body.querySelectorAll('.wl li:not(.me)').forEach(li => { const b = li.querySelector('[data-wgo]'); if (!b) return; const g = document.createElement('button'); g.className = 'btn'; g.dataset.gift = b.dataset.wgo; g.textContent = '🎁'; g.title = tr('送葉子幣', 'Send leaves'); b.after(g); });
+    if (off.length) { const ul = document.createElement('ul'); ul.className = 'wl off';
+      ul.innerHTML = off.map(([uid, d]) => `<li><span class="wl-n"><b>${esc(d.name || '?')}</b><small>Lv.${d.lv || 1}　${tr('離線', 'offline')}</small></span><button class="btn" data-gift="${uid}" title="${tr('送葉子幣', 'Send leaves')}">🎁</button></li>`).join('');
+      const eb = document.createElement('div'); eb.className = 'eyebrow'; eb.textContent = tr('其他朋友（離線）', 'Other friends (offline)');
+      const emo = body.querySelector('.wl-emo'); const anchor = emo ? emo.previousElementSibling : null; body.insertBefore(eb, anchor); body.insertBefore(ul, anchor); }
+    const hist = (AV.gifts || []).slice(0, 6);
+    if (hist.length) { const h = document.createElement('div'); h.innerHTML = `<div class="eyebrow">${tr('最近的禮物', 'Recent gifts')}</div><ul class="gf-log">${hist.map(x => `<li class="${x.k}">${x.k === 'in' ? tr(`🎁 ${esc(x.who)} 送你 ${x.amt} 枚`, '') : tr(`📤 你送 ${esc(x.who)} ${x.amt} 枚`, '')}${x.msg ? `<small>「${esc(x.msg)}」</small>` : ''}</li>`).join('')}</ul>`; body.appendChild(h); }
+    body.querySelectorAll('[data-gift]').forEach(b => b.addEventListener('click', () => giftDialog(b.dataset.gift)));
+  };
+}
+{ const _wt = worldTick; worldTick = function (dt, now) { _wt.apply(this, arguments); if (window.CLOUD && !GIFT.started && AVA && ME) giftStart(); }; }
+window.__gift = GIFT;
 /* WORLD-JS-END */
 /* =====================================================================
    17. start
