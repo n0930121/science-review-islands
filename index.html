@@ -18793,6 +18793,13 @@ function pickAt(cx, cy) {
       if (best && bd < R + .1) return HUNT ? selectIsland(best.id) : groundClick(best.id, h.point);
     }
   }
+  /* nothing hit: on the sea turtle, tapping open water swims there */
+  if (!HUNT && swimOK()) { const w = raycaster.intersectObject(water, false)[0]; if (w && terrainH(w.point.x, w.point.z) < WATER_Y - .08) swimTo(w.point); }
+}
+function swimTo(p) {
+  if (!AVA) return; if (AVA.path) { AVA.path = null; AVA.boat.visible = false; AVA.balloon.visible = false; }
+  AVA.swimT = { x: p.x, z: p.z }; AVA.follow = true;
+  AVA.mark.position.set(p.x, (atSea() ? WATER_Y + .03 : RING_Y + .005), p.z); AVA.mark.userData.t = 0; AVA.mark.visible = true;
 }
 let down = null;
 renderer.domElement.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; flight = null; });
@@ -21452,8 +21459,12 @@ function groundAt(x, z) {
   if (i) return unlocked(i) ? { y: RING_Y + i.ly, isl: i } : { locked: i };
   const br = bridgeAt(x, z);
   if (br) { const far = br.t > .5 ? br.b.B : br.b.A; if (br.t > .3 && br.t < .7 && !unlocked(far)) return { locked: far }; return { y: TOP + br.b.ly + .03 + Math.sin(Math.PI * br.t) * br.b.h, bridge: true }; }
+  /* riding the sea turtle: open water is walkable (swimming); the hills around the lagoon still stop you */
+  if (swimOK() && terrainH(x, z) < WATER_Y - .08) return { y: WATER_Y + .02, sea: true };
   return null;
 }
+function swimOK() { try { return MOUNT_ON() && AV.eq.mount === 'm_turtle' && !(AVA && AVA.path); } catch (e) { return false; } }
+function atSea() { if (!AVA) return false; const P = AVA.root.position; return !islAt(P.x, P.z, WALK_AP) && !bridgeAt(P.x, P.z); }
 function nearestNode(p, isl) { let best = 0, bd = 1e9; const lo = isl ? isl.idx * 12 : 0, hi = isl ? lo + 12 : NODES.length; for (let k = lo; k < hi; k++) { const d = Math.hypot(NODES[k].x - p.x, NODES[k].z - p.z); if (d < bd) { bd = d; best = k; } } return best; }
 function lockedSay(isl) { if (AVA.lockSay > 0) return; AVA.lockSay = 3; toast(tr(`🔒 ${codeOf(isl)} 還沒解鎖：先通過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」的闖關問答`, `🔒 ${codeOf(isl)} is locked: pass ${codeOf(prevIsl(isl))} first`)); avSay(tr(`柵欄還沒打開：先通過「${codeOf(prevIsl(isl))} ${T(prevIsl(isl).label)}」！`, `Pass ${codeOf(prevIsl(isl))} first!`), 2.5); }
 function advGoto(islId, fromSelect, point) {
@@ -21492,6 +21503,7 @@ function advGoto(islId, fromSelect, point) {
 function groundClick(id, p) {
   const isl = ISL_BY.get(id);
   if (!(ADV_READY && AVA && ME && isl && p)) return selectIsland(id);
+  if (swimOK() && atSea() && unlocked(isl)) { swimTo(p); return; }
   if (!unlocked(isl)) return selectIsland(id);
   if (selIslandId() !== id) select({ type: 'island', id }, framing(new V3(isl.x, TOP + isl.ly, isl.z), ISL_OFF));
   if (!inHex(isl, p.x, p.z)) { const dx = p.x - isl.x, dz = p.z - isl.z, f = .92 * WALK_AP / Math.max(.01, Math.hypot(dx, dz)); p = new V3(isl.x + dx * Math.min(1, f), 0, isl.z + dz * Math.min(1, f)); }
@@ -21516,7 +21528,7 @@ function walkStep(dx, dz) {
   const P = AVA.root.position, g = groundAt(P.x + dx, P.z + dz);
   if (!g) return false;
   if (g.locked) { lockedSay(g.locked); return false; }
-  P.x += dx; P.z += dz; P.y = g.y;
+  P.x += dx; P.z += dz; P.y = g.y; AVA.onSea = !!g.sea;
   camera.position.x += dx; camera.position.z += dz; controls.target.x += dx; controls.target.z += dz;
   return true;
 }
@@ -21540,7 +21552,14 @@ var advTick = function (dt, now) {
   if (AVA.lockSay > 0) AVA.lockSay -= dt;
   let kx = 0, kz = 0;
   if (WKEYS.size) { if (WKEYS.has('w')) kz += 1; if (WKEYS.has('s')) kz -= 1; if (WKEYS.has('d')) kx += 1; if (WKEYS.has('a')) kx -= 1; }
+  /* swimming on the sea turtle toward a tapped spot */
+  if (!(kx || kz) && AVA.swimT && !AVA.path) {
+    const T = AVA.swimT, P = R0.position, dx = T.x - P.x, dz = T.z - P.z, d = Math.hypot(dx, dz);
+    if (d < .06 || !swimOK()) AVA.swimT = null;
+    else { const sp = Math.min(d, Math.min(.2, 1.5 * dt * mountSpd())); if (walkStep(dx / d * sp, dz / d * sp)) { AVA.yaw = Math.atan2(dx, dz); moving = true; AVA.walked = true; const ni = islAt(P.x, P.z, WALK_AP); if (ni && ni !== AVA.isl) onArrive(ni); } else AVA.swimT = null; }
+  }
   if (kx || kz) {
+    AVA.swimT = null;
     if (FS) fishStop();
     if (AVA.path) { if (AVA.path.boat || AVA.path.balloon) R0.position.copy(AVA.path.pts[AVA.path.pts.length - 1]); AVA.path = null; AVA.boat.visible = false; AVA.balloon.visible = false; }
     flight = null; zoomGoal = null;
@@ -21982,6 +22001,7 @@ const FB_VER = '10.12.2', NQ = 7, QSEC = 12;
 let FB = null, NET = null;
 async function fbInit() {
   if (FB) return FB;
+  if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
@@ -24154,7 +24174,7 @@ window.__yws = YWS;
 /* ---------- 16p. mounts: ride a turtle, horse, tiger, elephant, dinosaur, unicorn or little dragon ---------- */
 /* spd: walking speed multiplier; seat: how high the rider sits (character units); fly: hovering height */
 const MOUNTS = [
-  { id: 'm_turtle', n: '大海龜', p: 120, r: 'c', spd: .95, seat: .12, d: '慢慢走但很穩。坐船的路線會直接游過去，不用划船！' },
+  { id: 'm_turtle', n: '大海龜', p: 120, r: 'c', spd: .95, seat: .12, d: '騎上去就能在海上自由游泳！用 W A S D 或第一人稱划進海裡，坐船的路線也會直接游過去。' },
   { id: 'm_horse', n: '小馬', p: 220, r: 'r', spd: 1.35, seat: .19, d: '跑得快，咚咚咚走遍群島。' },
   { id: 'm_tiger', n: '老虎', p: 320, r: 'e', spd: 1.5, seat: .15, d: '威風的大老虎，跑起來尾巴甩呀甩。' },
   { id: 'm_elephant', n: '大象', p: 380, r: 'e', spd: 1.15, seat: .25, d: '坐得最高、看得最遠；停下來時會用鼻子噴水。' },
@@ -24294,17 +24314,18 @@ function openMounts() {
           <span class="mt-spd">${tr('速度', 'Speed')} ${'▮'.repeat(Math.round(M.spd * 3))}<i>×${M.spd}</i></span><p>${esc(M.d)}</p>${btn}</div>`; }).join('')}</div>`;
     body.querySelectorAll('[data-pv]').forEach(el => mountThumb(el, el.dataset.pv));
     const rb = body.querySelector('#mtRide'); if (rb) rb.addEventListener('click', () => { setRide(!MOUNT_ON()); render(); });
-    body.querySelectorAll('[data-mride]').forEach(b => b.addEventListener('click', () => { AV.eq.mount = b.dataset.mride; AV.ride = true; saveP(); buildAvatar(); render(); avSay(tr(`出發囉！騎著${MOUNT_BY.get(b.dataset.mride).n}去冒險`, 'Let\'s ride!'), 3); }));
+    body.querySelectorAll('[data-mride]').forEach(b => b.addEventListener('click', () => { if (MOUNT_ON() && AV.eq.mount === 'm_turtle' && atSea() && b.dataset.mride !== 'm_turtle') { toast(tr('🌊 現在在海上，先游回島上才能換座騎喔', 'Swim back first')); return; } AV.eq.mount = b.dataset.mride; AV.ride = true; saveP(); buildAvatar(); render(); avSay(tr(`出發囉！騎著${MOUNT_BY.get(b.dataset.mride).n}去冒險`, 'Let\'s ride!'), 3); }));
     body.querySelectorAll('[data-mrel]').forEach(b => b.addEventListener('click', () => { setRide(false); render(); }));
     body.querySelectorAll('[data-mbuy]').forEach(b => b.addEventListener('click', () => {
-      const M = MOUNT_BY.get(b.dataset.mbuy); if (AV.owned[M.id] || AV.coins < M.p) return;
+      const M = MOUNT_BY.get(b.dataset.mbuy); if (AV.owned[M.id] || AV.coins < M.p) return; if (MOUNT_ON() && AV.eq.mount === 'm_turtle' && atSea()) { toast(tr('🌊 現在在海上，先游回島上再換座騎喔', 'Swim back first')); return; }
       AV.coins -= M.p; AV.owned[M.id] = today(); AV.eq.mount = M.id; AV.ride = true; saveP(); buildAvatar(); updateMeBar(); checkAch();
       toast(tr(`買到「${M.n}」了！已經騎上去`, `Got ${M.n}!`)); confetti(body.querySelector('.mt-grid')); render();
     }));
   };
   render();
 }
-function setRide(on) { if (!AV.eq.mount) { openMounts(); return; } AV.ride = !!on; saveP(); buildAvatar(); toast(on ? tr(`🐾 騎上${MOUNT_BY.get(AV.eq.mount).n}`, 'Riding') : tr('🚶 下來走路', 'Walking')); }
+function setRide(on) { if (!AV.eq.mount) { openMounts(); return; }
+  if (!on && AV.eq.mount === 'm_turtle' && MOUNT_ON() && atSea()) { toast(tr('🌊 現在在海上，先游回島上才能下來喔', 'Swim back to an island first')); return; } AV.ride = !!on; saveP(); buildAvatar(); toast(on ? tr(`🐾 騎上${MOUNT_BY.get(AV.eq.mount).n}`, 'Riding') : tr('🚶 下來走路', 'Walking')); }
 /* small static 3D thumbnails for the picker, rendered once to an image */
 let MT_R = null; const MT_CACHE = {};
 function mountThumb(el, id) {
@@ -24327,6 +24348,11 @@ function mountThumb(el, id) {
 /* per-frame extras: unicorn sparkles, elephant water spray, dinosaur roar */
 function mountTick(dt, t, moving) {
   if (!AVA || !MOUNT_ON()) return; const m = AVA.root.userData.mount; if (!m) return; const U = m.userData, R0 = AVA.root;
+  if (U.mount.id === 'm_turtle') {
+    const sea = AVA.onSea && atSea(); m.position.y = sea ? -.05 + Math.sin(t * 2.2) * .008 : 0;
+    if (sea && !AVA.path) { R0.position.y = WATER_Y + .02; if (moving && Math.random() < dt * 8) { const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw); spray(R0.position.x - hx * .25 * AV_K, WATER_Y + .04, R0.position.z - hz * .25 * AV_K, -hx * .15, .25, -hz * .15, .012); } }
+    if (sea && !U.swimSaid) { U.swimSaid = 1; avSay(tr('🌊 出海囉！', 'Out to sea!'), 2); } if (!sea) U.swimSaid = 0;
+  }
   if (U.spark && moving && Math.random() < dt * 14 && AP.list.length < 240) AP.list.push({ p: R0.position.clone().add(new V3((Math.random() - .5) * .3, .05, (Math.random() - .5) * .3)), v: new V3((Math.random() - .5) * .1, .3 + Math.random() * .3, (Math.random() - .5) * .1), c: ['#ffd84a', '#ff8fb1', '#8fd3ff'][Math.random() * 3 | 0], life: 0, max: 1, size: .02, geo: 'oct', mode: 'rise', rot: 0 });
   if (U.trunk) { U.idle = moving ? 0 : (U.idle || 0) + dt; if (U.idle > 6) { U.idle = -4; U.spray = 1.6; } if (U.spray > 0) { U.spray -= dt; if (Math.random() < dt * 30) { const hx = Math.sin(AVA.yaw), hz = Math.cos(AVA.yaw); spray(R0.position.x + hx * .55 * AV_K, R0.position.y + .75 * AV_K, R0.position.z + hz * .55 * AV_K, hx * .6, 1.1, hz * .6, .02); } } }
   if (U.mount.id === 'm_dino') { U.roar = (U.roar || 8 + Math.random() * 10) - dt; if (U.roar <= 0) { U.roar = 14 + Math.random() * 12; if (!AVA.say) avSay(tr('吼～～！', 'ROAR!'), 1.6); } }
@@ -24755,19 +24781,27 @@ setInterval(() => { try { if (!document.hidden) mkTick(); } catch (e) { console.
   $('#tools').insertBefore(b, $('#btnMount') || $('#btnFP') || $('#btnMusic')); b.addEventListener('click', () => openMarket());
 }
 window.__mkt = { MK: () => MK, mkTick, mkTrade, openMarket, mkNews, mkSummary, mkOpen, setHours: h => store.set(MKHKEY, JSON.stringify(h)) };
-/* hidden parent code: on the island view press F2, then a 4-digit code within 8 seconds → +9,999,999 leaves (the code is only checked by a hash) */
+/* hidden parent codes on the island view (the 4-digit code is only checked by a hash):
+   F2 + code → +9,999,999 leaves; F3 + code → max level and every shop item can be bought (earn-only items are given) */
+function cheatMaxAll() {
+  let xp = 0; for (let n = 1; n < 20; n++) xp += needXP(n); AV.xp = Math.max(AV.xp || 0, xp);
+  let got = 0; AD.shop.forEach(it => { if (it.earn && !AV.owned[it.id]) { AV.owned[it.id] = today(); got++; } });
+  AV.cheat = (AV.cheat || 0) + 1; saveP(); updateMeBar(); try { updateTag(); } catch (e) { } try { checkAch(); } catch (e) { }
+  toast(tr(`⭐ 等級全滿（Lv.20），商店全部商品都能買了${got ? `，另外取得 ${got} 樣限定商品` : ''}`, 'Max level, all shop items unlocked'));
+}
 {
-  let arm = 0, buf = '';
+  let arm = 0, mode = '', buf = '';
   addEventListener('keydown', e => {
     const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.isContentEditable)) return;
-    if (e.key === 'F2') { if (!ME || !PL.el.hidden) return; e.preventDefault(); arm = Date.now(); buf = ''; return; }
+    if (e.key === 'F2' || e.key === 'F3') { if (!ME || !PL.el.hidden) return; e.preventDefault(); arm = Date.now(); mode = e.key; buf = ''; return; }
     if (!arm) return;
     if (Date.now() - arm > 8000 || !PL.el.hidden) { arm = 0; buf = ''; return; }
     if (!/^[0-9]$/.test(e.key)) return;
     e.preventDefault(); e.stopImmediatePropagation(); buf += e.key;
     if (buf.length < 4) return;
-    const ok = (+buf * 7919) % 99991 === 84551; arm = 0; buf = '';
-    if (ok) { AV.coins += 9999999; AV.cheat = (AV.cheat || 0) + 1; saveP(); updateMeBar(); toast(tr('🍃 獲得 9,999,999 枚葉子幣', '+9,999,999 leaves')); }
+    const ok = (+buf * 7919) % 99991 === 84551, m = mode; arm = 0; buf = ''; if (!ok) return;
+    if (m === 'F2') { AV.coins += 9999999; AV.cheat = (AV.cheat || 0) + 1; saveP(); updateMeBar(); toast(tr('🍃 獲得 9,999,999 枚葉子幣', '+9,999,999 leaves')); }
+    else cheatMaxAll();
   }, true);
 }
 /* MKT-JS-END */
@@ -24832,7 +24866,8 @@ function worldTick(dt, now) {
     const P = r.root.position, dx = r.tx - P.x, dz = r.tz - P.z, d = Math.hypot(dx, dz), parts = r.root.userData.parts, M = r.root.userData.mount;
     let moving = false;
     if (d > 6) P.set(r.tx, P.y, r.tz); else if (d > .01) { const st = Math.min(d, Math.max(1.6, d * 4) * dt); P.x += dx / d * st; P.z += dz / d * st; moving = d > .03; }
-    const g2 = islAt(P.x, P.z), b2 = bridgeAt(P.x, P.z); P.y = g2 ? RING_Y + g2.ly : (b2 ? TOP + b2.b.ly + .05 : P.y);
+    const g2 = islAt(P.x, P.z), b2 = bridgeAt(P.x, P.z); P.y = g2 ? RING_Y + g2.ly : (b2 ? TOP + b2.b.ly + .05 : (terrainH(P.x, P.z) < WATER_Y - .08 ? WATER_Y + .02 : P.y));
+    if (M && M.userData.mount.id === 'm_turtle') M.position.y = !g2 && !b2 ? -.05 : 0;
     const yaw = moving ? Math.atan2(dx, dz) : r.yaw;
     r.root.rotation.y += ((yaw - r.root.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 10);
     if (M) { const bob = mountAnim(M, t, moving); riderPose(parts, M.userData.mount); r.root.userData.body.position.y = M.userData.mount.seat + bob; }
