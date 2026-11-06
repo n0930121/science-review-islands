@@ -24920,11 +24920,12 @@ function worldPayload() {
 function worldSend(force) {
   const C = window.CLOUD; if (!C || !WORLD.me || !AVA) return;
   const P = AVA.root.position, pos = [P.x.toFixed(2), P.z.toFixed(2), AVA.yaw.toFixed(1), (AVA.flyY != null ? AVA.flyY.toFixed(1) : '')].join(',');
-  const pl = worldPayload(), lk = JSON.stringify(pl);
+  /* JSON round trip drops undefined fields (a character made before skin colours existed has no skin): Firebase refuses a write containing undefined */
+  const pl = JSON.parse(JSON.stringify(worldPayload())), lk = JSON.stringify(pl);
   /* position and looks go in two separate writes, so a refused looks write cannot hide the player (and the parent sees which part failed) */
   const fail = what => e => { WORLD.err = `${what}（${(e && (e.code || e.message)) || e}）`; WORLD.errT = Date.now(); worldChip(); console.warn('world', what, e); };
-  if (force || pos !== WORLD.sentPos) { WORLD.sentPos = pos; C.D.update(WORLD.me, { x: +P.x.toFixed(2), z: +P.z.toFixed(2), yaw: +AVA.yaw.toFixed(2), fy: AVA.flyY != null ? +AVA.flyY.toFixed(2) : 0, t: C.D.serverTimestamp() }).catch(fail(tr('位置送不出去', 'position not sent'))); }
-  if (force || lk !== WORLD.sentLook) { WORLD.sentLook = lk; C.D.update(WORLD.me, { ...pl, t: C.D.serverTimestamp() }).catch(fail(tr('名字和外觀送不出去', 'name/looks not sent'))); }
+  if (force || pos !== WORLD.sentPos) { WORLD.sentPos = pos; try { C.D.update(WORLD.me, { x: +P.x.toFixed(2), z: +P.z.toFixed(2), yaw: +AVA.yaw.toFixed(2), fy: AVA.flyY != null ? +AVA.flyY.toFixed(2) : 0, t: C.D.serverTimestamp() }).catch(fail(tr('位置送不出去', 'position not sent'))); } catch (e) { fail(tr('位置送不出去', 'position not sent'))(e); } }
+  if (force || lk !== WORLD.sentLook) { WORLD.sentLook = lk; try { C.D.update(WORLD.me, { ...pl, t: C.D.serverTimestamp() }).catch(fail(tr('名字和外觀送不出去', 'name/looks not sent'))); } catch (e) { fail(tr('名字和外觀送不出去', 'name/looks not sent'))(e); } }
 }
 function worldEmote(e) { const C = window.CLOUD; if (!C || !WORLD.me) return; C.D.update(WORLD.me, { emo: e, emoT: Date.now() + WORLD.off, t: C.D.serverTimestamp() }).catch(() => {}); avSay(e, 2.5); }
 function worldUpsert(uid, o) {
@@ -25000,7 +25001,7 @@ const GIFT = { dir: {}, started: false, MAX_ONE: 50, MAX_DAY: 100, QUICK: ['加�
 function giftStart() {
   const C = window.CLOUD; if (!C || GIFT.started || !ME) return; GIFT.started = true; const D = C.D;
   /* public directory so friends can be found even when they are offline */
-  const pubDir = () => D.set(D.ref(C.db, 'dir/' + C.uid), { name: ME.name, lv: levelInfo().lv, shirt: ME.shirt, t: D.serverTimestamp() }).catch(() => {});
+  const pubDir = () => D.set(D.ref(C.db, 'dir/' + C.uid), { name: ME.name || '', lv: levelInfo().lv, shirt: ME.shirt || '', t: D.serverTimestamp() }).catch(() => {});
   pubDir(); setInterval(pubDir, 10 * 60e3);
   D.onValue(D.ref(C.db, 'dir'), s => { GIFT.dir = s.val() || {}; if (!PL.el.hidden && PL.kind === 'world') worldPanel(true); }, () => {});
   /* inbox: claim each gift once (delete it, then add the leaves) */
