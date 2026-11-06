@@ -24910,6 +24910,8 @@ function worldStart() {
     [...WORLD.others.keys()].forEach(uid => { if (!seen.has(uid)) worldDrop(uid); });
     worldChip();
   }, e => { WORLD.err = tr('讀不到其他人的位置', 'cannot read others') + '（' + (e && (e.code || e.message) || e) + '）'; worldChip(); });
+  /* "I'm still here" every 40 s on a timer, not in the drawing loop: the browser stops drawing a hidden tab, which used to make that player vanish for everyone else after 2.5 minutes */
+  setInterval(() => { try { worldSend(true); } catch (e) { } }, 40000);
   const chip = document.createElement('button'); chip.id = 'worldChip'; chip.type = 'button'; chip.addEventListener('click', worldPanel); document.body.appendChild(chip); WORLD.chip = chip; worldChip();
 }
 function worldPayload() {
@@ -24948,7 +24950,6 @@ function worldTick(dt, now) {
   if (!window.CLOUD) return;
   if (!WORLD.me) { if (AVA && ME) worldStart(); return; }
   WORLD.syncT -= dt; if (WORLD.syncT <= 0) { WORLD.syncT = .2; worldSend(); }
-  WORLD.beatT -= dt; if (WORLD.beatT <= 0) { WORLD.beatT = 45; worldSend(true); }
   const t = now / 1000;
   WORLD.others.forEach(r => {
     const hide = !!(NET && NET.remote && NET.remote.id === r.uid); r.root.visible = !hide; if (r.pet) r.pet.visible = !hide; r.tagEl.style.display = hide ? 'none' : '';
