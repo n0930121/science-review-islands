@@ -16746,6 +16746,10 @@ async function boot() {
     catch (e2) { why = '資料庫規則還沒更新（讀不到允許名單），請確認新規則已經按「發布」。'; }
   }
   if (!allowed) { gate(`<p class="cg-err">這個帳號還沒有開通，請爸爸媽媽到 Firebase 後台把它加進允許名單。</p><p class="cg-hint">給家長看的原因：${why}<br>登入的 UID：<code>${esc2(uid)}</code></p><button class="cg-btn" id="cgOut">換一個帳號</button>`); document.getElementById('cgOut').onclick = async () => { await U.signOut(auth); location.reload(); }; await new Promise(() => { }); }
+  const SYNC_K = 'scienceIslands.cloudSync.' + uid;
+  if (save) { const a = readActive(); if (a && a.prof.id === 'c_' + uid && String(save.t) === LS.get(SYNC_K)) {
+    const same = a.raw === JSON.stringify(save.lp || {}) && JSON.stringify(a.prof) === JSON.stringify(save.prof);
+    if (!same) { try { save = { prof: a.prof, lp: JSON.parse(a.raw), t: save.t }; } catch (e) { } } } }
   if (!save) { const a = readActive(); if (a && a.prof.id === 'c_' + uid) { try { save = { prof: a.prof, lp: JSON.parse(a.raw) }; } catch (e) { } } }
   if (!save) {
     const pick = await chooseMove(localProfiles());
@@ -16754,18 +16758,20 @@ async function boot() {
   useSave(save);
   const fresh = !!save;
   /* periodic upload of the active character (and a small summary for the parent's sheet) */
-  let last = save ? JSON.stringify(save.lp || {}) : '', busy = false;
+  const sig = a => JSON.stringify(a.prof) + '|' + a.raw;
+  let last = '', busy = false;
   const push = async (why) => {
     const a = readActive(); if (!a || busy) return; a.prof = { ...a.prof, id: 'c_' + uid };
-    if (a.raw === last && why !== 'force') return;
+    if (sig(a) === last && why !== 'force') return;
     busy = true;
     try { const lp = JSON.parse(a.raw); const adv = lp.adv || {};
       await D.update(uref(''), { save: { prof: a.prof, lp, t: D.serverTimestamp(), v: 1 }, sum: { name: a.prof.name, grade: a.prof.grade || '', stars: starsOf(lp), coins: adv.coins || 0, xp: adv.xp || 0, t: D.serverTimestamp() } });
-      last = a.raw; window.dispatchEvent(new CustomEvent('cloud-saved')); }
+      last = sig(a); try { const t = await D.get(uref('save/t')); if (t.exists()) LS.set(SYNC_K, String(t.val())); } catch (e) { }
+      window.dispatchEvent(new CustomEvent('cloud-saved')); }
     catch (e) { console.warn('cloud save failed', e); }
     busy = false;
   };
-  setInterval(() => push(), 8000); if (fresh) setTimeout(() => push('force'), 1500);
+  setInterval(() => push(), 8000); if (fresh) setTimeout(() => push(), 1500);
   addEventListener('pagehide', () => push());
   document.addEventListener('visibilitychange', () => { if (document.hidden) push(); });
   window.CLOUD = { A, U, D, app, auth, db, uid, email: user.email, user: (user.email || '').split('@')[0], push,
@@ -21809,7 +21815,7 @@ function openStart(mode) {
     $('#stGo').addEventListener('click', () => {
       const name = $('#stName').value.trim();
       if (!name) { const e = $('#stErr'); e.hidden = false; e.textContent = tr('幫角色取個名字吧！', 'Give your character a name!'); return; }
-      if (edit) { const p = PROFS.list.find(x => x.id === edit.id); Object.assign(p, { name, char: L.char, shirt: L.shirt, hair: L.hair, grade: L.grade }); saveProfs(); location.reload(); return; }
+      if (edit) { const p = PROFS.list.find(x => x.id === edit.id); Object.assign(p, { name, char: L.char, shirt: L.shirt, hair: L.hair, grade: L.grade }); saveProfs(); if (window.CLOUD) { window.CLOUD.push('force').finally(() => location.reload()); return; } location.reload(); return; }
       const id = window.CLOUD ? 'c_' + window.CLOUD.uid : 'p' + Date.now().toString(36);
       if (!window.CLOUD && !PROFS.list.length) { const old = store.get('scienceIslands.progress.v1'); if (old) store.set('scienceIslands.progress.v1.' + id, old); }
       PROFS.list.push({ id, name, char: L.char, shirt: L.shirt, hair: L.hair, grade: L.grade, created: today() }); PROFS.active = id; saveProfs();
@@ -21967,6 +21973,7 @@ const FB_VER = '10.12.2', NQ = 7, QSEC = 12;
 let FB = null, NET = null;
 async function fbInit() {
   if (FB) return FB;
+  if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   if (window.CLOUD) { const C = window.CLOUD; FB = { ...C.D, db: C.db, uid: C.uid }; return FB; }
   const base = `https://www.gstatic.com/firebasejs/${FB_VER}/`;
