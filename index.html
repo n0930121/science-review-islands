@@ -17798,6 +17798,7 @@ body.print-report > :not(#play){display:none!important}body.print-report #play{p
 .me-tag.world b{color:#1f6fb0}
 @media (max-width:800px){#worldChip{bottom:auto;top:calc(70px + env(safe-area-inset-top,0px));left:auto;right:12px}}
 .gf .coins-big small{font-size:12px;color:#8a7a6a;font-weight:400}.gf-amt{display:flex;gap:8px;margin-bottom:10px}.gf-amt .btn{min-width:64px;font-size:18px}
+.gf-num{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 12px;font-size:14px;color:#6b5a48}.gf .gf-num input{width:120px;flex:none;font-size:18px;padding:6px 10px;border:2px solid #e2d3bf;border-radius:10px;text-align:center}.gf-num small{color:#8a7a6a}
 .gf-quick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.gf input{width:100%;font:600 15px/1.2 var(--font);padding:10px 12px;border-radius:12px;border:1px solid #e6dccd;margin-bottom:10px}
 .gf-done{text-align:center}.gf-done b{font-size:48px}.wl.off li{opacity:.8}.gf-log{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:13px}.gf-log li{background:#fff;border-radius:10px;padding:6px 10px}.gf-log li.in{background:#fff6dc}.gf-log small{color:#8a7a6a;margin-left:6px}
 .wl li .btn+.btn{margin-left:6px}
@@ -26474,7 +26475,7 @@ function giftPop(g, amt) {
 const giftSentToday = () => (AV.gifts || []).filter(x => x.k === 'out' && x.day === today()).reduce((a, x) => a + x.amt, 0);
 async function giftSend(toUid, toName, amt, msg) {
   const C = window.CLOUD, D = C.D; amt = Math.floor(amt);
-  if (!(amt >= 1)) return tr('請選擇要送幾枚', 'Pick an amount');
+  if (!(amt >= 1)) return tr('請輸入或選擇要送幾枚', 'Pick an amount');
   if (amt > GIFT.MAX_ONE) return tr(`一次最多送 ${GIFT.MAX_ONE} 枚`, `Up to ${GIFT.MAX_ONE} at a time`);
   if (giftSentToday() + amt > GIFT.MAX_DAY) return tr(`每天最多送出 ${GIFT.MAX_DAY} 枚，今天還能送 ${Math.max(0, GIFT.MAX_DAY - giftSentToday())} 枚`, 'Daily limit reached');
   if (amt > AV.coins) return tr('葉子幣不夠', 'Not enough leaves');
@@ -26495,12 +26496,17 @@ function giftDialog(toUid) {
     const left = Math.max(0, GIFT.MAX_DAY - giftSentToday());
     body.innerHTML = `<div class="gf"><p class="coins-big">${ICON3.leaf}<b>${AV.coins}</b> ${tr('葉子幣', 'leaves')}<small>　${tr(`今天還能送 ${left} 枚（每天最多 ${GIFT.MAX_DAY} 枚，一次最多 ${GIFT.MAX_ONE} 枚）`, '')}</small></p>
       <div class="eyebrow">${tr('送幾枚', 'Amount')}</div><div class="gf-amt">${[5, 10, 20, 50].map(n => `<button class="btn ${n === amt ? 'primary' : ''}" data-ga="${n}" ${n > Math.min(left, AV.coins) ? 'disabled' : ''}>${n}</button>`).join('')}</div>
+      <label class="gf-num">${tr('或自己輸入', 'Or type an amount')}<input id="gfNum" type="number" inputmode="numeric" min="1" max="${Math.max(1, Math.min(GIFT.MAX_ONE, left, AV.coins))}" step="1" value="${amt}"><small>${tr(`這次最多可以送 ${Math.max(0, Math.min(GIFT.MAX_ONE, left, AV.coins))} 枚`, '')}</small></label>
       <div class="eyebrow">${tr('附一句話（可以不填）', 'Message (optional)')}</div>
       <div class="gf-quick">${GIFT.QUICK.map(q => `<button class="chip" data-gq="${esc(q)}">${esc(q)}</button>`).join('')}</div>
       <input id="gfMsg" maxlength="30" placeholder="${tr('最多 30 個字', 'Up to 30 characters')}">
       <div class="qrow"><button class="btn primary" id="gfGo">🎁 ${tr(`送出 ${amt} 枚`, `Send ${amt}`)}</button></div><p class="qfb ${msg ? 'bad' : ''}" id="gfErr" ${msg ? '' : 'hidden'}>${esc(msg || '')}</p>
       <p class="hint">${tr('送出後就拿不回來喔。爸爸媽媽可以在報表看到送禮紀錄。', 'Gifts cannot be taken back. Parents can see gift history.')}</p></div>`;
     body.querySelectorAll('[data-ga]').forEach(b => b.addEventListener('click', () => { amt = +b.dataset.ga; const m = body.querySelector('#gfMsg').value; draw(); body.querySelector('#gfMsg').value = m; }));
+    /* typed amount: the send button follows what is typed; limits are checked again when sending */
+    const num = body.querySelector('#gfNum'), go = body.querySelector('#gfGo');
+    num.addEventListener('input', () => { const v = Math.floor(+num.value); amt = v >= 1 ? v : 0; body.querySelectorAll('[data-ga]').forEach(b => b.classList.toggle('primary', +b.dataset.ga === amt)); go.textContent = amt ? `🎁 ${tr(`送出 ${amt} 枚`, `Send ${amt}`)}` : `🎁 ${tr('請輸入要送幾枚', 'Type an amount')}`; go.disabled = !amt; });
+    num.addEventListener('keydown', e => { if (e.key === 'Enter') go.click(); });
     body.querySelectorAll('[data-gq]').forEach(b => b.addEventListener('click', () => { body.querySelector('#gfMsg').value = b.dataset.gq; }));
     body.querySelector('#gfGo').addEventListener('click', async e => {
       e.target.disabled = true; const m = body.querySelector('#gfMsg').value.trim(); const err = await giftSend(toUid, name, amt, m);
@@ -26529,7 +26535,7 @@ function giftDialog(toUid) {
   };
 }
 { const _wt = worldTick; worldTick = function (dt, now) { _wt.apply(this, arguments); if (window.CLOUD && !GIFT.started && AVA && ME) giftStart(); }; }
-window.__gift = GIFT;
+window.__gift = GIFT; window.__giftDialog = uid => giftDialog(uid);
 /* WORLD-JS-END */
 /* =====================================================================
    17. start
