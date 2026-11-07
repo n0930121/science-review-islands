@@ -16724,6 +16724,10 @@ function gate(html) {
   if (!g) { g = document.createElement('div'); g.id = 'cloudGate'; document.body.appendChild(g); }
   g.innerHTML = `<div class="cg-card"><div class="cg-logo">🏝️</div><h1>小學知識群島</h1>${html}</div>`; return g;
 }
+/* Firebase keys cannot contain . # $ / [ ] — question ids look like "s5-1#17", so keys are %-escaped in the cloud and restored on load */
+const KEY_ENC = { '%': '%25', '.': '%2E', '#': '%23', '$': '%24', '/': '%2F', '[': '%5B', ']': '%5D' };
+const encK = v => v && typeof v === 'object' ? (Array.isArray(v) ? v.map(encK) : Object.fromEntries(Object.entries(v).map(([k, x]) => [k.replace(/[%.#$/[\]]/g, c => KEY_ENC[c]), encK(x)]))) : v;
+const decK = v => v && typeof v === 'object' ? (Array.isArray(v) ? v.map(decK) : Object.fromEntries(Object.entries(v).map(([k, x]) => [k.replace(/%(25|2E|23|24|2F|5B|5D)/gi, m => decodeURIComponent(m)), decK(x)]))) : v;
 const starsOf = lp => Object.values((lp && lp.q) || {}).reduce((a, v) => a + (+v || 0), 0);
 function localProfiles() {
   /* the device's own characters, from the backup made at first login (or the live list if no backup yet) */
@@ -16754,7 +16758,7 @@ async function boot() {
   const uid = user.uid, uref = p => D.ref(db, `users/${uid}${p ? '/' + p : ''}`);
   gate(`<p class="cg-sub">讀取雲端存檔…</p>`);
   let save = null, allowed = true, why = '';
-  try { const s = await D.get(uref('save')); save = s.exists() ? s.val() : null; }
+  try { const s = await D.get(uref('save')); save = s.exists() ? s.val() : null; if (save && save.lp) save.lp = decK(save.lp); }
   catch (e) {
     allowed = false;
     /* tell the parent which part is missing: the rules, the allow-list entry, or something else */
@@ -16769,7 +16773,7 @@ async function boot() {
   if (!save) { const a = readActive(); if (a && a.prof.id === 'c_' + uid) { try { save = { prof: a.prof, lp: JSON.parse(a.raw) }; } catch (e) { } } }
   if (!save) {
     const pick = await chooseMove(localProfiles());
-    if (pick) { save = { prof: { ...pick.p, id: 'c_' + uid }, lp: pick.lp, from: pick.p.id }; await D.set(uref('save'), { ...save, t: D.serverTimestamp(), v: 1 }); }
+    if (pick) { save = { prof: { ...pick.p, id: 'c_' + uid }, lp: pick.lp, from: pick.p.id }; await D.set(uref('save'), { ...save, lp: encK(save.lp), t: D.serverTimestamp(), v: 1 }); }
   }
   useSave(save);
   const fresh = !!save;
@@ -16781,7 +16785,7 @@ async function boot() {
     if (sig(a) === last && why !== 'force') return;
     busy = true;
     try { const lp = JSON.parse(a.raw); const adv = lp.adv || {};
-      await D.update(uref(''), { save: { prof: a.prof, lp, t: D.serverTimestamp(), v: 1 }, sum: { name: a.prof.name, grade: a.prof.grade || '', stars: starsOf(lp), coins: adv.coins || 0, xp: adv.xp || 0, t: D.serverTimestamp() } });
+      await D.update(uref(''), { save: { prof: a.prof, lp: encK(lp), t: D.serverTimestamp(), v: 1 }, sum: { name: a.prof.name, grade: a.prof.grade || '', stars: starsOf(lp), coins: adv.coins || 0, xp: adv.xp || 0, t: D.serverTimestamp() } });
       last = sig(a); try { const t = await D.get(uref('save/t')); if (t.exists()) LS.set(SYNC_K, String(t.val())); } catch (e) { }
       window.dispatchEvent(new CustomEvent('cloud-saved')); }
     catch (e) { console.warn('cloud save failed', e); }
