@@ -26448,7 +26448,7 @@ if (window.CLOUD) {
 }
 window.__world = WORLD;
 /* ---------- 16s. gifts: players send each other leaves (cloud only) ---------- */
-const GIFT = { dir: {}, started: false, MAX_ONE: 50, MAX_DAY: 100, QUICK: ['加油！', '謝謝你！', '一起去闖關吧', '生日快樂', '你好厲害'] };
+const GIFT = { dir: {}, started: false, MAX_ONE: 9999999999, MAX_DAY: Infinity, /* one gift is capped by the database rule (amt <= 9999999999); no daily cap */ QUICK: ['加油！', '謝謝你！', '一起去闖關吧', '生日快樂', '你好厲害'] };
 function giftStart() {
   const C = window.CLOUD; if (!C || GIFT.started || !ME) return; GIFT.started = true; const D = C.D;
   /* public directory so friends can be found even when they are offline */
@@ -26494,7 +26494,7 @@ function giftDialog(toUid) {
   let amt = 10;
   const draw = (msg) => {
     const left = Math.max(0, GIFT.MAX_DAY - giftSentToday());
-    body.innerHTML = `<div class="gf"><p class="coins-big">${ICON3.leaf}<b>${AV.coins}</b> ${tr('葉子幣', 'leaves')}<small>　${tr(`今天還能送 ${left} 枚（每天最多 ${GIFT.MAX_DAY} 枚，一次最多 ${GIFT.MAX_ONE} 枚）`, '')}</small></p>
+    body.innerHTML = `<div class="gf"><p class="coins-big">${ICON3.leaf}<b>${AV.coins}</b> ${tr('葉子幣', 'leaves')}${isFinite(GIFT.MAX_DAY) ? `<small>　${tr(`今天還能送 ${left} 枚（每天最多 ${GIFT.MAX_DAY} 枚，一次最多 ${GIFT.MAX_ONE} 枚）`, '')}</small>` : ''}</p>
       <div class="eyebrow">${tr('送幾枚', 'Amount')}</div><div class="gf-amt">${[5, 10, 20, 50].map(n => `<button class="btn ${n === amt ? 'primary' : ''}" data-ga="${n}" ${n > Math.min(left, AV.coins) ? 'disabled' : ''}>${n}</button>`).join('')}</div>
       <label class="gf-num">${tr('或自己輸入', 'Or type an amount')}<input id="gfNum" type="number" inputmode="numeric" min="1" max="${Math.max(1, Math.min(GIFT.MAX_ONE, left, AV.coins))}" step="1" value="${amt}"><small>${tr(`這次最多可以送 ${Math.max(0, Math.min(GIFT.MAX_ONE, left, AV.coins))} 枚`, '')}</small></label>
       <div class="eyebrow">${tr('附一句話（可以不填）', 'Message (optional)')}</div>
